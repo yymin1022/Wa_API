@@ -3,6 +3,31 @@ import random
 def getReplyMessage(message):
     strResult = message
 
+    if "아.." in message:
+        strResult = messageAh()
+    elif "코딩해야" in message:
+        strResult = messageCoding()
+    elif "하.." in message:
+        strResult = messageHa()
+    elif "이런.." in message:
+        strResult = messageIreon()
+    elif "무야호" in message:
+        strResult = messageMooYaHo()
+    elif "ㄹㅇㅋㅋ" in message:
+        strResult = messageReal()
+    elif "^^7" in message:
+        strResult = messageSalute()
+    elif "멈춰" in message:
+        strResult = messageStop()
+    elif "와.." in message:
+        strResult = messageWa()
+    elif "와!" in message:
+        strResult = messageWaSans()
+    elif "자라" in message:
+        strResult = messageZara()
+    elif "자야" in message:
+        strResult = messageZayazi() 
+
     return strResult
 
 def messageAh():

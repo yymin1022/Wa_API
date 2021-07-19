@@ -28,7 +28,9 @@ def messageCoding():
     return strMessage
 
 def messageHa():
-    pass
+    strMessage = "코딩하기 싫다.."
+
+    return strMessage
 
 def messageIreon():
     pass

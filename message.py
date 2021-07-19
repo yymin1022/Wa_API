@@ -86,7 +86,7 @@ def messageWaSans():
     return strMessage
 
 def messageZara():
-    pass
+    strMessage = "전기요금 아깝다;;"
 
 def messageZayazi():
     pass

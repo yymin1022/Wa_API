@@ -33,7 +33,15 @@ def messageHa():
     return strMessage
 
 def messageIreon():
-    pass
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "안됐군요.."
+    elif randInt == 1:
+        strMessage = "안타깝네요.."
+    
+    return strMessage
 
 def messageMooYaHo():
     pass

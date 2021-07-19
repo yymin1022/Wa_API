@@ -54,7 +54,9 @@ def messageReal():
     return strMessage
 
 def messageSalute():
-    pass
+    strMessage = "^^7"
+
+    return strMessage
 
 def messageStop():
     pass

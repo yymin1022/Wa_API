@@ -23,7 +23,9 @@ def messageAh():
     return strMessage
 
 def messageCoding():
-    pass
+    strMessage = "구라ㅡㅡ;;"
+
+    return strMessage
 
 def messageHa():
     pass
@@ -44,19 +46,7 @@ def messageStop():
     pass
 
 def messageWa():
-    randInt = random.randrange(0, 5)
-    messageStr = ""
-
-    if randInt == 0:
-        messageStr = "갑부;;"
-    elif randInt == 1:
-        messageStr = "기만;;"
-    elif randInt == 2:
-        messageStr = "ㄹㅇ;;"
-    elif randInt == 3:
-        messageStr = "마스터;;"
-    elif randInt == 4:
-        messageStr = "역시;;"
+    pass
 
 def messageWaSans():
     pass

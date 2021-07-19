@@ -91,4 +91,6 @@ def messageZara():
     return strMessage
 
 def messageZayazi():
-    pass
+    strMessage = "구라ㅡㅡ;;"
+
+    return strMessage

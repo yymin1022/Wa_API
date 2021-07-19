@@ -44,7 +44,9 @@ def messageIreon():
     return strMessage
 
 def messageMooYaHo():
-    pass
+    strMessage = "그만큼 신나신다는거지~"
+
+    return strMessage
 
 def messageReal():
     pass

@@ -81,7 +81,9 @@ def messageWa():
     return strMessage
 
 def messageWaSans():
-    pass
+    strMessage = "샌즈!<br/>아시는구나!<br/>이거 겁.나.어.렵.습.니.다."
+
+    return strMessage
 
 def messageZara():
     pass

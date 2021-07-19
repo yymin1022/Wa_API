@@ -59,7 +59,9 @@ def messageSalute():
     return strMessage
 
 def messageStop():
-    pass
+    strMessage = "멈춰!!"
+
+    return strMessage
 
 def messageWa():
     pass

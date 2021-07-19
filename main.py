@@ -20,7 +20,7 @@ def getMessage():
     replyRoom = inputRoom
     replySender = inputSender
 
-    replyData = dict(("msg", replyMessage), ("room", replyRoom), ("sender", replySender))
+    replyData = dict([("msg", replyMessage), ("room", replyRoom), ("sender", replySender)])
 
     return jsonify(replyData)
  

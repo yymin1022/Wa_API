@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify, request
 
 flaskApp = Flask (__name__)
  
@@ -6,9 +6,10 @@ flaskApp = Flask (__name__)
 def main():
     return "Hello, World!"
 
-@flaskApp.route("/getMessage")
+@flaskApp.route("/getMessage", methods = ["POST"])
 def getMessage():
-    return "Hello, World! This is getMessage Function!"
+    inputData = request.get_json()
+    return jsonify(inputData)
  
 if __name__ == "__main__":
     flaskApp.run(host = "0.0.0.0", port = 80)

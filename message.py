@@ -64,7 +64,21 @@ def messageStop():
     return strMessage
 
 def messageWa():
-    pass
+    randInt = random.randrange(0, 5)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "갑부;;"
+    elif randInt == 1:
+        strMessage = "기만;;"
+    elif randInt == 2:
+        strMessage = "ㄹㅇ;;"
+    elif randInt == 3:
+        strMessage = "마스터;;"
+    elif randInt == 4:
+        strMessage = "역시;;"
+
+    return strMessage
 
 def messageWaSans():
     pass

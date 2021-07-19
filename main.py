@@ -7,7 +7,7 @@ def main():
     return "Hello, World!"
 
 @flaskApp.route("/getMessage")
-def main():
+def getMessage():
     return "Hello, World! This is getMessage Function!"
  
 if __name__ == "__main__":

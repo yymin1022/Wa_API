@@ -49,7 +49,9 @@ def messageMooYaHo():
     return strMessage
 
 def messageReal():
-    pass
+    strMessage = "ㄹㅇㅋㅋ"
+
+    return strMessage
 
 def messageSalute():
     pass

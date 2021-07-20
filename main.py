@@ -27,8 +27,9 @@ def getMessage():
     except KeyError:
         errCode = 200
         errMessage = "KeyError : Check Dataset Keys"
-    except:
+    except Exception as errContent:
         errCode = 300
+        errMessgage = errContent
 
     replyMessage = message.getReplyMessage(inputMessage)
     replyRoom = inputRoom

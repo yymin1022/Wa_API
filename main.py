@@ -32,7 +32,7 @@ def getMessage():
     replyRoom = inputRoom
     replySender = inputSender
 
-    replyData = dict([[("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)], [("msg", replyMessage), ("room", replyRoom), ("sender", replySender)]])
+    replyData = dict([("RESULT", [("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]), ("DATA", [("msg", replyMessage), ("room", replyRoom), ("sender", replySender)])])
 
     return jsonify(replyData)
  

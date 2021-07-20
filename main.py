@@ -11,12 +11,16 @@ def main():
 @flaskApp.route("/getMessage", methods = ["POST"])
 def getMessage():
     errCode = 100
+    try:
+        inputData = request.get_json()
 
-    inputData = request.get_json()
-
-    inputMessage = inputData["msg"]
-    inputRoom = inputData["room"]
-    inputSender = inputData["sender"]
+        inputMessage = inputData["msg"]
+        inputRoom = inputData["room"]
+        inputSender = inputData["sender"]
+    except KeyError:
+        errCode = 200
+    except:
+        errCode = 300
 
     replyMessage = message.getReplyMessage(inputMessage)
     replyRoom = inputRoom

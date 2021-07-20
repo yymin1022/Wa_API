@@ -10,7 +10,7 @@ def main():
 
 @flaskApp.route("/getMessage", methods = ["POST"])
 def getMessage():
-    errCode = 100
+    errCode = 0
     errMessage = "RESULT OK"
 
     inputData = ""
@@ -24,11 +24,8 @@ def getMessage():
         inputMessage = inputData["msg"]
         inputRoom = inputData["room"]
         inputSender = inputData["sender"]
-    except KeyError:
-        errCode = 200
-        errMessage = "KeyError : Check Dataset Keys"
     except Exception as errContent:
-        errCode = 300
+        errCode = -1
         errMessage = repr(errContent)
 
     replyMessage = message.getReplyMessage(inputMessage)

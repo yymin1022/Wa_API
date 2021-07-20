@@ -26,6 +26,7 @@ def getMessage():
         inputSender = inputData["sender"]
     except KeyError:
         errCode = 200
+        errMessage = "KeyError : Check Dataset Keys"
     except:
         errCode = 300
 

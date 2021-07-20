@@ -24,9 +24,9 @@ def getMessage():
         inputMessage = inputData["msg"]
         inputRoom = inputData["room"]
         inputSender = inputData["sender"]
-    except KeyError:
-        errCode = 200
-        errMessage = "KeyError : Check Dataset Keys"
+    # except KeyError:
+    #     errCode = 200
+    #     errMessage = "KeyError : Check Dataset Keys"
     except Exception as errContent:
         errCode = 300
         errMessgage = errContent

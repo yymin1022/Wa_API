@@ -11,6 +11,11 @@ def main():
 @flaskApp.route("/getMessage", methods = ["POST"])
 def getMessage():
     errCode = 100
+    inputData = ""
+    inputMessage = ""
+    inputRoom = ""
+    inputSender = ""
+
     try:
         inputData = request.get_json()
 

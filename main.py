@@ -11,6 +11,8 @@ def main():
 @flaskApp.route("/getMessage", methods = ["POST"])
 def getMessage():
     errCode = 100
+    errMessage = "RESULT OK"
+
     inputData = ""
     inputMessage = ""
     inputRoom = ""
@@ -31,7 +33,7 @@ def getMessage():
     replyRoom = inputRoom
     replySender = inputSender
 
-    replyData = dict([("RESULT_CODE", errCode), ("msg", replyMessage), ("room", replyRoom), ("sender", replySender)])
+    replyData = dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage), ("msg", replyMessage), ("room", replyRoom), ("sender", replySender)])
 
     return jsonify(replyData)
  

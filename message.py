@@ -19,6 +19,8 @@ def getReplyMessage(message):
         strResult = messageReal()
     elif "^^7" in message:
         strResult = messageSalute()
+    elif "나스" in message or "폴리오" in message:
+        strResult = messageSaseyo()
     elif "멈춰" in message:
         strResult = messageStop()
     elif "와.." in message:
@@ -95,6 +97,17 @@ def messageReal():
 
 def messageSalute():
     strMessage = "^^7"
+
+    return strMessage
+
+def messageSaseyo():
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "사세요"
+    elif randInt == 1:
+        strMessage = "안 사도 돼요"
 
     return strMessage
 

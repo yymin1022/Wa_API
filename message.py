@@ -42,7 +42,7 @@ def getReplyMessage(message):
     elif "와!" in message:
         strResult = messageWaSans()
     elif "오늘" in message and "근무" in message:
-        strResult = messageWord()
+        strResult = messageWork()
     elif "용민" in message:
         strResult = messageYongmin()
     elif "자라" in message:

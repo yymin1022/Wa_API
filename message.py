@@ -33,7 +33,7 @@ def getReplyMessage(message):
     return strResult
 
 def messageAh():
-    randInt = random.randrange(0, 5)
+    randInt = random.randrange(0, 7)
     strMessage = ""
 
     if randInt == 0:
@@ -46,6 +46,10 @@ def messageAh():
         strMessage = "안돼.."
     elif randInt == 4:
         strMessage = "메리카노.."
+    elif randInt == 5:
+        strMessage = "냄새나요;"
+    elif randInt == 6:
+        strMessage = "흑우가 또.."
     
     return strMessage
 

@@ -15,6 +15,8 @@ def getReplyMessage(message):
         strResult = messageHa()
     elif "이런.." in message:
         strResult = messageIreon()
+    elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
+        strResult = messageLaugh()
     elif "무야호" in message:
         strResult = messageMooYaHo()
     elif "꺼라" in message:
@@ -41,6 +43,16 @@ def getReplyMessage(message):
         strResult = messageZayazi()
 
     return strResult
+
+def getLaughCount(message):
+    count = message.count("ㅋ")
+    count += message.count("ㄱ")
+    count += message.count("ㄲ")
+    count += message.count("ㄴ")
+    count += message.count("ㅌ")
+    count += message.count("ㅎ")
+
+    return count
 
 def messageAh():
     randInt = random.randrange(0, 7)
@@ -94,6 +106,12 @@ def messageIreon():
         strMessage = "안타깝네요.."
     
     return strMessage
+
+def messageLaugh():
+    strMessage = "뭘 웃어요;;"
+
+    return strMessage
+
 
 def messageMooYaHo():
     strMessage = "그만큼 신나신다는거지~"

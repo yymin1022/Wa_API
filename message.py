@@ -1,4 +1,8 @@
+from bs4 import BeautifulSoup
+
+import datetime
 import random
+import requests
 
 def getReplyMessage(message):
     strResult = ""
@@ -9,6 +13,8 @@ def getReplyMessage(message):
         strResult = messageBaby()
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
+    elif ("코로나" in message or "확진자" in message) and "몇" in message:
+        strResult = messageCorona()
     elif "뭐먹" in message:
         strResult = messageEat()
     elif "하.." in message:
@@ -83,6 +89,24 @@ def messageCoding():
         strMessage = "구라ㅡㅡ;;"
     elif randInt == 1:
         strMessage = "ㅋ"
+
+    return strMessage
+
+def messageCorona():
+    headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36'}
+    url = "http://ncov.mohw.go.kr/"
+
+    res = requests.get(url, headers=headers)
+    soup = BeautifulSoup(res.text, features="html.parser")
+
+    divTable = soup.find("div", class_="liveboard_layout")
+    divLive = divTable.find("div", class_="liveNumOuter")
+    divData = divLive.find("div", class_="liveNum")
+    strDate = divLive.find("span", class_="livedate").text
+    strTotal = divData.find_all("span", class_="num")[0].text.split(")")[1]
+    strToday = divData.find_all("span", class_="before")[0].text.split(" ")[2][:-1]
+
+    strMessage = " 어제 %s명\\n\\n누적 %s명\\n\\n%s"%(strToday, strTotal, strDate)
 
     return strMessage
 

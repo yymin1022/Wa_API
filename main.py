@@ -25,7 +25,7 @@ def getMessage():
         inputRoom = inputData["room"]
         inputSender = inputData["sender"]
     except Exception as errContent:
-        errCode = -1
+        errCode = 200
         errMessage = repr(errContent)
 
     replyMessage = message.getReplyMessage(inputMessage)

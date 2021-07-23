@@ -1,7 +1,7 @@
 import random
 
 def getReplyMessage(message):
-    strResult = message
+    strResult = ""
 
     if "아.." in message:
         strResult = messageAh()

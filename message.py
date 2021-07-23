@@ -5,7 +5,7 @@ def getReplyMessage(message):
 
     if "아.." in message:
         strResult = messageAh()
-    elif "코딩해야" in message:
+    elif "개발해야" in message or "코딩해야" in message:
         strResult = messageCoding()
     elif "하.." in message:
         strResult = messageHa()
@@ -13,6 +13,8 @@ def getReplyMessage(message):
         strResult = messageIreon()
     elif "무야호" in message:
         strResult = messageMooYaHo()
+    elif "꺼라" in message:
+        strResult = messageOff()
     elif "ㄹㅇㅋㅋ" in message:
         strResult = messageReal()
     elif "^^7" in message:
@@ -76,6 +78,11 @@ def messageIreon():
 
 def messageMooYaHo():
     strMessage = "그만큼 신나신다는거지~"
+
+    return strMessage
+
+def messageOff():
+    strMessage = "전기세 아깝다;;"
 
     return strMessage
 

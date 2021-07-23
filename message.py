@@ -29,6 +29,8 @@ def getReplyMessage(message):
         strResult = messageWa()
     elif "와!" in message:
         strResult = messageWaSans()
+    elif "용민" in message:
+        strResult = messageYongmin()
     elif "자라" in message:
         strResult = messageZara()
     elif "자야" in message:
@@ -152,6 +154,19 @@ def messageWa():
 
 def messageWaSans():
     strMessage = "샌즈!<br/>아시는구나!<br/>이거 겁.나.어.렵.습.니.다."
+
+    return strMessage
+
+def messageYongmin():
+    randInt = random.randrange(0, 3)
+    strMessage = ""
+    
+    if randInt == 0:
+        strMessage = "감사합니다. MCC 상병 유용민입니다. 머슼타드일까요?"
+    elif randInt == 1:
+        strMessage = "감사합니다. 체계운영실 상병 유용민입니다. 머슼타드일까요?"
+    elif randInt == 2:
+        strMessage = "감사합니다. 보라매 바동 1생활관 생활관장 상병 유용민입니다. 머슼타드일까요?"
 
     return strMessage
 

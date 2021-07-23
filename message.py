@@ -83,6 +83,19 @@ def messageAh():
     
     return strMessage
 
+def messageBaby():
+    randInt = random.randrange(0, 3)
+    strMessage = ""
+    
+    if randInt == 0:
+        strMessage = "귀여운척 하지 마세요;;"
+    elif randInt == 1:
+        strMessage = "응애 나 애기"
+    elif randInt == 2:
+        strMessage = "응애 나 코린이"
+
+    return strMessage
+
 def messageCoding():
     randInt = random.randrange(0, 2)
     strMessage = ""
@@ -146,6 +159,11 @@ def messageMooYaHo():
 
 def messageOff():
     strMessage = "전기세 아깝다ㅡㅡ;;"
+
+    return strMessage
+
+def messageOkay():
+    strMessage = "땡큐! 4딸라!"
 
     return strMessage
 
@@ -231,24 +249,6 @@ def messageZara():
 
 def messageZayazi():
     strMessage = "구라ㅡㅡ;;"
-
-    return strMessage
-
-def messageBaby():
-    randInt = random.randrange(0, 3)
-    strMessage = ""
-    
-    if randInt == 0:
-        strMessage = "귀여운척 하지 마세요;;"
-    elif randInt == 1:
-        strMessage = "응애 나 애기"
-    elif randInt == 2:
-        strMessage = "응애 나 코린이"
-
-    return strMessage
-
-def messageOkay():
-    strMessage = "땡큐! 4딸라!"
 
     return strMessage
 

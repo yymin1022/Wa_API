@@ -84,7 +84,7 @@ def messageMooYaHo():
     return strMessage
 
 def messageOff():
-    strMessage = "전기세 아깝다;;"
+    strMessage = "전기세 아깝다ㅡㅡ;;"
 
     return strMessage
 
@@ -130,7 +130,7 @@ def messageWaSans():
     return strMessage
 
 def messageZara():
-    strMessage = "전기요금 아깝다;;"
+    strMessage = "전기세 아깝다ㅡㅡ;;"
 
     return strMessage
 

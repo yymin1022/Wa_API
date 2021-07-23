@@ -26,7 +26,9 @@ def getReplyMessage(message):
     elif "자라" in message:
         strResult = messageZara()
     elif "자야" in message:
-        strResult = messageZayazi() 
+        strResult = messageZayazi()
+    elif "응애" in message:
+        strResult = messageBaby()
 
     return strResult
 
@@ -117,5 +119,18 @@ def messageZara():
 
 def messageZayazi():
     strMessage = "구라ㅡㅡ;;"
+
+    return strMessage
+
+def messageBaby():
+    randInt = random.randrange(0, 3)
+    strMessage = ""
+    
+    if randInt == 0:
+        strMessage = "귀여운척 하지 마세요;;"
+    elif randInt == 1:
+        strMessage = "응애 나 애기"
+    elif randInt == 2:
+        strMessage = "응애 나 코린이"
 
     return strMessage

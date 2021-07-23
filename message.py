@@ -106,7 +106,7 @@ def messageCorona():
     strTotal = divData.find_all("span", class_="num")[0].text.split(")")[1]
     strToday = divData.find_all("span", class_="before")[0].text.split(" ")[2][:-1]
 
-    strMessage = " 어제 %s명\\n\\n누적 %s명\\n\\n%s"%(strToday, strTotal, strDate)
+    strMessage = "어제 %s명\\n\\n누적 %s명\\n\\n%s"%(strToday, strTotal, strDate)
 
     return strMessage
 

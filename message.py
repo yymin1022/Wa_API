@@ -153,7 +153,7 @@ def messageWa():
     return strMessage
 
 def messageWaSans():
-    strMessage = "샌즈!<br/>아시는구나!<br/>이거 겁.나.어.렵.습.니.다."
+    strMessage = "샌즈!\\n아시는구나!\\n이거 겁.나.어.렵.습.니.다."
 
     return strMessage
 

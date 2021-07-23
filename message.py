@@ -31,6 +31,8 @@ def getReplyMessage(message):
         strResult = messageZayazi()
     elif "응애" in message:
         strResult = messageBaby()
+    elif "오케이" in message:
+        strResult = messageOkay()
 
     return strResult
 
@@ -147,5 +149,10 @@ def messageBaby():
         strMessage = "응애 나 애기"
     elif randInt == 2:
         strMessage = "응애 나 코린이"
+
+    return strMessage
+
+def messageOkay():
+    strMessage = "땡큐! 4딸라!"
 
     return strMessage

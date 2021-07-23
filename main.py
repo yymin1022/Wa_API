@@ -32,6 +32,10 @@ def getMessage():
     replyRoom = inputRoom
     replySender = inputSender
 
+    if(replyMessage == ""):
+        errCode = 100
+        errMessage = "None WA Bot Message Found"
+
     replyData = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([("msg", replyMessage), ("room", replyRoom), ("sender", replySender)]))])
 
     return jsonify(replyData)

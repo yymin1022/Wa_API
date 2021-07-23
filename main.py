@@ -28,6 +28,10 @@ def getMessage():
         errCode = 200
         errMessage = repr(errContent)
 
+        replyData = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([("msg", ""), ("room", ""), ("sender", "")]))])
+
+        return jsonify(replyData)
+
     replyMessage = message.getReplyMessage(inputMessage)
     replyRoom = inputRoom
     replySender = inputSender

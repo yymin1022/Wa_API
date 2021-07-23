@@ -91,7 +91,7 @@ def messageStop():
     return strMessage
 
 def messageWa():
-    randInt = random.randrange(0, 5)
+    randInt = random.randrange(0, 7)
     strMessage = ""
 
     if randInt == 0:
@@ -104,6 +104,10 @@ def messageWa():
         strMessage = "마스터;;"
     elif randInt == 4:
         strMessage = "역시;;"
+    elif randInt == 5:
+        strMessage = "이건 좀;;"
+    elif randInt == 6:
+        strMessage = "흑우;;"
 
     return strMessage
 

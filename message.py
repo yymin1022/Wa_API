@@ -197,7 +197,7 @@ def messageWa():
     return strMessage
 
 def messageWaSans():
-    strMessage = "샌즈!\\n\\n아시는구나!\\n\\n이거 겁.나.어.렵.습.니.다."
+    strMessage = "샌즈!\\m\\m아시는구나!\\m\\m이거 겁.나.어.렵.습.니.다."
 
     return strMessage
 
@@ -207,7 +207,7 @@ def messageWork():
     
     countDays = (dateToday - dateStart).days
 
-    strMessage = "병사<br/>%s<br/><br/>간부<br/>%s"%(calcByeongsa(countDays), calcGanbu(countDays))
+    strMessage = "병사\\n\\n%s\\n\\n\\n\\n간부\\n\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
 
     return strMessage
 

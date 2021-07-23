@@ -5,7 +5,7 @@ def getReplyMessage(message):
 
     if "아.." in message:
         strResult = messageAh()
-    elif "개발해야" in message or "코딩해야" in message:
+    elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
     elif "하.." in message:
         strResult = messageHa()
@@ -60,7 +60,13 @@ def messageAh():
     return strMessage
 
 def messageCoding():
-    strMessage = "구라ㅡㅡ;;"
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "구라ㅡㅡ;;"
+    elif randInt == 1:
+        strMessage = "ㅋ"
 
     return strMessage
 

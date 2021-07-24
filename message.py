@@ -52,7 +52,7 @@ def getReplyMessage(message):
     elif "자야" in message:
         strResult = messageZayazi()
     elif "호규" in message:
-    	strResult = messageHokyu()
+        strResult = messageHokyu()
 
     return strResult
 
@@ -75,7 +75,7 @@ def getStressCount(message):
     return count
 
 def messageAh():
-    randInt = random.randrange(0, 7)
+    randInt = random.randrange(0, 8)
     strMessage = ""
 
     if randInt == 0:
@@ -93,7 +93,7 @@ def messageAh():
     elif randInt == 6:
         strMessage = "흑우가 또.."
     elif randInt == 7:
-        strMessage = "정신 나갈 거 같아.."
+        strMessage = "정신 나갈 거 같애.."
     
     return strMessage
 
@@ -278,15 +278,15 @@ def messageHokyu():
     leftDays = (dateEnd - dateToday).days
     goneDays = (dateToday - dateStart).days
     
-    randInt = random.randrange(0, 3)
+    randInt = random.randrange(0, 4)
     if randInt == 0:
-	strMessage = "호규는 2021년 7월 19일 입대했습니다. 2023년 1월 18일 전역 예정입니다. %d일 남았습니다."%(leftDays)
+        strMessage = "호규는 2021년 7월 19일 입대했습니다. 2023년 1월 18일 전역 예정입니다. %d일 남았습니다."%(leftDays)
     elif randInt == 1:
-	strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
+        strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
     elif randInt == 2:
-	strMessage = "안녕하세요? 아미타이거 육군 김호규입니다."
+        strMessage = "안녕하세요? 아미타이거 육군 김호규입니다."
     elif randInt == 3:
-	strMessage = "응애 나 애기 호규."
+        strMessage = "응애 나 애기 호규."
     
     return strMessage
 

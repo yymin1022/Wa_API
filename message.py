@@ -35,7 +35,7 @@ def getReplyMessage(message):
         strResult = messageReal()
     elif "^^7" in message:
         strResult = messageSalute()
-    elif "나스" in message or "폴리오" in message:
+    elif "나스" in message or "폴리오" in message or "고민" in message:
         strResult = messageSaseyo()
     elif "멈춰" in message:
         strResult = messageStop()

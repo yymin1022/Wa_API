@@ -17,6 +17,10 @@ else
     sudo echo Listen $serverPort >> /etc/apache2/ports.conf
 fi
 
+curDirectory=$(pwd)
+
+sudo sed -i 's|Directory|$curDirectory|g' /etc/apache2/sites-available/000-default.conf
+
 echo "Setup Done..!"
 
 echo "Start API Server from now? (y/n)"

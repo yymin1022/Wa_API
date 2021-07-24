@@ -271,6 +271,7 @@ def messageHokyu():
     dateStart = datetime.date(2021,7,19)
     dateEnd = datetime.date(2023,1,18)
     dateToday = datetime.date.today()
+    strResult = ""
     
     leftDays = (dateEnd - dateToday).days
     goneDays = (dataToday - dateStart).days

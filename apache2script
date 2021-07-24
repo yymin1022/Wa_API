@@ -1,4 +1,4 @@
-<VirtualHost *:80>
+<VirtualHost *:varPort>
    WSGIScriptAlias / varDirectory/flask_app.wsgi
    WSGIDaemonProcess flask_app user=www-data group=www-data threads=5
    WSGIProcessGroup flask_app

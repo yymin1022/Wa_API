@@ -282,6 +282,8 @@ def messageHokyu():
     	strMessage = "호규가 입대한 지 " + goneDays + "일 되었습니다."
     elif randInt == 2:
 	    strMessage = "안녕하세요? 아미타이거 육군 김호규입니다."
+    
+    return strMessage
 
 def calcByeongsa(days):
     calcValue = days % 5

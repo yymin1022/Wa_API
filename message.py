@@ -271,20 +271,20 @@ def messageHokyu():
     dateStart = datetime.date(2021,7,19)
     dateEnd = datetime.date(2023,1,18)
     dateToday = datetime.date.today()
-    strResult = ""
+    strMessage = ""
     
     leftDays = (dateEnd - dateToday).days
     goneDays = (dataToday - dateStart).days
     
     randInt = random.randrange(0, 3)
     if randInt == 0:
-    	strResult = "호규는 2021년 7월 19일 입대했습니다. 2023년 1월 18일 전역 예정입니다. " + leftDays + "일 남았습니다."
+    	strMessage = "호규는 2021년 7월 19일 입대했습니다. 2023년 1월 18일 전역 예정입니다. " + leftDays + "일 남았습니다."
     elif randInt == 1:
-    	strResult = "호규가 입대한 지 " + goneDays + "일 되었습니다."
+    	strMessage = "호규가 입대한 지 " + goneDays + "일 되었습니다."
     elif randInt == 2:
-	    strResult = "안녕하세요? 아미타이거 육군 김호규입니다."
+	    strMessage = "안녕하세요? 아미타이거 육군 김호규입니다."
     
-    return strResult
+    return strMessage
 
 def calcByeongsa(days):
     calcValue = days % 5

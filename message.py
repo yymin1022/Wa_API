@@ -8,49 +8,49 @@ def getReplyMessage(message):
     strResult = ""
 
     if "아.." in message:
-        strResult = messageAh()
+	strResult = messageAh()
     elif "응애" in message:
-        strResult = messageBaby()
+	strResult = messageBaby()
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
-        strResult = messageCoding()
+	strResult = messageCoding()
     elif ("코로나" in message or "확진자" in message) and "몇" in message:
-        strResult = messageCorona()
+	strResult = messageCorona()
     elif "뭐먹" in message:
-        strResult = messageEat()
+	strResult = messageEat()
     elif "하.." in message:
-        strResult = messageHa()
+	strResult = messageHa()
     elif "이런.." in message:
-        strResult = messageIreon()
+	strResult = messageIreon()
     elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
-        strResult = messageLaugh()
+	strResult = messageLaugh()
     elif (";" in message or "," in message) and getStressCount(message) >= 4:
-        strResult = messageStress()
+	strResult = messageStress()
     elif "무야호" in message:
-        strResult = messageMooYaHo()
+	strResult = messageMooYaHo()
     elif "꺼라" in message:
-        strResult = messageOff()
+	strResult = messageOff()
     elif "오케이" in message:
-        strResult = messageOkay()
+	strResult = messageOkay()
     elif "ㄹㅇㅋㅋ" in message:
-        strResult = messageReal()
+	strResult = messageReal()
     elif "^^7" in message:
-        strResult = messageSalute()
+	strResult = messageSalute()
     elif "나스" in message or "폴리오" in message:
-        strResult = messageSaseyo()
+	strResult = messageSaseyo()
     elif "멈춰" in message:
-        strResult = messageStop()
+	strResult = messageStop()
     elif "와.." in message:
-        strResult = messageWa()
+	strResult = messageWa()
     elif "와!" in message:
-        strResult = messageWaSans()
+	strResult = messageWaSans()
     elif "오늘" in message and "근무" in message:
-        strResult = messageWork()
+	strResult = messageWork()
     elif "용민" in message:
-        strResult = messageYongmin()
+	strResult = messageYongmin()
     elif "자라" in message:
-        strResult = messageZara()
+	strResult = messageZara()
     elif "자야" in message:
-        strResult = messageZayazi()
+	strResult = messageZayazi()
     elif "호규" in message:
     	strResult = messageHokyu()
 
@@ -79,21 +79,21 @@ def messageAh():
     strMessage = ""
 
     if randInt == 0:
-        strMessage = "글쿤.."
+	strMessage = "글쿤.."
     elif randInt == 1:
-        strMessage = "그래요.."
+	strMessage = "그래요.."
     elif randInt == 2:
-        strMessage = "그렇군요.."
+	strMessage = "그렇군요.."
     elif randInt == 3:
-        strMessage = "안돼.."
+	strMessage = "안돼.."
     elif randInt == 4:
-        strMessage = "메리카노.."
+	strMessage = "메리카노.."
     elif randInt == 5:
-        strMessage = "냄새나요;"
+	strMessage = "냄새나요;"
     elif randInt == 6:
-        strMessage = "흑우가 또.."
+	strMessage = "흑우가 또.."
     elif randInt == 7:
-        strMessage = "정신 나갈 거 같아.."
+	strMessage = "정신 나갈 거 같아.."
     
     return strMessage
 
@@ -102,11 +102,11 @@ def messageBaby():
     strMessage = ""
     
     if randInt == 0:
-        strMessage = "귀여운척 하지 마세요;;"
+	strMessage = "귀여운척 하지 마세요;;"
     elif randInt == 1:
-        strMessage = "응애 나 애기"
+	strMessage = "응애 나 애기"
     elif randInt == 2:
-        strMessage = "응애 나 코린이"
+	strMessage = "응애 나 코린이"
 
     return strMessage
 
@@ -115,9 +115,9 @@ def messageCoding():
     strMessage = ""
 
     if randInt == 0:
-        strMessage = "구라ㅡㅡ;;"
+	strMessage = "구라ㅡㅡ;;"
     elif randInt == 1:
-        strMessage = "ㅋ"
+	strMessage = "ㅋ"
 
     return strMessage
 
@@ -154,9 +154,9 @@ def messageIreon():
     strMessage = ""
 
     if randInt == 0:
-        strMessage = "안됐군요.."
+	strMessage = "안됐군요.."
     elif randInt == 1:
-        strMessage = "안타깝네요.."
+	strMessage = "안타깝네요.."
     
     return strMessage
 
@@ -200,9 +200,9 @@ def messageSaseyo():
     strMessage = ""
 
     if randInt == 0:
-        strMessage = "사세요"
+	strMessage = "사세요"
     elif randInt == 1:
-        strMessage = "안 사도 돼요"
+	strMessage = "안 사도 돼요"
 
     return strMessage
 
@@ -216,19 +216,19 @@ def messageWa():
     strMessage = ""
 
     if randInt == 0:
-        strMessage = "갑부;;"
+	strMessage = "갑부;;"
     elif randInt == 1:
-        strMessage = "기만;;"
+	strMessage = "기만;;"
     elif randInt == 2:
-        strMessage = "ㄹㅇ;;"
+	strMessage = "ㄹㅇ;;"
     elif randInt == 3:
-        strMessage = "마스터;;"
+	strMessage = "마스터;;"
     elif randInt == 4:
-        strMessage = "역시;;"
+	strMessage = "역시;;"
     elif randInt == 5:
-        strMessage = "이건 좀;;"
+	strMessage = "이건 좀;;"
     elif randInt == 6:
-        strMessage = "흑우;;"
+	strMessage = "흑우;;"
 
     return strMessage
 
@@ -252,11 +252,11 @@ def messageYongmin():
     strMessage = ""
     
     if randInt == 0:
-        strMessage = "감사합니다. MCC 상병 유용민입니다. 머슼타드일까요?"
+	strMessage = "감사합니다. MCC 상병 유용민입니다. 머슼타드일까요?"
     elif randInt == 1:
-        strMessage = "감사합니다. 체계운영실 상병 유용민입니다. 머슼타드일까요?"
+	strMessage = "감사합니다. 체계운영실 상병 유용민입니다. 머슼타드일까요?"
     elif randInt == 2:
-        strMessage = "감사합니다. 보라매 바동 1생활관 생활관장 상병 유용민입니다. 머슼타드일까요?"
+	strMessage = "감사합니다. 보라매 바동 1생활관 생활관장 상병 유용민입니다. 머슼타드일까요?"
 
     return strMessage
 
@@ -295,15 +295,15 @@ def calcByeongsa(days):
     strResult = ""
     
     if calcValue == 0:
-        strResult = "1조 2BRK\\n2조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n3조 1BRK\\n4조 MOR(07:10 ~ 12:10)\\n5조 AFT(12:00 ~ 17:50)"
+	strResult = "1조 2BRK\\n2조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n3조 1BRK\\n4조 MOR(07:10 ~ 12:10)\\n5조 AFT(12:00 ~ 17:50)"
     elif calcValue == 1:
-        strResult = "1조 MOR(07:10 ~ 12:10)\\n2조 AFT(12:00 ~ 17:50)\\n3조 2BRK\\n4조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n5조 1BRK"
+	strResult = "1조 MOR(07:10 ~ 12:10)\\n2조 AFT(12:00 ~ 17:50)\\n3조 2BRK\\n4조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n5조 1BRK"
     elif calcValue == 2:
-        strResult = "1조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n2조 1BRK\\n3조 MOR(07:10 ~ 12:10)\\n4조 AFT(12:00 ~ 17:50)\\n5조 2BRK"
+	strResult = "1조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n2조 1BRK\\n3조 MOR(07:10 ~ 12:10)\\n4조 AFT(12:00 ~ 17:50)\\n5조 2BRK"
     elif calcValue == 3:
-        strResult = "1조 AFT(12:00 ~ 17:50)\\n2조 2BRK\\n3조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n4조 1BRK\\n5조 MOR(07:10 ~ 12:10)"
+	strResult = "1조 AFT(12:00 ~ 17:50)\\n2조 2BRK\\n3조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n4조 1BRK\\n5조 MOR(07:10 ~ 12:10)"
     elif calcValue == 4:
-        strResult = "1조 1BRK\\n2조 MOR(07:10 ~ 12:10)\\n3조 AFT(12:00 ~ 17:50)\\n4조 2BRK\\n5조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)"
+	strResult = "1조 1BRK\\n2조 MOR(07:10 ~ 12:10)\\n3조 AFT(12:00 ~ 17:50)\\n4조 2BRK\\n5조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)"
     
     return strResult
 
@@ -312,20 +312,20 @@ def calcGanbu(days):
     strResult = ""
     
     if calcValue == 0:
-        strResult = "A조 S/B\\nB조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\nC조 1BRK\\nD조 1DAY(07:20 ~ 17:10)"
+	strResult = "A조 S/B\\nB조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\nC조 1BRK\\nD조 1DAY(07:20 ~ 17:10)"
     elif calcValue == 1:
-        strResult = "A조 1MID(23:20 ~ 07:30)\\nB조 2SWI(17:00 ~ 23:30)\\nC조 2BRK\\nD조 2DAY(07:20 ~ 17:10)"
+	strResult = "A조 1MID(23:20 ~ 07:30)\\nB조 2SWI(17:00 ~ 23:30)\\nC조 2BRK\\nD조 2DAY(07:20 ~ 17:10)"
     elif calcValue == 2:
-        strResult = "A조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\nB조 1BRK\\nC조 1DAY(07:20 ~ 17:10)\\nD조 S/B"
+	strResult = "A조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\nB조 1BRK\\nC조 1DAY(07:20 ~ 17:10)\\nD조 S/B"
     elif calcValue == 3:
-        strResult = "A조 2SWI(17:00 ~ 23:30)\\nB조 2BRK\\nC조 2DAY(07:20 ~ 17:10)\\nD조 1MID(23:20 ~ 07:30)"
+	strResult = "A조 2SWI(17:00 ~ 23:30)\\nB조 2BRK\\nC조 2DAY(07:20 ~ 17:10)\\nD조 1MID(23:20 ~ 07:30)"
     elif calcValue == 4:
-        strResult = "A조 1BRK\\nB조 1DAY(07:20 ~ 17:10)\\nC조 S/B\\nD조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)"
+	strResult = "A조 1BRK\\nB조 1DAY(07:20 ~ 17:10)\\nC조 S/B\\nD조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)"
     elif calcValue == 5:
-        strResult = "A조 2BRK\\nB조 2DAY(07:20 ~ 17:10)\\nC조 1MID(23:20 ~ 07:30)\\nD조 2SWI(17:00 ~ 23:30)"
+	strResult = "A조 2BRK\\nB조 2DAY(07:20 ~ 17:10)\\nC조 1MID(23:20 ~ 07:30)\\nD조 2SWI(17:00 ~ 23:30)"
     elif calcValue == 6:
-        strResult = "A조 1DAY(07:20 ~ 17:10)\\nB조 S/B\\nC조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\nD조 1BRK"
+	strResult = "A조 1DAY(07:20 ~ 17:10)\\nB조 S/B\\nC조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\nD조 1BRK"
     elif calcValue == 7:
-        strResult = "A조 2DAY(07:20 ~ 17:10)\\nB조 1MID(23:20 ~ 07:30)\\nC조 2SWI(17:00 ~ 23:30)\\nD조 2BRK"
+	strResult = "A조 2DAY(07:20 ~ 17:10)\\nB조 1MID(23:20 ~ 07:30)\\nC조 2SWI(17:00 ~ 23:30)\\nD조 2BRK"
     
     return strResult

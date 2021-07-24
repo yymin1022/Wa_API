@@ -1,5 +1,9 @@
 # Wa.. Chat Bot API
 
+[English](README.md)
+
+[한국어](README_ko.md)
+
 ## Install
 
 ```

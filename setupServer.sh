@@ -27,6 +27,7 @@ fi
 
 curDirectory=$(pwd)
 
+sudo sed -i "s|varDirectory|$curDirectory|g" $curDirectory/flash_app.wsgi
 sudo sed -i "s|varDirectory|$curDirectory|g" /etc/apache2/sites-available/000-default.conf
 sudo sed -i "s|varPort|$serverPort|g" /etc/apache2/sites-available/000-default.conf
 echo ""

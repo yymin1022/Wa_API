@@ -274,7 +274,7 @@ def messageHokyu():
     strMessage = ""
     
     leftDays = (dateEnd - dateToday).days
-    goneDays = (dataToday - dateStart).days
+    goneDays = (dateToday - dateStart).days
     
     randInt = random.randrange(0, 3)
     if randInt == 0:

@@ -92,6 +92,8 @@ def messageAh():
         strMessage = "냄새나요;"
     elif randInt == 6:
         strMessage = "흑우가 또.."
+    elif randInt == 7:
+        strMessage = "정신 나갈 거 같아.."
     
     return strMessage
 

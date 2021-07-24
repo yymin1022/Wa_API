@@ -106,3 +106,11 @@ You can check all messages on ```message.py```
 |자라|전기세 아깝다ㅡㅡ;;|
 |자야지|구라ㅡㅡ;;|
 |^^7|^^7|
+
+## Example
+
+[CAU Meal Bot on Telegram](https://github.com/yymin1022/CAU_Meal_Bot_Telegram)
+
+## Want Contribute?
+
+If you want contribute on this Bot, check ```message.py``` and write code. I will ```Merge``` the code when you register ```Pull Request``` after checking code.

@@ -4,6 +4,10 @@
 
 [한국어](README_ko.md)
 
+## Before Usage
+
+본 챗봇은 개발자(yymin1022)와 지인들이 평소에 주로 하는 대화 ~~헛소리~~ 를 대신 해주는 봇을 개발하고자 기획되었습니다. 챗봇의 언행이 일반인이 이해하기에는 다소 난해할 수 ~~어질어질할 수~~ 있으니 활용에 참고해주시기 바랍니다.
+
 ## Install
 
 ```
@@ -116,3 +120,11 @@ service apache2 start
 |자라|전기세 아깝다ㅡㅡ;;|
 |자야지|구라ㅡㅡ;;|
 |^^7|^^7|
+
+## Example
+
+[CAU Meal Bot on Telegram](https://github.com/yymin1022/CAU_Meal_Bot_Telegram)
+
+## Want Contribute?
+
+봇 제작에 참여하고자 하시는 경우, ```message.py``` 를 참고해 코드를 작성하시고, ```Pull Request```를 올려주시면 주기적으로 확인하여 올바른지 검토한 뒤 ```Merge``` 해드립니다!

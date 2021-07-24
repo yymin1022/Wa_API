@@ -3,11 +3,8 @@
 echo "Installing Requiered Packages"
 sudo apt install apache2 libapache2-mod-wsgi-py3 python3 python3-flask python3-pip -y
 
-while:
-do
-    echo "Please input Port Number for WA API Server"
-    read serverPort
-done
+echo "Please input Port Number for WA API Server"
+read serverPort
 
 if [ $serverPort = "80" ]
 then
@@ -27,7 +24,7 @@ echo "Start API Server from now? (y/n)"
 
 read doStart
 
-if [$doStart = "y"]
+if [ $doStart = "y" ]
 then
     sudo /etc/init.d/apache2 start
 else

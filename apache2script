@@ -1,9 +1,9 @@
 <VirtualHost *:80>
-   WSGIScriptAlias / $Directory/flask_app.wsgi
+   WSGIScriptAlias / varDirectory/flask_app.wsgi
    WSGIDaemonProcess flask_app user=www-data group=www-data threads=5
    WSGIProcessGroup flask_app
   
-   <Directory $Directory>
+   <Directory varDirectory>
       WSGIApplicationGroup %{GLOBAL}
       AllowOverride None
       Require all granted

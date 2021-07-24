@@ -121,7 +121,7 @@ def messageCorona():
     strTotal = divData.find_all("span", class_="num")[0].text.split(")")[1]
     strToday = divData.find_all("span", class_="before")[0].text.split(" ")[2][:-1]
 
-    strMessage = "어제 %s명\\n\\n누적 %s명\\n\\n%s"%(strToday, strTotal, strDate)
+    strMessage = "어제 %s명\\n누적 %s명\\n%s"%(strToday, strTotal, strDate)
 
     return strMessage
 
@@ -215,7 +215,7 @@ def messageWa():
     return strMessage
 
 def messageWaSans():
-    strMessage = "샌즈!\\m\\m아시는구나!\\m\\m이거 겁.나.어.렵.습.니.다."
+    strMessage = "샌즈!\\m아시는구나!\\m이거 겁.나.어.렵.습.니.다."
 
     return strMessage
 
@@ -225,7 +225,7 @@ def messageWork():
     
     countDays = (dateToday - dateStart).days
 
-    strMessage = "병사\\n\\n%s\\n\\n\\n\\n간부\\n\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
+    strMessage = "병사\\n%s\\n\\n간부\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
 
     return strMessage
 
@@ -257,15 +257,15 @@ def calcByeongsa(days):
     strResult = ""
     
     if calcValue == 0:
-        strResult = "1조 2BRK\\n\\n2조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n\\n3조 1BRK\\n\\n4조 MOR(07:10 ~ 12:10)\\n\\n5조 AFT(12:00 ~ 17:50)"
+        strResult = "1조 2BRK\\n2조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n3조 1BRK\\n4조 MOR(07:10 ~ 12:10)\\n5조 AFT(12:00 ~ 17:50)"
     elif calcValue == 1:
-        strResult = "1조 MOR(07:10 ~ 12:10)\\n\\n2조 AFT(12:00 ~ 17:50)\\n\\n3조 2BRK\\n\\n4조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n\\n5조 1BRK"
+        strResult = "1조 MOR(07:10 ~ 12:10)\\n2조 AFT(12:00 ~ 17:50)\\n3조 2BRK\\n4조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n5조 1BRK"
     elif calcValue == 2:
-        strResult = "1조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n\\n2조 1BRK\\n\\n3조 MOR(07:10 ~ 12:10)\\n\\n4조 AFT(12:00 ~ 17:50)\\n\\n5조 2BRK"
+        strResult = "1조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n2조 1BRK\\n3조 MOR(07:10 ~ 12:10)\\n4조 AFT(12:00 ~ 17:50)\\n5조 2BRK"
     elif calcValue == 3:
-        strResult = "1조 AFT(12:00 ~ 17:50)\\n\\n2조 2BRK\\n\\n3조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n\\n4조 1BRK\\n\\n5조 MOR(07:10 ~ 12:10)"
+        strResult = "1조 AFT(12:00 ~ 17:50)\\n2조 2BRK\\n3조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n4조 1BRK\\n5조 MOR(07:10 ~ 12:10)"
     elif calcValue == 4:
-        strResult = "1조 1BRK\\n\\n2조 MOR(07:10 ~ 12:10)\\n\\n3조 AFT(12:00 ~ 17:50)\\n\\n4조 2BRK\\n\\n5조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)"
+        strResult = "1조 1BRK\\n2조 MOR(07:10 ~ 12:10)\\n3조 AFT(12:00 ~ 17:50)\\n4조 2BRK\\n5조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)"
     
     return strResult
 
@@ -274,20 +274,20 @@ def calcGanbu(days):
     strResult = ""
     
     if calcValue == 0:
-        strResult = "A조 S/B\\n\\nB조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\n\\nC조 1BRK\\n\\nD조 1DAY(07:20 ~ 17:10)"
+        strResult = "A조 S/B\\nB조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\nC조 1BRK\\nD조 1DAY(07:20 ~ 17:10)"
     elif calcValue == 1:
-        strResult = "A조 1MID(23:20 ~ 07:30)\\n\\nB조 2SWI(17:00 ~ 23:30)\\n\\nC조 2BRK\\n\\nD조 2DAY(07:20 ~ 17:10)"
+        strResult = "A조 1MID(23:20 ~ 07:30)\\nB조 2SWI(17:00 ~ 23:30)\\nC조 2BRK\\nD조 2DAY(07:20 ~ 17:10)"
     elif calcValue == 2:
-        strResult = "A조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\n\\nB조 1BRK\\n\\nC조 1DAY(07:20 ~ 17:10)\\n\\nD조 S/B"
+        strResult = "A조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\nB조 1BRK\\nC조 1DAY(07:20 ~ 17:10)\\nD조 S/B"
     elif calcValue == 3:
-        strResult = "A조 2SWI(17:00 ~ 23:30)\\n\\nB조 2BRK\\n\\nC조 2DAY(07:20 ~ 17:10)\\n\\nD조 1MID(23:20 ~ 07:30)"
+        strResult = "A조 2SWI(17:00 ~ 23:30)\\nB조 2BRK\\nC조 2DAY(07:20 ~ 17:10)\\nD조 1MID(23:20 ~ 07:30)"
     elif calcValue == 4:
-        strResult = "A조 1BRK\\n\\nB조 1DAY(07:20 ~ 17:10)\\n\\nC조 S/B\\n\\nD조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)"
+        strResult = "A조 1BRK\\nB조 1DAY(07:20 ~ 17:10)\\nC조 S/B\\nD조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)"
     elif calcValue == 5:
-        strResult = "A조 2BRK\\n\\nB조 2DAY(07:20 ~ 17:10)\\n\\nC조 1MID(23:20 ~ 07:30)\\n\\nD조 2SWI(17:00 ~ 23:30)"
+        strResult = "A조 2BRK\\nB조 2DAY(07:20 ~ 17:10)\\nC조 1MID(23:20 ~ 07:30)\\nD조 2SWI(17:00 ~ 23:30)"
     elif calcValue == 6:
-        strResult = "A조 1DAY(07:20 ~ 17:10)\\n\\nB조 S/B\\n\\nC조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\n\\nD조 1BRK"
+        strResult = "A조 1DAY(07:20 ~ 17:10)\\nB조 S/B\\nC조 2MID(23:20 ~ 07:30)/1SWI(17:00 ~ 23:30)\\nD조 1BRK"
     elif calcValue == 7:
-        strResult = "A조 2DAY(07:20 ~ 17:10)\\n\\nB조 1MID(23:20 ~ 07:30)\\n\\nC조 2SWI(17:00 ~ 23:30)\\n\\nD조 2BRK"
+        strResult = "A조 2DAY(07:20 ~ 17:10)\\nB조 1MID(23:20 ~ 07:30)\\nC조 2SWI(17:00 ~ 23:30)\\nD조 2BRK"
     
     return strResult

@@ -23,6 +23,8 @@ def getReplyMessage(message):
         strResult = messageIreon()
     elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
         strResult = messageLaugh()
+    elif (";" in message or "," in message) and getStressCount(message) >= 4:
+        strResult = messageStress()
     elif "무야호" in message:
         strResult = messageMooYaHo()
     elif "꺼라" in message:
@@ -59,6 +61,14 @@ def getLaughCount(message):
     count += message.count("ㄴ")
     count += message.count("ㅌ")
     count += message.count("ㅎ")
+
+    return count
+
+def getStressCount(message):
+    count = message.count(";")
+    count += message.count(":")
+    count += message.count(",")
+    count += message.count(".")
 
     return count
 
@@ -151,6 +161,10 @@ def messageLaugh():
 
     return strMessage
 
+def messageStress():
+    strMessage = "어림도 없지"
+
+    return strMessage
 
 def messageMooYaHo():
     strMessage = "그만큼 신나신다는거지~"

@@ -54,7 +54,7 @@ def getReplyMessage(message):
     elif "호규" in message:
         strResult = messageHokyu()
     elif "배고파" in message:
-    	strResult = messageHungry()
+        strResult = messageHungry()
 
     return strResult
 
@@ -295,13 +295,15 @@ def messageHokyu():
 def messageHungry():
     strMessage = ""
     
-    randInt = random.randrange(0, 3)
+    randInt = random.randrange(0, 4)
     if randInt == 0:
     	strMessage = "돼지"
     elif randInt == 1:
     	strMessage = "또 먹어?"
     elif randInt == 2:
     	strMessage = "살쪄"
+    elif randInt == 3:
+    	strMessage = "그만 먹어;;"
     	
     return strMessage
 

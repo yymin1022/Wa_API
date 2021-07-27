@@ -53,6 +53,8 @@ def getReplyMessage(message):
         strResult = messageZayazi()
     elif "호규" in message:
         strResult = messageHokyu()
+    elif "배고파" in message:
+    	strResult = messageHungry()
 
     return strResult
 
@@ -288,6 +290,19 @@ def messageHokyu():
     elif randInt == 3:
         strMessage = "응애 나 애기 호규."
     
+    return strMessage
+
+def messageHungry():
+    strMessage = ""
+    
+    randInt = random.randrange(0, 3)
+    if randInt == 0:
+    	strMessage = "돼지"
+    elif randInt == 1:
+    	strMessage = "또 먹어?"
+    elif randInt == 2:
+    	strMessage = "살쪄"
+    	
     return strMessage
 
 def calcByeongsa(days):

@@ -278,15 +278,17 @@ def messageHokyu():
     leftDays = (dateEnd - dateToday).days
     goneDays = (dateToday - dateStart).days
     
-    randInt = random.randrange(0, 4)
+    randInt = random.randrange(0, 2)
     if randInt == 0:
-        strMessage = "호규는 2021년 7월 19일 입대했습니다. 2023년 1월 18일 전역 예정입니다. %d일 남았습니다."%(leftDays)
-    elif randInt == 1:
-        strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
-    elif randInt == 2:
         strMessage = "안녕하세요? 아미타이거 육군 김호규입니다."
-    elif randInt == 3:
+    elif randInt == 1:
         strMessage = "응애 나 애기 호규."
+        
+# 입대 시 변경 바람
+#    elif randInt == 2:
+#        strMessage = "호규는 2021년 7월 19일 입대했습니다. 2023년 1월 18일 전역 예정입니다. %d일 남았습니다."%(leftDays)
+#    elif randInt == 3:
+#        strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
     
     return strMessage
 

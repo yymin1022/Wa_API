@@ -94,8 +94,6 @@ Returned RESULT_MSG can include Two types of Line-Breaking Character, that is ``
 
 <img src="/README_IMG/WaSans.jpg" width="50%" />
 
----
-
 ## API Example
 
 These Eamples are just a part of API.

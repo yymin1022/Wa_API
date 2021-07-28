@@ -100,7 +100,7 @@ service apache2 start
 
 ---
 
-## API Instruction
+## API Example
 
 아래 예시는 응답 가능한 메시지의 일부입니다.
 

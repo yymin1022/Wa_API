@@ -86,7 +86,7 @@ And then API Return Data is like this.
 |100|Message that Wa.. API does not support|
 |200|Other Error. Check RESULT_MSG|
 
-## API Instruction
+## API Example
 
 These Eamples are just a part of API.
 

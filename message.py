@@ -19,12 +19,14 @@ def getReplyMessage(message):
         strResult = messageEat()
     elif "하.." in message:
         strResult = messageHa()
+    elif "호규" in message:
+        strResult = messageHokyu()
+    elif "배고파" in message:
+        strResult = messageHungry()
     elif "이런.." in message:
         strResult = messageIreon()
     elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
         strResult = messageLaugh()
-    elif (";" in message or "," in message) and getStressCount(message) >= 4:
-        strResult = messageStress()
     elif "무야호" in message:
         strResult = messageMooYaHo()
     elif "꺼라" in message:
@@ -39,6 +41,8 @@ def getReplyMessage(message):
         strResult = messageSaseyo()
     elif "멈춰" in message:
         strResult = messageStop()
+    elif (";" in message or "," in message) and getStressCount(message) >= 4:
+        strResult = messageStress()
     elif "와.." in message:
         strResult = messageWa()
     elif "와!" in message:
@@ -51,10 +55,6 @@ def getReplyMessage(message):
         strResult = messageZara()
     elif "자야" in message:
         strResult = messageZayazi()
-    elif "호규" in message:
-        strResult = messageHokyu()
-    elif "배고파" in message:
-        strResult = messageHungry()
 
     return strResult
 
@@ -150,6 +150,44 @@ def messageHa():
     strMessage = "코딩하기 싫다.."
 
     return strMessage
+    
+def messageHokyu():
+    dateStart = datetime.date(2021,7,19)
+    dateEnd = datetime.date(2023,1,18)
+    dateToday = datetime.date.today()
+    strMessage = ""
+    
+    leftDays = (dateEnd - dateToday).days
+    goneDays = (dateToday - dateStart).days
+    
+    randInt = random.randrange(0, 2)
+    if randInt == 0:
+        strMessage = "안녕하세요? 아미타이거 육군 김호규입니다."
+    elif randInt == 1:
+        strMessage = "응애 나 애기 호규."
+        
+# 입대 시 변경 바람
+#    elif randInt == 2:
+#        strMessage = "호규는 2021년 7월 19일 입대했습니다. 2023년 1월 18일 전역 예정입니다. %d일 남았습니다."%(leftDays)
+#    elif randInt == 3:
+#        strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
+    
+    return strMessage
+
+def messageHungry():
+    strMessage = ""
+    
+    randInt = random.randrange(0, 4)
+    if randInt == 0:
+    	strMessage = "돼지"
+    elif randInt == 1:
+    	strMessage = "또 먹어?"
+    elif randInt == 2:
+    	strMessage = "살쪄"
+    elif randInt == 3:
+    	strMessage = "그만 먹어;;"
+    	
+    return strMessage
 
 def messageIreon():
     randInt = random.randrange(0, 2)
@@ -164,11 +202,6 @@ def messageIreon():
 
 def messageLaugh():
     strMessage = "뭘 웃어요;;"
-
-    return strMessage
-
-def messageStress():
-    strMessage = "어림도 없지"
 
     return strMessage
 
@@ -210,6 +243,11 @@ def messageSaseyo():
 
 def messageStop():
     strMessage = "멈춰!!"
+
+    return strMessage
+
+def messageStress():
+    strMessage = "어림도 없지"
 
     return strMessage
 
@@ -271,44 +309,6 @@ def messageZara():
 def messageZayazi():
     strMessage = "구라ㅡㅡ;;"
 
-    return strMessage
-    
-def messageHokyu():
-    dateStart = datetime.date(2021,7,19)
-    dateEnd = datetime.date(2023,1,18)
-    dateToday = datetime.date.today()
-    strMessage = ""
-    
-    leftDays = (dateEnd - dateToday).days
-    goneDays = (dateToday - dateStart).days
-    
-    randInt = random.randrange(0, 2)
-    if randInt == 0:
-        strMessage = "안녕하세요? 아미타이거 육군 김호규입니다."
-    elif randInt == 1:
-        strMessage = "응애 나 애기 호규."
-        
-# 입대 시 변경 바람
-#    elif randInt == 2:
-#        strMessage = "호규는 2021년 7월 19일 입대했습니다. 2023년 1월 18일 전역 예정입니다. %d일 남았습니다."%(leftDays)
-#    elif randInt == 3:
-#        strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
-    
-    return strMessage
-
-def messageHungry():
-    strMessage = ""
-    
-    randInt = random.randrange(0, 4)
-    if randInt == 0:
-    	strMessage = "돼지"
-    elif randInt == 1:
-    	strMessage = "또 먹어?"
-    elif randInt == 2:
-    	strMessage = "살쪄"
-    elif randInt == 3:
-    	strMessage = "그만 먹어;;"
-    	
     return strMessage
 
 def calcByeongsa(days):

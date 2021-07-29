@@ -268,7 +268,7 @@ def messageShuk():
     randInt = random.randrange(0, 5)
     strMessage = ""
     
-    while randInt != 5:
+    while randInt != 4:
         if randInt == 0:
             strMessage += "슉.슈슉.시.발럼."
         elif randInt == 1:

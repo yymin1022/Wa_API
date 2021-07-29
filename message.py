@@ -179,15 +179,19 @@ def messageHokyu():
     leftDays = (dateEnd - dateToday).days
     goneDays = (dateToday - dateStart).days
     
-    randInt = random.randrange(0, 4)
+    randInt = random.randrange(0, 6)
     if randInt == 0:
-        strMessage = "안녕하십니까? 아미타이거 육군 김호규입니다."
+        strMessage = "안녕하세요? 아미타이거 육군 김호규일까요?"
     elif randInt == 1:
         strMessage = "응애 나 애기 호규."
     elif randInt == 2:
         strMessage = "돔황챠!"
     elif randInt == 3:
         strMessage = "안녕하세요? 민간인 김호규입니다."
+    elif randInt == 4:
+        strMessage = "팬택 핥짝"
+    elif randInt == 5:
+        strMessage = "베가 핥짝 핥짝"
         
 # 입대 시 변경 바람
 #    elif randInt == 2:

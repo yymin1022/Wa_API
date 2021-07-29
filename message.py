@@ -17,6 +17,8 @@ def getReplyMessage(message):
         strResult = messageCorona()
     elif "뭐먹" in message:
         strResult = messageEat()
+    elif ("제발" in message or "하고 싶다" in message) and "졸업" in message:
+        strResult = messageGraduate()
     elif "하.." in message:
         strResult = messageHa()
     elif "호규" in message:
@@ -144,6 +146,14 @@ def messageCorona():
 def messageEat():
     strMessage = "고기!!"
 
+    return strMessage
+
+def messageGraduate():
+    strMessage = ""
+    strElement = ["대학원 가셔야죠 ㅋㅋ", "졸업은 무슨", "노예 하셔야죠 ㅋㅋ", "어림도 없지"]
+    randInt = random.randrange(0, 4)
+    strMessage = strElement[randInt]
+    
     return strMessage
 
 def messageHa():

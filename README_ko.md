@@ -106,8 +106,6 @@ RESULT_MSG로 반환된 메시지 내용을 채팅으로 반환할 때, ```\\m``
 
 <img src="/README_IMG/WaSans.jpg" width="50%" />
 
----
-
 ## API Example
 
 아래 예시는 응답 가능한 메시지의 일부입니다.

@@ -86,6 +86,14 @@ And then API Return Data is like this.
 |100|Message that Wa.. API does not support|
 |200|Other Error. Check RESULT_MSG|
 
+---
+
+Returned RESULT_MSG can include Two types of Line-Breaking Character, that is ```\\m``` and ```\\n```.
+
+```\\n``` is Line-Breaking in One Message, and ```\\m``` is Splited Message with Line-Breaking.
+
+<img src="/README_IMG/WaSans.jpg" width="50%" />
+
 ## API Example
 
 These Eamples are just a part of API.

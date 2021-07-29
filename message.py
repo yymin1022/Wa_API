@@ -265,7 +265,7 @@ def messageSaseyo():
     return strMessage
 
 def messageShuk():
-    randInt = random.randrange(0, 5)
+    randInt = random.randrange(0, 4)
     strMessage = ""
     
     while randInt != 4:
@@ -277,6 +277,8 @@ def messageShuk():
             strMessage = strMessage + "슈발놈아.슉.시발.슈슉.슉."
         elif randInt == 3:
             strMessage = strMessage + "슈슉.시발.럼아.슉.슈슉.슉.슉슉.슈슉.시.발놈아."
+        
+        randInt = random.randrange(0, 5)
 
     return strMessage
 

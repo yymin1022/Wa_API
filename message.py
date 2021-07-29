@@ -151,11 +151,18 @@ def messageEat():
     return strMessage
 
 def messageGraduate():
-    strMessage = ""
-    strElement = ["대학원 가셔야죠 ㅋㅋ", "졸업은 무슨", "노예 하셔야죠 ㅋㅋ", "어림도 없지"]
     randInt = random.randrange(0, 4)
-    strMessage = strElement[randInt]
+    strMessage = ""
     
+    if randInt == 0:
+        strMessage = "대학원 가셔야죠 ㅋㅋ"
+    elif randInt == 1:
+        strMessage = "졸업은 무슨"
+    elif randInt == 2:
+        strMessage = "노예 하셔야죠 ㅋㅋ"
+    elif randInt == 3:
+        strMessage = "어림도 없지"
+
     return strMessage
 
 def messageHa():
@@ -258,17 +265,18 @@ def messageSaseyo():
     return strMessage
 
 def messageShuk():
-    randInt = random.randrange(0, 4)
+    randInt = random.randrange(0, 5)
     strMessage = ""
     
-    if randInt == 0:
-        strMessage = "슉.슈슉.시.발럼"
-    elif randInt == 1:
-        strMessage = "슈슉.슉.슉시."
-    elif randInt == 2:
-        strMessage = "슈발놈아.슉.시발.슈슉.슉"
-    elif randInt == 3:
-        strMessage = "슈슉.시발.럼아.슉.슈슉.슉.슉슉.슈슉.시.발놈아"
+    while randInt != 5:
+        if randInt == 0:
+            strMessage += "슉.슈슉.시.발럼."
+        elif randInt == 1:
+            strMessage += "슈슉.슉.슉시."
+        elif randInt == 2:
+            strMessage += "슈발놈아.슉.시발.슈슉.슉."
+        elif randInt == 3:
+            strMessage += "슈슉.시발.럼아.슉.슈슉.슉.슉슉.슈슉.시.발놈아."
 
     return strMessage
 

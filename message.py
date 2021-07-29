@@ -270,13 +270,13 @@ def messageShuk():
     
     while randInt != 4:
         if randInt == 0:
-            strMessage += "슉.슈슉.시.발럼."
+            strMessage = strMessage + "슉.슈슉.시.발럼."
         elif randInt == 1:
-            strMessage += "슈슉.슉.슉시."
+            strMessage = strMessage + "슈슉.슉.슉시."
         elif randInt == 2:
-            strMessage += "슈발놈아.슉.시발.슈슉.슉."
+            strMessage = strMessage + "슈발놈아.슉.시발.슈슉.슉."
         elif randInt == 3:
-            strMessage += "슈슉.시발.럼아.슉.슈슉.슉.슉슉.슈슉.시.발놈아."
+            strMessage = strMessage + "슈슉.시발.럼아.슉.슈슉.슉.슉슉.슈슉.시.발놈아."
 
     return strMessage
 

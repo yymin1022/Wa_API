@@ -171,15 +171,17 @@ def messageHa():
     return strMessage
     
 def messageHokyu():
-    dateStart = datetime.date(2021,7,19)
-    dateEnd = datetime.date(2023,1,18)
-    dateToday = datetime.date.today()
+# 입대 시 주석 해제 바람
+#    dateStart = datetime.date(2021,7,19)
+#    dateEnd = datetime.date(2023,1,18)
+#    dateToday = datetime.date.today()
     strMessage = ""
+
+# 입대 시 주석 해제 바람
+#    leftDays = (dateEnd - dateToday).days
+#    goneDays = (dateToday - dateStart).days
     
-    leftDays = (dateEnd - dateToday).days
-    goneDays = (dateToday - dateStart).days
-    
-    randInt = random.randrange(0, 6)
+    randInt = random.randrange(0, 8)
     if randInt == 0:
         strMessage = "안녕하세요? 아미타이거 육군 김호규일까요?"
     elif randInt == 1:
@@ -192,8 +194,12 @@ def messageHokyu():
         strMessage = "팬택 핥짝"
     elif randInt == 5:
         strMessage = "베가 핥짝 핥짝"
+    elif randInt == 6:
+        strMessage = "호구"
+    elif randInt == 7:
+        strMessage = "제온 ES 하쉴?"
         
-# 입대 시 변경 바람
+# 입대 시 주석 해제 바람
 #    elif randInt == 2:
 #        strMessage = "호규는 2021년 7월 19일 입대했습니다. 2023년 1월 18일 전역 예정입니다. %d일 남았습니다."%(leftDays)
 #    elif randInt == 3:

@@ -100,8 +100,6 @@ def messageAh():
         strMessage = "흑우가 또.."
     elif randInt == 7:
         strMessage = "정신 나갈 거 같애.."
-    elif randInt == 8:
-        strMessage = "그님은 가셨습니다.."
     
     return strMessage
 
@@ -233,7 +231,7 @@ def messageIreon():
     elif randInt == 1:
         strMessage = "안타깝네요.."
     elif randInt == 2:
-        strMessage = "눈물나네요.."
+        strMessage = "눈물이 납니다.."
     elif randInt == 3:
         strMessage = "유감입니다.."
     elif randInt == 4:

@@ -81,7 +81,7 @@ def getStressCount(message):
     return count
 
 def messageAh():
-    randInt = random.randrange(0, 8)
+    randInt = random.randrange(0, 9)
     strMessage = ""
 
     if randInt == 0:
@@ -100,6 +100,8 @@ def messageAh():
         strMessage = "흑우가 또.."
     elif randInt == 7:
         strMessage = "정신 나갈 거 같애.."
+    elif randInt == 8:
+        strMessage = "그님은 가셨습니다.."
     
     return strMessage
 
@@ -223,13 +225,19 @@ def messageHungry():
     return strMessage
 
 def messageIreon():
-    randInt = random.randrange(0, 2)
+    randInt = random.randrange(0, 5)
     strMessage = ""
 
     if randInt == 0:
         strMessage = "안됐군요.."
     elif randInt == 1:
         strMessage = "안타깝네요.."
+    elif randInt == 2:
+        strMessage = "눈물나네요.."
+    elif randInt == 3:
+        strMessage = "유감입니다.."
+    elif randInt == 4:
+        strMessage = "불쌍하네요.."
     
     return strMessage
 
@@ -305,7 +313,7 @@ def messageStress():
     return strMessage
 
 def messageWa():
-    randInt = random.randrange(0, 9)
+    randInt = random.randrange(0, 10)
     strMessage = ""
 
     if randInt == 0:
@@ -326,6 +334,8 @@ def messageWa():
         strMessage = "돼지;;"
     elif randInt == 8:
         strMessage = "노답;;"
+    elif randInt == 9:
+        strMessage = "극혐;;"
 
     return strMessage
 

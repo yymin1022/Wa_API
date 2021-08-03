@@ -81,7 +81,7 @@ def getStressCount(message):
     return count
 
 def messageAh():
-    randInt = random.randrange(0, 9)
+    randInt = random.randrange(0, 8)
     strMessage = ""
 
     if randInt == 0:
@@ -311,7 +311,7 @@ def messageStress():
     return strMessage
 
 def messageWa():
-    randInt = random.randrange(0, 10)
+    randInt = random.randrange(0, 7)
     strMessage = ""
 
     if randInt == 0:

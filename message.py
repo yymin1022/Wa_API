@@ -81,7 +81,7 @@ def getStressCount(message):
     return count
 
 def messageAh():
-    randInt = random.randrange(0, 8)
+    randInt = random.randrange(0, 9)
     strMessage = ""
 
     if randInt == 0:
@@ -100,6 +100,8 @@ def messageAh():
         strMessage = "흑우가 또.."
     elif randInt == 7:
         strMessage = "정신 나갈 거 같애.."
+    elif randInt == 8:
+        strMessage = "그님은 가셨습니다.."
     
     return strMessage
 
@@ -161,7 +163,7 @@ def messageGraduate():
     elif randInt == 2:
         strMessage = "노예 하셔야죠 ㅋㅋ"
     elif randInt == 3:
-        strMessage = "어림도 없지"
+        strMessage = "어림도 없지 ㅋㅋ"
 
     return strMessage
 
@@ -171,15 +173,17 @@ def messageHa():
     return strMessage
     
 def messageHokyu():
-    dateStart = datetime.date(2021,7,19)
-    dateEnd = datetime.date(2023,1,18)
-    dateToday = datetime.date.today()
+# 입대 시 주석 해제 바람
+#    dateStart = datetime.date(2021,7,19)
+#    dateEnd = datetime.date(2023,1,18)
+#    dateToday = datetime.date.today()
     strMessage = ""
+
+# 입대 시 주석 해제 바람
+#    leftDays = (dateEnd - dateToday).days
+#    goneDays = (dateToday - dateStart).days
     
-    leftDays = (dateEnd - dateToday).days
-    goneDays = (dateToday - dateStart).days
-    
-    randInt = random.randrange(0, 6)
+    randInt = random.randrange(0, 8)
     if randInt == 0:
         strMessage = "안녕하세요? 아미타이거 육군 김호규일까요?"
     elif randInt == 1:
@@ -192,8 +196,12 @@ def messageHokyu():
         strMessage = "팬택 핥짝"
     elif randInt == 5:
         strMessage = "베가 핥짝 핥짝"
+    elif randInt == 6:
+        strMessage = "호구"
+    elif randInt == 7:
+        strMessage = "제온 ES 하쉴?"
         
-# 입대 시 변경 바람
+# 입대 시 주석 해제 바람
 #    elif randInt == 2:
 #        strMessage = "호규는 2021년 7월 19일 입대했습니다. 2023년 1월 18일 전역 예정입니다. %d일 남았습니다."%(leftDays)
 #    elif randInt == 3:
@@ -217,13 +225,19 @@ def messageHungry():
     return strMessage
 
 def messageIreon():
-    randInt = random.randrange(0, 2)
+    randInt = random.randrange(0, 5)
     strMessage = ""
 
     if randInt == 0:
         strMessage = "안됐군요.."
     elif randInt == 1:
         strMessage = "안타깝네요.."
+    elif randInt == 2:
+        strMessage = "눈물나네요.."
+    elif randInt == 3:
+        strMessage = "유감입니다.."
+    elif randInt == 4:
+        strMessage = "불쌍하네요.."
     
     return strMessage
 
@@ -299,7 +313,7 @@ def messageStress():
     return strMessage
 
 def messageWa():
-    randInt = random.randrange(0, 8)
+    randInt = random.randrange(0, 10)
     strMessage = ""
 
     if randInt == 0:
@@ -318,6 +332,10 @@ def messageWa():
         strMessage = "흑우;;"
     elif randInt == 7:
         strMessage = "돼지;;"
+    elif randInt == 8:
+        strMessage = "노답;;"
+    elif randInt == 9:
+        strMessage = "극혐;;"
 
     return strMessage
 

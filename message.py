@@ -329,12 +329,6 @@ def messageWa():
     elif randInt == 5:
         strMessage = "이건 좀;;"
     elif randInt == 6:
-        strMessage = "흑우;;"
-    elif randInt == 7:
-        strMessage = "돼지;;"
-    elif randInt == 8:
-        strMessage = "노답;;"
-    elif randInt == 9:
         strMessage = "극혐;;"
 
     return strMessage

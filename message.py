@@ -161,7 +161,7 @@ def messageGraduate():
     elif randInt == 2:
         strMessage = "노예 하셔야죠 ㅋㅋ"
     elif randInt == 3:
-        strMessage = "어림도 없지"
+        strMessage = "어림도 없지 ㅋㅋ"
 
     return strMessage
 
@@ -305,7 +305,7 @@ def messageStress():
     return strMessage
 
 def messageWa():
-    randInt = random.randrange(0, 8)
+    randInt = random.randrange(0, 9)
     strMessage = ""
 
     if randInt == 0:
@@ -324,6 +324,8 @@ def messageWa():
         strMessage = "흑우;;"
     elif randInt == 7:
         strMessage = "돼지;;"
+    elif randInt == 8:
+        strMessage = "노답;;"
 
     return strMessage
 

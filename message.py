@@ -307,9 +307,9 @@ def messageSleepy():
     strMessage = ""
     
     if randInt == 0:
-        strMessage = "자세요;"
+        strMessage = "자라;;"
     elif randInt == 1:
-        strMessage = "구라;"
+        strMessage = "구라;;"
     
     return strMessage
 

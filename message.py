@@ -43,6 +43,8 @@ def getReplyMessage(message):
         strResult = messageSaseyo()
     elif "슉" in message or "슈슉" in message:
         strResult = messageShuk()
+    elif "졸려" in message or "잠와" in message or "피곤해" in message:
+        strResult = messageSleepy()
     elif "멈춰" in message:
         strResult = messageStop()
     elif (";" in message or "," in message) and getStressCount(message) >= 4:
@@ -298,6 +300,17 @@ def messageShuk():
 
     strMessage += ".슉"
 
+    return strMessage
+
+def messageSleepy():
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+    
+    if randInt == 0:
+        strMessage = "자세요;"
+    elif randInt == 1:
+        strMessage = "구라;"
+    
     return strMessage
 
 def messageStop():

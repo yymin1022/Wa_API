@@ -54,7 +54,9 @@ def getReplyMessage(message):
     elif "와!" in message:
         strResult = messageWaSans()
     elif "오늘" in message and "근무" in message:
-        strResult = messageWork()
+        strResult = messageWorkToday()
+    elif "내일" in message and "근무" in message:
+        strResult = messageWorkTomorrow()
     elif "용민" in message:
         strResult = messageYongmin()
     elif "자라" in message:
@@ -349,9 +351,19 @@ def messageWaSans():
 
     return strMessage
 
-def messageWork():
+def messageWorkToday():
     dateStart = datetime.date(2021,3,1)
     dateToday = datetime.date.today()
+    
+    countDays = (dateToday - dateStart).days
+
+    strMessage = "병사\\n%s\\n\\n간부\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
+
+    return strMessage
+
+def messageWorkTomorrow():
+    dateStart = datetime.date(2021,3,1)
+    dateToday = datetime.date.today() + datetime.timedelta(days=1)
     
     countDays = (dateToday - dateStart).days
 

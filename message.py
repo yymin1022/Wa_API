@@ -370,7 +370,10 @@ def messageWorkTomorrow():
     
     countDays = (dateToday - dateStart).days
 
-    strMessage = "병사\\n%s\\n\\n간부\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
+    patternByeongsa = "MOR-MID/SWI-AFT-BRK-BRK"
+    patternGanbu = "DAY-DAY-S/B-MID-MID/SWI-SWI-BRK-BRK"
+
+    strMessage = "병사(%s)\\n%s\\n\\n간부(%s)\\n%s"%(patternByeongsa, calcByeongsa(countDays), patternGanbu, calcGanbu(countDays))
 
     return strMessage
 

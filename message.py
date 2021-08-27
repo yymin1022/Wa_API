@@ -415,7 +415,7 @@ def messageYongminGraduate():
         dateGraduate = datetime.date(2022,7,12)
         dateToday = datetime.date.today()
         
-        countDays = (dateGraduate - dateToday).days
+        countDays = (dateGraduate - dateToday).days - 1
         strMessage = "전역까지 %d일 남았습니다."%(countDays)
 
     return strMessage

@@ -89,7 +89,7 @@ def getStressCount(message):
     return count
 
 def messageAh():
-    randInt = random.randrange(0, 8)
+    randInt = random.randrange(0, 6)
     strMessage = ""
 
     if randInt == 0:
@@ -103,11 +103,7 @@ def messageAh():
     elif randInt == 4:
         strMessage = "메리카노.."
     elif randInt == 5:
-        strMessage = "냄새나요;"
-    elif randInt == 6:
-        strMessage = "흑우가 또.."
-    elif randInt == 7:
-        strMessage = "정신 나갈 거 같애.."
+        strMessage = "에이오우.."
     
     return strMessage
 

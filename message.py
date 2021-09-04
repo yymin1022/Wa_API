@@ -35,6 +35,8 @@ def getReplyMessage(message):
         strResult = messageMooYaHo()
     elif "꺼라" in message:
         strResult = messageOff()
+    elif "오.." in message:
+        strResult = messageOh()
     elif "오케이" in message:
         strResult = messageOkay()
     elif "ㄹㅇㅋㅋ" in message:
@@ -271,6 +273,17 @@ def messageMooYaHo():
 def messageOff():
     strMessage = "전기세 아깝다ㅡㅡ;;"
 
+    return strMessage
+
+def messageOh():
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "..레오"
+    elif randInt == 1:
+        strMessage = "..렌지쥬스"
+    
     return strMessage
 
 def messageOkay():

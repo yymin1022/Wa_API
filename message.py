@@ -103,9 +103,9 @@ def messageAh():
     elif randInt == 3:
         strMessage = "안돼.."
     elif randInt == 4:
-        strMessage = "메리카노.."
+        strMessage = "..메리카노"
     elif randInt == 5:
-        strMessage = "에이오우.."
+        strMessage = "..에이오우"
     
     return strMessage
 

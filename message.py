@@ -11,6 +11,8 @@ def getReplyMessage(message):
         strResult = messageAh()
     elif "응애" in message:
         strResult = messageBaby()
+    elif "불편" in message:
+        strResult = messageBoolpyeon()
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
     elif ("코로나" in message or "확진자" in message) and "몇" in message:
@@ -119,6 +121,11 @@ def messageBaby():
         strMessage = "응애 나 애기"
     elif randInt == 2:
         strMessage = "응애 나 코린이"
+
+    return strMessage
+
+def messageBoolpyeon():
+    strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불퍈하니깐 그런거아냐!"
 
     return strMessage
 

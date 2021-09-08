@@ -363,13 +363,15 @@ def messageStress():
     return strMessage
 
 def messageUh():
-    randInt = random.randrange(0, 2)
+    randInt = random.randrange(0, 3)
     strMessage = ""
 
     if randInt == 0:
         strMessage = "..이가없네;;"
     elif randInt == 1:
         strMessage = "..피치"
+    elif randInt == 2:
+        strMessage = "..어..엄준식!!!"
 
     return strMessage
 

@@ -371,7 +371,7 @@ def messageUh():
     elif randInt == 1:
         strMessage = "..피치"
     elif randInt == 2:
-        strMessage = "..어..엄준식!!!"
+        strMessage = "..기여차"
 
     return strMessage
 

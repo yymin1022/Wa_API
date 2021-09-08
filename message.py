@@ -53,7 +53,7 @@ def getReplyMessage(message):
         strResult = messageSleepy()
     elif "멈춰" in message:
         strResult = messageStop()
-    elif (";" in message or "," in message) and getStressCount(message) >= 4:
+    elif ";" in message and getStressCount(message) >= 4:
         strResult = messageStress()
     elif "어.." in message:
         strResult = messageUh()

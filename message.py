@@ -55,6 +55,8 @@ def getReplyMessage(message):
         strResult = messageStop()
     elif (";" in message or "," in message) and getStressCount(message) >= 4:
         strResult = messageStress()
+    elif "어.." in message:
+        strResult = messageUh()
     elif "와.." in message:
         strResult = messageWa()
     elif "와!" in message:
@@ -357,6 +359,17 @@ def messageStop():
 
 def messageStress():
     strMessage = "어림도 없지"
+
+    return strMessage
+
+def messageUh():
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "..이가없네;;"
+    elif randInt == 1:
+        strMessage = "..피치"
 
     return strMessage
 

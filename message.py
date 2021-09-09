@@ -127,7 +127,7 @@ def messageBaby():
     return strMessage
 
 def messageBoolpyeon():
-    strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불퍈하니깐 그런거아냐!"
+    strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불퍈하니깐 그런거아냐!!"
 
     return strMessage
 

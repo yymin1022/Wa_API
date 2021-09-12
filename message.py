@@ -196,7 +196,7 @@ def messageHokyu():
 #    leftDays = (dateEnd - dateToday).days
 #    goneDays = (dateToday - dateStart).days
     
-    randInt = random.randrange(0, 10)
+    randInt = random.randrange(0, 8)
     if randInt == 0:
         strMessage = "안녕하세요? 아미타이거 육군 김호규일까요?"
     elif randInt == 1:
@@ -213,10 +213,6 @@ def messageHokyu():
         strMessage = "호구"
     elif randInt == 7:
         strMessage = "제온 ES 하쉴?"
-    elif randInt == 8:
-        strMessage = "ITX 핥짝"
-    elif randInt == 9:
-        strMessage = "SFF 핥짝"
         
 # 입대 시 주석 해제 바람
 #    elif randInt == 2:

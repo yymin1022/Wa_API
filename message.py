@@ -259,13 +259,15 @@ def messageIreon():
     return strMessage
 
 def messageJeonwoo():
-    randInt = random.randrange(0, 2)
+    randInt = random.randrange(0, 3)
     strMessage = ""
 
     if randInt == 0:
         strMessage = "코딩좀 하십쇼;;"
     elif randInt == 1:
         strMessage = "공부좀 하십쇼;;"
+    elif randInt == 2:
+        strMessage = "일좀 하십쇼;;"
     
     return strMessage;
 

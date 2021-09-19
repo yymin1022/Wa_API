@@ -39,6 +39,8 @@ def getReplyMessage(message):
         strResult = messageOff()
     elif "오.." in message:
         strResult = messageOh()
+    elif "오호" in message or "호오" in message:
+        strResult = messageOho(message)
     elif "오케이" in message:
         strResult = messageOkay()
     elif "ㄹㅇㅋㅋ" in message:
@@ -290,6 +292,11 @@ def messageOh():
         strMessage = "..레오"
     elif randInt == 1:
         strMessage = "..렌지쥬스"
+    
+    return strMessage
+
+def messageOho(message):
+    strMessage = message[::-1]
     
     return strMessage
 

@@ -37,10 +37,10 @@ def getReplyMessage(message):
         strResult = messageMooYaHo()
     elif "꺼라" in message:
         strResult = messageOff()
-    elif "오.." in message:
-        strResult = messageOh()
     elif "오호" in message or "호오" in message:
         strResult = messageOho(message)
+    elif "오.." in message:
+        strResult = messageOh()
     elif "오케이" in message:
         strResult = messageOkay()
     elif "ㄹㅇㅋㅋ" in message:

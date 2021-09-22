@@ -1,124 +1,25 @@
 # Wa.. Chat Bot API
 
-[English](README.md)
+<img src="README_IMG/Usage_KakaoTalk.png" width="30%" />
+<img src="README_IMG/Usage_Telegram.png" width="30%" />
 
-[한국어](README_ko.md)
+와...하면 대답하는 헛소리 봇입니다.<br/>
+하지만 **코로나 몇명** 등의 쓸모 있는 정보를 제공하기도 합니다.
 
-## Install
+Python Flask를 이용해 개발되었으며, 추후 ```Node.JS``` 기반으로 변경할 계획입니다.
 
-```
-git clone https://github.com/yymin1022/Wa_API.git
-chmod +x Wa_API/*.sh
-./setupServer.sh
-```
+반응하는 키워드 목록과 API 사용법은 아래 링크에서 확인하실 수 있습니다.
 
-## Requirements
+***
 
-Tested on ```Ubuntu 20.04 LTS amd64```. Other platform might need some modifying.
+### API Usage Guide
 
-These requirements will be installed automatically with ```setupServer.sh``` Script.
+[Engligh](Guide_EN.md)
+[Korean](Guide_KO.md)
 
-```
-sudo apt install apache2 libapache2-mod-wsgi-py3 python3 python3-pip python3-flask
-sudo python3 -m pip install flask requests
-```
+### History
 
-## Run
-
-If installed with ```setupServer.sh``` script, Apach2 service will be installed automatically.
-
-Service can be started with command one of low.
-
-```
-service apache2 start
-/etc/init.d/apache2 start
-```
-
-## How To Use
-
-Send POST Restful API Data to ```http://localhost:port```
-
-API Format is like this.
-
-```
-{
-    "msg": "와..",
-    "room": "ChatRoom 1",
-    "sender": "yymin1022"
-}
-```
-
-|Variable|Data Type|Data Content|
-|---|---|---|
-|msg|String|Message Content|
-|room|String|ChatRoom Name|
-|sender|String|Chat Talker|
-
----
-
-And then API Return Data is like this.
-
-```
-{
-    "RESULT": {
-        "RESULT_CODE": 0,
-        "RESULT_MSG": "RESULT OK"
-        },
-    "DATA": {
-        "msg":"갑부;;",
-        "room":"ChatRoom 1",
-        "sender":"yymin1022"
-        }
-}
-```
-
-|Variable|Data Type|Data Content|
-|---|---|---|
-|RESULT_CODE|String|API Result Code|
-|RESULT_MSG|String|API Result Message|
-|msg|String|Message Content|
-|room|String|ChatRoom Name|
-|sender|String|Chat Talker|
-
-|API Result Code||
-|---|---|
-|0|Result OK|
-|100|Message that Wa.. API does not support|
-|200|Other Error. Check RESULT_MSG|
-
----
-
-Returned RESULT_MSG can include Two types of Line-Breaking Character, that is ```\\m``` and ```\\n```.
-
-```\\n``` is Line-Breaking in One Message, and ```\\m``` is Splited Message with Line-Breaking.
-
-<img src="/README_IMG/WaSans.jpg" width="50%" />
-
-## API Example
-
-These Eamples are just a part of API.
-
-You can check all messages on ```message.py```
-
-|Message Content|Reply|
-|---|---|
-|꺼라|전기세 아깝다ㅡㅡ;;|
-|ㄹㅇㅋㅋ|ㄹㅇㅋㅋ|
-|멈춰|멈춰!!|
-|무야호|그만큼 신나신다는거지~|
-|아..|글쿤.. / 그래요.. 등 8종|
-|와..|갑부;; / 기만;; / ㄹㅇ;; 등 7종|
-|와!|샌즈! 아시는구나! 이거 겁.나.어.렵.습.니.다.|
-|응애|응애 나 애기 등 3종|
-|이런..|안됐군요.. 등 2종|
-|자라|전기세 아깝다ㅡㅡ;;|
-|자야지|구라ㅡㅡ;;|
-|^^7|^^7|
-
-## Example
-
-[CAU Meal Bot on Telegram](https://github.com/yymin1022/CAU_Meal_Bot_Telegram)
-
-## Want Contribute?
-
-If you want contribute on this Bot, check ```message.py``` and write code. I will ```Merge``` the code when you register ```Pull Request``` after checking code.
+* 2020\. 01\. 카카오톡 봇 형태 시작
+* 2020\. 03\. 텔레그램 봇 형태 시작
+* 2021\. 07\. API서버 개발 시작
+* 2016\. 08\. 카카오톡/텔레그램 봇 API서버로 통합 및 서버 배포 시작

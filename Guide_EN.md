@@ -1,8 +1,7 @@
-# Wa.. Chat Bot API
+# API Usage Guide
 
-[English](README.md)
-
-[한국어](README_ko.md)
+[Engligh](Guide_EN.md)<br/>
+[한국어](Guide_KO.md)
 
 ## Install
 

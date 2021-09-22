@@ -1,8 +1,7 @@
-# 와.. 챗봇 API
+# API 사용 가이드
 
-[English](README.md)
-
-[한국어](README_ko.md)
+[Engligh](Guide_EN.md)<br/>
+[한국어](Guide_KO.md)
 
 ## Before Usage
 

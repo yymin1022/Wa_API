@@ -37,6 +37,8 @@ def getReplyMessage(message):
         strResult = messageMooYaHo()
     elif "꺼라" in message:
         strResult = messageOff()
+    elif "오호" in message or "호오" in message:
+        strResult = messageOho(message)
     elif "오.." in message:
         strResult = messageOh()
     elif "오케이" in message:
@@ -127,7 +129,7 @@ def messageBaby():
     return strMessage
 
 def messageBoolpyeon():
-    strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불퍈하니깐 그런거아냐!"
+    strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불편하니깐 그런거아냐!!"
 
     return strMessage
 
@@ -196,7 +198,7 @@ def messageHokyu():
 #    leftDays = (dateEnd - dateToday).days
 #    goneDays = (dateToday - dateStart).days
     
-    randInt = random.randrange(0, 10)
+    randInt = random.randrange(0, 8)
     if randInt == 0:
         strMessage = "안녕하세요? 아미타이거 육군 김호규일까요?"
     elif randInt == 1:
@@ -213,10 +215,6 @@ def messageHokyu():
         strMessage = "호구"
     elif randInt == 7:
         strMessage = "제온 ES 하쉴?"
-    elif randInt == 8:
-        strMessage = "ITX 핥짝"
-    elif randInt == 9:
-        strMessage = "SFF 핥짝"
         
 # 입대 시 주석 해제 바람
 #    elif randInt == 2:
@@ -259,13 +257,15 @@ def messageIreon():
     return strMessage
 
 def messageJeonwoo():
-    randInt = random.randrange(0, 2)
+    randInt = random.randrange(0, 3)
     strMessage = ""
 
     if randInt == 0:
         strMessage = "코딩좀 하십쇼;;"
     elif randInt == 1:
         strMessage = "공부좀 하십쇼;;"
+    elif randInt == 2:
+        strMessage = "일좀 하십쇼;;"
     
     return strMessage;
 
@@ -292,6 +292,11 @@ def messageOh():
         strMessage = "..레오"
     elif randInt == 1:
         strMessage = "..렌지쥬스"
+    
+    return strMessage
+
+def messageOho(message):
+    strMessage = message[::-1]
     
     return strMessage
 

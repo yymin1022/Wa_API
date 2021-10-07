@@ -71,7 +71,7 @@ def getReplyMessage(message):
         strResult = messageYongminGraduate()
     elif "용민" in message:
         strResult = messageYongmin()
-    elif "자라" in message  or "zara" in message.lower():
+    elif "자라" in message:
         strResult = messageZara()
     elif "자야" in message:
         strResult = messageZayazi()

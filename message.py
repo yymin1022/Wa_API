@@ -67,10 +67,11 @@ def getReplyMessage(message):
         strResult = messageWorkToday()
     elif "내일" in message and "근무" in message:
         strResult = messageWorkTomorrow()
-    elif "용민" in message and "전역" in message:
-        strResult = messageYongminGraduate()
     elif "용민" in message:
-        strResult = messageYongmin()
+        if "전역" in message:
+            strResult = messageYongminGraduate()
+        else:
+            strResult = messageYongmin()
     elif "자라" in message:
         strResult = messageZara()
     elif "자야" in message:

@@ -164,7 +164,17 @@ def messageCorona():
     return strMessage
 
 def messageEat():
-    strMessage = "고기!!"
+    randInt = random.randrange(0, 5)
+    if randInt == 0:
+    	strMessage = "돼지"
+    elif randInt == 1:
+    	strMessage = "또 먹어?"
+    elif randInt == 2:
+    	strMessage = "살쪄"
+    elif randInt == 3:
+    	strMessage = "그만 먹어;;"
+    elif randInt == 4:
+        strMessage = "고기!!"
 
     return strMessage
 

@@ -268,7 +268,7 @@ def messageIreon():
     return strMessage
 
 def messageJeonwoo():
-    randInt = random.randrange(0, 3)
+    randInt = random.randrange(0, 4)
     strMessage = ""
 
     if randInt == 0:
@@ -277,6 +277,8 @@ def messageJeonwoo():
         strMessage = "공부좀 하십쇼;;"
     elif randInt == 2:
         strMessage = "일좀 하십쇼;;"
+    elif randInt == 3:
+        strMessage = "근무좀 하십쇼;;"
     
     return strMessage;
 

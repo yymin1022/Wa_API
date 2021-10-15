@@ -17,6 +17,8 @@ def getReplyMessage(message):
         strResult = messageCoding()
     elif ("코로나" in message or "확진자" in message) and "몇" in message:
         strResult = messageCorona()
+    elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
+        strResult = messageCry()
     elif "뭐먹" in message:
         strResult = messageEat()
     elif ("제발" in message or "하고 싶다" in message) and "졸업" in message:
@@ -78,6 +80,12 @@ def getReplyMessage(message):
         strResult = messageZayazi()
 
     return strResult
+
+def getCryCount(message):
+    count = message.count("ㅠ")
+    count += message.count("ㅜ")
+
+    return count
 
 def getLaughCount(message):
     count = message.count("ㅋ")
@@ -160,6 +168,11 @@ def messageCorona():
     strToday = divData.find_all("span", class_="before")[0].text.split(" ")[2][:-1]
 
     strMessage = "어제 %s명\\n누적 %s명\\n%s"%(strToday, strTotal, strDate)
+
+    return strMessage
+
+def messageCry():
+    strMessage = "뭘 울어요;;"
 
     return strMessage
 

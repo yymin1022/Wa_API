@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 
 import datetime
 import random
+import re
 import requests
 
 def getReplyMessage(message):
@@ -65,6 +66,10 @@ def getReplyMessage(message):
         strResult = messageWa()
     elif "와!" in message:
         strResult = messageWaSans()
+    # elif re.search("/^\(0[1-9]|1[012])월?(0[1-9]|[12][0-9]|3[01])일$/", message):
+    #     month = message.split("월")[0]
+    #     date = message.split("월")[1].split("일")[0].rstrip
+    #     strResult = messageWorkDate(month, date)
     elif "오늘" in message and "근무" in message:
         strResult = messageWorkToday()
     elif "내일" in message and "근무" in message:

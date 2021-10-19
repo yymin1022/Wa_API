@@ -72,8 +72,8 @@ def getReplyMessage(message):
         elif "내일" in message:
             strResult = messageWorkTomorrow()
         elif "월" in message and "일" in message:
-            month = message.split("월")[0]
-            day = message.split("월")[0].split("일")[0]
+            month = int(message.split("월")[0].split()[-1])
+            day = int(message.split("월")[0].split("일")[0].split()[-1])
             strResult = messageWorkDate(month, day)
     elif "용민" in message:
         if "전역" in message:
@@ -477,7 +477,7 @@ def messageYongmin():
     elif randInt == 1:
         strMessage = "감사합니다. 체계운영실 상병 유용민입니다. 머슼타드일까요?"
     elif randInt == 2:
-        strMessage = "감사합니다. 운영중대 상병 유용민입니다. 머슼타드일까요?"
+        strMessage = "감사합니다. 운영중대  상병 유용민입니다. 머슼타드일까요?"
 
     return strMessage
 

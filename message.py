@@ -66,14 +66,15 @@ def getReplyMessage(message):
         strResult = messageWa()
     elif "와!" in message:
         strResult = messageWaSans()
-    # elif re.search("/^\(0[1-9]|1[012])월?(0[1-9]|[12][0-9]|3[01])일$/", message):
-    #     month = message.split("월")[0]
-    #     date = message.split("월")[1].split("일")[0].rstrip
-    #     strResult = messageWorkDate(month, date)
-    elif "오늘" in message and "근무" in message:
-        strResult = messageWorkToday()
-    elif "내일" in message and "근무" in message:
-        strResult = messageWorkTomorrow()
+    elif "근무" in message:
+        if "오늘" in message:
+            strResult = messageWorkToday()
+        elif "내일" in message:
+            strResult = messageWorkTomorrow()
+        elif "월" in message and "일" in message:
+            month = message.split("월")[0]
+            day = message.split("월")[0].split("일")[0]
+            strResult = messageWorkDate(month, day)
     elif "용민" in message:
         if "전역" in message:
             strResult = messageYongminGraduate()
@@ -434,6 +435,16 @@ def messageWa():
 
 def messageWaSans():
     strMessage = "샌즈!\\m아시는구나!\\m이거 겁.나.어.렵.습.니.다."
+
+    return strMessage
+
+def messageWorkDate(month, day):
+    dateStart = datetime.date(2021,3,1)
+    dateToday = datetime.date(month, day)
+
+    countDays = (dateToday - dateStart).days
+
+    strMessage = str(countDays)
 
     return strMessage
 

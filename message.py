@@ -442,7 +442,7 @@ def messageWaSans():
     return strMessage
 
 def messageWorkDate(year, month, day):
-    dateStart = dateime.date(2021,3,1)
+    dateStart = datetime.date(2021,3,1)
     dateToday = datetime.date(year, month, day)
 
     countDays = (dateToday - dateStart).days

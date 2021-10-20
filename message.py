@@ -74,7 +74,7 @@ def getReplyMessage(message):
         elif "월" in message and "일" in message:
             month = int(message.split("월")[0].split()[-1])
             day = int(message.split("월")[1].split("일")[0].split()[-1])
-            strResult = messageWorkDate(month, day)
+            strResult = "%d/%d"%(month, day)# messageWorkDate(month, day)
     elif "용민" in message:
         if "전역" in message:
             strResult = messageYongminGraduate()

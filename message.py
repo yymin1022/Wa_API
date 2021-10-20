@@ -447,7 +447,7 @@ def messageWorkDate(year, month, day):
 
     countDays = (dateToday - dateStart).days
 
-    strMessage = str(countDays)
+    strMessage = "병사\\n%s\\n\\n간부\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
 
     return strMessage
 

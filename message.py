@@ -453,7 +453,7 @@ def messageWorkDate(year, month, day):
         countDays = (dateToday - dateStart).days
 
         strMessage = "병사\\n%s\\n\\n간부\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
-    except Error:
+    except:
         strMessage = "그게 날짜냐?"
     
     return strMessage

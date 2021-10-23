@@ -443,6 +443,10 @@ def messageWaSans():
 
 def messageWorkDate(year, month, day):
     try:
+        year = int(year)
+        month = int(month)
+        day = int(day)
+
         dateStart = datetime.date(2021,3,1)
         dateToday = datetime.date(year, month, day)
 

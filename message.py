@@ -442,13 +442,16 @@ def messageWaSans():
     return strMessage
 
 def messageWorkDate(year, month, day):
-    dateStart = datetime.date(2021,3,1)
-    dateToday = datetime.date(year, month, day)
+    try:
+        dateStart = datetime.date(2021,3,1)
+        dateToday = datetime.date(year, month, day)
 
-    countDays = (dateToday - dateStart).days
+        countDays = (dateToday - dateStart).days
 
-    strMessage = "병사\\n%s\\n\\n간부\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
-
+        strMessage = "병사\\n%s\\n\\n간부\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
+    except Error:
+        strMessage = "그게 날짜냐?"
+    
     return strMessage
 
 def messageWorkToday():

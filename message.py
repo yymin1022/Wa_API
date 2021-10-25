@@ -305,7 +305,13 @@ def messageJeonwoo():
     return strMessage;
 
 def messageLaugh():
-    strMessage = "뭘 웃어요;;"
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "뭘 웃어요;;"
+    elif randInt == 1:
+        strMessage = "안웃긴데;;"
 
     return strMessage
 

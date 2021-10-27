@@ -232,7 +232,7 @@ def messageHokyu():
     
     randInt = random.randrange(0, 8)
     if randInt == 0:
-        strMessage = "안녕하세요? 아미타이거 육군 김호규일까요?"
+        strMessage = "안녕하세요? 아미타이거 육군 일뻔 했던 공군 김호규일까요?"
     elif randInt == 1:
         strMessage = "응애 나 애기 호규."
     elif randInt == 2:

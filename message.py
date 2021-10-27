@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 
 import datetime
 import random
-import re
 import requests
 
 def getReplyMessage(message):

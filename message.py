@@ -27,7 +27,7 @@ def getReplyMessage(message):
         strResult = messageHa()
     elif "호규" in message:
         strResult = messageHokyu()
-    elif "배고파" in message or "배고프" in :
+    elif "배고파" in message or "배고프" in message:
         strResult = messageHungry()
     elif "이런.." in message:
         strResult = messageIreon()

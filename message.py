@@ -492,7 +492,7 @@ def messageYongmin():
     elif randInt == 1:
         strMessage = "감사합니다. 체계운영실 상병 유용민입니다. 머슼타드일까요?"
     elif randInt == 2:
-        strMessage = "감사합니다. 운영중대  상병 유용민입니다. 머슼타드일까요?"
+        strMessage = "감사합니다. 운영중대 상병 유용민입니다. 머슼타드일까요?"
 
     return strMessage
 

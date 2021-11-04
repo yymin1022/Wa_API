@@ -162,7 +162,9 @@ def messageCoding():
     return strMessage
 
 def messageCorona():
-    headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36'}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36'
+        }
     url = "http://ncov.mohw.go.kr/"
 
     res = requests.get(url, headers=headers)

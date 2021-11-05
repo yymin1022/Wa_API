@@ -170,7 +170,7 @@ def messageCorona():
     res = requests.get(url, headers=headers)
     soup = BeautifulSoup(res.text, features="html.parser")
 
-    divTable = soup.find("div", class_="liveboard_layout")
+    divTable = soup.find("div", class_="liveboardlayout")
     divLive = divTable.find("div", class_="liveNumOuter")
     divData = divLive.find("div", class_="liveNum")
     strDate = divLive.find("span", class_="livedate").text

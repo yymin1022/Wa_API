@@ -165,7 +165,7 @@ def messageCoding():
 
 def messageCorona():
     tokenFile = open("/home/server/API_TOKEN", "r")
-    API_TOKEN = tokenFile.readline()
+    API_TOKEN = tokenFile.readline().strip()
     tokenFile.close()
 
     yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y%m%d")

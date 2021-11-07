@@ -9,7 +9,7 @@ sudo a2enmod wsgi
 echo ""
 
 echo "Installing Python3 Required Modules with PIP"
-python3 -m pip install flask requests
+python3 -m pip install flask requests xmltodict
 echo ""
 
 echo

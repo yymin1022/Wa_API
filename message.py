@@ -185,7 +185,7 @@ def messageCorona():
     valYesterday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt'])
     valToday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt'])
 
-    strMessage = "어제 %s명\\n누적 %s명\\n"%(valToday - valYesterday, strTotal)
+    strMessage = "어제 %d명\\n누적 %d명\\n"%(valToday - valYesterday, valToday)
 
     print(strMessage)
 

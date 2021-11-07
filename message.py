@@ -182,10 +182,10 @@ def messageCorona():
 
     response = requests.get(url, params=params)
 
-    strYesterday = xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt']
-    strToday = xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt']
+    # strYesterday = xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt']
+    # strToday = xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt']
 
-    strMessage = "어제 %s명\\n누적 %s명\\n"%(strToday - strYesterday, strTotal)
+    # strMessage = "어제 %s명\\n누적 %s명\\n"%(strToday - strYesterday, strTotal)
 
     return response.content
 

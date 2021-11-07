@@ -187,6 +187,8 @@ def messageCorona():
 
     # strMessage = "어제 %s명\\n누적 %s명\\n"%(strToday - strYesterday, strTotal)
 
+    print(API_TOKEN)
+
     return response.content
 
 def messageCry():

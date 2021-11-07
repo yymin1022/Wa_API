@@ -164,22 +164,28 @@ def messageCoding():
     return strMessage
 
 def messageCorona():
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36'
-        }
-    url = "http://ncov.mohw.go.kr/"
+    tokenFile = open("API_TOKEN", "r")
+    API_TOKEN = tokenFile.readline()
+    tokenFile.close()
 
-    res = requests.get(url, headers=headers)
-    soup = BeautifulSoup(res.text, features="html.parser")
+    yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y%m%d")
+    today = datetime.date.today().strftime("%Y%m%d")
 
-    divTable = soup.find("div", class_="liveboardlayout")
-    divLive = divTable.find("div", class_="liveNumOuter")
-    divData = divLive.find("div", class_="liveNum")
-    strDate = divLive.find("span", class_="livedate").text
-    strTotal = divData.find_all("span", class_="num")[0].text.split(")")[1]
-    strToday = divData.find_all("span", class_="before")[0].text.split(" ")[2][:-1]
+    url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson"
+    params = {
+        "serviceKey": API_TOKEN,
+        "pageNo": "1",
+        "numOfRows": "10",
+        "startCreateDt": yesterday,
+        "endCreateDt": today
+    }
 
-    strMessage = "어제 %s명\\n누적 %s명\\n%s"%(strToday, strTotal, strDate)
+    response = requests.get(url, params=params)
+
+    strYesterday = xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt']
+    strToday = xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt']
+
+    strMessage = "어제 %s명\\n누적 %s명\\n"%(strToday - strYesterday, strTotal)
 
     return strMessage
 

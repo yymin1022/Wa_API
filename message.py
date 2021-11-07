@@ -187,9 +187,7 @@ def messageCorona():
 
     strMessage = "어제 %d명\\n누적 %d명\\n"%(valToday - valYesterday, valToday)
 
-    print(strMessage)
-
-    return response.content
+    return strMessage
 
 def messageCry():
     strMessage = "뭘 울어요;;"

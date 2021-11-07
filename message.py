@@ -164,7 +164,7 @@ def messageCoding():
     return strMessage
 
 def messageCorona():
-    tokenFile = open("API_TOKEN", "r")
+    tokenFile = open("/home/server/API_TOKEN", "r")
     API_TOKEN = tokenFile.readline()
     tokenFile.close()
 

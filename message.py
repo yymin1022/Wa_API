@@ -188,7 +188,7 @@ def messageCorona():
     valYesterday = int("{:,}".format(strYesterday))
     valToday = int("{:,}".format(strToday))
 
-    strMessage = "어제 %d명\\n누적 %d명"%(int(strToday) - int(strYesterday), valToday)
+    strMessage = "%s 기준 코로나19 확진자 현황 어제 %d명\\n누적 %d명"%(str(today), int(strToday) - int(strYesterday), valToday)
 
     return strMessage
 

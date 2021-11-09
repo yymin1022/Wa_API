@@ -187,24 +187,17 @@ def messageCorona():
 
     valDate = xmltodict.parse(response.content)['response']['body']['items']['item'][0]['createDt']
 
-    valConfirmYesterday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt'])
-    valConfirmToday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt'])
-
-    valDeathYesterday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][1]['deathCnt'])
-    valDeathToday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][0]['deathCnt'])
+    valYesterday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt'])
+    valToday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt'])
 
     valTime = valDate.split()[1].split(".")[0]
     valDate = valDate.split()[0].split("-")[1] + "월 " + valDate.split()[0].split("-")[2] + "일"
 
-    valConfirmDifference = "{0:,}".format(valConfirmToday - valConfirmYesterday)
-    valConfirmYesterday = "{0:,}".format(valConfirmYesterday)
-    valConfirmToday = "{0:,}".format(valConfirmToday)
+    valDifference = "{0:,}".format(valToday - valYesterday)
+    valYesterday = "{0:,}".format(valYesterday)
+    valToday = "{0:,}".format(valToday)
 
-    valDeathDifference = "{0:,}".format(valDeathToday - valDeathYesterday)
-    valDeathYesterday = "{0:,}".format(valDeathYesterday)
-    valDeathToday = "{0:,}".format(valDeathToday)
-
-    strMessage = "%s 코로나19 현황\\n[확진자]\\n어제 %s명\\n누적 %s명\\n[사망자]\\n어제 %s명\\n누적 %s명\\n업데이트 %s"%(valDate, valConfirmDifference, valConfirmToday, valDeathDifference, valDeathToday, valTime)
+    strMessage = "%s 코로나19 현황\\n신규 %s명\\n누적 %s명\\n업데이트 %s"%(valDate, valDifference, valToday, valTime)
 
     return strMessage
 
@@ -212,7 +205,7 @@ def messageCoronaCity():
     tokenFile = open("/home/server/API_TOKEN", "r")
     API_TOKEN = tokenFile.readline().strip()
     tokenFile.close()
-    
+
     dateToday = datetime.date.today().strftime("%Y%m%d")
 
     url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson"
@@ -235,7 +228,7 @@ def messageCoronaCity():
         if item['gubun'] != "검역" and item['gubun'] != '합계':
             strValue = "%s %s"%(item['gubun'], item['incDec'])
             strMessage += "%s %s"%(item['gubun'], item['incDec'])
-            strMessage += "\\n"
+            strMessage += "명\\n"
 
     return strMessage
 

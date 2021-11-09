@@ -185,14 +185,19 @@ def messageCorona():
     valDate = xmltodict.parse(response.content)['response']['body']['items']['item'][1]['createDt']
     valConfirmYesterday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt'])
     valConfirmToday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt'])
+    valDeathYesterday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][1]['deathCnt'])
+    valDeathToday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][0]['deathCnt'])
 
     valTime = valDate.split()[1].split(".")[0]
     valDate = valDate.split()[0].split("-")[1] + "월 " + valDate.split()[0].split("-")[2] + "일"
     valConfirmDifference = "{0:,}".format(valConfirmToday - valConfirmYesterday)
     valConfirmYesterday = "{0:,}".format(valConfirmYesterday)
     valConfirmToday = "{0:,}".format(valConfirmToday)
+    valDeathDifference = "{0:,}".format(valDeathToday - valDeathYesterday)
+    valDeathYesterday = "{0:,}".format(valDeathYesterday)
+    valDeathToday = "{0:,}".format(valDeathToday)
 
-    strMessage = "%s 코로나19 현황\\n[확진자]\\n어제 %s명\\n누적 %s명\\n업데이트 : %s"%(valDate, valConfirmDifference, valConfirmToday, valTime)
+    strMessage = "%s 코로나19 현황\\n[확진자]\\n어제 %s명\\n누적 %s명[사망자]\\n어제 %s명\\n누적 %s명\\n업데이트 : %s"%(valDate, valConfirmDifference, valConfirmToday, valDeathDifference, valDeathToday, valTime)
 
     return strMessage
 

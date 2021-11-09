@@ -205,6 +205,11 @@ def messageCorona():
 
     return strMessage
 
+def messageCoronaCity():
+    strMessage = ""
+
+    return strMessage
+
 def messageCry():
     strMessage = "뭘 울어요;;"
 

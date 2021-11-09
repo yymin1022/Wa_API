@@ -197,7 +197,7 @@ def messageCorona():
     valDeathYesterday = "{0:,}".format(valDeathYesterday)
     valDeathToday = "{0:,}".format(valDeathToday)
 
-    strMessage = "%s 코로나19 현황\\n[확진자]\\n어제 %s명\\n누적 %s명[사망자]\\n어제 %s명\\n누적 %s명\\n업데이트 : %s"%(valDate, valConfirmDifference, valConfirmToday, valDeathDifference, valDeathToday, valTime)
+    strMessage = "%s 코로나19 현황\\n[확진자]\\n어제 %s명\\n누적 %s명\\n[사망자]\\n어제 %s명\\n누적 %s명\\n업데이트 : %s"%(valDate, valConfirmDifference, valConfirmToday, valDeathDifference, valDeathToday, valTime)
 
     return strMessage
 

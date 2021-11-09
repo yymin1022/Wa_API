@@ -209,6 +209,10 @@ def messageCorona():
     return strMessage
 
 def messageCoronaCity():
+    tokenFile = open("/home/server/API_TOKEN", "r")
+    API_TOKEN = tokenFile.readline().strip()
+    tokenFile.close()
+    
     dateToday = datetime.date.today().strftime("%Y%m%d")
 
     url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson"

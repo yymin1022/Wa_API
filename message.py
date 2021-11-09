@@ -182,17 +182,21 @@ def messageCorona():
 
     response = requests.get(url, params=params)
 
-    valDate = xmltodict.parse(response.content)['response']['body']['items']['item'][1]['createDt']
+    valDate = xmltodict.parse(response.content)['response']['body']['items']['item'][0]['createDt']
+
     valConfirmYesterday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt'])
     valConfirmToday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt'])
+
     valDeathYesterday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][1]['deathCnt'])
     valDeathToday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][0]['deathCnt'])
 
     valTime = valDate.split()[1].split(".")[0]
     valDate = valDate.split()[0].split("-")[1] + "월 " + valDate.split()[0].split("-")[2] + "일"
+
     valConfirmDifference = "{0:,}".format(valConfirmToday - valConfirmYesterday)
     valConfirmYesterday = "{0:,}".format(valConfirmYesterday)
     valConfirmToday = "{0:,}".format(valConfirmToday)
+
     valDeathDifference = "{0:,}".format(valDeathToday - valDeathYesterday)
     valDeathYesterday = "{0:,}".format(valDeathYesterday)
     valDeathToday = "{0:,}".format(valDeathToday)

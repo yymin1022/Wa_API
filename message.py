@@ -19,7 +19,7 @@ def getReplyMessage(message):
         strResult = messageCoding()
     elif ("코로나" in message or "확진자" in message) and "몇" in message:
         if "지역별" in message:
-            # strResult = messageCoronaCity()
+            strResult = messageCoronaCity()
         else:
             strResult = messageCorona()
     elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
@@ -209,7 +209,29 @@ def messageCorona():
     return strMessage
 
 def messageCoronaCity():
-    strMessage = ""
+    dateToday = datetime.date.today().strftime("%Y%m%d")
+
+    url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson"
+    params = {
+        "serviceKey": API_TOKEN,
+        "pageNo" : "1",
+        "numOfRows" : "10",
+        "startCreateDt" : dateToday,
+        "endCreateDt" : dateToday
+    }
+
+    response = requests.get(url, params=params)
+
+    itemList = xmltodict.parse(response.content)['response']['body']['items']['item']
+    itemList.sort(key=lambda x: x['gubun'])
+
+    strMessage = "%s 지역별 코로나19 현황\\n"%(datetime.date.today().strftime("%m월 %d일"))
+
+    for item in itemList:
+        if item['gubun'] != "검역" and item['gubun'] != '합계':
+            strValue = "%s %s"%(item['gubun'], item['incDec'])
+            strMessage += "%s %s"%(item['gubun'], item['incDec'])
+            strMessage += "\\n"
 
     return strMessage
 

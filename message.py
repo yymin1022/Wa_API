@@ -182,15 +182,16 @@ def messageCorona():
 
     response = requests.get(url, params=params)
 
+    valDate = xmltodict.parse(response.content)['response']['body']['items']['item'][1]['createDt']
     valYesterday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt'])
     valToday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt'])
 
-    valDate = xmltodict.parse(response.content)['response']['body']['items']['item'][1]['createDt']
+    valDate = valDate.split()[0].split("-")[1] + "월" + valDate.split()[0].split("-")[2] + "일 " + valDate.split()[1].split(".")[0]
     valDifference = "{0:,}".format(valToday - valYesterday)
     valYesterday = "{0:,}".format(valYesterday)
     valToday = "{0:,}".format(valToday)
 
-    strMessage = "%s 기준 코로나19 확진자 현황 어제 %s명\\n누적 %s명"%(dateToday, valDifference, valToday)
+    strMessage = "%s 기준 코로나19 확진자 현황 어제 %s명\\n누적 %s명"%(valDate, valDifference, valToday)
 
     return strMessage
 

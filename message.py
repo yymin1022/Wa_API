@@ -18,7 +18,10 @@ def getReplyMessage(message):
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
     elif ("코로나" in message or "확진자" in message) and "몇" in message:
-        strResult = messageCorona()
+        if "지역별" in message:
+            # strResult = messageCoronaCity()
+        else:
+            strResult = messageCorona()
     elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
         strResult = messageCry()
     elif "뭐먹" in message:

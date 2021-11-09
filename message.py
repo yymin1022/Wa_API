@@ -168,27 +168,29 @@ def messageCorona():
     API_TOKEN = tokenFile.readline().strip()
     tokenFile.close()
 
-    yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y%m%d")
-    today = datetime.date.today().strftime("%Y%m%d")
+    dateYesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y%m%d")
+    dateToday = datetime.date.today().strftime("%Y%m%d")
 
     url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson"
     params = {
         "serviceKey": API_TOKEN,
         "pageNo": "1",
         "numOfRows": "10",
-        "startCreateDt": yesterday,
-        "endCreateDt": today
+        "startCreateDt": dateYesterday,
+        "endCreateDt": dateToday
     }
 
     response = requests.get(url, params=params)
 
-    strYesterday = xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt']
-    strToday = xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt']
+    valYesterday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt'])
+    valToday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt'])
 
-    valYesterday = int("{:,}".format(strYesterday))
-    valToday = int("{:,}".format(strToday))
+    valDate = xmltodict.parse(response.content)['response']['body']['items']['item'][1]['createDt']
+    valDifference = "{0:,}".format(valToday - valYesterday)
+    valYesterday = "{0:,}".format(valYesterday)
+    valToday = "{0:,}".format(valToday)
 
-    strMessage = "%s 기준 코로나19 확진자 현황 어제 %d명\\n누적 %d명"%(str(today), int(strToday) - int(strYesterday), valToday)
+    strMessage = "%s 기준 코로나19 확진자 현황 어제 %s명\\n누적 %s명"%(dateToday, valDifference, valToday)
 
     return strMessage
 

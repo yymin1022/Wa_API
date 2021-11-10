@@ -225,7 +225,7 @@ def messageCoronaCity():
     strMessage = "%s 지역별 코로나19 현황\\n"%(datetime.date.today().strftime("%m월 %d일"))
 
     for item in itemList:
-        if item['gubun'] != "검역" and item['gubun'] != '합계':
+        if item['gubun'] != "검역":
             strValue = "%s %s"%(item['gubun'], item['incDec'])
             strMessage += "%s %s"%(item['gubun'], item['incDec'])
             strMessage += "명\\n"

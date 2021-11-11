@@ -226,9 +226,7 @@ def messageCoronaCity():
 
     for item in itemList:
         if item['gubun'] != "검역":
-            strValue = "%s %s"%(item['gubun'], item['incDec'])
-            strMessage += "%s %s"%(item['gubun'], item['incDec'])
-            strMessage += "명\\n"
+            strMessage += "%s %s명\\n"%(item['gubun'], item['incDec'])
 
     return strMessage
 

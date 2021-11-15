@@ -3,7 +3,7 @@
 <img src="README_IMG/Usage_KakaoTalk.png" width="30%" height="30%" alt="KakaoTalk"></img>
 <img src="README_IMG/Usage_Telegram.png" width="30%" height="30%" alt="Telegram"></img>
 
-**와..**하면 대답하는 헛소리 봇입니다.<br/>
+**와..** 하면 대답하는 헛소리 봇입니다.<br/>
 하지만 **코로나 몇명** 등의 쓸모 있는 정보를 제공하기도 합니다.
 
 Python Flask를 이용해 개발되었으며, 추후 ```Node.JS``` 기반으로 변경할 계획입니다.

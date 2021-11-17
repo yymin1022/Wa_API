@@ -23,7 +23,7 @@ chmod +x Wa_API/*.sh
 
 다른 플랫폼에서 이용하고자 할 경우 수정이 필요할 수 있습니다.
 
-```setupServer.sh``` 를 이용해 설치할 경우, 아래 Requirements들은 자동으로 설치 및 설정됩니다.
+```setupServer.sh``` 를 이용해 설치할 경우, 아래 Requirements이 자동으로 설치됩니다.
 
 ```
 sudo apt install apache2 libapache2-mod-wsgi-py3 python3 python3-pip python3-flask
@@ -132,4 +132,4 @@ RESULT_MSG로 반환된 메시지 내용을 채팅으로 반환할 때, ```\\m``
 
 ## Want Contribute?
 
-봇 제작에 참여하고자 하시는 경우, ```message.py``` 를 참고해 코드를 작성하시고, ```Pull Request```를 올려주시면 주기적으로 확인하여 올바른지 검토한 뒤 ```Merge``` 해드립니다!
+봇 제작에 참여하고자 하시는 경우, ```message.py``` 를 참고해 코드를 작성하시고, ```Pull Request```를 등록해주시면 주기적으로 확인하여 올바른지 검토한 뒤 ```Merge``` 해드립니다!

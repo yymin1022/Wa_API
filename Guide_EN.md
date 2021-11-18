@@ -1,4 +1,4 @@
-# API Usage Guide
+﻿# API Usage Guide
 
 [Engligh](Guide_EN.md)<br/>
 [한국어](Guide_KO.md)
@@ -26,7 +26,7 @@ sudo python3 -m pip install flask requests
 
 If installed with ```setupServer.sh``` script, Apach2 service will be installed automatically.
 
-Service can be started with command one of low.
+Service can be started with command one of these.
 
 ```
 service apache2 start

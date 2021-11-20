@@ -44,6 +44,6 @@ if [ $doStart = "y" ]
 then
     sudo /etc/init.d/apache2 start
 else
-    echo "You can start API Server with this command : /etc/init.d/apache2 start"
+    echo "You can start API Server manually with this command : /etc/init.d/apache2 start"
     echo ""
 fi

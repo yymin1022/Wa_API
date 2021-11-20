@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Installing Requiered Packages..."
+echo "Installing Requiered Dependecies/Packages..."
 echo ""
 sudo apt install apache2 libapache2-mod-wsgi-py3 python3 python3-flask python3-pip -y
 
@@ -8,7 +8,7 @@ echo "Enabling Apache2 WSGI Module..."
 sudo a2enmod wsgi
 echo ""
 
-echo "Installing Python3 Required Modules with PIP"
+echo "Installing Python3 Required Dependencies/Modules with PIP"
 python3 -m pip install flask requests xmltodict
 echo ""
 

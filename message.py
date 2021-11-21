@@ -225,7 +225,6 @@ def messageCoronaCity():
     itemList = xmltodict.parse(response.content)['response']['body']['items']['item']
     itemList.sort(key=lambda x: x['gubun'])
 
-
     strMessage = "%s 지역별 코로나19 현황\\n"%(datetime.date.today().strftime("%m월 %d일"))
 
     for item in itemList:

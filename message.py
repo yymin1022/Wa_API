@@ -538,7 +538,7 @@ def messageWorkTomorrow():
     
     countDays = (dateToday - dateStart).days
 
-    strMessage = "병사\\n%s\\n\\n간부\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
+    strMessage = "%s 근무현황\\n병사\\n%s\\n\\n간부\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcByeongsa(countDays), calcGanbu(countDays))
 
     return strMessage
 

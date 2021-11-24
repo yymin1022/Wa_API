@@ -516,7 +516,7 @@ def messageWorkDate(year, month, day):
 
         countDays = (dateToday - dateStart).days
         
-        strMessage = "%s 근무현황\\n병사\\n%s\\n\\n간부\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcByeongsa(countDays), calcGanbu(countDays))
+        strMessage = "%s 근무현황\\n병사\\n%s\\n간부\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcByeongsa(countDays), calcGanbu(countDays))
     except:
         strMessage = "그게 날짜냐?"
     
@@ -528,7 +528,7 @@ def messageWorkToday():
     
     countDays = (dateToday - dateStart).days
 
-    strMessage = "%s 근무현황\\n병사\\n%s\\n\\n간부\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcByeongsa(countDays), calcGanbu(countDays))
+    strMessage = "%s 근무현황\\n병사\\n%s\\n간부\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcByeongsa(countDays), calcGanbu(countDays))
 
     return strMessage
 
@@ -538,7 +538,7 @@ def messageWorkTomorrow():
     
     countDays = (dateToday - dateStart).days
 
-    strMessage = "%s 근무현황\\n병사\\n%s\\n\\n간부\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcByeongsa(countDays), calcGanbu(countDays))
+    strMessage = "%s 근무현황\\n병사\\n%s\\n간부\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcByeongsa(countDays), calcGanbu(countDays))
 
     return strMessage
 

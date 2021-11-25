@@ -480,7 +480,7 @@ def messageUh():
     return strMessage
 
 def messageWa():
-    randInt = random.randrange(0, 7)
+    randInt = random.randrange(0, 9)
     strMessage = ""
 
     if randInt == 0:
@@ -497,6 +497,10 @@ def messageWa():
         strMessage = "이건 좀;;"
     elif randInt == 6:
         strMessage = "극혐;;"
+    elif randInt == 7:
+        strMessage = "플;;"
+    elif randInt == 8:
+        strMessage = "이파이;;"
 
     return strMessage
 

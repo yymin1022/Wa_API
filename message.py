@@ -405,7 +405,13 @@ def messageOkay():
     return strMessage
 
 def messageReal():
-    strMessage = "ㄹㅇㅋㅋ"
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "ㄹㅇㅋㅋ"
+    elif randInt == 1:
+        strMessage = "아닌데요"
 
     return strMessage
 

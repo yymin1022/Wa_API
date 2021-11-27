@@ -416,7 +416,13 @@ def messageReal():
     return strMessage
 
 def messageSalute():
-    strMessage = "^^7"
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "필승! ^^7"
+    elif randInt == 1:
+        strMessage = "충성! ^^7"
 
     return strMessage
 

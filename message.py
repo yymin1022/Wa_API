@@ -269,7 +269,13 @@ def messageGraduate():
     return strMessage
 
 def messageHa():
-    strMessage = "코딩하기 싫다.."
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "코딩하기 싫다.."
+    elif randInt == 1:
+        strMessage = "과제하기 싫다.."
 
     return strMessage
     

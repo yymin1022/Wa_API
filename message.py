@@ -59,7 +59,7 @@ def getReplyMessage(message):
         strResult = messageSalute()
     elif "나스" in message or "폴리오" in message:
         strResult = messageSaseyo()
-    elif "슉" in message:
+    elif "슈슉" in message:
         strResult = messageShuk()
     elif "졸려" in message or "잠와" in message or "피곤해" in message:
         strResult = messageSleepy()

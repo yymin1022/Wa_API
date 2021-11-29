@@ -2,7 +2,7 @@ from flask import Flask, jsonify, redirect, request
 
 import message
 
-flaskApp = Flask (__name__)
+flaskApp = Flask(__name__)
  
 @flaskApp.route("/")
 def main():

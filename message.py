@@ -31,7 +31,10 @@ def getReplyMessage(message):
     elif "하.." in message:
         strResult = messageHa()
     elif "호규" in message:
-        strResult = messageHokyu()
+        if "전역" in message:
+            strResult = messageHokyuJeonyeuk()
+        else:
+            strResult = messageHokyu()
     elif "배고파" in message or "배고프" in message:
         strResult = messageHungry()
     elif "이런.." in message:
@@ -272,25 +275,17 @@ def messageHa():
     return strMessage
     
 def messageHokyu():
-# 입대 시 주석 해제 바람
-#    dateStart = datetime.date(2021,7,19)
-#    dateEnd = datetime.date(2023,1,18)
-#    dateToday = datetime.date.today()
     strMessage = ""
-
-# 입대 시 주석 해제 바람
-#    leftDays = (dateEnd - dateToday).days
-#    goneDays = (dateToday - dateStart).days
     
     randInt = random.randrange(0, 8)
     if randInt == 0:
-        strMessage = "안녕하세요? 아미타이거 육군 일뻔 했던 공군 김호규일까요?"
+        strMessage = "필승! 833기 훈련병 김호규입니다!"
     elif randInt == 1:
-        strMessage = "응애 나 애기 호규."
+        strMessage = "예! 김호규 훈련병!"
     elif randInt == 2:
-        strMessage = "돔황챠!"
+        strMessage = "필승!"
     elif randInt == 3:
-        strMessage = "안녕하세요? 민간인 김호규입니다."
+        strMessage = "안녕하세요? 전역하고 싶은 김호규입니다."
     elif randInt == 4:
         strMessage = "팬택 핥짝"
     elif randInt == 5:
@@ -298,14 +293,27 @@ def messageHokyu():
     elif randInt == 6:
         strMessage = "호구"
     elif randInt == 7:
-        strMessage = "제온 ES 하쉴?"
-        
-# 입대 시 주석 해제 바람
-#    elif randInt == 2:
-#        strMessage = "호규는 2021년 7월 19일 입대했습니다. 2023년 1월 18일 전역 예정입니다. %d일 남았습니다."%(leftDays)
-#    elif randInt == 3:
-#        strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
+        strMessage = "K1 핥짝핥짝"
     
+    return strMessage
+
+def messageHokyuJeonyeuk():
+    strMessage = ""
+    dateStart = datetime.date(2021,12,6)
+    dateEnd = datetime.date(2023,9,5)
+    dateToday = datetime.date.today()
+
+    leftDays = (dateEnd - dateToday).days - 1
+    goneDays = (dateToday - dateStart).days
+
+    randInt = random.randrange(0, 3)
+    if randInt == 0:
+        strMessage = "호규는 전역할 때까지 %d일 남았습니다"%(leftDays)
+    elif randInt == 1:
+        strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
+    elif randInt == 2:
+        strMessage = "833기가 벌써 전역 따질 짬인가?"
+
     return strMessage
 
 def messageHungry():

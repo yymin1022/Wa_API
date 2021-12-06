@@ -32,7 +32,7 @@ def getReplyMessage(message):
         strResult = messageHa()
     elif "호규" in message:
         if "전역" in message:
-            strResult = messageHokyuJeonyeuk()
+            strResult = messageHokyuGraduate()
         else:
             strResult = messageHokyu()
     elif "배고파" in message or "배고프" in message:
@@ -297,7 +297,7 @@ def messageHokyu():
     
     return strMessage
 
-def messageHokyuJeonyeuk():
+def messageHokyuGraduate():
     strMessage = ""
     dateStart = datetime.date(2021,12,6)
     dateEnd = datetime.date(2023,9,5)

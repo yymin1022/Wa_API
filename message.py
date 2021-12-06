@@ -293,7 +293,7 @@ def messageHokyu():
     elif randInt == 6:
         strMessage = "호구"
     elif randInt == 7:
-        strMessage = "K1 핥짝핥짝"
+        strMessage = "K2C1 핥짝핥짝"
     
     return strMessage
 

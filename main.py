@@ -45,4 +45,4 @@ def getMessage():
     return jsonify(replyData)
  
 if __name__ == "__main__":
-    flaskApp.run(host = "0.0.0.0", port = 80)
+    flaskApp.run(host="0.0.0.0", port=80)

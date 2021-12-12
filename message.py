@@ -59,7 +59,7 @@ def getReplyMessage(message):
         strResult = messageSalute()
     elif "나스" in message or "폴리오" in message:
         strResult = messageSaseyo()
-    elif "슉" in message:
+    elif "슈슉" in message:
         strResult = messageShuk()
     elif "졸려" in message or "잠와" in message or "피곤해" in message:
         strResult = messageSleepy()
@@ -225,7 +225,6 @@ def messageCoronaCity():
     itemList = xmltodict.parse(response.content)['response']['body']['items']['item']
     itemList.sort(key=lambda x: x['gubun'])
 
-
     strMessage = "%s 지역별 코로나19 현황\\n"%(datetime.date.today().strftime("%m월 %d일"))
 
     for item in itemList:
@@ -270,7 +269,13 @@ def messageGraduate():
     return strMessage
 
 def messageHa():
-    strMessage = "코딩하기 싫다.."
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "코딩하기 싫다.."
+    elif randInt == 1:
+        strMessage = "과제하기 싫다.."
 
     return strMessage
     
@@ -406,12 +411,24 @@ def messageOkay():
     return strMessage
 
 def messageReal():
-    strMessage = "ㄹㅇㅋㅋ"
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "ㄹㅇㅋㅋ"
+    elif randInt == 1:
+        strMessage = "아닌데요"
 
     return strMessage
 
 def messageSalute():
-    strMessage = "^^7"
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "필승! ^^7"
+    elif randInt == 1:
+        strMessage = "충성! ^^7"
 
     return strMessage
 
@@ -481,7 +498,7 @@ def messageUh():
     return strMessage
 
 def messageWa():
-    randInt = random.randrange(0, 7)
+    randInt = random.randrange(0, 9)
     strMessage = ""
 
     if randInt == 0:
@@ -498,6 +515,10 @@ def messageWa():
         strMessage = "이건 좀;;"
     elif randInt == 6:
         strMessage = "극혐;;"
+    elif randInt == 7:
+        strMessage = "플;;"
+    elif randInt == 8:
+        strMessage = "이파이;;"
 
     return strMessage
 
@@ -516,8 +537,8 @@ def messageWorkDate(year, month, day):
         dateToday = datetime.date(year, month, day)
 
         countDays = (dateToday - dateStart).days
-
-        strMessage = "병사\\n%s\\n\\n간부\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
+        
+        strMessage = "%s 근무현황\\n병사\\n%s\\n간부\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcByeongsa(countDays), calcGanbu(countDays))
     except:
         strMessage = "그게 날짜냐?"
     
@@ -529,7 +550,7 @@ def messageWorkToday():
     
     countDays = (dateToday - dateStart).days
 
-    strMessage = "병사\\n%s\\n\\n간부\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
+    strMessage = "%s 근무현황\\n병사\\n%s\\n간부\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcByeongsa(countDays), calcGanbu(countDays))
 
     return strMessage
 
@@ -539,7 +560,7 @@ def messageWorkTomorrow():
     
     countDays = (dateToday - dateStart).days
 
-    strMessage = "병사\\n%s\\n\\n간부\\n%s"%(calcByeongsa(countDays), calcGanbu(countDays))
+    strMessage = "%s 근무현황\\n병사\\n%s\\n간부\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcByeongsa(countDays), calcGanbu(countDays))
 
     return strMessage
 

@@ -5,7 +5,7 @@ import message
 flaskApp = Flask(__name__)
  
 @flaskApp.route("/")
-def main():
+def mainPage():
     return redirect("https://github.com/yymin1022/Wa_API", code=302)
 
 @flaskApp.route("/getMessage", methods = ["POST"])

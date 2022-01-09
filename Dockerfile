@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 WORKDIR /app
-ADD ../Web/Wa_API /app
+ADD ./ /app
 
 RUN apt update -y
 RUN apt install apache2 libapache2-mod-wsgi-py3 python3 python3-flask python3-pip -y

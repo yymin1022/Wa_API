@@ -1,3 +1,3 @@
 import sys
-sys.path.insert(0, "/app/Wa_API")
+sys.path.insert(0, "/app")
 from main import flaskApp as application

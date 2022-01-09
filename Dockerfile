@@ -12,4 +12,4 @@ RUN dd if=/app/apache2script_docker of=/etc/apache2/sites-available/000-default.
 
 EXPOSE 80
 
-CMD ["/etc/init.d/apache2", "start"]
+CMD ["/bin/bash"]

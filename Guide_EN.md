@@ -5,6 +5,16 @@
 
 ## Install
 
+### Setup Using Docker
+
+[DockerHub](https://hub.docker.com/repository/docker/yymin1022/wa-api)
+
+```
+docker pull yymin1022/wa-api
+docker run --name wa -p 8080:80 wa-api
+```
+
+### Setup Manually
 ```
 git clone https://github.com/yymin1022/Wa_API.git
 chmod +x Wa_API/*.sh

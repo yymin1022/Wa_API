@@ -284,9 +284,9 @@ def messageHokyu():
     
     randInt = random.randrange(0, 8)
     if randInt == 0:
-        strMessage = "필승! 833기 훈련병 김호규입니다!"
+        strMessage = "필승! 833기 이병 김호규입니다!"
     elif randInt == 1:
-        strMessage = "예! 김호규 훈련병!"
+        strMessage = "예! 이병 김호규!"
     elif randInt == 2:
         strMessage = "필승!"
     elif randInt == 3:
@@ -311,13 +311,15 @@ def messageHokyuGraduate():
     leftDays = (dateEnd - dateToday).days - 1
     goneDays = (dateToday - dateStart).days
 
-    randInt = random.randrange(0, 3)
+    randInt = random.randrange(0, 4)
     if randInt == 0:
         strMessage = "호규는 전역할 때까지 %d일 남았습니다"%(leftDays)
     elif randInt == 1:
         strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
     elif randInt == 2:
         strMessage = "833기가 벌써 전역 따질 짬인가?"
+    elif randInt == 3:
+        strMessage = "404 Not Found"
 
     return strMessage
 

@@ -13,6 +13,8 @@
 
 [DockerHub](https://hub.docker.com/repository/docker/yymin1022/wa-api)
 
+컨테이너 내부 80번 포트를 외부로 포워딩 해야합니다.
+
 ```
 docker pull yymin1022/wa-api
 docker run --name wa -p 8080:80 wa-api

@@ -7,6 +7,8 @@
 
 ### Setup Using Docker
 
+You must Forward 80 Container Port.
+
 [DockerHub](https://hub.docker.com/repository/docker/yymin1022/wa-api)
 
 ```

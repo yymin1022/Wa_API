@@ -140,7 +140,7 @@ RESULT_MSG로 반환된 메시지 내용을 채팅으로 반환할 때, ```\\m``
 
 ## Example
 
-[Wa.. for Discord](https://github.com/yymin1022/Wa_Bot_Discord)
+[Wa.. for Discord](https://github.com/yymin1022/Wa_Bot_Discord)<br/>
 [Wa.. for Telegram](https://github.com/yymin1022/Wa_Bot_Telegram)
 
 ## Want Contribute?

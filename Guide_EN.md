@@ -128,7 +128,7 @@ You can check all messages on ```message.py```
 
 ## Example
 
-[Wa.. for Discord](https://github.com/yymin1022/Wa_Bot_Discord)
+[Wa.. for Discord](https://github.com/yymin1022/Wa_Bot_Discord)<br/>
 [Wa.. for Telegram](https://github.com/yymin1022/Wa_Bot_Telegram)
 
 ## Want Contribute?

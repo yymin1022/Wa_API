@@ -128,7 +128,8 @@ You can check all messages on ```message.py```
 
 ## Example
 
-[CAU Meal Bot on Telegram](https://github.com/yymin1022/CAU_Meal_Bot_Telegram)
+[Wa.. for Discord](https://github.com/yymin1022/Wa_Bot_Discord)
+[Wa.. for Telegram](https://github.com/yymin1022/Wa_Bot_Telegram)
 
 ## Want Contribute?
 

@@ -17,6 +17,11 @@ Python Flask를 이용해 개발되었으며, 추후 ```Node.JS``` 기반으로 
 [Engligh](Guide_EN.md)<br/>
 [한국어](Guide_KO.md)
 
+### Example
+
+[Wa.. for Discord](https://github.com/yymin1022/Wa_Bot_Discord)
+[Wa.. for Telegram](https://github.com/yymin1022/Wa_Bot_Telegram)
+
 ### History
 
 * 2020\. 01\. 카카오톡 봇 단일 서비스 시작

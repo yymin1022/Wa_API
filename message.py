@@ -282,9 +282,9 @@ def messageHa():
 def messageHokyu():
     strMessage = ""
     
-    randInt = random.randrange(0, 8)
+    randInt = random.randrange(0, 9)
     if randInt == 0:
-        strMessage = "필승! 833기 이병 김호규입니다!"
+        strMessage = "필승! 833기 일병 김호규입니다!"
     elif randInt == 1:
         strMessage = "예! 이병 김호규!"
     elif randInt == 2:
@@ -299,6 +299,8 @@ def messageHokyu():
         strMessage = "호구"
     elif randInt == 7:
         strMessage = "K2C1 핥짝핥짝"
+    elif randInt == 8:
+        strMessage = "감사합니다. 314대대 통신반 일병 김호규입니다. 머슼타드일까요?"
     
     return strMessage
 

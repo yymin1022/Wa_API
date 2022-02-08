@@ -305,7 +305,7 @@ def messageHokyu():
 def messageHokyuGraduate():
     strMessage = ""
     dateStart = datetime.date(2021,12,6)
-    dateEnd = datetime.date(2023,9,5)
+    dateEnd = datetime.date(2023,8,27)
     dateToday = datetime.date.today()
 
     leftDays = (dateEnd - dateToday).days - 1

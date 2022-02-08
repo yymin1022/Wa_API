@@ -286,7 +286,7 @@ def messageHokyu():
     if randInt == 0:
         strMessage = "필승! 833기 일병 김호규입니다!"
     elif randInt == 1:
-        strMessage = "예! 이병 김호규!"
+        strMessage = "예! 일병 김호규!"
     elif randInt == 2:
         strMessage = "필승!"
     elif randInt == 3:

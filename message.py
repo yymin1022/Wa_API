@@ -203,31 +203,25 @@ def messageCorona():
     return strMessage
 
 def messageCoronaCity():
-    tokenFile = open("/app/API_TOKEN", "r")
-    API_TOKEN = tokenFile.readline().strip()
-    tokenFile.close()
+    curDate = datetime.date.today().strftime("%Y년 %m월 %d일")
+    curTimestamp = str(time.time())
 
-    dateToday = datetime.date.today().strftime("%Y%m%d")
+    url = f"https://apiv3.corona-live.com/domestic/live.json?timestamp={curTimestamp}"
+    response = requests.get(url)
+    jsonData = json.loads(response.content)["cities"]
 
-    url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson"
-    params = {
-        "serviceKey": API_TOKEN,
-        "pageNo" : "1",
-        "numOfRows" : "10",
-        "startCreateDt" : dateToday,
-        "endCreateDt" : dateToday
-    }
+    domesticList = ["서울", "부산", "인천", "대구", "광주", "대전", "울산", "세종", "경기", "강원", "충북", "충남", "경북", "경남", "전북", "전남", "제주", "입국 검역소"]
 
-    response = requests.get(url, params=params)
+    strDomestic = ""
+    for i in range(18):
+        dataCurDomestic = jsonData[str(i)]
+        strDomestic += f"{domesticList[i]} {format(dataCurDomestic[0], ',')}명 "
+        if(int(dataCurDomestic[1]) < 0):
+            strDomestic += f"(- {format(int(dataCurDomestic[1]) * -1, ',')})\n"
+        else:
+            strDomestic += f"(+ {format(dataCurDomestic[1], ',')})\n"
 
-    itemList = xmltodict.parse(response.content)['response']['body']['items']['item']
-    itemList.sort(key=lambda x: x['gubun'])
-
-    strMessage = "%s 지역별 코로나19 현황\\n"%(datetime.date.today().strftime("%m월 %d일"))
-
-    for item in itemList:
-        if item['gubun'] != "검역":
-            strMessage += "%s %s명\\n"%(item['gubun'], item['incDec'])
+    strMessage = f"{curDate} 코로나19 지역별 현황\n{strDomestic}"
 
     return strMessage
 

@@ -23,6 +23,8 @@ def getReplyMessage(message):
             strResult = messageCoronaCity()
         else:
             strResult = messageCorona()
+    elif "방역" in message and ("수칙" in message or "지침" in message):
+        messageCoronaRule()
     elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
         strResult = messageCry()
     elif "뭐먹" in message:
@@ -236,6 +238,30 @@ def messageCoronaCity():
             strDomestic += f"(+{format(dataCurDomestic[1], ',')})\n"
 
     strMessage = f"{curDate} 코로나19 지역별 현황\n{strDomestic}".rstrip()
+
+    return strMessage
+
+def messageCoronaRule():
+    headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36'}
+    url = "https://o-bang.kr/"
+
+    res = requests.get(url, headers=headers)
+    soup = BeautifulSoup(res.text, features="html.parser")
+
+    divParent = soup.find_all("div")[0]
+    divFrame = divParent.find_all("div")[4]
+    divContainer = divFrame.find_all("div")[2]
+    divTerm = divContainer.find_all("div")[2]
+    divPerson = divContainer.find_all("div")[5]
+    divTime = divContainer.find_all("div")[8]
+    divPass = divContainer.find_all("div")[11]
+
+    strTerm = divTerm.text
+    strPerson = divPerson.text
+    strTime = divTime.text
+    strPass = divPass.text
+
+    strMessage = f"현행 코로나19 방역수칙\n\n인원제한 - {strPerson}\n시간제한 - {strTime}\n방역패스 - {strPass}\n\n적용기간 {strTerm}"
 
     return strMessage
 

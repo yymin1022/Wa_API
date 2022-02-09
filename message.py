@@ -184,9 +184,23 @@ def messageCorona():
     dataRecovered = jsonData["recovered"]
 
     strConfirmed = f"확진자 : {format(dataConfirmed[1], ',')}명 (누적 {format(dataConfirmed[0], ',')}명)"
-    strSevere = f"위중증 : {format(dataSevere[0], ',')}명 (+{format(dataSevere[1], ',')})"
-    strRecovered = f"완치자 : {format(dataRecovered[0], ',')}명 (+{format(dataRecovered[1], ',')})"
-    strDeceased = f"사망자 : {format(dataDeceased[0], ',')}명 (+{format(dataDeceased[1], ',')})"
+    strSevere = f"위중증 : {format(dataSevere[0], ',')}명 "
+    if int(dataSevere[1]) < 0:
+        strSevere += f"(-{format(int(dataSevere[1]) * -1, ',')})"
+    else:
+        strSevere += f"(+{format(dataSevere[1], ',')})"
+
+    strRecovered = f"완치자 : {format(dataRecovered[0], ',')}명 "
+    if int(dataRecovered[1]) < 0:
+        strRecovered += f"(-{format(int(dataRecovered[1]) * -1, ',')})"
+    else:
+        strRecovered += f"(+{format(dataRecovered[1], ',')})"
+
+    strDeceased = f"사망자 : {format(dataDeceased[0], ',')}명 "
+    if int(dataDeceased[1]) < 0:
+        strDeceased += f"(-{format(int(dataDeceased[1]) * -1, ',')})"
+    else:
+        strDeceased += f"(+{format(dataDeceased[1], ',')})"
 
     url = f"https://apiv3.corona-live.com/domestic/live.json?timestamp={curTimestamp}"
     response = requests.get(url)

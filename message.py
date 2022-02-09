@@ -24,7 +24,7 @@ def getReplyMessage(message):
         else:
             strResult = messageCorona()
     elif "방역" in message and ("수칙" in message or "지침" in message):
-        messageCoronaRule()
+        strResult = messageCoronaRule()
     elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
         strResult = messageCry()
     elif "뭐먹" in message:

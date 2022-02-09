@@ -183,7 +183,7 @@ def messageCorona():
     dataDeceased = jsonData["deceased"]
     dataRecovered = jsonData["recovered"]
 
-    strConfirmed = f"확진자 : {format(dataConfirmed[1], ',')}명 (누적 {format(dataConfirmed[1], ',')}명)"
+    strConfirmed = f"확진자 : {format(dataConfirmed[1], ',')}명 (누적 {format(dataConfirmed[0], ',')}명)"
     strConfirmedSevere = f"위중증 : {format(dataConfirmedSevere[0], ',')}명 (+{format(dataConfirmedSevere[1], ',')})"
     strRecovered = f"완치자 : {format(dataRecovered[0], ',')}명 (+{format(dataRecovered[1], ',')})"
     strDeceased = f"사망자 : {format(dataDeceased[0], ',')}명 (+{format(dataDeceased[1], ',')})"

@@ -235,7 +235,7 @@ def messageCoronaCity():
         else:
             strDomestic += f"(+{format(dataCurDomestic[1], ',')})\n"
 
-    strMessage = f"{curDate} 코로나19 지역별 현황\n{strDomestic}"
+    strMessage = f"{curDate} 코로나19 지역별 현황\n{strDomestic}".rstrip()
 
     return strMessage
 

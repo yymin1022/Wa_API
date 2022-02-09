@@ -170,37 +170,34 @@ def messageCoding():
     return strMessage
 
 def messageCorona():
-    tokenFile = open("/app/API_TOKEN", "r")
-    API_TOKEN = tokenFile.readline().strip()
-    tokenFile.close()
+    curDate = datetime.date.today().strftime("%Y년 %m월 %d일")
+    curTimestamp = str(time.time())
 
-    dateYesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y%m%d")
-    dateToday = datetime.date.today().strftime("%Y%m%d")
+    url = f"https://apiv3.corona-live.com/domestic/stat.json?timestamp={curTimestamp}"
+    response = requests.get(url)
+    jsonData = json.loads(response.content)["overview"]
 
-    url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson"
-    params = {
-        "serviceKey": API_TOKEN,
-        "pageNo": "1",
-        "numOfRows": "10",
-        "startCreateDt": dateYesterday,
-        "endCreateDt": dateToday
-    }
+    dataConfirmed = jsonData["confirmed"]
+    dataConfirmedSevere = jsonData["confirmedSevereSymptoms"]
+    dataDeceased = jsonData["deceased"]
+    dataRecovered = jsonData["recovered"]
 
-    response = requests.get(url, params=params)
+    strConfirmed = f"확진자 : {format(dataConfirmed[1], ',')}명 (누적 {format(dataConfirmed[1], ',')}명)"
+    strConfirmedSevere = f"위중증 : {dataConfirmedSevere[0]}명 (+{dataConfirmedSevere[1]})"
+    strRecovered = f"완치자 : {dataRecovered[0]}명 (+{dataRecovered[1]})"
+    strDeceased = f"사망자 : {dataDeceased[0]}명 (+{dataDeceased[1]})"
 
-    valDate = xmltodict.parse(response.content)['response']['body']['items']['item'][0]['createDt']
+    url = f"https://apiv3.corona-live.com/domestic/live.json?timestamp={curTimestamp}"
+    response = requests.get(url)
+    jsonData = json.loads(response.content)["live"]
 
-    valYesterday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][1]['decideCnt'])
-    valToday = int(xmltodict.parse(response.content)['response']['body']['items']['item'][0]['decideCnt'])
+    dataConfirmedLive = jsonData["today"]
+    dataConfirmedLiveYesterday = jsonData["yesterday"]
 
-    valTime = valDate.split()[1].split(".")[0]
-    valDate = valDate.split()[0].split("-")[1] + "월 " + valDate.split()[0].split("-")[2] + "일"
+    strConfirmedLive = f"실시간 : {format(dataConfirmedLive, ',')}명"
+    strConfirmedLiveYesterday = f"어제 동시간대 : {format(dataConfirmedLiveYesterday, ',')}명"
 
-    valDifference = "{0:,}".format(valToday - valYesterday)
-    valYesterday = "{0:,}".format(valYesterday)
-    valToday = "{0:,}".format(valToday)
-
-    strMessage = "%s 코로나19 현황\\n신규 %s명\\n누적 %s명\\n업데이트 %s"%(valDate, valDifference, valToday, valTime)
+    strMessage = f"{curDate} 코로나19 현황\n{strConfirmedLive}\n{strConfirmedLiveYesterday}\n\n어제까지\n{strConfirmed}\n{strConfirmedSevere}\n{strRecovered}\n{strDeceased}"
 
     return strMessage
 

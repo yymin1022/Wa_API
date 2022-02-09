@@ -217,9 +217,9 @@ def messageCoronaCity():
         dataCurDomestic = jsonData[str(i)]
         strDomestic += f"{domesticList[i]} {format(dataCurDomestic[0], ',')}명 "
         if(int(dataCurDomestic[1]) < 0):
-            strDomestic += f"(- {format(int(dataCurDomestic[1]) * -1, ',')})\n"
+            strDomestic += f"(-{format(int(dataCurDomestic[1]) * -1, ',')})\n"
         else:
-            strDomestic += f"(+ {format(dataCurDomestic[1], ',')})\n"
+            strDomestic += f"(+{format(dataCurDomestic[1], ',')})\n"
 
     strMessage = f"{curDate} 코로나19 지역별 현황\n{strDomestic}"
 

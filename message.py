@@ -181,28 +181,35 @@ def messageCorona():
     jsonData = json.loads(response.content)["overview"]
 
     dataConfirmed = jsonData["confirmed"]
-    dataSevere = jsonData["confirmedSevereSymptoms"]
+    dataCritical = jsonData["confirmedCritical"]
     dataDeceased = jsonData["deceased"]
+    dataHospitalised = jsonData["hospitalised"]
     dataRecovered = jsonData["recovered"]
 
     strConfirmed = f"확진자 : {format(dataConfirmed[1], ',')}명 (누적 {format(dataConfirmed[0], ',')}명)"
-    strSevere = f"위중증 : {format(dataSevere[0], ',')}명 "
-    if int(dataSevere[1]) < 0:
-        strSevere += f"(-{format(int(dataSevere[1]) * -1, ',')})"
+    strCritical = f"위중증 : {format(dataCritical[0], ',')}명 "
+    if int(dataCritical[1]) < 0:
+        strCritical += f"(-{format(int(dataCritical[1]) * -1, ',')})"
     else:
-        strSevere += f"(+{format(dataSevere[1], ',')})"
-
-    strRecovered = f"완치자 : {format(dataRecovered[0], ',')}명 "
-    if int(dataRecovered[1]) < 0:
-        strRecovered += f"(-{format(int(dataRecovered[1]) * -1, ',')})"
-    else:
-        strRecovered += f"(+{format(dataRecovered[1], ',')})"
+        strCritical += f"(+{format(dataCritical[1], ',')})"
 
     strDeceased = f"사망자 : {format(dataDeceased[0], ',')}명 "
     if int(dataDeceased[1]) < 0:
         strDeceased += f"(-{format(int(dataDeceased[1]) * -1, ',')})"
     else:
         strDeceased += f"(+{format(dataDeceased[1], ',')})"
+
+    strHospitalised = f"입원환자 : {format(dataHospitalised[0], ',')}명 "
+    if int(dataHospitalised[1]) < 0:
+        strHospitalised += f"(-{format(int(dataHospitalised[1]) * -1, ',')})"
+    else:
+        strHospitalised += f"(+{format(dataHospitalised[1], ',')})"
+
+    strRecovered = f"완치자 : {format(dataRecovered[0], ',')}명 "
+    if int(dataRecovered[1]) < 0:
+        strRecovered += f"(-{format(int(dataRecovered[1]) * -1, ',')})"
+    else:
+        strRecovered += f"(+{format(dataRecovered[1], ',')})"
 
     url = f"https://apiv3.corona-live.com/domestic/live.json?timestamp={curTimestamp}"
     response = requests.get(url)
@@ -214,7 +221,7 @@ def messageCorona():
     strConfirmedLive = f"실시간 : {format(dataConfirmedLive, ',')}명"
     strConfirmedLiveYesterday = f"어제 동시간대 : {format(dataConfirmedLiveYesterday, ',')}명"
 
-    strMessage = f"{curDate} 코로나19 현황\n{strConfirmedLive}\n{strConfirmedLiveYesterday}\n\n어제까지\n{strConfirmed}\n{strSevere}\n{strRecovered}\n{strDeceased}"
+    strMessage = f"{curDate} 코로나19 현황\n{strConfirmedLive}\n{strConfirmedLiveYesterday}\n\n어제까지\n{strConfirmed}\n{strCritical}\n{strHospitalised}\n{strRecovered}\n{strDeceased}"
 
     return strMessage
 

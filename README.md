@@ -21,6 +21,7 @@ Python Flask를 이용해 개발되었으며, 추후 ```Node.JS``` 기반으로 
 ### Example
 
 [Wa.. for Discord](https://github.com/yymin1022/Wa_Bot_Discord)<br/>
+[Wa.. for KakaoTalk](https://github.com/yymin1022/Wa_Bot_KakaoTalk)<br/>
 [Wa.. for Telegram](https://github.com/yymin1022/Wa_Bot_Telegram)
 
 ### History

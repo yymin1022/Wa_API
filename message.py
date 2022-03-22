@@ -184,7 +184,6 @@ def messageCorona():
     dataCritical = jsonData["confirmedCritical"]
     dataDeceased = jsonData["deceased"]
     dataHospitalised = jsonData["hospitalised"]
-    dataRecovered = jsonData["recovered"]
 
     strConfirmed = f"확진자 : {format(dataConfirmed[1], ',')}명 (누적 {format(dataConfirmed[0], ',')}명)"
     strCritical = f"위중증 : {format(dataCritical[0], ',')}명 "
@@ -205,12 +204,6 @@ def messageCorona():
     else:
         strHospitalised += f"(+{format(dataHospitalised[1], ',')})"
 
-    strRecovered = f"완치자 : {format(dataRecovered[0], ',')}명 "
-    if int(dataRecovered[1]) < 0:
-        strRecovered += f"(-{format(int(dataRecovered[1]) * -1, ',')})"
-    else:
-        strRecovered += f"(+{format(dataRecovered[1], ',')})"
-
     url = f"https://apiv3.corona-live.com/domestic/live.json?timestamp={curTimestamp}"
     response = requests.get(url)
     jsonData = json.loads(response.content)["live"]
@@ -221,7 +214,7 @@ def messageCorona():
     strConfirmedLive = f"실시간 : {format(dataConfirmedLive, ',')}명"
     strConfirmedLiveYesterday = f"어제 동시간대 : {format(dataConfirmedLiveYesterday, ',')}명"
 
-    strMessage = f"{curDate} 코로나19 현황\n{strConfirmedLive}\n{strConfirmedLiveYesterday}\n\n어제까지\n{strConfirmed}\n{strCritical}\n{strHospitalised}\n{strRecovered}\n{strDeceased}"
+    strMessage = f"{curDate} 코로나19 현황\n{strConfirmedLive}\n{strConfirmedLiveYesterday}\n\n어제까지\n{strConfirmed}\n{strCritical}\n{strHospitalised}\n{strDeceased}"
 
     return strMessage
 

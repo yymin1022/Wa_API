@@ -23,8 +23,6 @@ def getReplyMessage(message):
             strResult = messageCoronaCity()
         else:
             strResult = messageCorona()
-    elif "방역" in message and ("수칙" in message or "지침" in message):
-        strResult = messageCoronaRule()
     elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
         strResult = messageCry()
     elif "뭐먹" in message:
@@ -42,8 +40,6 @@ def getReplyMessage(message):
         strResult = messageHungry()
     elif "이런.." in message:
         strResult = messageIreon()
-    elif "저누님" in message:
-        strResult = messageJeonwoo()
     elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
         strResult = messageLaugh()
     elif "무야호" in message:
@@ -76,23 +72,8 @@ def getReplyMessage(message):
         strResult = messageWa()
     elif "와!" in message:
         strResult = messageWaSans()
-    elif "근무" in message:
-        if "오늘" in message:
-            strResult = messageWorkToday()
-        elif "내일" in message:
-            strResult = messageWorkTomorrow()
-        elif "월" in message and "일" in message:
-            year = datetime.date.today().year
-            if "년" in message:
-                year = message.split("년")[0]
-            month = message.split("월")[0].split()[-1]
-            day = message.split("월")[1].split("일")[0].split()[-1]
-            strResult = messageWorkDate(year, month, day)
     elif "용민" in message:
-        if "전역" in message:
-            strResult = messageYongminGraduate()
-        else:
-            strResult = messageYongmin()
+        strResult = messageYongmin()
     elif "자라" in message:
         strResult = messageZara()
     elif "자야" in message:
@@ -241,30 +222,6 @@ def messageCoronaCity():
 
     return strMessage
 
-def messageCoronaRule():
-    headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36'}
-    url = "https://o-bang.kr/"
-
-    res = requests.get(url, headers=headers)
-    soup = BeautifulSoup(res.text, features="html.parser")
-
-    divParent = soup.find_all("div")[0]
-    divFrame = divParent.find_all("div")[4]
-    divContainer = divFrame.find_all("div")[2]
-    divTerm = divContainer.find_all("div")[2]
-    divPerson = divContainer.find_all("div")[5]
-    divTime = divContainer.find_all("div")[8]
-    divPass = divContainer.find_all("div")[11]
-
-    strTerm = divTerm.text
-    strPerson = divPerson.text
-    strTime = divTime.text
-    strPass = divPass.text
-
-    strMessage = f"현행 코로나19 방역수칙\n\n인원제한 - {strPerson}\n시간제한 - {strTime}\n방역패스 - {strPass}\n\n적용기간 {strTerm}"
-
-    return strMessage
-
 def messageCry():
     strMessage = "뭘 울어요;;"
 
@@ -388,21 +345,6 @@ def messageIreon():
         strMessage = "불쌍하네요.."
     
     return strMessage
-
-def messageJeonwoo():
-    randInt = random.randrange(0, 4)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "코딩좀 하십쇼;;"
-    elif randInt == 1:
-        strMessage = "공부좀 하십쇼;;"
-    elif randInt == 2:
-        strMessage = "일좀 하십쇼;;"
-    elif randInt == 3:
-        strMessage = "근무좀 하십쇼;;"
-    
-    return strMessage;
 
 def messageLaugh():
     randInt = random.randrange(0, 2)
@@ -563,71 +505,9 @@ def messageWaSans():
 
     return strMessage
 
-def messageWorkDate(year, month, day):
-    try:
-        year = int(year)
-        month = int(month)
-        day = int(day)
-
-        dateStart = datetime.date(2021,3,1)
-        dateToday = datetime.date(year, month, day)
-
-        countDays = (dateToday - dateStart).days
-        
-        strMessage = "%s 근무현황\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcWork(countDays))
-    except:
-        strMessage = "그게 날짜냐?"
-    
-    return strMessage
-
-def messageWorkToday():
-    dateStart = datetime.date(2021,3,1)
-    dateToday = datetime.date.today()
-    
-    countDays = (dateToday - dateStart).days
-
-    strMessage = "%s 근무현황\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcWork(countDays))
-
-    return strMessage
-
-def messageWorkTomorrow():
-    dateStart = datetime.date(2021,3,1)
-    dateToday = datetime.date.today() + datetime.timedelta(days=1)
-    
-    countDays = (dateToday - dateStart).days
-
-    strMessage = "%s 근무현황\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcWork(countDays))
-
-    return strMessage
-
 def messageYongmin():
-    randInt = random.randrange(0, 3)
-    strMessage = ""
+    strMessage = "집가고싶다"
     
-    if randInt == 0:
-        strMessage = "감사합니다. MCC 병장 유용민입니다. 머슼타드일까요?"
-    elif randInt == 1:
-        strMessage = "감사합니다. 체계운영실 병장 유용민입니다. 머슼타드일까요?"
-    elif randInt == 2:
-        strMessage = "감사합니다. 운영중대 병장 유용민입니다. 머슼타드일까요?"
-
-    return strMessage
-
-def messageYongminGraduate():
-    randInt = random.randrange(0, 3)
-    strMessage = ""
-    
-    if randInt == 0:
-        strMessage = "819기가 벌써 전역 따질 짬인가??"
-    elif randInt == 1:
-        strMessage = "404 Not Found"
-    elif randInt == 2:
-        dateGraduate = datetime.date(2022,7,12)
-        dateToday = datetime.date.today()
-        
-        countDays = (dateGraduate - dateToday).days - 1
-        strMessage = "전역까지 %d일 남았습니다."%(countDays)
-
     return strMessage
 
 def messageZara():
@@ -645,20 +525,3 @@ def messageZayazi():
     strMessage = "구라ㅡㅡ;;"
 
     return strMessage
-
-def calcWork(days):
-    calcValue = days % 5
-    strResult = ""
-    
-    if calcValue == 0:
-        strResult = "1조 2BRK\\n2조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n3조 1BRK\\n4조 MOR(07:10 ~ 12:10)\\n5조 AFT(12:00 ~ 17:50)"
-    elif calcValue == 1:
-        strResult = "1조 MOR(07:10 ~ 12:10)\\n2조 AFT(12:00 ~ 17:50)\\n3조 2BRK\\n4조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n5조 1BRK"
-    elif calcValue == 2:
-        strResult = "1조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n2조 1BRK\\n3조 MOR(07:10 ~ 12:10)\\n4조 AFT(12:00 ~ 17:50)\\n5조 2BRK"
-    elif calcValue == 3:
-        strResult = "1조 AFT(12:00 ~ 17:50)\\n2조 2BRK\\n3조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)\\n4조 1BRK\\n5조 MOR(07:10 ~ 12:10)"
-    elif calcValue == 4:
-        strResult = "1조 1BRK\\n2조 MOR(07:10 ~ 12:10)\\n3조 AFT(12:00 ~ 17:50)\\n4조 2BRK\\n5조 MID(23:40 ~ 07:20)/SWI(17:40 ~ 23:50)"
-    
-    return strResult

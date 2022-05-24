@@ -506,16 +506,8 @@ def messageWaSans():
     return strMessage
 
 def messageYongmin():
-    randInt = random.randrange(0, 3)
-    strMessage = ""
+    strMessage = "집가고싶다"
     
-    if randInt == 0:
-        strMessage = "감사합니다. MCC 병장 유용민입니다. 머슼타드일까요?"
-    elif randInt == 1:
-        strMessage = "감사합니다. 체계운영실 병장 유용민입니다. 머슼타드일까요?"
-    elif randInt == 2:
-        strMessage = "감사합니다. 운영중대 병장 유용민입니다. 머슼타드일까요?"
-
     return strMessage
 
 def messageZara():

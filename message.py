@@ -72,18 +72,6 @@ def getReplyMessage(message):
         strResult = messageWa()
     elif "와!" in message:
         strResult = messageWaSans()
-    elif "근무" in message:
-        if "오늘" in message:
-            strResult = messageWorkToday()
-        elif "내일" in message:
-            strResult = messageWorkTomorrow()
-        elif "월" in message and "일" in message:
-            year = datetime.date.today().year
-            if "년" in message:
-                year = message.split("년")[0]
-            month = message.split("월")[0].split()[-1]
-            day = message.split("월")[1].split("일")[0].split()[-1]
-            strResult = messageWorkDate(year, month, day)
     elif "용민" in message:
         if "전역" in message:
             strResult = messageYongminGraduate()
@@ -517,43 +505,6 @@ def messageWa():
 
 def messageWaSans():
     strMessage = "샌즈!\\m아시는구나!\\m이거 겁.나.어.렵.습.니.다."
-
-    return strMessage
-
-def messageWorkDate(year, month, day):
-    try:
-        year = int(year)
-        month = int(month)
-        day = int(day)
-
-        dateStart = datetime.date(2021,3,1)
-        dateToday = datetime.date(year, month, day)
-
-        countDays = (dateToday - dateStart).days
-        
-        strMessage = "%s 근무현황\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcWork(countDays))
-    except:
-        strMessage = "그게 날짜냐?"
-    
-    return strMessage
-
-def messageWorkToday():
-    dateStart = datetime.date(2021,3,1)
-    dateToday = datetime.date.today()
-    
-    countDays = (dateToday - dateStart).days
-
-    strMessage = "%s 근무현황\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcWork(countDays))
-
-    return strMessage
-
-def messageWorkTomorrow():
-    dateStart = datetime.date(2021,3,1)
-    dateToday = datetime.date.today() + datetime.timedelta(days=1)
-    
-    countDays = (dateToday - dateStart).days
-
-    strMessage = "%s 근무현황\\n%s"%(dateToday.strftime("%Y년 %m월 %d일"), calcWork(countDays))
 
     return strMessage
 

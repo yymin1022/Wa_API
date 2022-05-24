@@ -169,6 +169,7 @@ def messageCAUMeal(mealTypeID):
     elif mealTypeID == "40":
         mealType = "석식"
 
+    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
     mealResponse = requests.post(mealUrl, json=mealData).json()
     mealList = mealResponse["list"]
 

@@ -151,8 +151,30 @@ def messageBoolpyeon():
 
     return strMessage
 
-def messageCAUMeal(mealType):
-    strMessage = mealType
+def messageCAUMeal(mealTypeID):
+    strMessage = mealTypeID
+
+    mealData = {
+        "daily": 0,
+        "tabs": "1",
+        "tabs2": mealTypeID
+    }
+    mealType = ""
+    mealUrl = "https://mportal.cau.ac.kr/portlet/p005/p005.ajax"
+
+    if mealTypeID == "10":
+        mealType = "조식"
+    elif mealTypeID == "20":
+        mealType = "중식"
+    elif mealTypeID == "40":
+        mealType = "석식"
+
+    mealResponse = requests.post(mealUrl, json=mealDataLunch).json()
+    mealList = mealResponse["list"]
+
+    strMessage = f"{mealList[0]['date']}. 중앙대학교 학식메뉴({mealType})\n"
+    for mealItem in mealList:
+        strMessage += f"\n{mealItem['rest']} : {mealItem['menuDetail']}"
 
     return strMessage
 

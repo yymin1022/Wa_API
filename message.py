@@ -16,6 +16,13 @@ def getReplyMessage(message):
         strResult = messageBaby()
     elif "불편" in message:
         strResult = messageBoolpyeon()
+    elif "학식" in message:
+        if "아침" in message or "조식" in message:
+            strResult = messageCAUMeal("10")
+        elif "점심" in message or "중식" in message:
+            strResult = messageCAUMeal("20")
+        elif "저녁" in message or "석식" in message:
+            strResult = messageCAUMeal("30")
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
     elif ("코로나" in message or "확진자" in message) and "몇" in message:
@@ -141,6 +148,33 @@ def messageBaby():
 
 def messageBoolpyeon():
     strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불편하니깐 그런거아냐!!"
+
+    return strMessage
+
+def messageCAUMeal(mealTypeID):
+    strMessage = mealTypeID
+
+    mealData = {
+        "daily": 0,
+        "tabs": "1",
+        "tabs2": mealTypeID
+    }
+    mealType = ""
+    mealUrl = "https://mportal.cau.ac.kr/portlet/p005/p005.ajax"
+
+    if mealTypeID == "10":
+        mealType = "조식"
+    elif mealTypeID == "20":
+        mealType = "중식"
+    elif mealTypeID == "40":
+        mealType = "석식"
+
+    mealResponse = requests.post(mealUrl, json=mealDataLunch).json()
+    mealList = mealResponse["list"]
+
+    strMessage = f"{mealList[0]['date']}. 중앙대학교 학식메뉴({mealType})\n"
+    for mealItem in mealList:
+        strMessage += f"\n{mealItem['rest']} : {mealItem['menuDetail']}"
 
     return strMessage
 

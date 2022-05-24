@@ -169,7 +169,7 @@ def messageCAUMeal(mealTypeID):
     elif mealTypeID == "40":
         mealType = "석식"
 
-    mealResponse = requests.post(mealUrl, json=mealDataLunch).json()
+    mealResponse = requests.post(mealUrl, json=mealData).json()
     mealList = mealResponse["list"]
 
     strMessage = f"{mealList[0]['date']}. 중앙대학교 학식메뉴({mealType})\n"

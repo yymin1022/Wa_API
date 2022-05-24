@@ -16,6 +16,13 @@ def getReplyMessage(message):
         strResult = messageBaby()
     elif "불편" in message:
         strResult = messageBoolpyeon()
+    elif "학식" in message:
+        if "아침" in message or "조식" in message:
+            strResult = messageCAUMeal("10")
+        elif "점심" in message or "중식" in message:
+            strResult = messageCAUMeal("20")
+        elif "저녁" in message or "석식" in message:
+            strResult = messageCAUMeal("30")
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
     elif ("코로나" in message or "확진자" in message) and "몇" in message:
@@ -141,6 +148,11 @@ def messageBaby():
 
 def messageBoolpyeon():
     strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불편하니깐 그런거아냐!!"
+
+    return strMessage
+
+def messageCAUMeal(mealType):
+    strMessage = mealType
 
     return strMessage
 

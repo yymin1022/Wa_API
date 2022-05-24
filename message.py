@@ -359,7 +359,7 @@ def messageLaugh():
 
     return strMessage
 
-def messageMooYaHo():
+def messageMoloo():
     strMessage = "몰?루"
 
     return strMessage

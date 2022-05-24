@@ -73,10 +73,7 @@ def getReplyMessage(message):
     elif "와!" in message:
         strResult = messageWaSans()
     elif "용민" in message:
-        if "전역" in message:
-            strResult = messageYongminGraduate()
-        else:
-            strResult = messageYongmin()
+        strResult = messageYongmin()
     elif "자라" in message:
         strResult = messageZara()
     elif "자야" in message:
@@ -518,23 +515,6 @@ def messageYongmin():
         strMessage = "감사합니다. 체계운영실 병장 유용민입니다. 머슼타드일까요?"
     elif randInt == 2:
         strMessage = "감사합니다. 운영중대 병장 유용민입니다. 머슼타드일까요?"
-
-    return strMessage
-
-def messageYongminGraduate():
-    randInt = random.randrange(0, 3)
-    strMessage = ""
-    
-    if randInt == 0:
-        strMessage = "819기가 벌써 전역 따질 짬인가??"
-    elif randInt == 1:
-        strMessage = "404 Not Found"
-    elif randInt == 2:
-        dateGraduate = datetime.date(2022,7,12)
-        dateToday = datetime.date.today()
-        
-        countDays = (dateGraduate - dateToday).days - 1
-        strMessage = "전역까지 %d일 남았습니다."%(countDays)
 
     return strMessage
 

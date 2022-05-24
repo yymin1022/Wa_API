@@ -49,7 +49,7 @@ def getReplyMessage(message):
         strResult = messageIreon()
     elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
         strResult = messageLaugh()
-    elif ("앎" in mssage or "아는사람" in message) or "알아" in message:
+    elif ("앎" in message or "아는사람" in message) or "알아" in message:
         strResult = messageMoloo()
     elif "무야호" in message:
         strResult = messageMooYaHo()

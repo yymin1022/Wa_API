@@ -23,6 +23,8 @@ def getReplyMessage(message):
             strResult = messageCAULibrary("2")
         elif "안성" in message:
             strResult = messageCAULibrary("3")
+        else:
+            strResult = messageCAULibrary("")
     elif "학식" in message:
         if "아침" in message or "조식" in message:
             strResult = messageCAUMeal("10")

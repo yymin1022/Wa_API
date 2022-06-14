@@ -32,6 +32,8 @@ def getReplyMessage(message):
             strResult = messageCAUMeal("20")
         elif "저녁" in message or "석식" in message:
             strResult = messageCAUMeal("30")
+        else:
+            strResult = messageCAUMeal("")
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
     elif ("코로나" in message or "확진자" in message) and "몇" in message:

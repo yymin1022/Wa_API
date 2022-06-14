@@ -211,6 +211,9 @@ def messageCAUMeal(mealTypeID):
         mealType = "중식"
     elif mealTypeID == "40":
         mealType = "석식"
+    else:
+        strMessage = "중앙대학교 학식메뉴\n\n사용법 : 학식 키워드와 함께 아침 / 점심 / 저녁 / 조식 / 중식 / 석식 키워드 언급"
+        return strMessage
 
     requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
     mealResponse = requests.post(mealUrl, json=mealData).json()

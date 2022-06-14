@@ -54,6 +54,8 @@ def getReplyMessage(message):
         strResult = messageHungry()
     elif "이런.." in message:
         strResult = messageIreon()
+    elif "주형" in message:
+        strResult = messageJoohyeong()
     elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
         strResult = messageLaugh()
     elif ("앎" in message or "아는사람" in message) or "알아" in message:
@@ -418,6 +420,11 @@ def messageIreon():
     elif randInt == 4:
         strMessage = "불쌍하네요.."
     
+    return strMessage
+
+def messageJoohyeong():
+    strMessage = "예! 2025년도 CECOM 회장 이주형!"
+
     return strMessage
 
 def messageLaugh():

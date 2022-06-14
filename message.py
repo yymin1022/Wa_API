@@ -25,13 +25,17 @@ def getReplyMessage(message):
             strResult = messageCAULibrary("2")
         elif "안성" in message:
             strResult = messageCAULibrary("3")
+        else:
+            strResult = messageCAULibrary("")
     elif "학식" in message:
         if "아침" in message or "조식" in message:
             strResult = messageCAUMeal("10")
         elif "점심" in message or "중식" in message:
             strResult = messageCAUMeal("20")
         elif "저녁" in message or "석식" in message:
-            strResult = messageCAUMeal("30")
+            strResult = messageCAUMeal("40")
+        else:
+            strResult = messageCAUMeal("")
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
     elif ("코로나" in message or "확진자" in message) and "몇" in message:
@@ -188,31 +192,34 @@ def messageCAUCalendar():
     return strMessage
 
 def messageCAULibrary(libTypeID):
-   strMessage = libTypeID
+    strMessage = libTypeID
 
-   libData = {
+    libData = {
        "tabNo": libTypeID
-   }
-   libType = ""
-   libUrl = "https://mportal.cau.ac.kr/portlet/p017/p017.ajax"
+    }
+    libType = ""
+    libUrl = "https://mportal.cau.ac.kr/portlet/p017/p017.ajax"
 
-   if libTypeID == "1":
+    if libTypeID == "1":
        libType = "서울"
-   elif libTypeID == "2":
+    elif libTypeID == "2":
        libType = "법학"
-   elif libTypeID == "3":
+    elif libTypeID == "3":
        libType = "안성"
+    else:
+        strMessage = "중앙대학교 열람실 좌석현황\n\n사용법 : 열람실 키워드와 함께 서울 / 안성 / 법학 키워드 언급"
+        return strMessage
 
-   requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
-   libResponse = requests.post(libUrl, json=libData).json()
+    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
+    libResponse = requests.post(libUrl, json=libData).json()
 
-   libList = libResponse["gridData"]
+    libList = libResponse["gridData"]
 
-   strMessage = f"중앙대학교 열람실 좌석현황({libType})\n"
-   for libItem in libList:
+    strMessage = f"중앙대학교 열람실 좌석현황({libType})\n"
+    for libItem in libList:
        strMessage += f"\n{libItem['roomName']} : 여석 {libItem['remainCnt']}석 ({libItem['useCnt']}석 사용중)"
 
-   return strMessage
+    return strMessage
 
 def messageCAUMeal(mealTypeID):
     strMessage = mealTypeID
@@ -231,6 +238,9 @@ def messageCAUMeal(mealTypeID):
         mealType = "중식"
     elif mealTypeID == "40":
         mealType = "석식"
+    else:
+        strMessage = "중앙대학교 학식메뉴\n\n사용법 : 학식 키워드와 함께 아침 / 점심 / 저녁 / 조식 / 중식 / 석식 키워드 언급"
+        return strMessage
 
     requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
     mealResponse = requests.post(mealUrl, json=mealData).json()

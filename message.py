@@ -209,7 +209,10 @@ def messageCAUMeal(mealTypeID):
 
     strMessage = f"{mealList[0]['date']}. 중앙대학교 학식메뉴({mealType})\n"
     for mealItem in mealList:
-        strMessage += f"\n{mealItem['rest']} : {mealItem['menuDetail']}"
+        strMenu = mealItem['menuDetail']
+        if strMenu == None:
+            strMenu = "정보가 없습니다."
+        strMessage += f"\n{mealItem['rest']} : {strMenu}"
 
     return strMessage
 

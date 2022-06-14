@@ -16,6 +16,13 @@ def getReplyMessage(message):
         strResult = messageBaby()
     elif "불편" in message:
         strResult = messageBoolpyeon()
+    elif "열람실" in message:
+        if "서울" in message:
+            strResult = messageCAULibrary("1")
+        elif "법학" in message:
+            strResult = messageCAULibrary("2")
+        elif "안성" in message:
+            strResult = messageCAULibrary("3")
     elif "학식" in message:
         if "아침" in message or "조식" in message:
             strResult = messageCAUMeal("10")
@@ -150,6 +157,33 @@ def messageBoolpyeon():
     strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불편하니깐 그런거아냐!!"
 
     return strMessage
+
+def messageCAULibrary(libTypeID):
+   strMessage = libTypeID
+
+   libData = {
+       "tabNo": libTypeID
+   }
+   libType = ""
+   libUrl = "https://mportal.cau.ac.kr/portlet/p017/p017.ajax"
+
+   if libTypeID == "1":
+       libType = "서울"
+   elif libTypeID == "2":
+       libType = "법학"
+   elif libTypeID == "3":
+       libType = "안성"
+
+   requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
+   libResponse = requests.post(libUrl, json=libData).json()
+
+   libList = libResponse["gridData"]
+
+   strMessage = f"중앙대학교 열람실 좌석현황({libType})\n"
+   for libItem in libList:
+       strMessage += f"\n{libItem['roomName']} : 여석 {libItem['remainCnt']}석 ({libItem['useCnt']}석 사용중)"
+
+   return strMessage
 
 def messageCAUMeal(mealTypeID):
     strMessage = mealTypeID

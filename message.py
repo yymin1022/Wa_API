@@ -16,6 +16,8 @@ def getReplyMessage(message):
         strResult = messageBaby()
     elif "불편" in message:
         strResult = messageBoolpyeon()
+    elif "학사일정" in message:
+        strResult = messageCAUCalendar()
     elif "열람실" in message:
         if "서울" in message:
             strResult = messageCAULibrary("1")
@@ -161,6 +163,31 @@ def messageBaby():
 
 def messageBoolpyeon():
     strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불편하니깐 그런거아냐!!"
+
+    return strMessage
+
+def messageCAUCalendar():
+    strMessage = ""
+
+    calData = datetime.date.today()
+    calMonth = calData.month
+    calYear = calData.year
+
+    calData = {
+        "active": True,
+        "month": calMonth,
+        "title": f"{calMonth}월",
+        "year": calYear
+    }
+    calUrl = "https://mportal.cau.ac.kr/portlet/p014/p014List.ajax"
+
+    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
+    calResponse = eval(requests.post(calUrl, json=calData).json())
+    calList = calResponse["data"]
+
+    strMessage = f"중앙대학교 {calMonth}월 학사일정\n"
+    for calItem in calList:
+        strMessage += f"\n{calItem['TITLE']} : {calItem['TDAY']}"
 
     return strMessage
 

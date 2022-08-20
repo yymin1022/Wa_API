@@ -5,7 +5,7 @@ pipeline {
         stage("Set Variable") {
             steps {
                 script {
-                    DOCKER_CREDENTIAL = credentials("Dockerhub yymin1022")
+                    DOCKERHUB_CREDENTIAL = credentials("dockerhub-yymin1022")
                     DOCKER_IMAGE_NAME = "wa-api"
                     DOCKER_IMAGE_STORAGE = "yymin1022"
                 }
@@ -23,7 +23,7 @@ pipeline {
         stage("Push Docker Image to Dockerhub") {
             steps {
                 script {
-                    sh "echo ${DOCKER_CREDENTIAL_PSW} | docker login -u ${DOCKER_CREDENTIAL_USR} --password-stdin"
+                    sh "echo ${DOCKERHUB_CREDENTIAL_PSW} | docker login -u ${DOCKERHUB_CREDENTIAL_USR} --password-stdin"
                     sh "docker push ${DOCKER_IMAGE_STORAGE}/${DOCKER_IMAGE_NAME}"
                 }
             }

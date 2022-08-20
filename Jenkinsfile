@@ -5,7 +5,7 @@ pipeline {
         stage("Set Variable") {
             steps {
                 script {
-                    DOCKERHUB_CREDENTIAL = credentials("dockerhub-yymin1022")
+                    DOCKERHUB_CREDENTIAL = "dockerhub-yymin1022"
                     DOCKER_IMAGE_NAME = "wa-api"
                     DOCKER_IMAGE_STORAGE = "yymin1022"
                 }
@@ -23,7 +23,7 @@ pipeline {
         stage("Push Docker Image to Dockerhub") {
             steps {
                 script {
-                    docker.withRegistry("", "dockerhub-yymin1022") {
+                    docker.withRegistry("", DOCKERHUB_CREDENTIAL) {
                         image.push()
                     }
                 }

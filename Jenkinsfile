@@ -23,7 +23,7 @@ pipeline {
         stage("Push Docker Image to Dockerhub") {
             steps {
                 script {
-                    sh 'echo $DOCKERHUB_CREDENTIAL_PSW | docker login -u $DOCKERHUB_CREDENTIAL_USR --password-stdin'
+                    sh 'docker login -u $DOCKERHUB_CREDENTIAL_USR -p $DOCKERHUB_CREDENTIAL_PSW'
                     sh "docker push ${DOCKER_IMAGE_STORAGE}/${DOCKER_IMAGE_NAME}"
                 }
             }

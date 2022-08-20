@@ -7,4 +7,4 @@ RUN python3 -m pip install -r requirements.txt
 
 EXPOSE 80
 
-CMD ["python3 /app/main.py"]
+ENTRYPOINT ["python3", "/app/main.py"]

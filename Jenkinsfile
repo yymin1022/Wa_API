@@ -23,8 +23,10 @@ pipeline {
         stage("Push Docker Image to Dockerhub") {
             steps {
                 script {
-                    sh 'docker login -u $DOCKERHUB_CREDENTIAL_USR -p $DOCKERHUB_CREDENTIAL_PSW'
-                    sh "docker push ${DOCKER_IMAGE_STORAGE}/${DOCKER_IMAGE_NAME}"
+                    docker.withRegistry('https://hub.docker.com', DOCKERHUB_CREDENTIAL) {
+
+                        image.push()
+                    }
                 }
             }
         }

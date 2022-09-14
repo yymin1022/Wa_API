@@ -386,9 +386,9 @@ def messageHokyu():
     
     randInt = random.randrange(0, 9)
     if randInt == 0:
-        strMessage = "필승! 833기 일병 김호규입니다!"
+        strMessage = "필승! 833기 상병 김호규입니다!"
     elif randInt == 1:
-        strMessage = "예! 일병 김호규!"
+        strMessage = "예! 상병 김호규!"
     elif randInt == 2:
         strMessage = "필승!"
     elif randInt == 3:
@@ -402,7 +402,7 @@ def messageHokyu():
     elif randInt == 7:
         strMessage = "K2C1 핥짝핥짝"
     elif randInt == 8:
-        strMessage = "감사합니다. 314대대 통신반 일병 김호규입니다. 머슼타드일까요?"
+        strMessage = "감사합니다. 314대대 통신반 상병 김호규입니다. 머슼타드일까요?"
     
     return strMessage
 

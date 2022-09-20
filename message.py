@@ -38,11 +38,6 @@ def getReplyMessage(message):
             strResult = messageCAUMeal("")
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
-    elif ("코로나" in message or "확진자" in message) and "몇" in message:
-        if "지역별" in message:
-            strResult = messageCoronaCity()
-        else:
-            strResult = messageCorona()
     elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
         strResult = messageCry()
     elif "뭐먹" in message:
@@ -265,75 +260,6 @@ def messageCoding():
         strMessage = "구라ㅡㅡ;;"
     elif randInt == 1:
         strMessage = "ㅋ"
-
-    return strMessage
-
-def messageCorona():
-    curDate = datetime.date.today().strftime("%Y년 %m월 %d일")
-    curTimestamp = str(time.time())
-
-    url = f"https://apiv3.corona-live.com/domestic/stat.json?timestamp={curTimestamp}"
-    response = requests.get(url)
-    jsonData = json.loads(response.content)["overview"]
-
-    dataConfirmed = jsonData["confirmed"]
-    dataCritical = jsonData["confirmedCritical"]
-    dataDeceased = jsonData["deceased"]
-    dataHospitalised = jsonData["hospitalised"]
-
-    strConfirmed = f"확진자 : {format(dataConfirmed[1], ',')}명 (누적 {format(dataConfirmed[0], ',')}명)"
-    strCritical = f"위중증 : {format(dataCritical[0], ',')}명 "
-    if int(dataCritical[1]) < 0:
-        strCritical += f"(-{format(int(dataCritical[1]) * -1, ',')})"
-    else:
-        strCritical += f"(+{format(dataCritical[1], ',')})"
-
-    strDeceased = f"사망자 : {format(dataDeceased[0], ',')}명 "
-    if int(dataDeceased[1]) < 0:
-        strDeceased += f"(-{format(int(dataDeceased[1]) * -1, ',')})"
-    else:
-        strDeceased += f"(+{format(dataDeceased[1], ',')})"
-
-    strHospitalised = f"입원환자 : {format(dataHospitalised[0], ',')}명 "
-    if int(dataHospitalised[1]) < 0:
-        strHospitalised += f"(-{format(int(dataHospitalised[1]) * -1, ',')})"
-    else:
-        strHospitalised += f"(+{format(dataHospitalised[1], ',')})"
-
-    url = f"https://apiv3.corona-live.com/domestic/live.json?timestamp={curTimestamp}"
-    response = requests.get(url)
-    jsonData = json.loads(response.content)["live"]
-
-    dataConfirmedLive = jsonData["today"]
-    dataConfirmedLiveYesterday = jsonData["yesterday"]
-
-    strConfirmedLive = f"실시간 : {format(dataConfirmedLive, ',')}명"
-    strConfirmedLiveYesterday = f"어제 동시간대 : {format(dataConfirmedLiveYesterday, ',')}명"
-
-    strMessage = f"{curDate} 코로나19 현황\n{strConfirmedLive}\n{strConfirmedLiveYesterday}\n\n어제까지\n{strConfirmed}\n{strCritical}\n{strHospitalised}\n{strDeceased}"
-
-    return strMessage
-
-def messageCoronaCity():
-    curDate = datetime.date.today().strftime("%Y년 %m월 %d일")
-    curTimestamp = str(time.time())
-
-    url = f"https://apiv3.corona-live.com/domestic/live.json?timestamp={curTimestamp}"
-    response = requests.get(url)
-    jsonData = json.loads(response.content)["cities"]
-
-    domesticList = ["서울", "부산", "인천", "대구", "광주", "대전", "울산", "세종", "경기", "강원", "충북", "충남", "경북", "경남", "전북", "전남", "제주", "입국 검역소"]
-
-    strDomestic = ""
-    for i in range(18):
-        dataCurDomestic = jsonData[str(i)]
-        strDomestic += f"{domesticList[i]} {format(dataCurDomestic[0], ',')}명 "
-        if(int(dataCurDomestic[1]) < 0):
-            strDomestic += f"(-{format(int(dataCurDomestic[1]) * -1, ',')})\n"
-        else:
-            strDomestic += f"(+{format(dataCurDomestic[1], ',')})\n"
-
-    strMessage = f"{curDate} 코로나19 지역별 현황\n{strDomestic}".rstrip()
 
     return strMessage
 

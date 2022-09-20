@@ -59,6 +59,8 @@ def getReplyMessage(message):
         strResult = messageJoohyeong()
     elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
         strResult = messageLaugh()
+    elif "민식" in message:
+        strResult = messageMinsik()
     elif "과제" in message or "집가고싶다" in message:
         strResult = messageMinsikBooreop()
     elif ("앎" in message or "아는사람" in message) or "알아" in message:
@@ -400,6 +402,11 @@ def messageLaugh():
         strMessage = "뭘 웃어요;;"
     elif randInt == 1:
         strMessage = "안웃긴데;;"
+
+    return strMessage
+
+def messageMinsik():
+    strMessage = "민식아 그래서 학교는 언제와?"
 
     return strMessage
 

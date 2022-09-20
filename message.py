@@ -60,7 +60,7 @@ def getReplyMessage(message):
     elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
         strResult = messageLaugh()
     elif "과제" in message or "집가고싶다" in message:
-        strResult = messageMinsik()
+        strResult = messageMinsikBooreop()
     elif ("앎" in message or "아는사람" in message) or "알아" in message:
         strResult = messageMoloo()
     elif "무야호" in message:
@@ -403,7 +403,7 @@ def messageLaugh():
 
     return strMessage
 
-def messageMinsik():
+def messageMinsikBooreop():
     strMessage = "2022-2학기 휴학한 민식아 부럽다"
 
     return strMessage

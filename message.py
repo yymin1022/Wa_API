@@ -600,7 +600,6 @@ def messageWeather():
     jsonData = json.loads(text)
     
     
-    print(jsonData["main"]["temp"])
-    strMessage = "현재온도: " + jsonData["main"]["temp"] + "구름: " + jsonData["clouds"]["all"]
+    strMessage = "현재온도: " + (str)(jsonData["main"]["temp"]) + "구름: " + (str)(jsonData["clouds"]["all"])
     return strMessage
 

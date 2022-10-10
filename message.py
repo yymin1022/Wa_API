@@ -101,6 +101,8 @@ def getReplyMessage(message):
         strResult = messageZara()
     elif "자야" in message:
         strResult = messageZayazi()
+    elif "날씨" in message:
+        strResult = messageWeather()
 
     return strResult
 
@@ -588,3 +590,17 @@ def messageZayazi():
     strMessage = "구라ㅡㅡ;;"
 
     return strMessage
+
+
+def messageWeather():
+
+    weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?id=1835847&appid=ea9e5f8d8e4aa2c798f8eb78f361d1b4"
+    text = requests.get(weatherAPIUrl)
+    text = text.text
+    jsonData = json.loads(text)
+    
+    
+    print(jsonData["main"]["temp"])
+    strMessage = "현재온도: " + jsonData["main"]["temp"] + "구름: " + jsonData["clouds"]["all"]
+    return strMessage
+

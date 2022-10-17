@@ -101,7 +101,7 @@ def getReplyMessage(message):
         strResult = messageZara()
     elif "자야" in message:
         strResult = messageZayazi()
-    elif "날씨" in message:
+    elif "!날씨" in message:
         strResult = messageWeather()
 
     return strResult

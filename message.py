@@ -436,7 +436,7 @@ def messageMooYaHo():
     return strMessage
 
 def messageNSUMeal(NSU_BAP):
-    global strMessage
+    strMessage = ""
     strUrl = "https://nsu.ac.kr/api/user/board/getBoardContentSummaryList"
     mealResponse = requests.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data="boardIdList=%d&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4" % int(NSU_BAP)).json()
     mealResponse = dict(mealResponse)

@@ -57,7 +57,7 @@ def getReplyMessage(message):
         strResult = messageIreon()
     elif "주형" in message:
         strResult = messageJoohyeong()
-    elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
+    elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 15:
         strResult = messageLaugh()
     elif "민식" in message:
         strResult = messageMinsik()

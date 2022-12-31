@@ -57,7 +57,7 @@ def getReplyMessage(message):
         strResult = messageIreon()
     elif "주형" in message:
         strResult = messageJoohyeong()
-    elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
+    elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 15:
         strResult = messageLaugh()
     elif "민식" in message:
         strResult = messageMinsik()
@@ -103,7 +103,7 @@ def getReplyMessage(message):
         strResult = messageZayazi()
     elif "!날씨" in message:
         strResult = messageWeather()
-    if "남샤" in message:
+    elif "남샤" in message:
         if "1층" in message:
             strResult = messageNSUMeal("465")
         elif "2층" in message:
@@ -112,6 +112,13 @@ def getReplyMessage(message):
             strResult = messageNSUMeal("467")
         elif "채움" in message:
             strResult = messageNSUMeal("468")
+    elif "창환 전역" in message:
+        strResult = messageChalsGraduate()
+    elif "재민" in message:
+        strResult = messageJaemin()
+    elif "서건1우" in message:
+        strResult = messageSGW()
+
     return strResult
 
 def getCryCount(message):
@@ -264,6 +271,15 @@ def messageCAUMeal(mealTypeID):
 
     return strMessage
 
+def messageChalsGraduate():
+    strMessage = ""
+    dateStart = datetime.date(2022,9,1)
+    dateToday = datetime.date.today()
+    goneDays = (dateToday - dateStart).days
+
+    strMessage = "찰스가 전역한지 '%d일'이 됐습니다."%(goneDays)
+    return strMessage
+
 def messageCoding():
     randInt = random.randrange(0, 2)
     strMessage = ""
@@ -397,6 +413,19 @@ def messageIreon():
     elif randInt == 4:
         strMessage = "불쌍하네요.."
     
+    return strMessage
+
+def messageJaemin():
+    strMessage = ""
+    randInt = random.randrange(0, 3)
+
+    if randInt == 0:
+        strMessage = "그만놀고 일해"
+    elif randInt == 1:
+        strMessage = "왜 안 자"
+    elif randInt == 2:
+        strMessage = "자라"
+
     return strMessage
 
 def messageJoohyeong():
@@ -547,6 +576,21 @@ def messageStop():
 def messageStress():
     strMessage = "어림도 없지"
 
+    return strMessage
+
+def messageSGW():
+    randInt = random.randrange(0, 4)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "좀 나가라;;"
+    elif randInt == 1:
+        strMessage = "뭐하냐;"
+    elif randInt == 2:
+        strMessage = "좀 꺼라;"
+    elif randInt == 3:
+        strMessage = "이미 차단당한 유저입니다."
+    
     return strMessage
 
 def messageUh():

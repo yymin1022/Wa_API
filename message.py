@@ -116,6 +116,8 @@ def getReplyMessage(message):
         strResult = messageChalsGraduate()
     elif "재민" in message:
         strResult = messageJaemin()
+    elif "서건1우" in message:
+        strResult = messageSGW()
 
     return strResult
 
@@ -566,6 +568,21 @@ def messageStop():
 def messageStress():
     strMessage = "어림도 없지"
 
+    return strMessage
+
+def messageSGW():
+    randInt = random.randrange(0, 4)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "좀 나가라;;"
+    elif randInt == 1:
+        strMessage = "뭐하냐;"
+    elif randInt == 2:
+        strMessage = "좀 꺼라;"
+    elif randInt == 3:
+        strMessage = "이미 차단당한 유저입니다."
+    
     return strMessage
 
 def messageUh():

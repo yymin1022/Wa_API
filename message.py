@@ -103,7 +103,7 @@ def getReplyMessage(message):
         strResult = messageZayazi()
     elif "!날씨" in message:
         strResult = messageWeather()
-    if "남샤" in message:
+    elif "남샤" in message:
         if "1층" in message:
             strResult = messageNSUMeal("465")
         elif "2층" in message:
@@ -114,6 +114,8 @@ def getReplyMessage(message):
             strResult = messageNSUMeal("468")
     elif "창환 전역" in message:
         strResult = messageChalsGraduate()
+    elif "재민" in message:
+        strResult = messageJaemin()
 
     return strResult
 
@@ -409,6 +411,11 @@ def messageIreon():
     elif randInt == 4:
         strMessage = "불쌍하네요.."
     
+    return strMessage
+
+def messageJaemin():
+    strMessage = "재민아 그만놀고 일해"
+
     return strMessage
 
 def messageJoohyeong():

@@ -112,6 +112,9 @@ def getReplyMessage(message):
             strResult = messageNSUMeal("467")
         elif "채움" in message:
             strResult = messageNSUMeal("468")
+    elif "창환 전역" in message:
+        strResult = messageChalsGraduate()
+
     return strResult
 
 def getCryCount(message):
@@ -262,6 +265,15 @@ def messageCAUMeal(mealTypeID):
             strMenu = "정보가 없습니다."
         strMessage += f"\n{mealItem['rest']} : {strMenu}"
 
+    return strMessage
+
+def messageChalsGraduate():
+    strMessage = ""
+    dateStart = datetime.date(2022,9,1)
+    dateToday = datetime.date.today()
+    goneDays = (dateToday - dateStart).days
+
+    strMessage = "찰스가 전역한지 '%d일'이 됐습니다."%(goneDays)
     return strMessage
 
 def messageCoding():

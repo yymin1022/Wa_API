@@ -416,7 +416,15 @@ def messageIreon():
     return strMessage
 
 def messageJaemin():
-    strMessage = "재민아 그만놀고 일해"
+    strMessage = ""
+    randInt = random.randrange(0, 3)
+
+    if randInt == 0:
+        strMessage = "그만놀고 일해"
+    elif randInt == 1:
+        strMessage = "왜 안 자"
+    elif randInt == 2:
+        strMessage = "자라"
 
     return strMessage
 

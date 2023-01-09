@@ -118,6 +118,9 @@ def getReplyMessage(message):
         strResult = messageSGW()
     elif "한수 소해" in message:
         strResult = messageHansuGraduate()
+    elif "성민 소해" in message:
+        strResult = messageSeongminGraduate()
+
 
     return strResult
 
@@ -545,6 +548,23 @@ def messageSaseyo():
     elif randInt == 1:
         strMessage = "안 사도 돼요"
 
+    return strMessage
+
+def messageSeongminGraduate():
+    randInt = random.randrange(0, 3)
+    strMessage = ""
+
+    dateEnd = datetime.date(2024,2,22)
+    dateToday = datetime.date.today()
+    leftdays = (dateEnd - dateToday).days
+
+    if randInt == 0:
+        strMessage = "24년은 오지 않습니다..."
+    if randInt == 1:
+        strMessage = "지성민씨의 소집해제일은 29년 12월 32일입니다."
+    elif randInt == 2:
+        strMessage = "지성민씨의 소집해제일까지 %d일이 남았습니다."%(leftdays)
+    
     return strMessage
 
 def messageShuk():

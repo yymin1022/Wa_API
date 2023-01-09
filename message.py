@@ -114,8 +114,6 @@ def getReplyMessage(message):
             strResult = messageNSUMeal("468")
     elif "창환 전역" in message:
         strResult = messageChalsGraduate()
-    elif "최잼민" in message:
-        strResult = messageJaemin()
     elif "서건1우" in message:
         strResult = messageSGW()
 
@@ -278,13 +276,13 @@ def messageChalsGraduate():
     dateStart = datetime.date(2020,12,7)
     dateEnd = datetime.date(2022,9,1)
     dateToday = datetime.date.today()
-    goneDays1 = (dateToday - dateStart).days
-    goneDays2 = (dateToday - dateEnd).days
+    goneDays = (dateToday - dateStart).days
+    leftDays = (dateToday - dateEnd).days
 
     if randInt == 0:
-        strMessage = "찰스가 입대한지 %d일이 됐습니다."%(goneDays1)
+        strMessage = "찰스가 입대한지 %d일이 됐습니다."%(goneDays)
     elif randInt == 1:
-        strMessage = "찰스가 전역한지 %d일이 됐습니다."%(goneDays2)
+        strMessage = "찰스가 전역한지 %d일이 됐습니다."%(leftDays)
 
     return strMessage
 
@@ -421,21 +419,6 @@ def messageIreon():
     elif randInt == 4:
         strMessage = "불쌍하네요.."
     
-    return strMessage
-
-def messageJaemin():
-    strMessage = ""
-    randInt = random.randrange(0, 4)
-
-    if randInt == 0:
-        strMessage = "그만놀고 일해"
-    elif randInt == 1:
-        strMessage = "왜 안 자"
-    elif randInt == 2:
-        strMessage = "자라"
-    elif randInt == 3:
-        strMessage = "출근해"
-
     return strMessage
 
 def messageJoohyeong():

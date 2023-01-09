@@ -116,6 +116,8 @@ def getReplyMessage(message):
         strResult = messageChalsGraduate()
     elif "서건1우" in message:
         strResult = messageSGW()
+    elif "한수 소해" in message:
+        strResult = messageHansuGraduate()
 
     return strResult
 
@@ -387,6 +389,21 @@ def messageHokyuGraduate():
     elif randInt == 3:
         strMessage = "404 Not Found"
 
+    return strMessage
+
+def messageHansuGraduate():
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    dateEnd = datetime.date(2024,8,31)
+    dateToday = datetime.date.today()
+    leftdays = (dateEnd - dateToday).days
+
+    if randInt == 0:
+        strMessage = "몰?루"
+    elif randInt == 1:
+        strMessage = "이한수씨의 소집해제일까지 %d일이 남았습니다."%(leftdays)
+    
     return strMessage
 
 def messageHungry():

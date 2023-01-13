@@ -397,19 +397,19 @@ def messageHokyuGraduate():
 def messageHansuGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-
+    
     dateEnd = datetime.date(2024,8,31)
     dateToday = datetime.date.today()
     now = datetime.datetime.now()
     leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour
-    leftminutes = 60 - now.minute
-    leftseconds = 60 - now.second
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60 - 1) + (leftminutes * 60 - 1) + leftseconds
+    lefthours = 24 - now.hour - 10
+    leftminutes = 60 - now.minute - 1
+    leftseconds = 60 - now.second - 1
+    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
     if randInt == 0:
         strMessage = "몰?루"
     elif randInt == 1:
-        strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, lefthours - 1, leftminutes - 1, leftseconds)
+        strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
         strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     

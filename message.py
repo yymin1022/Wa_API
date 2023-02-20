@@ -57,7 +57,7 @@ def getReplyMessage(message):
         strResult = messageIreon()
     elif "주형" in message:
         strResult = messageJoohyeong()
-    elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 15:
+    elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 20:
         strResult = messageLaugh()
     elif "민식" in message:
         strResult = messageMinsik()
@@ -79,7 +79,7 @@ def getReplyMessage(message):
         strResult = messageReal()
     elif "^^7" in message:
         strResult = messageSalute()
-    elif "나스" in message or "폴리오" in message:
+    elif "나스" in message:
         strResult = messageSaseyo()
     elif "슈슉" in message:
         strResult = messageShuk()
@@ -120,8 +120,14 @@ def getReplyMessage(message):
         strResult = messageHansuGraduate()
     elif "성민 소해" in message:
         strResult = messageSeongminGraduate()
-
-
+    elif "ㅡㅡ" in message:
+        strResult = messageMM()
+    elif "퇴근" in message:
+        strresult = messageOutwork()
+    elif "사고싶" or "사야" or "살까" or "샀어" or "샀다" in message:
+        strresult = messageBuy()
+    elif "병희 전역" in message:
+        strresult = messageBHGraduate()    
     return strResult
 
 def getCryCount(message):
@@ -183,6 +189,29 @@ def messageBaby():
 def messageBoolpyeon():
     strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불편하니깐 그런거아냐!!"
 
+    return strMessage
+
+def messageBuy():
+    randInt = random.randrange(0, 4)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "사지 마세요"
+    elif randInt == 1:
+        strMessage = "그걸 샀네;;"
+    elif randInt == 2:
+        strMessage = "개부자;;"
+    elif randInt == 3:
+        strMessage = "와 샀네"
+
+    return strMessage
+
+def messageBHGraduate():
+    dateEnd = datetime.date(2021,12,29)
+    dateToday = datetime.date.today()
+    leftDays = (dateToday - dateEnd).days
+    strMessage = "임병희씨가 전역한지 %d일이 지났습니다."%(leftDays)
+    
     return strMessage
 
 def messageCAUCalendar():
@@ -287,7 +316,7 @@ def messageChalsGraduate():
     if randInt == 0:
         strMessage = "찰스가 입대한지 %d일이 됐습니다."%(goneDays)
     elif randInt == 1:
-        strMessage = "찰스가 전역한지 %d일이 됐습니다."%(leftDays)
+        strMessage = "찰스가 전역한지 %d일이 지났습니다."%(leftDays)
 
     return strMessage
 
@@ -353,9 +382,9 @@ def messageHokyu():
     
     randInt = random.randrange(0, 9)
     if randInt == 0:
-        strMessage = "필승! 833기 상병 김호규입니다!"
+        strMessage = "필승! 833기 병장(진) 김호규입니다!"
     elif randInt == 1:
-        strMessage = "예! 상병 김호규!"
+        strMessage = "예! 병장(진) 김호규!"
     elif randInt == 2:
         strMessage = "필승!"
     elif randInt == 3:
@@ -369,7 +398,7 @@ def messageHokyu():
     elif randInt == 7:
         strMessage = "K2C1 핥짝핥짝"
     elif randInt == 8:
-        strMessage = "감사합니다. 314대대 통신반 상병 김호규입니다. 머슼타드일까요?"
+        strMessage = "감사합니다. 314대대 통신반 병장(진) 김호규입니다. 머슼타드일까요?"
     
     return strMessage
 
@@ -407,7 +436,7 @@ def messageHansuGraduate():
     leftseconds = 60 - now.second - 1
     leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
     if randInt == 0:
-        strMessage = "몰?루"
+        strMessage = "404 Not Found"
     elif randInt == 1:
         strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
@@ -483,6 +512,11 @@ def messageMooYaHo():
 
     return strMessage
 
+def messageMM():
+    strMessage = "정색하지 마세요;;"
+
+    return strMessage
+
 def messageNSUMeal(NSU_BAP):
     strMessage = ""
     strUrl = "https://nsu.ac.kr/api/user/board/getBoardContentSummaryList"
@@ -512,6 +546,17 @@ def messageOh():
         strMessage = "..렌지쥬스"
     
     return strMessage
+
+def messageOutwork():
+    randInt = random.randrange(0, 3)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "출근하세요"
+    elif randInt == 1:
+        strMessage = "평생 쉬세요~"
+    elif randInt == 2:
+        strMessage = "집가고싶다"
 
 def messageOho(message):
     strMessage = message[::-1]
@@ -546,13 +591,15 @@ def messageSalute():
     return strMessage
 
 def messageSaseyo():
-    randInt = random.randrange(0, 2)
+    randInt = random.randrange(0, 3)
     strMessage = ""
 
     if randInt == 0:
         strMessage = "사세요"
     elif randInt == 1:
         strMessage = "안 사도 돼요"
+    elif randInt == 2:
+        strMessage = "나스는 역시 시놀로지죠~"
 
     return strMessage
 

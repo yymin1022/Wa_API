@@ -18,7 +18,7 @@ def getReplyMessage(message):
         strResult = messageBHGraduate()  
     elif "불편" in message:
         strResult = messageBoolpyeon()
-    elif "사고싶" or "사야" or "살까" or "샀어" or "샀다" in message:
+    elif "사고싶" in message or "사야" in message or "살까" in message or "샀어" in message or "샀다" in message:
         strResult = messageBuy()
     elif "학사일정" in message:
         strResult = messageCAUCalendar()

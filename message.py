@@ -498,7 +498,7 @@ def messageMinsik():
     return strMessage
 
 def messageMinsikBooreop():
-    strMessage = "2022-2학기 휴학한 민식아 부럽다"
+    strMessage = "2023-1학기 복학한 민식아 이제 안부럽다"
 
     return strMessage
 

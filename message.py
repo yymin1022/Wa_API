@@ -14,8 +14,12 @@ def getReplyMessage(message):
         strResult = messageAh()
     elif "응애" in message:
         strResult = messageBaby()
+    elif "병희 전역" in message:
+        strResult = messageBHGraduate()  
     elif "불편" in message:
         strResult = messageBoolpyeon()
+    elif "사고싶" or "사야" or "살까" or "샀어" or "샀다" in message:
+        strResult = messageBuy()
     elif "학사일정" in message:
         strResult = messageCAUCalendar()
     elif "열람실" in message:
@@ -36,6 +40,8 @@ def getReplyMessage(message):
             strResult = messageCAUMeal("40")
         else:
             strResult = messageCAUMeal("")
+    elif "창환 전역" in message:
+        strResult = messageChalsGraduate()
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
     elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
@@ -46,6 +52,8 @@ def getReplyMessage(message):
         strResult = messageGraduate()
     elif "하.." in message:
         strResult = messageHa()
+    elif "한수 소해" in message:
+        strResult = messageHansuGraduate()
     elif "호규" in message:
         if "전역" in message:
             strResult = messageHokyuGraduate()
@@ -63,10 +71,21 @@ def getReplyMessage(message):
         strResult = messageMinsik()
     elif "과제" in message or "집가고싶다" in message:
         strResult = messageMinsikBooreop()
+    elif "ㅡㅡ" in message:
+        strResult = messageMM()
     elif ("앎" in message or "아는사람" in message) or "알아" in message:
         strResult = messageMoloo()
     elif "무야호" in message:
         strResult = messageMooYaHo()
+    elif "남샤" in message:
+        if "1층" in message:
+            strResult = messageNSUMeal("465")
+        elif "2층" in message:
+            strResult = messageNSUMeal("466")
+        elif "3층" in message:
+            strResult = messageNSUMeal("467")
+        elif "채움" in message:
+            strResult = messageNSUMeal("468")
     elif "꺼라" in message:
         strResult = messageOff()
     elif "오호" in message or "호오" in message:
@@ -75,12 +94,18 @@ def getReplyMessage(message):
         strResult = messageOh()
     elif "오케이" in message:
         strResult = messageOkay()
+    elif "퇴근" in message:
+        strResult = messageOutwork()
     elif "ㄹㅇㅋㅋ" in message:
         strResult = messageReal()
     elif "^^7" in message:
         strResult = messageSalute()
     elif "나스" in message:
         strResult = messageSaseyo()
+    elif "성민 소해" in message:
+        strResult = messageSeongminGraduate()
+    elif "서건1우" in message:
+        strResult = messageSGW()
     elif "슈슉" in message:
         strResult = messageShuk()
     elif "졸려" in message or "잠와" in message or "피곤해" in message:
@@ -95,39 +120,14 @@ def getReplyMessage(message):
         strResult = messageWa()
     elif "와!" in message:
         strResult = messageWaSans()
+    elif "!날씨" in message:
+        strResult = messageWeather()
     elif "용민" in message:
         strResult = messageYongmin()
     elif "자라" in message:
         strResult = messageZara()
     elif "자야" in message:
-        strResult = messageZayazi()
-    elif "!날씨" in message:
-        strResult = messageWeather()
-    elif "남샤" in message:
-        if "1층" in message:
-            strResult = messageNSUMeal("465")
-        elif "2층" in message:
-            strResult = messageNSUMeal("466")
-        elif "3층" in message:
-            strResult = messageNSUMeal("467")
-        elif "채움" in message:
-            strResult = messageNSUMeal("468")
-    elif "창환 전역" in message:
-        strResult = messageChalsGraduate()
-    elif "서건1우" in message:
-        strResult = messageSGW()
-    elif "한수 소해" in message:
-        strResult = messageHansuGraduate()
-    elif "성민 소해" in message:
-        strResult = messageSeongminGraduate()
-    elif "ㅡㅡ" in message:
-        strResult = messageMM()
-    elif "퇴근" in message:
-        strresult = messageOutwork()
-    elif "사고싶" or "사야" or "살까" or "샀어" or "샀다" in message:
-        strresult = messageBuy()
-    elif "병희 전역" in message:
-        strresult = messageBHGraduate()    
+        strResult = messageZayazi()  
     return strResult
 
 def getCryCount(message):

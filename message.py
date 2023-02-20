@@ -558,6 +558,8 @@ def messageOutwork():
     elif randInt == 2:
         strMessage = "집가고싶다"
 
+    return strMessage
+
 def messageOho(message):
     strMessage = message[::-1]
     

@@ -405,7 +405,7 @@ def messageHa():
 def messageHokyu():
     strMessage = ""
     
-    randInt = random.randrange(0, 9)
+    randInt = random.randrange(0, 10)
     if randInt == 0:
         strMessage = "필승! 833기 병장(진) 김호규입니다!"
     elif randInt == 1:

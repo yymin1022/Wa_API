@@ -337,7 +337,7 @@ def messageCry():
     return strMessage
 
 def messageEat():
-    randInt = random.randrange(0, 5)
+    randInt = random.randrange(0, 27)
     if randInt == 0:
     	strMessage = "돼지"
     elif randInt == 1:
@@ -347,8 +347,51 @@ def messageEat():
     elif randInt == 3:
     	strMessage = "그만 먹어;;"
     elif randInt == 4:
-        strMessage = "고기!!"
-
+        strMessage = "삼겹살에 쐬주 한 잔?"
+    elif randInt == 5:
+        strMessage = "부리또!!"
+    elif randInt == 6:
+        strMessage = "김볶밥!!"
+    elif randInt == 7:
+        strMessage = "소고기!!"
+    elif randInt == 8:
+        strMessage = "햄버거!!"
+    elif randInt == 9:
+        strMessage = "부찌!!"
+    elif randInt == 10:
+        strMessage = "치폴!!"
+    elif randInt == 11:
+        strMessage = "아웃백!!"
+    elif randInt == 12:
+        strMessage = "빕스!!"
+    elif randInt == 13:
+        strMessage = "황금볶음밥!!"
+    elif randInt == 14:
+        strMessage = "마라탕!!"
+    elif randInt == 15:
+        strMessage = "슈하스코!!"
+    elif randInt == 16:
+        strMessage = "떡볶이!!"
+    elif randInt == 17:
+        strMessage = "학식!!"
+    elif randInt == 18:
+        strMessage = "돈까스!!"
+    elif randInt == 19:
+        strMessage = "곱창!!"
+    elif randInt == 20:
+        strMessage = "삼계탕!!"
+    elif randInt == 21:
+        strMessage = "짜장면!!"
+    elif randInt == 22:
+        strMessage = "양꼬치!!"
+    elif randInt == 23:
+        strMessage = "피탕!!"
+    elif randInt == 24:
+        strMessage = "피맥!!"
+    elif randInt == 25:
+        strMessage = "감자탕!!"
+    elif randInt == 26:
+        strMessage = "치킨!!"
     return strMessage
 
 def messageGraduate():
@@ -380,7 +423,7 @@ def messageHa():
 def messageHokyu():
     strMessage = ""
     
-    randInt = random.randrange(0, 9)
+    randInt = random.randrange(0, 10)
     if randInt == 0:
         strMessage = "필승! 833기 병장(진) 김호규입니다!"
     elif randInt == 1:
@@ -399,6 +442,8 @@ def messageHokyu():
         strMessage = "K2C1 핥짝핥짝"
     elif randInt == 8:
         strMessage = "감사합니다. 314대대 통신반 병장(진) 김호규입니다. 머슼타드일까요?"
+    elif randInt == 9:
+        strMessage = "악! 소위 김호규!"
     
     return strMessage
 

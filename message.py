@@ -424,6 +424,8 @@ def messageHokyu():
         strMessage = "K2C1 핥짝핥짝"
     elif randInt == 8:
         strMessage = "감사합니다. 314대대 통신반 병장(진) 김호규입니다. 머슼타드일까요?"
+    elif randInt == 9:
+        strMessage = "악! 소위 김호규!"
     
     return strMessage
 

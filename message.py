@@ -337,7 +337,7 @@ def messageCry():
     return strMessage
 
 def messageEat():
-    randInt = random.randrange(0, 5)
+    randInt = random.randrange(0, 27)
     if randInt == 0:
     	strMessage = "돼지"
     elif randInt == 1:
@@ -374,6 +374,24 @@ def messageEat():
         strMessage = "떡볶이!!"
     elif randInt == 17:
         strMessage = "학식!!"
+    elif randInt == 18:
+        strMessage = "돈까스!!"
+    elif randInt == 19:
+        strMessage = "곱창!!"
+    elif randInt == 20:
+        strMessage = "삼계탕!!"
+    elif randInt == 21:
+        strMessage = "짜장면!!"
+    elif randInt == 22:
+        strMessage = "양꼬치!!"
+    elif randInt == 23:
+        strMessage = "피탕!!"
+    elif randInt == 24:
+        strMessage = "피맥!!"
+    elif randInt == 25:
+        strMessage = "감자탕!!"
+    elif randInt == 26:
+        strMessage = "치킨!!"
     return strMessage
 
 def messageGraduate():

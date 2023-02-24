@@ -347,8 +347,33 @@ def messageEat():
     elif randInt == 3:
     	strMessage = "그만 먹어;;"
     elif randInt == 4:
-        strMessage = "고기!!"
-
+        strMessage = "삼겹살에 쐬주 한 잔?"
+    elif randInt == 5:
+        strMessage = "부리또!!"
+    elif randInt == 6:
+        strMessage = "김볶밥!!"
+    elif randInt == 7:
+        strMessage = "소고기!!"
+    elif randInt == 8:
+        strMessage = "햄버거!!"
+    elif randInt == 9:
+        strMessage = "부찌!!"
+    elif randInt == 10:
+        strMessage = "치폴!!"
+    elif randInt == 11:
+        strMessage = "아웃백!!"
+    elif randInt == 12:
+        strMessage = "빕스!!"
+    elif randInt == 13:
+        strMessage = "황금볶음밥!!"
+    elif randInt == 14:
+        strMessage = "마라탕!!"
+    elif randInt == 15:
+        strMessage = "슈하스코!!"
+    elif randInt == 16:
+        strMessage = "떡볶이!!"
+    elif randInt == 17:
+        strMessage = "학식!!"
     return strMessage
 
 def messageGraduate():

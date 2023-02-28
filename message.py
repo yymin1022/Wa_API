@@ -12,6 +12,8 @@ def getReplyMessage(message):
 
     if "아.." in message:
         strResult = messageAh()
+    elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
+        strResult = messageAhnsa()
     elif "응애" in message:
         strResult = messageBaby()
     elif "병희 전역" in message:
@@ -126,7 +128,7 @@ def getReplyMessage(message):
         strResult = messageYongmin()
     elif "자라" in message:
         strResult = messageZara()
-    elif "자야" in message:
+    elif "자야" in message or "잘까" in message:
         strResult = messageZayazi()  
     return strResult
 
@@ -172,6 +174,21 @@ def messageAh():
         strMessage = "..에이오우"
     
     return strMessage
+
+def messageAhnsa():
+    randInt = random.randrange(0, 5)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "이걸 안 사?"
+    elif randInt == 1:
+        strMessage = "왜요;;"
+    elif randInt == 2:
+        strMessage = "그거 사면 진짜 좋을텐데.."
+    elif randInt == 3:
+        strMessage = "아.."
+    elif randInt == 4:
+        strMessage = "헐.."
 
 def messageBaby():
     randInt = random.randrange(0, 3)
@@ -337,7 +354,7 @@ def messageCry():
     return strMessage
 
 def messageEat():
-    randInt = random.randrange(0, 27)
+    randInt = random.randrange(0, 28)
     if randInt == 0:
     	strMessage = "돼지"
     elif randInt == 1:
@@ -392,6 +409,8 @@ def messageEat():
         strMessage = "감자탕!!"
     elif randInt == 26:
         strMessage = "치킨!!"
+    elif randInt == 27:
+        strMessage = "C₂₈H₃₄N₂O₃!!"
     return strMessage
 
 def messageGraduate():
@@ -638,7 +657,7 @@ def messageSalute():
     return strMessage
 
 def messageSaseyo():
-    randInt = random.randrange(0, 3)
+    randInt = random.randrange(0, 4)
     strMessage = ""
 
     if randInt == 0:
@@ -647,6 +666,8 @@ def messageSaseyo():
         strMessage = "안 사도 돼요"
     elif randInt == 2:
         strMessage = "나스는 역시 시놀로지죠~"
+    elif randInt == 3:
+        strMessage = "나스는 역시 큐냅이죠~"
 
     return strMessage
 

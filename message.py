@@ -128,7 +128,7 @@ def getReplyMessage(message):
         strResult = messageYongmin()
     elif "자라" in message:
         strResult = messageZara()
-    elif "자야" in message:
+    elif "자야" in message or "잘까" in message:
         strResult = messageZayazi()  
     return strResult
 

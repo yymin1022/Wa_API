@@ -190,6 +190,8 @@ def messageAhnsa():
     elif randInt == 4:
         strMessage = "헐.."
 
+    return strMessage
+        
 def messageBaby():
     randInt = random.randrange(0, 3)
     strMessage = ""

@@ -657,7 +657,7 @@ def messageSalute():
     return strMessage
 
 def messageSaseyo():
-    randInt = random.randrange(0, 3)
+    randInt = random.randrange(0, 4)
     strMessage = ""
 
     if randInt == 0:
@@ -666,6 +666,8 @@ def messageSaseyo():
         strMessage = "안 사도 돼요"
     elif randInt == 2:
         strMessage = "나스는 역시 시놀로지죠~"
+    elif randInt == 3:
+        strMessage = "나스는 역시 큐냅이죠~"
 
     return strMessage
 

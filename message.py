@@ -12,6 +12,8 @@ def getReplyMessage(message):
 
     if "아.." in message:
         strResult = messageAh()
+    elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
+        strResult = messageAhnsa()
     elif "응애" in message:
         strResult = messageBaby()
     elif "병희 전역" in message:
@@ -172,6 +174,21 @@ def messageAh():
         strMessage = "..에이오우"
     
     return strMessage
+
+def messageAhnsa():
+    randInt = random.randrange(0, 5)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "이걸 안 사?"
+    elif randInt == 1:
+        strMessage = "왜요;;"
+    elif randInt == 2:
+        strMessage = "그거 사면 진짜 좋을텐데.."
+    elif randInt == 3:
+        strMessage = "아.."
+    elif randInt == 4:
+        strMessage = "헐.."
 
 def messageBaby():
     randInt = random.randrange(0, 3)

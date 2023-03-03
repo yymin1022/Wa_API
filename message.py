@@ -48,7 +48,7 @@ def getReplyMessage(message):
         strResult = messageCoding()
     elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
         strResult = messageCry()
-    elif "뭐먹" in message:
+    elif "뭐먹" in message or "머먹" in message:
         strResult = messageEat()
     elif ("제발" in message or "하고 싶다" in message) and "졸업" in message:
         strResult = messageGraduate()

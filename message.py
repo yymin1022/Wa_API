@@ -215,13 +215,21 @@ def messageBuy():
     strMessage = ""
 
     if randInt == 0:
-        strMessage = "사지 마세요"
+        strMessage = "축하합니다!!!"
     elif randInt == 1:
         strMessage = "그걸 샀네;;"
     elif randInt == 2:
         strMessage = "개부자;;"
     elif randInt == 3:
         strMessage = "와 샀네"
+    elif randInt == 4:
+        strMessage = "이걸 산다고?"
+    elif randInt == 5:
+        strMessage = "ㅋㅋ"
+    elif randInt == 6:
+        strMessage = "왜요"
+    elif randInt == 7:
+        strMessage = "그거 살 돈이면 차라리.."
 
     return strMessage
 

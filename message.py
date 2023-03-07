@@ -211,7 +211,7 @@ def messageBoolpyeon():
     return strMessage
 
 def messageBuy():
-    randInt = random.randrange(0, 4)
+    randInt = random.randrange(0, 8)
     strMessage = ""
 
     if randInt == 0:

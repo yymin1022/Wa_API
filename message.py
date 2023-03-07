@@ -22,7 +22,7 @@ def getReplyMessage(message):
         strResult = messageBHGraduate()  
     elif "불편" in message:
         strResult = messageBoolpyeon()
-    elif "사고싶" in message or "사야" in message or "살까" in message or "샀어" in message or "샀다" in message:
+    elif "사고싶" in message or "사야" in message or "살까" in message or "샀어" in message or "샀다" in message or "샀네" in message or "사버렸" in message:
         strResult = messageBuy()
     elif "학사일정" in message:
         strResult = messageCAUCalendar()
@@ -231,7 +231,7 @@ def messageBuy():
     elif randInt == 6:
         strMessage = "왜요"
     elif randInt == 7:
-        strMessage = "그거 살 돈이면 차라리.."
+        strMessage = "그거 살 돈이면 차라리..\\m........."
 
     return strMessage
 

@@ -16,6 +16,8 @@ def getReplyMessage(message):
         strResult = messageAhnsa()
     elif "응애" in message:
         strResult = messageBaby()
+    elif "으.." in message:
+        strResult = messageShipduk()
     elif "병희 전역" in message:
         strResult = messageBHGraduate()  
     elif "불편" in message:
@@ -716,6 +718,11 @@ def messageShuk():
 
     strMessage += ".슉"
 
+    return strMessage
+
+def messageShipduk():
+    strMessage = "씹덕;;"
+    
     return strMessage
 
 def messageSleepy():

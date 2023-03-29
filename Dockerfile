@@ -1,5 +1,7 @@
 FROM python:3.10.6
 
+ENV TZ Asia/Seoul
+
 WORKDIR /app
 ADD ./ /app
 

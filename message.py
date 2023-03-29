@@ -376,10 +376,10 @@ def messageDaelimMeal():
     strDate = todayDate.weekday() + 1
     strMessage = f"{todayDate.strftime('%Y.%m.%d.')} 대림대학교 학식메뉴\n"
     if strDate < 6:
-        strMessage += f"Corner1\n{mealResponse['data'][f'CCT{strDate}1'].strip()}\n"
-        strMessage += f"Corner3\n{mealResponse['data'][f'CCT{strDate}3'].strip()}\n"
-        strMessage += f"Corner6\n{mealResponse['data'][f'CCT{strDate}6'].strip()}\n"
-        strMessage += f"Daelim Cook\n{mealResponse['data'][f'CCT{strDate}7'].strip()}\n"
+        strMessage += f"* Corner1\n{mealResponse['data'][f'CCT{strDate}1'].strip()}\n"
+        strMessage += f"* Corner3\n{mealResponse['data'][f'CCT{strDate}3'].strip()}\n"
+        strMessage += f"* Corner6\n{mealResponse['data'][f'CCT{strDate}6'].strip()}\n"
+        strMessage += f"* Daelim Cook\n{mealResponse['data'][f'CCT{strDate}7'].strip()}"
     else:
         strMessage += "금일은 학식을 운영하지 않습니다"
 

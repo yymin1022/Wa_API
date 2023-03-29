@@ -367,7 +367,7 @@ def messageCry():
 
 def messageDaelimMeal():
     mealUrl = "https://www.daelim.ac.kr/ajaxf/FrBistroSvc/BistroCarteInfo.do"
-    mealInput = "MENU_ID=1470&BISTRO_SEQ=1&START_DAY=2023.03.26&END_DAY=2023.03.26"
+    mealInput = f"MENU_ID=1470&BISTRO_SEQ=1&START_DAY={datetime.date.today().strftime('%Y.%m.%d.')}&END_DAY={datetime.date.today().strftime('%Y.%m.%d.')}"
 
     mealHeader = {"Content-Type": "application/x-www-form-urlencoded"}
     mealResponse = requests.post(mealUrl, data=mealInput, headers=mealHeader).json()

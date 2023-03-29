@@ -340,6 +340,25 @@ def messageCry():
 
     return strMessage
 
+def messageDaelimMeal():
+    mealUrl = "https://www.daelim.ac.kr/ajaxf/FrBistroSvc/BistroCarteInfo.do"
+    mealInput = "MENU_ID=1470&BISTRO_SEQ=1&START_DAY=2023.03.26&END_DAY=2023.03.26"
+
+    mealHeader = {"Content-Type": "application/x-www-form-urlencoded"}
+    mealResponse = requests.post(mealUrl, data=mealInput, headers=mealHeader).json()
+
+    strDate = datetime.datetime.today().weekday() + 1
+    strMessage = f"{datetime.date.today().strftime('%Y.%m.%d.')} 대림대학교 학식메뉴\n"
+    if strDate < 6:
+        strMessage += f"Corner1\n{mealResponse['data'][f'CCT{strDate}1'].strip()}\n"
+        strMessage += f"Corner3\n{mealResponse['data'][f'CCT{strDate}3'].strip()}\n"
+        strMessage += f"Corner6\n{mealResponse['data'][f'CCT{strDate}6'].strip()}\n"
+        strMessage += f"Daelim Cook\n{mealResponse['data'][f'CCT{strDate}7'].strip()}\n"
+    else:
+        strMessage += "금일은 학식을 운영하지 않습니다"
+
+    return strMessage
+
 def messageEat():
     randInt = random.randrange(0, 5)
     if randInt == 0:

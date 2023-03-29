@@ -366,14 +366,15 @@ def messageCry():
     return strMessage
 
 def messageDaelimMeal():
+    todayDate = datetime.date.today()
     mealUrl = "https://www.daelim.ac.kr/ajaxf/FrBistroSvc/BistroCarteInfo.do"
-    mealInput = f"MENU_ID=1470&BISTRO_SEQ=1&START_DAY={datetime.date.today().strftime('%Y.%m.%d')}&END_DAY={datetime.date.today().strftime('%Y.%m.%d')}"
+    mealInput = f"MENU_ID=1470&BISTRO_SEQ=1&START_DAY={todayDate.strftime('%Y.%m.%d')}&END_DAY={todayDate.strftime('%Y.%m.%d')}"
 
     mealHeader = {"Content-Type": "application/x-www-form-urlencoded"}
     mealResponse = requests.post(mealUrl, data=mealInput, headers=mealHeader).json()
 
-    strDate = datetime.datetime.today().weekday() + 1
-    strMessage = f"{datetime.date.today().strftime('%Y.%m.%d.')} 대림대학교 학식메뉴\n"
+    strDate = todayDate.weekday() + 1
+    strMessage = f"{todayDate.strftime('%Y.%m.%d.')} 대림대학교 학식메뉴\n"
     if strDate < 6:
         strMessage += f"Corner1\n{mealResponse['data'][f'CCT{strDate}1'].strip()}\n"
         strMessage += f"Corner3\n{mealResponse['data'][f'CCT{strDate}3'].strip()}\n"

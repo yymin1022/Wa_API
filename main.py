@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, redirect, request
+from waitress import serve
 
 import message
 
@@ -45,4 +46,4 @@ def getMessage():
     return jsonify(replyData)
  
 if __name__ == "__main__":
-    flaskApp.run(host="0.0.0.0", port=80)
+    serve(flaskApp, host="0.0.0.0", port=80)

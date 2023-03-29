@@ -12,10 +12,16 @@ def getReplyMessage(message):
 
     if "아.." in message:
         strResult = messageAh()
+    elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
+        strResult = messageAhnsa()
     elif "응애" in message:
         strResult = messageBaby()
+    elif "병희 전역" in message:
+        strResult = messageBHGraduate()  
     elif "불편" in message:
         strResult = messageBoolpyeon()
+    elif "사고싶" in message or "사야" in message or "살까" in message or "샀어" in message or "샀다" in message or "샀네" in message or "사버렸" in message:
+        strResult = messageBuy()
     elif "학사일정" in message:
         strResult = messageCAUCalendar()
     elif "열람실" in message:
@@ -38,21 +44,20 @@ def getReplyMessage(message):
             strResult = messageDaelimMeal()
         else:
             strResult = messageCAUMeal("")
+    elif "창환 전역" in message:
+        strResult = messageChalsGraduate()
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
-    elif ("코로나" in message or "확진자" in message) and "몇" in message:
-        if "지역별" in message:
-            strResult = messageCoronaCity()
-        else:
-            strResult = messageCorona()
     elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
         strResult = messageCry()
-    elif "뭐먹" in message:
+    elif "뭐먹" in message or "머먹" in message:
         strResult = messageEat()
     elif ("제발" in message or "하고 싶다" in message) and "졸업" in message:
         strResult = messageGraduate()
     elif "하.." in message:
         strResult = messageHa()
+    elif "한수 소해" in message:
+        strResult = messageHansuGraduate()
     elif "호규" in message:
         if "전역" in message:
             strResult = messageHokyuGraduate()
@@ -64,12 +69,27 @@ def getReplyMessage(message):
         strResult = messageIreon()
     elif "주형" in message:
         strResult = messageJoohyeong()
-    elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 10:
+    elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 20:
         strResult = messageLaugh()
+    elif "민식" in message:
+        strResult = messageMinsik()
+    elif "과제" in message or "집가고싶다" in message:
+        strResult = messageMinsikBooreop()
+    elif "ㅡㅡ" in message:
+        strResult = messageMM()
     elif ("앎" in message or "아는사람" in message) or "알아" in message:
         strResult = messageMoloo()
     elif "무야호" in message:
         strResult = messageMooYaHo()
+    elif "남샤" in message:
+        if "1층" in message:
+            strResult = messageNSUMeal("465")
+        elif "2층" in message:
+            strResult = messageNSUMeal("466")
+        elif "3층" in message:
+            strResult = messageNSUMeal("467")
+        elif "채움" in message:
+            strResult = messageNSUMeal("468")
     elif "꺼라" in message:
         strResult = messageOff()
     elif "오호" in message or "호오" in message:
@@ -78,12 +98,18 @@ def getReplyMessage(message):
         strResult = messageOh()
     elif "오케이" in message:
         strResult = messageOkay()
+    elif "퇴근" in message:
+        strResult = messageOutwork()
     elif "ㄹㅇㅋㅋ" in message:
         strResult = messageReal()
     elif "^^7" in message:
         strResult = messageSalute()
-    elif "나스" in message or "폴리오" in message:
+    elif "나스" in message:
         strResult = messageSaseyo()
+    elif "성민 소해" in message:
+        strResult = messageSeongminGraduate()
+    elif "서건1우" in message:
+        strResult = messageSGW()
     elif "슈슉" in message:
         strResult = messageShuk()
     elif "졸려" in message or "잠와" in message or "피곤해" in message:
@@ -98,13 +124,14 @@ def getReplyMessage(message):
         strResult = messageWa()
     elif "와!" in message:
         strResult = messageWaSans()
+    elif "!날씨" in message:
+        strResult = messageWeather()
     elif "용민" in message:
         strResult = messageYongmin()
     elif "자라" in message:
         strResult = messageZara()
-    elif "자야" in message:
-        strResult = messageZayazi()
-
+    elif "자야" in message or "잘까" in message:
+        strResult = messageZayazi()  
     return strResult
 
 def getCryCount(message):
@@ -150,6 +177,23 @@ def messageAh():
     
     return strMessage
 
+def messageAhnsa():
+    randInt = random.randrange(0, 5)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "이걸 안 사?"
+    elif randInt == 1:
+        strMessage = "왜요;;"
+    elif randInt == 2:
+        strMessage = "그거 사면 진짜 좋을텐데.."
+    elif randInt == 3:
+        strMessage = "아.."
+    elif randInt == 4:
+        strMessage = "헐.."
+
+    return strMessage
+        
 def messageBaby():
     randInt = random.randrange(0, 3)
     strMessage = ""
@@ -166,6 +210,37 @@ def messageBaby():
 def messageBoolpyeon():
     strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불편하니깐 그런거아냐!!"
 
+    return strMessage
+
+def messageBuy():
+    randInt = random.randrange(0, 8)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "축하합니다!!!"
+    elif randInt == 1:
+        strMessage = "그걸 샀네;;"
+    elif randInt == 2:
+        strMessage = "개부자;;"
+    elif randInt == 3:
+        strMessage = "와 샀네"
+    elif randInt == 4:
+        strMessage = "이걸 산다고?"
+    elif randInt == 5:
+        strMessage = "ㅋㅋ"
+    elif randInt == 6:
+        strMessage = "왜요"
+    elif randInt == 7:
+        strMessage = "그거 살 돈이면 차라리..\\m........."
+
+    return strMessage
+
+def messageBHGraduate():
+    dateEnd = datetime.date(2021,12,29)
+    dateToday = datetime.date.today()
+    leftDays = (dateToday - dateEnd).days
+    strMessage = "임병희씨가 전역한지 %d일이 지났습니다."%(leftDays)
+    
     return strMessage
 
 def messageCAUCalendar():
@@ -257,6 +332,23 @@ def messageCAUMeal(mealTypeID):
 
     return strMessage
 
+def messageChalsGraduate():
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    dateStart = datetime.date(2020,12,7)
+    dateEnd = datetime.date(2022,9,1)
+    dateToday = datetime.date.today()
+    goneDays = (dateToday - dateStart).days
+    leftDays = (dateToday - dateEnd).days
+
+    if randInt == 0:
+        strMessage = "찰스가 입대한지 %d일이 됐습니다."%(goneDays)
+    elif randInt == 1:
+        strMessage = "찰스가 전역한지 %d일이 지났습니다."%(leftDays)
+
+    return strMessage
+
 def messageCoding():
     randInt = random.randrange(0, 2)
     strMessage = ""
@@ -265,75 +357,6 @@ def messageCoding():
         strMessage = "구라ㅡㅡ;;"
     elif randInt == 1:
         strMessage = "ㅋ"
-
-    return strMessage
-
-def messageCorona():
-    curDate = datetime.date.today().strftime("%Y년 %m월 %d일")
-    curTimestamp = str(time.time())
-
-    url = f"https://apiv3.corona-live.com/domestic/stat.json?timestamp={curTimestamp}"
-    response = requests.get(url)
-    jsonData = json.loads(response.content)["overview"]
-
-    dataConfirmed = jsonData["confirmed"]
-    dataCritical = jsonData["confirmedCritical"]
-    dataDeceased = jsonData["deceased"]
-    dataHospitalised = jsonData["hospitalised"]
-
-    strConfirmed = f"확진자 : {format(dataConfirmed[1], ',')}명 (누적 {format(dataConfirmed[0], ',')}명)"
-    strCritical = f"위중증 : {format(dataCritical[0], ',')}명 "
-    if int(dataCritical[1]) < 0:
-        strCritical += f"(-{format(int(dataCritical[1]) * -1, ',')})"
-    else:
-        strCritical += f"(+{format(dataCritical[1], ',')})"
-
-    strDeceased = f"사망자 : {format(dataDeceased[0], ',')}명 "
-    if int(dataDeceased[1]) < 0:
-        strDeceased += f"(-{format(int(dataDeceased[1]) * -1, ',')})"
-    else:
-        strDeceased += f"(+{format(dataDeceased[1], ',')})"
-
-    strHospitalised = f"입원환자 : {format(dataHospitalised[0], ',')}명 "
-    if int(dataHospitalised[1]) < 0:
-        strHospitalised += f"(-{format(int(dataHospitalised[1]) * -1, ',')})"
-    else:
-        strHospitalised += f"(+{format(dataHospitalised[1], ',')})"
-
-    url = f"https://apiv3.corona-live.com/domestic/live.json?timestamp={curTimestamp}"
-    response = requests.get(url)
-    jsonData = json.loads(response.content)["live"]
-
-    dataConfirmedLive = jsonData["today"]
-    dataConfirmedLiveYesterday = jsonData["yesterday"]
-
-    strConfirmedLive = f"실시간 : {format(dataConfirmedLive, ',')}명"
-    strConfirmedLiveYesterday = f"어제 동시간대 : {format(dataConfirmedLiveYesterday, ',')}명"
-
-    strMessage = f"{curDate} 코로나19 현황\n{strConfirmedLive}\n{strConfirmedLiveYesterday}\n\n어제까지\n{strConfirmed}\n{strCritical}\n{strHospitalised}\n{strDeceased}"
-
-    return strMessage
-
-def messageCoronaCity():
-    curDate = datetime.date.today().strftime("%Y년 %m월 %d일")
-    curTimestamp = str(time.time())
-
-    url = f"https://apiv3.corona-live.com/domestic/live.json?timestamp={curTimestamp}"
-    response = requests.get(url)
-    jsonData = json.loads(response.content)["cities"]
-
-    domesticList = ["서울", "부산", "인천", "대구", "광주", "대전", "울산", "세종", "경기", "강원", "충북", "충남", "경북", "경남", "전북", "전남", "제주", "입국 검역소"]
-
-    strDomestic = ""
-    for i in range(18):
-        dataCurDomestic = jsonData[str(i)]
-        strDomestic += f"{domesticList[i]} {format(dataCurDomestic[0], ',')}명 "
-        if(int(dataCurDomestic[1]) < 0):
-            strDomestic += f"(-{format(int(dataCurDomestic[1]) * -1, ',')})\n"
-        else:
-            strDomestic += f"(+{format(dataCurDomestic[1], ',')})\n"
-
-    strMessage = f"{curDate} 코로나19 지역별 현황\n{strDomestic}".rstrip()
 
     return strMessage
 
@@ -362,7 +385,7 @@ def messageDaelimMeal():
     return strMessage
 
 def messageEat():
-    randInt = random.randrange(0, 5)
+    randInt = random.randrange(0, 28)
     if randInt == 0:
     	strMessage = "돼지"
     elif randInt == 1:
@@ -372,8 +395,53 @@ def messageEat():
     elif randInt == 3:
     	strMessage = "그만 먹어;;"
     elif randInt == 4:
-        strMessage = "고기!!"
-
+        strMessage = "삼겹살에 쐬주 한 잔?"
+    elif randInt == 5:
+        strMessage = "부리또!!"
+    elif randInt == 6:
+        strMessage = "김볶밥!!"
+    elif randInt == 7:
+        strMessage = "소고기!!"
+    elif randInt == 8:
+        strMessage = "햄버거!!"
+    elif randInt == 9:
+        strMessage = "부찌!!"
+    elif randInt == 10:
+        strMessage = "치폴!!"
+    elif randInt == 11:
+        strMessage = "아웃백!!"
+    elif randInt == 12:
+        strMessage = "빕스!!"
+    elif randInt == 13:
+        strMessage = "황금볶음밥!!"
+    elif randInt == 14:
+        strMessage = "마라탕!!"
+    elif randInt == 15:
+        strMessage = "슈하스코!!"
+    elif randInt == 16:
+        strMessage = "떡볶이!!"
+    elif randInt == 17:
+        strMessage = "학식!!"
+    elif randInt == 18:
+        strMessage = "돈까스!!"
+    elif randInt == 19:
+        strMessage = "곱창!!"
+    elif randInt == 20:
+        strMessage = "삼계탕!!"
+    elif randInt == 21:
+        strMessage = "짜장면!!"
+    elif randInt == 22:
+        strMessage = "양꼬치!!"
+    elif randInt == 23:
+        strMessage = "피탕!!"
+    elif randInt == 24:
+        strMessage = "피맥!!"
+    elif randInt == 25:
+        strMessage = "감자탕!!"
+    elif randInt == 26:
+        strMessage = "치킨!!"
+    elif randInt == 27:
+        strMessage = "C₂₈H₃₄N₂O₃!!"
     return strMessage
 
 def messageGraduate():
@@ -405,11 +473,11 @@ def messageHa():
 def messageHokyu():
     strMessage = ""
     
-    randInt = random.randrange(0, 9)
+    randInt = random.randrange(0, 10)
     if randInt == 0:
-        strMessage = "필승! 833기 일병 김호규입니다!"
+        strMessage = "필승! 833기 병장(진) 김호규입니다!"
     elif randInt == 1:
-        strMessage = "예! 일병 김호규!"
+        strMessage = "예! 병장(진) 김호규!"
     elif randInt == 2:
         strMessage = "필승!"
     elif randInt == 3:
@@ -423,7 +491,9 @@ def messageHokyu():
     elif randInt == 7:
         strMessage = "K2C1 핥짝핥짝"
     elif randInt == 8:
-        strMessage = "감사합니다. 314대대 통신반 일병 김호규입니다. 머슼타드일까요?"
+        strMessage = "감사합니다. 314대대 통신반 병장(진) 김호규입니다. 머슼타드일까요?"
+    elif randInt == 9:
+        strMessage = "악! 소위 김호규!"
     
     return strMessage
 
@@ -446,6 +516,27 @@ def messageHokyuGraduate():
     elif randInt == 3:
         strMessage = "404 Not Found"
 
+    return strMessage
+
+def messageHansuGraduate():
+    randInt = random.randrange(0, 3)
+    strMessage = ""
+    
+    dateEnd = datetime.date(2024,8,31)
+    dateToday = datetime.date.today()
+    now = datetime.datetime.now()
+    leftdays = (dateEnd - dateToday).days
+    lefthours = 24 - now.hour - 10
+    leftminutes = 60 - now.minute - 1
+    leftseconds = 60 - now.second - 1
+    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    if randInt == 0:
+        strMessage = "404 Not Found"
+    elif randInt == 1:
+        strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+    elif randInt == 2:
+        strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+    
     return strMessage
 
 def messageHungry():
@@ -496,6 +587,16 @@ def messageLaugh():
 
     return strMessage
 
+def messageMinsik():
+    strMessage = "민식아 그래서 학교는 언제와?"
+
+    return strMessage
+
+def messageMinsikBooreop():
+    strMessage = "2023-1학기 복학한 민식아 이제 안부럽다"
+
+    return strMessage
+
 def messageMoloo():
     strMessage = "몰?루"
 
@@ -504,6 +605,25 @@ def messageMoloo():
 def messageMooYaHo():
     strMessage = "그만큼 신나신다는거지~"
 
+    return strMessage
+
+def messageMM():
+    strMessage = "정색하지 마세요;;"
+
+    return strMessage
+
+def messageNSUMeal(NSU_BAP):
+    strMessage = ""
+    strUrl = "https://nsu.ac.kr/api/user/board/getBoardContentSummaryList"
+    mealResponse = requests.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data="boardIdList=%d&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4" % int(NSU_BAP)).json()
+    mealResponse = dict(mealResponse)
+    mealList = mealResponse["body"]["list"][0]["properties"]["food_list"][0]
+
+    mealList['// 월요일 //'], mealList['// 화요일 //'], mealList['// 수요일 //'], mealList['// 목요일 //'], mealList['// 금요일 //'], = mealList['field1'], mealList['field2'], mealList['field3'], mealList['field4'], mealList['field5']
+    del(mealList['corner'], mealList['field1'], mealList['field2'], mealList['field3'], mealList['field4'], mealList['field5'])
+
+    for mealData in mealList.items():
+        strMessage += (f"{mealData[0]}\n{mealData[1]}\n")
     return strMessage
 
 def messageOff():
@@ -520,6 +640,19 @@ def messageOh():
     elif randInt == 1:
         strMessage = "..렌지쥬스"
     
+    return strMessage
+
+def messageOutwork():
+    randInt = random.randrange(0, 3)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "출근하세요"
+    elif randInt == 1:
+        strMessage = "평생 쉬세요~"
+    elif randInt == 2:
+        strMessage = "집가고싶다"
+
     return strMessage
 
 def messageOho(message):
@@ -555,14 +688,35 @@ def messageSalute():
     return strMessage
 
 def messageSaseyo():
-    randInt = random.randrange(0, 2)
+    randInt = random.randrange(0, 4)
     strMessage = ""
 
     if randInt == 0:
         strMessage = "사세요"
     elif randInt == 1:
         strMessage = "안 사도 돼요"
+    elif randInt == 2:
+        strMessage = "나스는 역시 시놀로지죠~"
+    elif randInt == 3:
+        strMessage = "나스는 역시 큐냅이죠~"
 
+    return strMessage
+
+def messageSeongminGraduate():
+    randInt = random.randrange(0, 3)
+    strMessage = ""
+
+    dateEnd = datetime.date(2024,2,22)
+    dateToday = datetime.date.today()
+    leftdays = (dateEnd - dateToday).days
+
+    if randInt == 0:
+        strMessage = "24년은 오지 않습니다..."
+    if randInt == 1:
+        strMessage = "지성민씨의 소집해제일은 29년 12월 32일입니다."
+    elif randInt == 2:
+        strMessage = "지성민씨의 소집해제일까지 %d일이 남았습니다."%(leftdays)
+    
     return strMessage
 
 def messageShuk():
@@ -604,6 +758,21 @@ def messageStop():
 def messageStress():
     strMessage = "어림도 없지"
 
+    return strMessage
+
+def messageSGW():
+    randInt = random.randrange(0, 4)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "좀 나가라;;"
+    elif randInt == 1:
+        strMessage = "뭐하냐;"
+    elif randInt == 2:
+        strMessage = "좀 꺼라;"
+    elif randInt == 3:
+        strMessage = "이미 차단당한 유저입니다."
+    
     return strMessage
 
 def messageUh():
@@ -668,4 +837,15 @@ def messageZara():
 def messageZayazi():
     strMessage = "구라ㅡㅡ;;"
 
+    return strMessage
+
+
+def messageWeather():
+
+    weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?id=1835847&appid=ea9e5f8d8e4aa2c798f8eb78f361d1b4"
+    text = requests.get(weatherAPIUrl)
+    text = text.text
+    jsonData = json.loads(text)
+    
+    strMessage = "현재온도: " + str((jsonData["main"]["temp"])) + "구름: " + str((jsonData["clouds"]["all"]))
     return strMessage

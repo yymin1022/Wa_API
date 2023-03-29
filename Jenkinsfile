@@ -8,6 +8,7 @@ pipeline {
                     DOCKERHUB_CREDENTIAL = "dockerhub-yymin1022"
                     DOCKER_IMAGE_NAME = "wa-api"
                     DOCKER_IMAGE_STORAGE = "yymin1022"
+                    DOCKER_IMAGE_TAG = "release11"
                 }
             }
         }
@@ -24,7 +25,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry("", DOCKERHUB_CREDENTIAL) {
-                        image.push()
+                        image.push("$DOCKER_IMAGE_TAG")
+                        image.push("latest")
                     }
                 }
             }

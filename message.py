@@ -42,6 +42,8 @@ def getReplyMessage(message):
             strResult = messageCAUMeal("40")
         elif "대림대" in message:
             strResult = messageDaelimMeal()
+        elif "안양대" in message:
+            strResult = messageAnyangMeal()
         else:
             strResult = messageCAUMeal("")
     elif "창환 전역" in message:
@@ -193,7 +195,28 @@ def messageAhnsa():
         strMessage = "헐.."
 
     return strMessage
-        
+
+def messageAnyangMeal():
+    todayDate = datetime.date.today()
+    mealUrl = "https://www.anyang.ac.kr/main/activities/school-cafeteria.do"
+
+    mealResponse = requests.post(mealUrl).text
+
+    bs = BeautifulSoup(mealResponse, 'html.parser')
+    mealData = json.loads(bs.find("input", id="mealList").get("value"))
+
+    numDate = todayDate.weekday()
+    strDate = ["mon", "tue", "wed", "thu", "fri"]
+    strMessage = f"{todayDate.strftime('%Y.%m.%d.')} 안양대학교 학식메뉴\n"
+    if numDate < 5:
+        strMessage += f"{mealData[f'{strDate[numDate]}Main02']}"
+        for item in mealData[f'{strDate[numDate]}Sub02']:
+            strMessage += f"\n{item}"
+    else:
+        strMessage += "금일은 학식을 운영하지 않습니다"
+
+    return strMessage
+
 def messageBaby():
     randInt = random.randrange(0, 3)
     strMessage = ""

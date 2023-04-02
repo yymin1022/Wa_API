@@ -198,6 +198,11 @@ def messageAhnsa():
 
 def messageAnyangMeal():
     todayDate = datetime.date.today()
+    numDate = todayDate.weekday()
+
+    if numDate >= 5:
+        return "금일은 학식을 운영하지 않습니다"
+
     mealUrl = "https://www.anyang.ac.kr/main/activities/school-cafeteria.do"
 
     mealResponse = requests.post(mealUrl).text
@@ -205,15 +210,11 @@ def messageAnyangMeal():
     bs = BeautifulSoup(mealResponse, 'html.parser')
     mealData = json.loads(bs.find("input", id="mealList").get("value"))
 
-    numDate = todayDate.weekday()
     strDate = ["mon", "tue", "wed", "thu", "fri"]
     strMessage = f"{todayDate.strftime('%Y.%m.%d.')} 안양대학교 학식메뉴\n"
-    if numDate < 5:
-        strMessage += f"{mealData[f'{strDate[numDate]}Main02']}"
-        for item in mealData[f'{strDate[numDate]}Sub02']:
-            strMessage += f"\n{item}"
-    else:
-        strMessage += "금일은 학식을 운영하지 않습니다"
+    strMessage += f"{mealData[f'{strDate[numDate]}Main02']}"
+    for item in mealData[f'{strDate[numDate]}Sub02']:
+        strMessage += f"\n{item}"
 
     return strMessage
 

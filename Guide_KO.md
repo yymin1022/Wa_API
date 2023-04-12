@@ -59,7 +59,7 @@ service apache2 start
 
 ## How To Use
 
-```http://localhost:port``` 로 POST Restful 데이터셋을 전송합니다.
+```http://localhost:port/getMessage``` 로 POST Restful 데이터셋을 전송합니다.
 
 서버에 API 요청을 하는 경우 포맷은 다음과 같습니다.
 

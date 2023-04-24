@@ -90,7 +90,7 @@ def getReplyMessage(message):
             strResult = messageNSUMeal("466")
         elif "3층" in message:
             strResult = messageNSUMeal("467")
-        elif "채움" in message:
+        elif "카페" in message:
             strResult = messageNSUMeal("468")
     elif "꺼라" in message:
         strResult = messageOff()

@@ -90,7 +90,7 @@ def getReplyMessage(message):
             strResult = messageNSUMeal("466")
         elif "3층" in message:
             strResult = messageNSUMeal("467")
-        elif "채움" in message:
+        elif "카페" in message:
             strResult = messageNSUMeal("468")
     elif "꺼라" in message:
         strResult = messageOff()
@@ -505,11 +505,11 @@ def messageHokyu():
     if randInt == 0:
         strMessage = "필승! 833기 병장(진) 김호규입니다!"
     elif randInt == 1:
-        strMessage = "예! 병장(진) 김호규!"
+        strMessage = "예! 하사(진) 김호규!"
     elif randInt == 2:
         strMessage = "필승!"
     elif randInt == 3:
-        strMessage = "안녕하세요? 전역하고 싶은 김호규입니다."
+        strMessage = "안녕하세요? 전역하고 싶지 않은 김호규입니다."
     elif randInt == 4:
         strMessage = "팬택 핥짝"
     elif randInt == 5:

@@ -11,7 +11,9 @@ import xmltodict
 def getReplyMessage(message):
     strResult = ""
 
-    if "아.." in message:
+    if "!뉴스" in message:
+        strResult = messageFakeNews(message)
+    elif "아.." in message:
         strResult = messageAh()
     elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
         strResult = messageAhnsa()
@@ -135,8 +137,6 @@ def getReplyMessage(message):
         strResult = messageZara()
     elif "자야" in message or "잘까" in message:
         strResult = messageZayazi() 
-    elif "!뉴스" in message:
-        strResult = messageFakeNews(message)
 
     return strResult
 

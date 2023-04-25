@@ -872,10 +872,9 @@ def messageFakeNews(message):
     fake_news_url = os.environ['FAKE_NEWS_URL']
     keyword = message.split("!뉴스:")[1]
     response = requests.post(fake_news_url, json={'message':keyword, 'len':64})
-    strResult = response.text.split('\n')[2]
-    strResult += response.text.split('\n')[3]
-    
-    return strResult
+    strMessage = '\n'.join(response.text.split('\n')[2:-4])
+
+    return strMessage
 
 def messageWeather():
 

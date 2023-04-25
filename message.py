@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 
 import datetime
 import json
+import os
 import random
 import requests
 import time

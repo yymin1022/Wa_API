@@ -133,7 +133,10 @@ def getReplyMessage(message):
     elif "자라" in message:
         strResult = messageZara()
     elif "자야" in message or "잘까" in message:
-        strResult = messageZayazi()  
+        strResult = messageZayazi() 
+    elif "!뉴스" in message:
+        strResult = messageFakeNews(message)
+
     return strResult
 
 def getCryCount(message):
@@ -864,6 +867,13 @@ def messageZayazi():
 
     return strMessage
 
+def messageFakeNews(message):
+    fake_news_url = os.environ['FAKE_NEWS_URL']
+    keyword = message.split("!뉴스:")[1]
+    response = requests.post(fake_news_url, json={'message':keyword, 'len':64})
+    strResult = response.text.split('\n')
+    
+    return strResult
 
 def messageWeather():
 

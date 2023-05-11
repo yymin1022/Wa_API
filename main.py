@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, redirect, request
+from flask_cors import CORS
 from waitress import serve
 
 import message
 
 flaskApp = Flask(__name__)
+CORS(flaskApp, resources={r"*": {"origins": "*"}})
  
 @flaskApp.route("/")
 def mainPage():

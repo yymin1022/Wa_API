@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 
 import datetime
 import json
+import os
 import random
 import requests
 import time
@@ -10,7 +11,9 @@ import xmltodict
 def getReplyMessage(message):
     strResult = ""
 
-    if "아.." in message:
+    if "!뉴스" in message:
+        strResult = messageFakeNews(message)
+    elif "아.." in message:
         strResult = messageAh()
     elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
         strResult = messageAhnsa()
@@ -90,7 +93,7 @@ def getReplyMessage(message):
             strResult = messageNSUMeal("466")
         elif "3층" in message:
             strResult = messageNSUMeal("467")
-        elif "채움" in message:
+        elif "카페" in message:
             strResult = messageNSUMeal("468")
     elif "꺼라" in message:
         strResult = messageOff()
@@ -133,7 +136,8 @@ def getReplyMessage(message):
     elif "자라" in message:
         strResult = messageZara()
     elif "자야" in message or "잘까" in message:
-        strResult = messageZayazi()  
+        strResult = messageZayazi() 
+
     return strResult
 
 def getCryCount(message):
@@ -503,11 +507,11 @@ def messageHokyu():
     if randInt == 0:
         strMessage = "필승! 833기 병장(진) 김호규입니다!"
     elif randInt == 1:
-        strMessage = "예! 병장(진) 김호규!"
+        strMessage = "예! 하사(진) 김호규!"
     elif randInt == 2:
         strMessage = "필승!"
     elif randInt == 3:
-        strMessage = "안녕하세요? 전역하고 싶은 김호규입니다."
+        strMessage = "안녕하세요? 전역하고 싶지 않은 김호규입니다."
     elif randInt == 4:
         strMessage = "팬택 핥짝"
     elif randInt == 5:
@@ -865,6 +869,13 @@ def messageZayazi():
 
     return strMessage
 
+def messageFakeNews(message):
+    fake_news_url = os.environ['FAKE_NEWS_URL']
+    keyword = message.split("!뉴스:")[1]
+    response = requests.post(fake_news_url, json={'message':keyword, 'len':64})
+    strMessage = '\\m'.join(response.text.split('\n')[2:-4])
+
+    return strMessage
 
 def messageWeather():
 

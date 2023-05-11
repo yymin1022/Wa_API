@@ -1,6 +1,6 @@
 ﻿# API Usage Guide
 
-[Engligh](Guide_EN.md)<br/>
+[English](Guide_EN.md)<br/>
 [한국어](Guide_KO.md)
 
 ## Install
@@ -47,7 +47,7 @@ service apache2 start
 
 ## How To Use
 
-Send POST Restful API Data to ```http://localhost:port```
+Send POST Restful API Data to ```http://localhost:port/getMessage```
 
 API Format is like this.
 

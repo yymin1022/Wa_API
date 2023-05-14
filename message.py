@@ -286,6 +286,8 @@ def messageCAUCalendar():
     }
     calUrl = "https://mportal.cau.ac.kr/portlet/p014/p014List.ajax"
 
+    requests.packages.urllib3.disable_warnings()
+    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
     requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
     calResponse = eval(requests.post(calUrl, json=calData).json())
     calList = calResponse["data"]
@@ -315,6 +317,8 @@ def messageCAULibrary(libTypeID):
         strMessage = "중앙대학교 열람실 좌석현황\n\n사용법 : 열람실 키워드와 함께 서울 / 안성 / 법학 키워드 언급"
         return strMessage
 
+    requests.packages.urllib3.disable_warnings()
+    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
     requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
     libResponse = requests.post(libUrl, json=libData).json()
 
@@ -347,6 +351,8 @@ def messageCAUMeal(mealTypeID):
         strMessage = "중앙대학교 학식메뉴\n\n사용법 : 학식 키워드와 함께 아침 / 점심 / 저녁 / 조식 / 중식 / 석식 키워드 언급"
         return strMessage
 
+    requests.packages.urllib3.disable_warnings()
+    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
     requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
     mealResponse = requests.post(mealUrl, json=mealData).json()
     mealList = mealResponse["list"]

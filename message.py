@@ -287,8 +287,8 @@ def messageCAUCalendar():
     calUrl = "https://mportal.cau.ac.kr/portlet/p014/p014List.ajax"
 
     requests.packages.urllib3.disable_warnings()
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
     requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
+    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ":HIGH:!DH:!aNULL"
     calResponse = eval(requests.post(calUrl, json=calData).json())
     calList = calResponse["data"]
 
@@ -318,8 +318,8 @@ def messageCAULibrary(libTypeID):
         return strMessage
 
     requests.packages.urllib3.disable_warnings()
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
     requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
+    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ":HIGH:!DH:!aNULL"
     libResponse = requests.post(libUrl, json=libData).json()
 
     libList = libResponse["gridData"]
@@ -352,8 +352,8 @@ def messageCAUMeal(mealTypeID):
         return strMessage
 
     requests.packages.urllib3.disable_warnings()
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
     requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
+    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ":HIGH:!DH:!aNULL"
     mealResponse = requests.post(mealUrl, json=mealData).json()
     mealList = mealResponse["list"]
 

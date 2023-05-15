@@ -15,8 +15,9 @@ Python Flask를 이용해 개발되었으며, 추후 ```Node.JS``` 기반으로 
 
 ### API Usage Guide
 
+[한국어](Guide_KO.md)<br/>
 [Engligh](Guide_EN.md)<br/>
-[한국어](Guide_KO.md)
+[Japanese](Guide_JP.md)
 
 ### Example
 

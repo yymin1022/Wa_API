@@ -1,7 +1,8 @@
 ﻿# API 사용 가이드
 
+[한국어](Guide_KO.md)<br/>
 [Engligh](Guide_EN.md)<br/>
-[한국어](Guide_KO.md)
+[Japanese](Guide_JP.md)
 
 ## Before Usage
 

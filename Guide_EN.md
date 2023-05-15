@@ -1,7 +1,8 @@
 ﻿# API Usage Guide
 
-[English](Guide_EN.md)<br/>
-[한국어](Guide_KO.md)
+[한국어](Guide_KO.md)<br/>
+[Engligh](Guide_EN.md)<br/>
+[Japanese](Guide_JP.md)
 
 ## Install
 

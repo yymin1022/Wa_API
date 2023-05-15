@@ -1,8 +1,8 @@
 ﻿# API ガイド
 
-[Engligh](Guide_EN.md)<br/>
 [한국어](Guide_KO.md)<br/>
-[日本語](Guide_JP.md)
+[Engligh](Guide_EN.md)<br/>
+[Japanese](Guide_JP.md)
 
 ## ワーボットの概要
 

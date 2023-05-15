@@ -2,7 +2,7 @@
 
 [한국어](Guide_KO.md)<br/>
 [Engligh](Guide_EN.md)<br/>
-[Japanese](Guide_JP.md)
+[日本語](Guide_JP.md)
 
 ## ワーボットの概要
 

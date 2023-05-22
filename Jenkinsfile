@@ -8,7 +8,7 @@ pipeline {
                     DOCKERHUB_CREDENTIAL = "dockerhub-yymin1022"
                     DOCKER_IMAGE_NAME = "wa-api"
                     DOCKER_IMAGE_STORAGE = "yymin1022"
-                    DOCKER_IMAGE_TAG = "release11"
+                    DOCKER_IMAGE_TAG = "release12"
                 }
             }
         }

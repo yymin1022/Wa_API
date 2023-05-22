@@ -1,4 +1,6 @@
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.ssl_ import create_urllib3_context
 
 import datetime
 import json
@@ -7,6 +9,24 @@ import random
 import requests
 import time
 import xmltodict
+
+CIPHERS = (
+    'ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+HIGH:'
+    'DH+HIGH:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+HIGH:RSA+3DES:!aNULL:'
+    '!eNULL:!MD5'
+    ':HIGH:!DH:!aNULL'
+)
+
+class DESAdapter(HTTPAdapter):
+    def init_poolmanager(self, *args, **kwargs):
+        context = create_urllib3_context(ciphers=CIPHERS)
+        kwargs['ssl_context'] = context
+        return super(DESAdapter, self).init_poolmanager(*args, **kwargs)
+
+    def proxy_manager_for(self, *args, **kwargs):
+        context = create_urllib3_context(ciphers=CIPHERS)
+        kwargs['ssl_context'] = context
+        return super(DESAdapter, self).proxy_manager_for(*args, **kwargs)
 
 def getReplyMessage(message):
     strResult = ""
@@ -212,7 +232,9 @@ def messageAnyangMeal():
 
     mealUrl = "https://www.anyang.ac.kr/main/activities/school-cafeteria.do"
 
-    mealResponse = requests.post(mealUrl).text
+    requestSession = requests.Session()
+    requestSession.mount(mealUrl, DESAdapter())
+    mealResponse = requestSession.get(mealUrl).text
 
     bs = BeautifulSoup(mealResponse, 'html.parser')
     mealData = json.loads(bs.find("input", id="mealList").get("value"))
@@ -289,10 +311,9 @@ def messageCAUCalendar():
     }
     calUrl = "https://mportal.cau.ac.kr/portlet/p014/p014List.ajax"
 
-    requests.packages.urllib3.disable_warnings()
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ":HIGH:!DH:!aNULL"
-    calResponse = eval(requests.post(calUrl, json=calData).json())
+    requestSession = requests.Session()
+    requestSession.mount(calUrl, DESAdapter())
+    calResponse = eval(requestSession.post(calUrl, json=calData).json())
     calList = calResponse["data"]
 
     strMessage = f"중앙대학교 {calMonth}월 학사일정\n"
@@ -320,10 +341,9 @@ def messageCAULibrary(libTypeID):
         strMessage = "중앙대학교 열람실 좌석현황\n\n사용법 : 열람실 키워드와 함께 서울 / 안성 / 법학 키워드 언급"
         return strMessage
 
-    requests.packages.urllib3.disable_warnings()
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ":HIGH:!DH:!aNULL"
-    libResponse = requests.post(libUrl, json=libData).json()
+    requestSession = requests.Session()
+    requestSession.mount(libUrl, DESAdapter())
+    libResponse = requestSession.post(libUrl, json=libData).json()
 
     libList = libResponse["gridData"]
 
@@ -354,10 +374,9 @@ def messageCAUMeal(mealTypeID):
         strMessage = "중앙대학교 학식메뉴\n\n사용법 : 학식 키워드와 함께 아침 / 점심 / 저녁 / 조식 / 중식 / 석식 키워드 언급"
         return strMessage
 
-    requests.packages.urllib3.disable_warnings()
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ":HIGH:!DH:!aNULL"
-    mealResponse = requests.post(mealUrl, json=mealData).json()
+    requestSession = requests.Session()
+    requestSession.mount(mealUrl, DESAdapter())
+    mealResponse = requestSession.post(mealUrl, json=mealData).json()
     mealList = mealResponse["list"]
 
     strMessage = f"{mealList[0]['date']}. 중앙대학교 학식메뉴({mealType})\n"
@@ -408,7 +427,9 @@ def messageDaelimMeal():
     mealInput = f"MENU_ID=1470&BISTRO_SEQ=1&START_DAY={todayDate.strftime('%Y.%m.%d')}&END_DAY={todayDate.strftime('%Y.%m.%d')}"
 
     mealHeader = {"Content-Type": "application/x-www-form-urlencoded"}
-    mealResponse = requests.post(mealUrl, data=mealInput, headers=mealHeader).json()
+    requestSession = requests.Session()
+    requestSession.mount(mealUrl, DESAdapter())
+    mealResponse = requestSession.post(mealUrl, data=mealInput, headers=mealHeader).json()
 
     strDate = todayDate.weekday() + 1
     strMessage = f"{todayDate.strftime('%Y.%m.%d.')} 대림대학교 학식메뉴\n"
@@ -654,7 +675,9 @@ def messageMM():
 def messageNSUMeal(NSU_BAP, food_list):
     strMessage = ""
     strUrl = "https://nsu.ac.kr/api/user/board/getBoardContentSummaryList"
-    mealResponse = requests.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data="boardIdList=%d&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4" % NSU_BAP).json()
+    requestSession = requests.Session()
+    requestSession.mount(strUrl, DESAdapter())
+    mealResponse = requestSession.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data="boardIdList=%d&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4" % NSU_BAP).json()
     mealResponse = dict(mealResponse)
     mealDate = mealResponse["body"]["list"][0]["title"]
     if food_list == 0:
@@ -886,7 +909,9 @@ def messageZayazi():
 def messageFakeNews(message):
     fake_news_url = os.environ['FAKE_NEWS_URL']
     keyword = message.split("!뉴스:")[1]
-    response = requests.post(fake_news_url, json={'message':keyword, 'len':64})
+    requestSession = requests.Session()
+    requestSession.mount(fake_news_url, DESAdapter())
+    response = requestSession.post(fake_news_url, json={'message':keyword, 'len':64})
     strMessage = '\\m'.join(response.text.split('\n')[2:-4])
 
     return strMessage
@@ -894,7 +919,10 @@ def messageFakeNews(message):
 def messageWeather():
 
     weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?id=1835847&appid=ea9e5f8d8e4aa2c798f8eb78f361d1b4"
-    text = requests.get(weatherAPIUrl)
+
+    requestSession = requests.Session()
+    requestSession.mount(weatherAPIUrl, DESAdapter())
+    text = requestSession.get(weatherAPIUrl)
     text = text.text
     jsonData = json.loads(text)
     

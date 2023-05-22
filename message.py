@@ -557,7 +557,7 @@ def messageHokyuGraduate():
 
     return strMessage
 
-def messageGraduate():
+def messageHansuGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
     

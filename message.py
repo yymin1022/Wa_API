@@ -674,7 +674,9 @@ def messageMM():
 def messageNSUMeal(NSU_BAP, food_list):
     strMessage = ""
     strUrl = "https://nsu.ac.kr/api/user/board/getBoardContentSummaryList"
-    mealResponse = requests.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data="boardIdList=%d&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4" % NSU_BAP).json()
+    requestSession = requests.Session()
+    requestSession.mount(strUrl, DESAdapter())
+    mealResponse = requestSession.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data="boardIdList=%d&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4" % NSU_BAP).json()
     mealResponse = dict(mealResponse)
     mealDate = mealResponse["body"]["list"][0]["title"]
     if food_list == 0:

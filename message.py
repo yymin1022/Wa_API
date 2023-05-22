@@ -340,10 +340,9 @@ def messageCAULibrary(libTypeID):
         strMessage = "중앙대학교 열람실 좌석현황\n\n사용법 : 열람실 키워드와 함께 서울 / 안성 / 법학 키워드 언급"
         return strMessage
 
-    requests.packages.urllib3.disable_warnings()
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ":HIGH:!DH:!aNULL"
-    libResponse = requests.post(libUrl, json=libData).json()
+    requestSession = requests.Session()
+    requestSession.mount(libUrl, DESAdapter())
+    libResponse = requestSession.post(libUrl, json=libData).json()
 
     libList = libResponse["gridData"]
 

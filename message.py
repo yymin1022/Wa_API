@@ -373,10 +373,9 @@ def messageCAUMeal(mealTypeID):
         strMessage = "중앙대학교 학식메뉴\n\n사용법 : 학식 키워드와 함께 아침 / 점심 / 저녁 / 조식 / 중식 / 석식 키워드 언급"
         return strMessage
 
-    requests.packages.urllib3.disable_warnings()
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ":HIGH:!DH:!aNULL"
-    mealResponse = requests.post(mealUrl, json=mealData).json()
+    requestSession = requests.Session()
+    requestSession.mount(mealUrl, DESAdapter())
+    mealResponse = requestSession.post(mealUrl, json=mealData).json()
     mealList = mealResponse["list"]
 
     strMessage = f"{mealList[0]['date']}. 중앙대학교 학식메뉴({mealType})\n"

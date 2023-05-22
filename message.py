@@ -565,7 +565,7 @@ def messageHansuGraduate():
     dateToday = datetime.date.today()
     now = datetime.datetime.now()
     leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour - 10
+    lefthours = 24 - now.hour - 1
     leftminutes = 60 - now.minute - 1
     leftseconds = 60 - now.second - 1
     leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds

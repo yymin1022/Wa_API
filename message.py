@@ -310,10 +310,9 @@ def messageCAUCalendar():
     }
     calUrl = "https://mportal.cau.ac.kr/portlet/p014/p014List.ajax"
 
-    requests.packages.urllib3.disable_warnings()
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
-    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ":HIGH:!DH:!aNULL"
-    calResponse = eval(requests.post(calUrl, json=calData).json())
+    requestSession = requests.Session()
+    requestSession.mount(calUrl, DESAdapter())
+    calResponse = eval(requestSession.post(calUrl, json=calData).json())
     calList = calResponse["data"]
 
     strMessage = f"중앙대학교 {calMonth}월 학사일정\n"

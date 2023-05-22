@@ -918,7 +918,10 @@ def messageFakeNews(message):
 def messageWeather():
 
     weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?id=1835847&appid=ea9e5f8d8e4aa2c798f8eb78f361d1b4"
-    text = requests.get(weatherAPIUrl)
+
+    requestSession = requests.Session()
+    requestSession.mount(weatherAPIUrl, DESAdapter())
+    text = requestSession.get(weatherAPIUrl)
     text = text.text
     jsonData = json.loads(text)
     

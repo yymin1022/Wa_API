@@ -231,7 +231,9 @@ def messageAnyangMeal():
 
     mealUrl = "https://www.anyang.ac.kr/main/activities/school-cafeteria.do"
 
-    mealResponse = requests.post(mealUrl).text
+    requestSession = requests.Session()
+    requestSession.mount(mealUrl, DESAdapter())
+    mealResponse = requestSession.get(mealUrl).text
 
     bs = BeautifulSoup(mealResponse, 'html.parser')
     mealData = json.loads(bs.find("input", id="mealList").get("value"))

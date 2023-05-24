@@ -436,7 +436,7 @@ def messageDaelimMeal():
     if strDate < 6:
         for idx in range(1, 10):
             try:
-                strMessage += f"* {mealResponse['data'][f'CNM1{idx}']}\n{mealResponse['data'][f'CCT{strDate}{idx}'].strip()}\n"
+                strMessage += f">> {mealResponse['data'][f'CNM1{idx}']} <<\n{mealResponse['data'][f'CCT{strDate}{idx}'].strip()}\n"
             except:
                 pass
     else:

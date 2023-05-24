@@ -447,13 +447,13 @@ def messageDaelimMeal():
 def messageEat():
     randInt = random.randrange(0, 28)
     if randInt == 0:
-    	strMessage = "돼지"
+        strMessage = "돼지"
     elif randInt == 1:
-    	strMessage = "또 먹어?"
+        strMessage = "또 먹어?"
     elif randInt == 2:
-    	strMessage = "살쪄"
+        strMessage = "살쪄"
     elif randInt == 3:
-    	strMessage = "그만 먹어;;"
+        strMessage = "그만 먹어;;"
     elif randInt == 4:
         strMessage = "삼겹살에 쐬주 한 잔?"
     elif randInt == 5:
@@ -604,13 +604,13 @@ def messageHungry():
     
     randInt = random.randrange(0, 4)
     if randInt == 0:
-    	strMessage = "돼지"
+        strMessage = "돼지"
     elif randInt == 1:
-    	strMessage = "또 먹어?"
+        strMessage = "또 먹어?"
     elif randInt == 2:
-    	strMessage = "살쪄"
+        strMessage = "살쪄"
     elif randInt == 3:
-    	strMessage = "그만 먹어;;"
+        strMessage = "그만 먹어;;"
     	
     return strMessage
 

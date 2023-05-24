@@ -436,7 +436,7 @@ def messageDaelimMeal():
     if strDate < 6:
         for idx in range(1, 10):
             try:
-                strMessage += f"* {mealResponse['data'][f'CNM1{idx}']}\n{mealResponse['data'][f'CCT{strDate}{idx}'].strip()}\n"
+                strMessage += f">> {mealResponse['data'][f'CNM1{idx}']} <<\n{mealResponse['data'][f'CCT{strDate}{idx}'].strip()}\n"
             except:
                 pass
     else:
@@ -446,14 +446,16 @@ def messageDaelimMeal():
 
 def messageEat():
     randInt = random.randrange(0, 28)
+    strMessage = ""
+
     if randInt == 0:
-    	strMessage = "돼지"
+        strMessage = "돼지"
     elif randInt == 1:
-    	strMessage = "또 먹어?"
+        strMessage = "또 먹어?"
     elif randInt == 2:
-    	strMessage = "살쪄"
+        strMessage = "살쪄"
     elif randInt == 3:
-    	strMessage = "그만 먹어;;"
+        strMessage = "그만 먹어;;"
     elif randInt == 4:
         strMessage = "삼겹살에 쐬주 한 잔?"
     elif randInt == 5:
@@ -604,13 +606,13 @@ def messageHungry():
     
     randInt = random.randrange(0, 4)
     if randInt == 0:
-    	strMessage = "돼지"
+        strMessage = "돼지"
     elif randInt == 1:
-    	strMessage = "또 먹어?"
+        strMessage = "또 먹어?"
     elif randInt == 2:
-    	strMessage = "살쪄"
+        strMessage = "살쪄"
     elif randInt == 3:
-    	strMessage = "그만 먹어;;"
+        strMessage = "그만 먹어;;"
     	
     return strMessage
 
@@ -680,6 +682,8 @@ def messageNSUMeal(NSU_BAP, food_list):
     mealResponse = requestSession.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data="boardIdList=%d&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4" % NSU_BAP).json()
     mealResponse = dict(mealResponse)
     mealDate = mealResponse["body"]["list"][0]["title"]
+    mealList = []
+    
     if food_list == 0:
         mealList = mealResponse["body"]["list"][0]["properties"]["food_list"][0]
     elif food_list == 1:

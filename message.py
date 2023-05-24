@@ -446,6 +446,8 @@ def messageDaelimMeal():
 
 def messageEat():
     randInt = random.randrange(0, 28)
+    strMessage = ""
+
     if randInt == 0:
         strMessage = "돼지"
     elif randInt == 1:
@@ -680,6 +682,8 @@ def messageNSUMeal(NSU_BAP, food_list):
     mealResponse = requestSession.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data="boardIdList=%d&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4" % NSU_BAP).json()
     mealResponse = dict(mealResponse)
     mealDate = mealResponse["body"]["list"][0]["title"]
+    mealList = []
+    
     if food_list == 0:
         mealList = mealResponse["body"]["list"][0]["properties"]["food_list"][0]
     elif food_list == 1:

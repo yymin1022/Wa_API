@@ -557,7 +557,7 @@ def messageHokyu():
     elif randInt == 9:
         strMessage = "악! 소위 김호규!"
     elif randInt == 10:
-       strMessage = "아~ 전역하기 싫다"
+       strMessage = "아...\\m전역하기 싫다..."
     
     return strMessage
 

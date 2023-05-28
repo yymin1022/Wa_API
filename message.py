@@ -535,15 +535,15 @@ def messageHa():
 def messageHokyu():
     strMessage = ""
     
-    randInt = random.randrange(0, 10)
+    randInt = random.randrange(0, 11)
     if randInt == 0:
-        strMessage = "필승! 833기 병장(진) 김호규입니다!"
+        strMessage = "필승! 전문-38기 하사 김호규입니다!"
     elif randInt == 1:
-        strMessage = "예! 하사(진) 김호규!"
+        strMessage = "예! 하사 김호규!"
     elif randInt == 2:
         strMessage = "필승!"
     elif randInt == 3:
-        strMessage = "안녕하세요? 전역하고 싶지 않은 김호규입니다."
+        strMessage = "안녕하세요? 전역하지 않기로 한 김호규입니다."
     elif randInt == 4:
         strMessage = "팬택 핥짝"
     elif randInt == 5:
@@ -553,9 +553,11 @@ def messageHokyu():
     elif randInt == 7:
         strMessage = "K2C1 핥짝핥짝"
     elif randInt == 8:
-        strMessage = "감사합니다. 314대대 통신반 병장(진) 김호규입니다. 머슼타드일까요?"
+        strMessage = "감사합니다. 314대대 통신반 김호규 하사입니다. 머슼타드일까요?"
     elif randInt == 9:
         strMessage = "악! 소위 김호규!"
+    elif randInt == 10:
+       strMessage = "아...\\m전역하기 싫다..."
     
     return strMessage
 
@@ -570,7 +572,7 @@ def messageHokyuGraduate():
 
     randInt = random.randrange(0, 4)
     if randInt == 0:
-        strMessage = "호규는 전역할 때까지 %d일 남았습니다"%(leftDays)
+        strMessage = "호규가 전역할 때까지 %d일 남았습니다"%(leftDays)
     elif randInt == 1:
         strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
     elif randInt == 2:

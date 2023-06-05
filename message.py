@@ -595,7 +595,7 @@ def messageHokyuGraduate():
     elif randInt == 3:
         strMessage = "404 Not Found"
     elif randInt == 4:
-        strMessage = "하사 호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%(hasa_leftDays)
+        strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%(hasa_leftDays)
 
     return strMessage
 

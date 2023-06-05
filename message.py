@@ -578,11 +578,14 @@ def messageHokyuGraduate():
     dateStart = datetime.date(2021,12,6)
     dateEnd = datetime.date(2023,8,27)
     dateToday = datetime.date.today()
-
+    
     leftDays = (dateEnd - dateToday).days - 1
     goneDays = (dateToday - dateStart).days
 
-    randInt = random.randrange(0, 4)
+    hasa_dateend = datetime.date(2027,8,26)
+    hasa_leftDays = (hasa_dateend - dateToday).days -1
+
+    randInt = random.randrange(0, 5)
     if randInt == 0:
         strMessage = "호규가 전역할 때까지 %d일 남았습니다"%(leftDays)
     elif randInt == 1:
@@ -591,6 +594,8 @@ def messageHokyuGraduate():
         strMessage = "833기가 벌써 전역 따질 짬인가?"
     elif randInt == 3:
         strMessage = "404 Not Found"
+    elif randInt == 4:
+        strMessage = "하사 호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%(hasa_leftDays)
 
     return strMessage
 

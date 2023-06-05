@@ -445,7 +445,7 @@ def messageDaelimMeal():
     return strMessage
 
 def messageEat():
-    randInt = random.randrange(0, 28)
+    randInt = random.randrange(0, 33)
     strMessage = ""
 
     if randInt == 0:
@@ -457,53 +457,65 @@ def messageEat():
     elif randInt == 3:
         strMessage = "그만 먹어;;"
     elif randInt == 4:
-        strMessage = "삼겹살에 쐬주 한 잔?"
+        strMessage = "된장찌개!!"
     elif randInt == 5:
         strMessage = "부리또!!"
     elif randInt == 6:
         strMessage = "김볶밥!!"
     elif randInt == 7:
-        strMessage = "소고기!!"
+        strMessage = "김치찌개!!"
     elif randInt == 8:
         strMessage = "햄버거!!"
     elif randInt == 9:
         strMessage = "부찌!!"
     elif randInt == 10:
-        strMessage = "치폴!!"
+        strMessage = "불고기!!"
     elif randInt == 11:
-        strMessage = "아웃백!!"
+        strMessage = "삼겹살!!"
     elif randInt == 12:
-        strMessage = "빕스!!"
+        strMessage = "돼지갈비!!"
     elif randInt == 13:
         strMessage = "황금볶음밥!!"
     elif randInt == 14:
-        strMessage = "마라탕!!"
+        strMessage = "미역국!!"
     elif randInt == 15:
-        strMessage = "슈하스코!!"
+        strMessage = "닭갈비!!"
     elif randInt == 16:
         strMessage = "떡볶이!!"
     elif randInt == 17:
-        strMessage = "학식!!"
+        strMessage = "순두부찌개!!"
     elif randInt == 18:
         strMessage = "돈까스!!"
     elif randInt == 19:
         strMessage = "곱창!!"
     elif randInt == 20:
-        strMessage = "삼계탕!!"
+        strMessage = "콩나물국!!"
     elif randInt == 21:
         strMessage = "짜장면!!"
     elif randInt == 22:
-        strMessage = "양꼬치!!"
+        strMessage = "감자전!!"
     elif randInt == 23:
-        strMessage = "피탕!!"
+        strMessage = "짬뽕!!"
     elif randInt == 24:
-        strMessage = "피맥!!"
+        strMessage = "해물탕!!"
     elif randInt == 25:
         strMessage = "감자탕!!"
     elif randInt == 26:
         strMessage = "치킨!!"
     elif randInt == 27:
-        strMessage = "C₂₈H₃₄N₂O₃!!"
+        strMessage = "라면!!"
+    elif randInt == 28:
+        strMessage = "샌드위치!!"
+    elif randInt == 29:
+        strMessage = "피자!!"
+    elif randInt == 30:
+        strMessage = "파스타!!"
+    elif randInt == 31:
+        strMessage = "햄버거!!"
+    elif randInt == 32:
+        strMessage = "샐러드!!"
+    elif randInt == 33:
+        strMessage = "쌈밥!!"
     return strMessage
 
 def messageGraduate():

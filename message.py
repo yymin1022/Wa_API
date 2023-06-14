@@ -914,13 +914,17 @@ def messageYongmin():
     return strMessage
 
 def messageZara():
-    randInt = random.randrange(0, 2)
+    randInt = random.randrange(0, 4)
     strMessage = ""
     
     if randInt == 0:
         strMessage = "전기세 아깝다ㅡㅡ;;"
     elif randInt == 1:
         strMessage = "거북이"
+    elif randInt == 2:
+        strMessage = "..투스트라는 이렇게 말했다."
+    elif randInt == 3:
+        strMessage = "..ZARA는 스페인에 본사를 둔 글로벌 패션 그룹 인디텍스를 모회사로 두고 있는 SPA 브랜드로, SPA 브랜드 중 세계 최대 매출을 기록하고 있습니다."
         
     return strMessage
 

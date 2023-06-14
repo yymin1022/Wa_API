@@ -914,13 +914,15 @@ def messageYongmin():
     return strMessage
 
 def messageZara():
-    randInt = random.randrange(0, 2)
+    randInt = random.randrange(0, 3)
     strMessage = ""
     
     if randInt == 0:
         strMessage = "전기세 아깝다ㅡㅡ;;"
     elif randInt == 1:
         strMessage = "거북이"
+    elif randInt == 2:
+        strMessage = "..투스트라는 이렇게 말했다."
         
     return strMessage
 

@@ -815,7 +815,9 @@ def messageSeungbeomGraduate():
     if randInt == 0:
         strMessage = "404 Not Found"
     elif randInt == 1:
-        strMessage = "승범이가 전역하기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+        strMessage = "승범이가 졸업하기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+    elif randInt == 2:
+        strMessage = "승범이가 졸업하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     
     return strMessage
 

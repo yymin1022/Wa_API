@@ -580,21 +580,21 @@ def messageHokyuGraduate():
     dateStart = datetime.date(2021,12,6)
     dateEnd = datetime.date(2023,8,27)
     dateToday = datetime.date.today()
-    
-    leftDays = (dateEnd - dateToday).days - 1
     goneDays = (dateToday - dateStart).days
 
     hasa_dateend = datetime.date(2027,8,26)
     hasa_leftDays = (hasa_dateend - dateToday).days -1
-
+    
+    now = datetime.datetime.now()
+    leftdays = (dateEnd - dateToday).days
     lefthours = 24 - now.hour - 1
     leftminutes = 60 - now.minute - 1
-    leftseconds = 60 - now.second - 1
+    leftseconds = 60 - now.second
     leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
 
     randInt = random.randrange(0, 5)
     if randInt == 0:
-        strMessage = "호규가 전역할 때까지 %d초 남았습니다"%(leftseconds_wa)
+        strMessage = "호규가 전역하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     elif randInt == 1:
         strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
     elif randInt == 2:

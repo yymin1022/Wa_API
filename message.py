@@ -1015,10 +1015,10 @@ def messageRemreturn(room):
             rem_dict = json.load(f)
 
         if room in rem_dict:
-            strMessage = rem_dict[room]
+            strMessage = rem_dict[room] + "\\m아마 이거일 듯?"
         else:
             strMessage = ""
     else:
-        pass
+        strMessage = ""
 
     return strMessage

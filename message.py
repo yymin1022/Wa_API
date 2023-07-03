@@ -33,6 +33,8 @@ def getReplyMessage(message, room, sender):
 
     if "!뉴스" in message:
         strResult = messageFakeNews(message)
+    elif "!기억" in message:
+        strResult = messageRemember(message, room)
     elif "아.." in message:
         strResult = messageAh()
     elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
@@ -162,8 +164,9 @@ def getReplyMessage(message, room, sender):
         strResult = messageZara()
     elif "자야" in message or "잘까" in message:
         strResult = messageZayazi()
-    elif "!기억" in message:
-        strResult = messageRemember(message, room)
+    elif "뭐였" in message:
+        strResult = messageRemreturn(room)
+
 
     return strResult
 
@@ -1002,4 +1005,20 @@ def messageRemember(message, room):
         f.write(json_data)
 
     strMessage = ""
+    return strMessage
+
+def messageRemreturn(room):
+    strMessage = ""
+
+    if os.path.isfile("rem.json"):
+        with open('rem.json', 'r', encoding='utf-8') as f:
+            rem_dict = json.load(f)
+
+        if room in rem_dict:
+            strMessage = rem_dict[room]
+        else:
+            strMessage = ""
+    else:
+        pass
+
     return strMessage

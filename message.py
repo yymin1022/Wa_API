@@ -134,6 +134,8 @@ def getReplyMessage(message):
         strResult = messageSalute()
     elif "나스" in message:
         strResult = messageSaseyo()
+    elif "승범 졸업" in message:
+        strResult = messageSeungbeomGraduate()
     elif "성민 소해" in message:
         strResult = messageSeongminGraduate()
     elif "서건1우" in message:
@@ -578,16 +580,21 @@ def messageHokyuGraduate():
     dateStart = datetime.date(2021,12,6)
     dateEnd = datetime.date(2023,8,27)
     dateToday = datetime.date.today()
-    
-    leftDays = (dateEnd - dateToday).days - 1
     goneDays = (dateToday - dateStart).days
 
     hasa_dateend = datetime.date(2027,8,26)
     hasa_leftDays = (hasa_dateend - dateToday).days -1
+    
+    now = datetime.datetime.now()
+    leftdays = (dateEnd - dateToday).days
+    lefthours = 24 - now.hour - 1
+    leftminutes = 60 - now.minute - 1
+    leftseconds = 60 - now.second
+    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
 
     randInt = random.randrange(0, 5)
     if randInt == 0:
-        strMessage = "호규가 전역할 때까지 %d일 남았습니다"%(leftDays)
+        strMessage = "호규가 전역하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     elif randInt == 1:
         strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
     elif randInt == 2:
@@ -790,6 +797,28 @@ def messageSaseyo():
     elif randInt == 3:
         strMessage = "나스는 역시 큐냅이죠~"
 
+    return strMessage
+
+def messageSeungbeomGraduate():
+    randInt = random.randrange(0, 2)
+    strMessage = ""
+
+    dateEnd = datetime.date(2024,2,15)
+    dateToday = datetime.date.today()
+    now = datetime.datetime.now()
+    leftdays = (dateEnd - dateToday).days
+    lefthours = 24 - now.hour - 1
+    leftminutes = 60 - now.minute - 1
+    leftseconds = 60 - now.second
+    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+
+    if randInt == 0:
+        strMessage = "404 Not Found"
+    elif randInt == 1:
+        strMessage = "승범이가 졸업하기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+    elif randInt == 2:
+        strMessage = "승범이가 졸업하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+    
     return strMessage
 
 def messageSeongminGraduate():

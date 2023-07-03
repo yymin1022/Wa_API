@@ -35,7 +35,7 @@ def getMessage():
 
         return jsonify(replyData)
 
-    replyMessage = message.getReplyMessage(inputMessage)
+    replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
     replyRoom = inputRoom
     replySender = inputSender
 

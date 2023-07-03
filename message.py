@@ -28,7 +28,7 @@ class DESAdapter(HTTPAdapter):
         kwargs['ssl_context'] = context
         return super(DESAdapter, self).proxy_manager_for(*args, **kwargs)
 
-def getReplyMessage(message):
+def getReplyMessage(message, room, sender):
     strResult = ""
 
     if "!뉴스" in message:
@@ -161,7 +161,9 @@ def getReplyMessage(message):
     elif "자라" in message:
         strResult = messageZara()
     elif "자야" in message or "잘까" in message:
-        strResult = messageZayazi() 
+        strResult = messageZayazi()
+    elif "!기억" in message:
+        strResult = messageRemember(message, room)
 
     return strResult
 
@@ -983,4 +985,16 @@ def messageWeather():
     jsonData = json.loads(text)
     
     strMessage = "현재온도: " + str((jsonData["main"]["temp"])) + "구름: " + str((jsonData["clouds"]["all"]))
+    return strMessage
+
+def messageRemember(message, room):
+    message = message.replace("!기억 ", "")
+    message_json = {
+        room: message
+    }
+
+    with open('./rem.json', 'w', encoding='utf-8') as f:
+        json.dump(message_json, f, ensure_ascii=False, indent=4)
+
+    strMessage = "기억했습니다!"
     return strMessage

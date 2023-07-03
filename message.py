@@ -800,7 +800,7 @@ def messageSaseyo():
     return strMessage
 
 def messageSeungbeomGraduate():
-    randInt = random.randrange(0, 2)
+    randInt = random.randrange(0, 3)
     strMessage = ""
 
     dateEnd = datetime.date(2024,2,15)

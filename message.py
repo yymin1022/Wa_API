@@ -28,11 +28,13 @@ class DESAdapter(HTTPAdapter):
         kwargs['ssl_context'] = context
         return super(DESAdapter, self).proxy_manager_for(*args, **kwargs)
 
-def getReplyMessage(message):
+def getReplyMessage(message, room, sender):
     strResult = ""
 
     if "!뉴스" in message:
         strResult = messageFakeNews(message)
+    elif "!기억" in message:
+        strResult = messageRemember(message, room)
     elif "아.." in message:
         strResult = messageAh()
     elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
@@ -161,7 +163,10 @@ def getReplyMessage(message):
     elif "자라" in message:
         strResult = messageZara()
     elif "자야" in message or "잘까" in message:
-        strResult = messageZayazi() 
+        strResult = messageZayazi()
+    elif "뭐였" in message:
+        strResult = messageRemreturn(room)
+
 
     return strResult
 
@@ -983,4 +988,37 @@ def messageWeather():
     jsonData = json.loads(text)
     
     strMessage = "현재온도: " + str((jsonData["main"]["temp"])) + "구름: " + str((jsonData["clouds"]["all"]))
+    return strMessage
+
+def messageRemember(message, room):
+    if os.path.isfile("rem.json"):
+        with open('rem.json', 'r', encoding='utf-8') as f:
+            rem_dict = json.load(f)
+    else:
+        rem_dict = {}
+
+    message = message.replace("!기억 ", "")
+    rem_dict[room] = message
+    json_data = json.dumps(rem_dict, ensure_ascii=False, indent=4)
+
+    with open('rem.json', 'w', encoding='utf-8') as f:
+        f.write(json_data)
+
+    strMessage = ""
+    return strMessage
+
+def messageRemreturn(room):
+    strMessage = ""
+
+    if os.path.isfile("rem.json"):
+        with open('rem.json', 'r', encoding='utf-8') as f:
+            rem_dict = json.load(f)
+
+        if room in rem_dict:
+            strMessage = rem_dict[room] + "\\m아마 이거일 듯?"
+        else:
+            strMessage = ""
+    else:
+        strMessage = ""
+
     return strMessage

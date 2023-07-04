@@ -94,6 +94,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageHungry()
     elif "이런.." in message:
         strResult = messageIreon()
+    elif "재민 소해" in message:
+        strResult = messageJaeminGraduate()
     elif "주형" in message:
         strResult = messageJoohyeong()
     elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 20:
@@ -662,6 +664,28 @@ def messageIreon():
     elif randInt == 4:
         strMessage = "불쌍하네요.."
     
+    return strMessage
+
+def messageJaeminGraduate():
+    randInt = random.randrange(0, 3)
+    strMessage = ""
+
+    dateEnd = datetime.date(2024,3,9)
+    dateToday = datetime.date.today()
+    now = datetime.datetime.now()
+    leftdays = (dateEnd - dateToday).days
+    lefthours = 24 - now.hour - 1
+    leftminutes = 60 - now.minute - 1
+    leftseconds = 60 - now.second
+    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+
+    if randInt == 0:
+        strMessage = "404 Not Found"
+    elif randInt == 1:
+        strMessage = "재민이의 민간인(진)까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+    elif randInt == 2:
+        strMessage = "재민이가 사람이 되기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+
     return strMessage
 
 def messageJoohyeong():

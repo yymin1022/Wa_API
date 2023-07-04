@@ -805,7 +805,7 @@ def messageReal():
 def messageRemember(message, room):
     message = message.replace("!기억", "")
 
-    if len(Str) != 0:
+    if len(message) != 0:
         if os.path.isfile("rem.json"):
             with open('rem.json', 'r', encoding='utf-8') as f:
                 rem_dict = json.load(f)

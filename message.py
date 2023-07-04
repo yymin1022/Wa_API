@@ -997,7 +997,7 @@ def messageRemember(message, room):
     else:
         rem_dict = {}
 
-    message = message.replace("!기억 ", "")
+    message = message.replace("!기억", "")
     rem_dict[room] = message
     json_data = json.dumps(rem_dict, ensure_ascii=False, indent=4)
 

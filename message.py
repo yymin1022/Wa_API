@@ -628,17 +628,12 @@ def messageHokyuGraduate():
 def messageHansuGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-    
-    dateEnd = datetime.date(2024,8,31)
-    dateToday = datetime.date.today()
-    now = datetime.datetime.now()
-    leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour - 1
-    leftminutes = 60 - now.minute - 1
-    leftseconds = 60 - now.second - 1
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    y, m, d = int(2024), int(8), int(31)
+    messageGraduateDate(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
+
     if randInt == 0:
-        strMessage = "404 Not Found"
+        strMessage = "ㅋㅋ"
     elif randInt == 1:
         strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
@@ -681,24 +676,18 @@ def messageIreon():
 def messageJaeminGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-
-    dateEnd = datetime.date(2024,3,9)
-    dateToday = datetime.date.today()
-    now = datetime.datetime.now()
-    leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour - 1
-    leftminutes = 60 - now.minute - 1
-    leftseconds = 60 - now.second
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    y, m, d = int(2024), int(3), int(4)
+    messageGraduateDate(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
 
     if randInt == 0:
         strMessage = "404 Not Found"
     elif randInt == 1:
-        strMessage = "재민이의 민간인(진)까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+        strMessage = "재민이가 민간인(진)이 되기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
         strMessage = "재민이가 사람이 되기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
 
-    return strMessage
+    print(strMessage)
 
 def messageJoohyeong():
     strMessage = "예! 2025년도 CECOM 회장 이주형!"

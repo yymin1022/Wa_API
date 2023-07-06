@@ -397,7 +397,7 @@ def messageCAUMeal(mealTypeID):
 def messageChalsGraduate():
     randInt = random.randrange(0, 2)
     strMessage = ""
-    
+
     if randInt == 0:
         strMessage = "찰스가 입대한지 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,12,7)).days)
     elif randInt == 1:
@@ -587,32 +587,22 @@ def messageHokyu():
 
 def messageHokyuGraduate():
     strMessage = ""
-    dateStart = datetime.date(2021,12,6)
-    dateEnd = datetime.date(2023,8,27)
-    dateToday = datetime.date.today()
-    goneDays = (dateToday - dateStart).days
 
-    hasa_dateend = datetime.date(2027,8,26)
-    hasa_leftDays = (hasa_dateend - dateToday).days -1
-    
-    now = datetime.datetime.now()
-    leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour - 1
-    leftminutes = 60 - now.minute - 1
-    leftseconds = 60 - now.second
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    y, m, d = int(2023), int(8), int(27)
+    messageGraduateDate(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
 
     randInt = random.randrange(0, 5)
     if randInt == 0:
         strMessage = "호규가 전역하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     elif randInt == 1:
-        strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
+        strMessage = "호규가 입대한 지 %d일 되었습니다."%((datetime.date.today() - datetime.date(2021,12,6)).days)
     elif randInt == 2:
         strMessage = "833기가 벌써 전역 따질 짬인가?"
     elif randInt == 3:
-        strMessage = "404 Not Found"
+        strMessage = "응 안 돼~"
     elif randInt == 4:
-        strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%(hasa_leftDays)
+        strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%((datetime.date(2027,8,26) - datetime.date.today()).days -1)
 
     return strMessage
 

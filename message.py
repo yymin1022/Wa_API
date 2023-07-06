@@ -298,11 +298,8 @@ def messageBuy():
     return strMessage
 
 def messageBHGraduate():
-    dateEnd = datetime.date(2021,12,29)
-    dateToday = datetime.date.today()
-    leftDays = (dateToday - dateEnd).days
-    strMessage = "임병희씨가 전역한지 %d일이 지났습니다."%(leftDays)
-    
+    strMessage = "임병희씨가 전역한지 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2021,12,29)).days)
+
     return strMessage
 
 def messageCAUCalendar():
@@ -401,16 +398,10 @@ def messageChalsGraduate():
     randInt = random.randrange(0, 2)
     strMessage = ""
 
-    dateStart = datetime.date(2020,12,7)
-    dateEnd = datetime.date(2022,9,1)
-    dateToday = datetime.date.today()
-    goneDays = (dateToday - dateStart).days
-    leftDays = (dateToday - dateEnd).days
-
     if randInt == 0:
-        strMessage = "찰스가 입대한지 %d일이 됐습니다."%(goneDays)
+        strMessage = "찰스가 입대한지 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,12,7)).days)
     elif randInt == 1:
-        strMessage = "찰스가 전역한지 %d일이 지났습니다."%(leftDays)
+        strMessage = "찰스가 전역한지 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2022,9,1)).days)
 
     return strMessage
 
@@ -542,6 +533,18 @@ def messageGraduate():
 
     return strMessage
 
+def messageGraduateDate(y, m, d):
+    dateEnd = datetime.date(y,m,d)
+    dateToday = datetime.date.today()
+    now = datetime.datetime.now()
+    leftdays = (dateEnd - dateToday).days
+    lefthours = 24 - now.hour - 1
+    leftminutes = 60 - now.minute - 1
+    leftseconds = 60 - now.second - 1
+    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+
+    return leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa
+
 def messageHa():
     randInt = random.randrange(0, 2)
     strMessage = ""
@@ -584,49 +587,34 @@ def messageHokyu():
 
 def messageHokyuGraduate():
     strMessage = ""
-    dateStart = datetime.date(2021,12,6)
-    dateEnd = datetime.date(2023,8,27)
-    dateToday = datetime.date.today()
-    goneDays = (dateToday - dateStart).days
 
-    hasa_dateend = datetime.date(2027,8,26)
-    hasa_leftDays = (hasa_dateend - dateToday).days -1
-    
-    now = datetime.datetime.now()
-    leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour - 1
-    leftminutes = 60 - now.minute - 1
-    leftseconds = 60 - now.second
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    y, m, d = int(2023), int(8), int(27)
+    messageGraduateDate(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
 
     randInt = random.randrange(0, 5)
     if randInt == 0:
         strMessage = "호규가 전역하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     elif randInt == 1:
-        strMessage = "호규가 입대한 지 %d일 되었습니다."%(goneDays)
+        strMessage = "호규가 입대한 지 %d일 되었습니다."%((datetime.date.today() - datetime.date(2021,12,6)).days)
     elif randInt == 2:
         strMessage = "833기가 벌써 전역 따질 짬인가?"
     elif randInt == 3:
-        strMessage = "404 Not Found"
+        strMessage = "응 안 돼~"
     elif randInt == 4:
-        strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%(hasa_leftDays)
+        strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%((datetime.date(2027,8,26) - datetime.date.today()).days -1)
 
     return strMessage
 
 def messageHansuGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-    
-    dateEnd = datetime.date(2024,8,31)
-    dateToday = datetime.date.today()
-    now = datetime.datetime.now()
-    leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour - 1
-    leftminutes = 60 - now.minute - 1
-    leftseconds = 60 - now.second - 1
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    y, m, d = int(2024), int(8), int(31)
+    messageGraduateDate(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
+
     if randInt == 0:
-        strMessage = "404 Not Found"
+        strMessage = "ㅋㅋ"
     elif randInt == 1:
         strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
@@ -669,20 +657,14 @@ def messageIreon():
 def messageJaeminGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-
-    dateEnd = datetime.date(2024,3,9)
-    dateToday = datetime.date.today()
-    now = datetime.datetime.now()
-    leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour - 1
-    leftminutes = 60 - now.minute - 1
-    leftseconds = 60 - now.second
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    y, m, d = int(2024), int(3), int(4)
+    messageGraduateDate(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
 
     if randInt == 0:
         strMessage = "404 Not Found"
     elif randInt == 1:
-        strMessage = "재민이의 민간인(진)까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+        strMessage = "재민이가 민간인(진)이 되기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
         strMessage = "재민이가 사람이 되기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
 
@@ -868,18 +850,12 @@ def messageSaseyo():
 def messageSeungbeomGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-
-    dateEnd = datetime.date(2024,2,15)
-    dateToday = datetime.date.today()
-    now = datetime.datetime.now()
-    leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour - 1
-    leftminutes = 60 - now.minute - 1
-    leftseconds = 60 - now.second
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    y, m, d = int(2024), int(2), int(15)
+    messageGraduateDate(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
 
     if randInt == 0:
-        strMessage = "404 Not Found"
+        strMessage = "승범아 대학원 가야지?"
     elif randInt == 1:
         strMessage = "승범이가 졸업하기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
@@ -890,15 +866,10 @@ def messageSeungbeomGraduate():
 def messageSeongminGraduate():
     randInt = random.randrange(0, 5)
     strMessage = ""
-
-    dateEnd = datetime.date(2024,2,22)
-    dateToday = datetime.date.today()
-    now = datetime.datetime.now()
-    leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour - 1
-    leftminutes = 60 - now.minute - 1
-    leftseconds = 60 - now.second - 1
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    
+    y, m, d = int(2024), int(2), int(22)
+    messageGraduateDate(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
 
     if randInt == 0:
         strMessage = "24년은 오지 않습니다..."

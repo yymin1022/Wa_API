@@ -529,6 +529,23 @@ def messageEat():
         strMessage = "쌈밥!!"
     return strMessage
 
+def messageGgobugi():
+    randInt = random.randrange(0, 5)
+    strMessage = ""
+
+    if randInt == 0:
+        strMessage = "자라"
+    elif randInt == 1:
+        strMessage = "꼬부기는 몸통박치기를 사용했다. 효과는 굉장했다!"
+    elif randInt == 2:
+        strMessage = "꼬부기는 몸통박치기를 사용했다. 효과가 별로인 듯하다..."
+    elif randInt == 3:
+        strMessage = "꼬부기는 물대포를 사용했다. 효과는 굉장했다!"
+    elif randInt == 4:
+        strMessage = "꼬부기는 물대포를 사용했다. 효과가 별로인 듯하다..."
+
+    return strMessage
+
 def messageGraduate():
     randInt = random.randrange(0, 4)
     strMessage = ""
@@ -1023,23 +1040,6 @@ def messageZara():
     elif randInt == 3:
         strMessage = "..ZARA는 스페인에 본사를 둔 글로벌 패션 그룹 인디텍스를 모회사로 두고 있는 SPA 브랜드로, SPA 브랜드 중 세계 최대 매출을 기록하고 있습니다."
         
-    return strMessage
-
-def messageGgobugi():
-    randInt = random.randrange(0, 5)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "자라"
-    elif randInt == 1:
-        strMessage = "꼬부기는 몸통박치기를 사용했다. 효과는 굉장했다!"
-    elif randInt == 2:
-        strMessage = "꼬부기는 몸통박치기를 사용했다. 효과가 별로인 듯하다..."
-    elif randInt == 3:
-        strMessage = "꼬부기는 물대포를 사용했다. 효과는 굉장했다!"
-    elif randInt == 4:
-        strMessage = "꼬부기는 물대포를 사용했다. 효과가 별로인 듯하다..."
-
     return strMessage
 
 def messageZayazi():

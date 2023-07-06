@@ -542,6 +542,18 @@ def messageGraduate():
 
     return strMessage
 
+def messageGraduateDate(y, m, d):
+    dateEnd = datetime.date(y,m,d)
+    dateToday = datetime.date.today()
+    now = datetime.datetime.now()
+    leftdays = (dateEnd - dateToday).days
+    lefthours = 24 - now.hour - 1
+    leftminutes = 60 - now.minute - 1
+    leftseconds = 60 - now.second - 1
+    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+
+    return leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa
+
 def messageHa():
     randInt = random.randrange(0, 2)
     strMessage = ""

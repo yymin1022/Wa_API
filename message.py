@@ -1026,11 +1026,19 @@ def messageZara():
     return strMessage
 
 def messageGgobugi():
-    randInt = random.randrange(0, 1)
+    randInt = random.randrange(0, 5)
     strMessage = ""
 
     if randInt == 0:
         strMessage = "자라"
+    elif randInt == 1:
+        strMessage = "꼬부기는 몸통박치기를 사용했다. 효과는 굉장했다!"
+    elif randInt == 2:
+        strMessage = "꼬부기는 몸통박치기를 사용했다. 효과가 별로인 듯하다..."
+    elif randInt == 3:
+        strMessage = "꼬부기는 물대포를 사용했다. 효과는 굉장했다!"
+    elif randInt == 4:
+        strMessage = "꼬부기는 물대포를 사용했다. 효과가 별로인 듯하다..."
 
     return strMessage
 

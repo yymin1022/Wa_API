@@ -298,11 +298,8 @@ def messageBuy():
     return strMessage
 
 def messageBHGraduate():
-    dateEnd = datetime.date(2021,12,29)
-    dateToday = datetime.date.today()
-    leftDays = (dateToday - dateEnd).days
-    strMessage = "임병희씨가 전역한지 %d일이 지났습니다."%(leftDays)
-    
+    strMessage = "임병희씨가 전역한지 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2021,12,29)).days)
+
     return strMessage
 
 def messageCAUCalendar():
@@ -400,17 +397,11 @@ def messageCAUMeal(mealTypeID):
 def messageChalsGraduate():
     randInt = random.randrange(0, 2)
     strMessage = ""
-
-    dateStart = datetime.date(2020,12,7)
-    dateEnd = datetime.date(2022,9,1)
-    dateToday = datetime.date.today()
-    goneDays = (dateToday - dateStart).days
-    leftDays = (dateToday - dateEnd).days
-
+    
     if randInt == 0:
-        strMessage = "찰스가 입대한지 %d일이 됐습니다."%(goneDays)
+        strMessage = "찰스가 입대한지 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,12,7)).days)
     elif randInt == 1:
-        strMessage = "찰스가 전역한지 %d일이 지났습니다."%(leftDays)
+        strMessage = "찰스가 전역한지 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2022,9,1)).days)
 
     return strMessage
 

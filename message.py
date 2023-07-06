@@ -869,18 +869,12 @@ def messageSaseyo():
 def messageSeungbeomGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-
-    dateEnd = datetime.date(2024,2,15)
-    dateToday = datetime.date.today()
-    now = datetime.datetime.now()
-    leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour - 1
-    leftminutes = 60 - now.minute - 1
-    leftseconds = 60 - now.second
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    y, m, d = int(2024), int(2), int(15)
+    messageGraduateDate(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
 
     if randInt == 0:
-        strMessage = "404 Not Found"
+        strMessage = "승범아 대학원 가야지?"
     elif randInt == 1:
         strMessage = "승범이가 졸업하기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
@@ -891,17 +885,16 @@ def messageSeungbeomGraduate():
 def messageSeongminGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-
-    dateEnd = datetime.date(2024,2,22)
-    dateToday = datetime.date.today()
-    leftdays = (dateEnd - dateToday).days
+    y, m, d = int(2024), int(2), int(22)
+    messageGraduateDate(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
 
     if randInt == 0:
-        strMessage = "24년은 오지 않습니다..."
+        strMessage = "그런거 물어볼 시간에 일이나 하세요."
     if randInt == 1:
         strMessage = "지성민씨의 소집해제일은 29년 12월 32일입니다."
     elif randInt == 2:
-        strMessage = "지성민씨의 소집해제일까지 %d일이 남았습니다."%(leftdays)
+        strMessage = "지성민씨가 민간인이 될 때까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     
     return strMessage
 

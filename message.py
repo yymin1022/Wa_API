@@ -888,19 +888,28 @@ def messageSeungbeomGraduate():
     return strMessage
 
 def messageSeongminGraduate():
-    randInt = random.randrange(0, 3)
+    randInt = random.randrange(0, 5)
     strMessage = ""
 
     dateEnd = datetime.date(2024,2,22)
     dateToday = datetime.date.today()
+    now = datetime.datetime.now()
     leftdays = (dateEnd - dateToday).days
+    lefthours = 24 - now.hour - 1
+    leftminutes = 60 - now.minute - 1
+    leftseconds = 60 - now.second - 1
+    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
 
     if randInt == 0:
         strMessage = "24년은 오지 않습니다..."
-    if randInt == 1:
+    elif randInt == 1:
         strMessage = "지성민씨의 소집해제일은 29년 12월 32일입니다."
     elif randInt == 2:
         strMessage = "지성민씨의 소집해제일까지 %d일이 남았습니다."%(leftdays)
+    elif randInt == 3:
+        strMessage = "지성민씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+    elif randInt == 4:
+        strMessage = "지성민씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     
     return strMessage
 

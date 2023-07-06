@@ -668,7 +668,7 @@ def messageJaeminGraduate():
     elif randInt == 2:
         strMessage = "재민이가 사람이 되기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
 
-    print(strMessage)
+    return strMessage
 
 def messageJoohyeong():
     strMessage = "예! 2025년도 CECOM 회장 이주형!"

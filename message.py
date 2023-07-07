@@ -521,26 +521,31 @@ def messageEat():
     return strMessage
 
 def messageGgobugi():
-    randInt = random.randrange(0, 5)
+    randInt = random.randrange(0, 3)
     strMessage = ""
+
+    if randInt == 1 or randInt == 2 :
+        ggobugiInt = random.randrange(0, 2)
+        ggobugiMessage = ""
+
+        if ggobugiInt == 0:
+            ggobugiMessage = "효과는 굉장했다!"
+        elif ggobugiInt == 1:
+            ggobugiMessage = "효과가 별로인 듯하다..."
 
     if randInt == 0:
         strMessage = "자라"
     elif randInt == 1:
-        strMessage = "꼬부기는 몸통박치기를 사용했다. 효과는 굉장했다!"
+        strMessage = "꼬부기는 몸통박치기를 사용했다.\\m" + ggobugiMessage
     elif randInt == 2:
-        strMessage = "꼬부기는 몸통박치기를 사용했다. 효과가 별로인 듯하다..."
-    elif randInt == 3:
-        strMessage = "꼬부기는 물대포를 사용했다. 효과는 굉장했다!"
-    elif randInt == 4:
-        strMessage = "꼬부기는 물대포를 사용했다. 효과가 별로인 듯하다..."
+        strMessage = "꼬부기는 물대포를 사용했다.\\m" + ggobugiMessage
 
     return strMessage
 
 def messageGraduate():
     randInt = random.randrange(0, 4)
     strMessage = ""
-    
+
     if randInt == 0:
         strMessage = "대학원 가셔야죠 ㅋㅋ"
     elif randInt == 1:

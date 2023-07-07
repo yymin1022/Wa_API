@@ -533,7 +533,7 @@ def messageGgobugi():
     randInt = random.randrange(0, 3)
     strMessage = ""
 
-    if randInt == 1:
+    if randInt == 1 or randInt == 2 :
         ggobugiInt = random.randrange(0, 2)
         ggobugiMessage = ""
 

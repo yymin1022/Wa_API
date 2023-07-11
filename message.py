@@ -669,7 +669,7 @@ def messageHokyuGraduate():
     return strMessage
 
 def messageHansuGraduate():
-    randInt = random.randrange(0, 3)
+    randInt = random.randrange(0, 4)
     strMessage = ""
     y, m, d = int(2024), int(8), int(31)
     messageDateCalculator(y, m, d)
@@ -681,6 +681,8 @@ def messageHansuGraduate():
         strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
         strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+    elif randInt == 3:
+        strMessage = "답변하기 적당한 말을 찾지 못했어요."
     
     return strMessage
 

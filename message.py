@@ -621,7 +621,7 @@ def messageHokyu():
     elif randInt == 1:
         strMessage = "예! 하사 김호규!"
     elif randInt == 2:
-        strMessage = "필승!"
+        strMessage = "ㅍ승!"
     elif randInt == 3:
         strMessage = "안녕하세요? 전역하지 않기로 한 김호규입니다."
     elif randInt == 4:
@@ -650,7 +650,13 @@ def messageHokyuGraduate():
 
     randInt = random.randrange(0, 5)
     if randInt == 0:
-        strMessage = "호규가 전역하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+        randInt = random.randrange(0, 3)
+        if randInt == 0:
+            strMessage = "호규가 전역하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+        elif randInt == 1:
+            strMessage = "zz"
+        elif randInt == 2:
+            strMessage = "답변하기 적당한 말을 찾지 못했어요."
     elif randInt == 1:
         strMessage = "호규가 입대한 지 %d일 되었습니다."%((datetime.date.today() - datetime.date(2021,12,6)).days)
     elif randInt == 2:

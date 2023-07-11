@@ -465,22 +465,31 @@ def messageDateCalculator(y, m, d):
     return leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa
 
 def messageDDay(message):
-    strMessage = ""
-    message = message.replace("!디데이", "").replace("!day", "").replace(" ", "")
-    if message.count('-') == 2 or message.count('.') == 2:
-        if "-" in message: message = message.split("-")
-        elif "." in message: message = message.split(".")
-        if len(str(message[0])) == 2:
-            message[0] = "20" + message[0]
-
-        y, m, d = int(message[0]), int(message[1]), int(message[2])
-        messageDateCalculator(y, m, d)
-        leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
-        if leftdays <= 0:
-            strMessage = "%s년 %s월 %s일을 기준으로 오늘은 %s일이 지났으며, 이를 초로 환산하면 %s초입니다."%(message[0], message[1], message[2], abs(format(leftdays, ',')), abs(format(leftseconds_wa, ',')))
-        else:
-            strMessage = "%s년 %s월 %s일까지는 %s일 남았으며, 이를 초로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
-    else: strMessage = "올바르지 않은 형식입니다.\\mex)!day 2023.09.08 or !디데이 23.12.31"
+    try:
+        message = "!디데이 24.-9.3"
+        strMessage = ""
+        message = message.replace("!디데이", "").replace("!day", "").replace(" ", "")
+        if message.strip()[-1] == '.': message = message[:-1]
+        if message.count('-') == 2 or message.count('.') == 2:
+            if "-" in message: message = message.split("-")
+            elif "." in message: message = message.split(".")
+            if len(str(message[0])) == 2:
+                message[0] = "20" + message[0]
+            try:
+                y, m, d = int(message[0]), int(message[1]), int(message[2])
+                messageDateCalculator(y, m, d)
+                leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
+                if leftdays <= 0:
+                    leftdays = int(leftdays * -1)
+                    leftseconds_wa = int(leftseconds_wa * -1)
+                    strMessage = "%s년 %s월 %s일을 기준으로 오늘은 %s일이 지났으며, 이를 초로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
+                else:
+                    strMessage = "%s년 %s월 %s일까지는 %s일 남았으며, 이를 초로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
+            except:
+                strMessage = messageDateCalculator(y, m, d)   
+        else: strMessage = "올바르지 않은 형식입니다.\\mex)!day 2023.09.08 or !디데이 23.12.31"
+    except:
+        strMessage = "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex)!day 2023.9.8 or !디데이 23.12.31"
 
     return strMessage
 

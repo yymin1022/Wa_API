@@ -465,19 +465,26 @@ def messageDateCalculator(y, m, d):
     return leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa
 
 def messageDDay(message):
-    strMessage = ""
-    message = message.replace("!디데이", "").replace("!day", "").replace(" ", "")
-    if message.count('-') == 2 or message.count('.') == 2:
-        if "-" in message: message = message.split("-")
-        elif "." in message: message = message.split(".")
-        if len(str(message[0])) == 2:
-            message[0] = "20" + message[0]
-
-        y, m, d = int(message[0]), int(message[1]), int(message[2])
-        messageDateCalculator(y, m, d)
-        leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
-        strMessage = "%s년 %s월 %s일까지는 %s일 남았으며, 이를 초로 계산하면 %s초입니다."%(message[0], message[1], message[2], leftdays, format(leftseconds_wa, ','))
-    else: strMessage = "올바르지 않은 형식입니다.\\mex)!day 2023.09.08 or !디데이 23.12.31"
+    try:
+        strMessage = ""
+        message = message.replace("!디데이", "").replace("!day", "").replace(" ", "")
+        if message.strip()[-1] == '.': message = message[:-1]
+        if message.count('-') == 2 or message.count('.') == 2:
+            if "-" in message: message = message.split("-")
+            elif "." in message: message = message.split(".")
+            if len(str(message[0])) == 2:
+                message[0] = "20" + message[0] 
+            y, m, d = int(message[0]), int(message[1]), int(message[2])
+            messageDateCalculator(y, m, d)
+            leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
+            if leftdays <= 0:
+                leftdays = int(leftdays * -1)
+                leftseconds_wa = int(leftseconds_wa * -1)
+                strMessage = "%s년 %s월 %s일을 기준으로 오늘은 %s일이 지났으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
+            else: strMessage = "%s년 %s월 %s일까지는 %s일이 남았으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
+        else: raise
+    except:
+        strMessage = "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !day 2023.9.8 or !디데이 23.12.31"
 
     return strMessage
 
@@ -612,7 +619,7 @@ def messageHokyu():
     elif randInt == 1:
         strMessage = "예! 하사 김호규!"
     elif randInt == 2:
-        strMessage = "필승!"
+        strMessage = "ㅍ승!"
     elif randInt == 3:
         strMessage = "안녕하세요? 전역하지 않기로 한 김호규입니다."
     elif randInt == 4:
@@ -641,7 +648,13 @@ def messageHokyuGraduate():
 
     randInt = random.randrange(0, 5)
     if randInt == 0:
-        strMessage = "호규가 전역하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+        randInt = random.randrange(0, 3)
+        if randInt == 0:
+            strMessage = "호규가 전역하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+        elif randInt == 1:
+            strMessage = "zz"
+        elif randInt == 2:
+            strMessage = "답변하기 적당한 말을 찾지 못했어요."
     elif randInt == 1:
         strMessage = "호규가 입대한 지 %d일 되었습니다."%((datetime.date.today() - datetime.date(2021,12,6)).days)
     elif randInt == 2:
@@ -654,7 +667,7 @@ def messageHokyuGraduate():
     return strMessage
 
 def messageHansuGraduate():
-    randInt = random.randrange(0, 3)
+    randInt = random.randrange(0, 4)
     strMessage = ""
     y, m, d = int(2024), int(8), int(31)
     messageDateCalculator(y, m, d)
@@ -666,6 +679,8 @@ def messageHansuGraduate():
         strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
         strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+    elif randInt == 3:
+        strMessage = "답변하기 적당한 말을 찾지 못했어요."
     
     return strMessage
 
@@ -869,7 +884,7 @@ def messageReal():
     return strMessage
 
 def messageRemember(message, room):
-    message = message.replace("!기억", "")
+    message = message.replace("!기억해", "").replace("!기억", "")
 
     if len(message) != 0:
         if os.path.isfile("rem.json"):

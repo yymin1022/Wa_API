@@ -463,7 +463,7 @@ def messageDateCalculator(y, m, d):
 def messageDDay(message):
     strMessage = ""
     message = message.replace("!디데이", "").replace("!day", "").replace(" ", "")
-    if "-" in message or "." in message:
+    if message.count('-') == 2 or message.count('.') == 2:
         if "-" in message: message = message.split("-")
         elif "." in message: message = message.split(".")
         if len(str(message[0])) == 2:

@@ -35,6 +35,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageFakeNews(message)
     elif "!기억" in message:
         strResult = messageRemember(message, room)
+    elif "!메모" in message:
+        strResult = messageMemo(message, sender)
     elif "아.." in message:
         strResult = messageAh()
     elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
@@ -172,6 +174,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageZayazi()
     elif "뭐였" in message:
         strResult = messageRemreturn(room)
+    elif "뭐더라" in message:
+        strResult = messageMemreturn(sender)
 
 
     return strResult
@@ -726,6 +730,43 @@ def messageLaugh():
         strMessage = "뭘 웃어요;;"
     elif randInt == 1:
         strMessage = "안웃긴데;;"
+
+    return strMessage
+
+def messageMemo(message, sender):
+    message = message.replace("!메모", "")
+
+    if len(message) != 0:
+        if os.path.isfile("mem.json"):
+            with open('mem.json', 'r', encoding='utf-8') as f:
+                mem_dict = json.load(f)
+        else:
+            mem_dict = {}
+
+        mem_dict[sender] = message
+        json_data = json.dumps(mem_dict, ensure_ascii=False, indent=4)
+
+        with open('mem.json', 'w', encoding='utf-8') as f:
+            f.write(json_data)
+    else:
+        pass
+
+    strMessage = ""
+    return strMessage
+
+def messageMemreturn(sender):
+    strMessage = ""
+
+    if os.path.isfile("mem.json"):
+        with open('mem.json', 'r', encoding='utf-8') as f:
+            mem_dict = json.load(f)
+
+        if sender in mem_dict:
+            strMessage = mem_dict[sender] + "\\m^^7"
+        else:
+            strMessage = ""
+    else:
+        strMessage = ""
 
     return strMessage
 

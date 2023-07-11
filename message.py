@@ -466,7 +466,6 @@ def messageDateCalculator(y, m, d):
 
 def messageDDay(message):
     try:
-        message = "!디데이 24.-9.3"
         strMessage = ""
         message = message.replace("!디데이", "").replace("!day", "").replace(" ", "")
         if message.strip()[-1] == '.': message = message[:-1]
@@ -483,10 +482,8 @@ def messageDDay(message):
                     leftdays = int(leftdays * -1)
                     leftseconds_wa = int(leftseconds_wa * -1)
                     strMessage = "%s년 %s월 %s일을 기준으로 오늘은 %s일이 지났으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
-                else:
-                    strMessage = "%s년 %s월 %s일까지는 %s일이 남았으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
-            except:
-                strMessage = messageDateCalculator(y, m, d)
+                else: strMessage = "%s년 %s월 %s일까지는 %s일이 남았으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
+            except: strMessage = messageDateCalculator(y, m, d)
         else: strMessage = "올바르지 않은 형식입니다.\\mex)!day 2023.09.08 or !디데이 23.12.31"
     except:
         strMessage = "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex)!day 2023.9.8 or !디데이 23.12.31"

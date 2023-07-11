@@ -476,7 +476,7 @@ def messageDDay(message):
         y, m, d = int(message[0]), int(message[1]), int(message[2])
         messageDateCalculator(y, m, d)
         leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
-        strMessage = "%s년 %s월 %s일까지는 %s일 남았으며, 이를 초로 계산하면 %s초입니다."%(message[0], message[1], message[2], leftdays, format(leftseconds_wa, ','))
+        strMessage = "%s년 %s월 %s일까지는 %s일 남았으며, 이를 초로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
     else: strMessage = "올바르지 않은 형식입니다.\\mex)!day 2023.09.08 or !디데이 23.12.31"
 
     return strMessage

@@ -77,6 +77,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageCoding()
     elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
         strResult = messageCry()
+    elif "!디데이" in message or "!day" in message:
+        strResult = messageDDay(message)
     elif "뭐먹" in message or "머먹" in message:
         strResult = messageEat()
     elif ("제발" in message or "하고 싶다" in message) and "졸업" in message:
@@ -446,6 +448,35 @@ def messageDaelimMeal():
 
     return strMessage
 
+def messageDateCalculator(y, m, d):
+    dateEnd = datetime.date(y,m,d)
+    dateToday = datetime.date.today()
+    now = datetime.datetime.now()
+    leftdays = (dateEnd - dateToday).days
+    lefthours = 24 - now.hour - 1
+    leftminutes = 60 - now.minute - 1
+    leftseconds = 60 - now.second - 1
+    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+
+    return leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa
+
+def messageDDay(message):
+    strMessage = ""
+    message = message.replace("!디데이", "").replace("!day", "").replace(" ", "")
+    if "-" in message or "." in message:
+        if "-" in message: message = message.split("-")
+        elif "." in message: message = message.split(".")
+        if len(str(message[0])) == 2:
+            message[0] = "20" + message[0]
+
+        y, m, d = int(message[0]), int(message[1]), int(message[2])
+        messageDateCalculator(y, m, d)
+        leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
+        strMessage = "%s년 %s월 %s일까지는 %s일 남았으며, 이를 초로 계산하면 %s초입니다."%(message[0], message[1], message[2], leftdays, format(leftseconds_wa, ','))
+    else: strMessage = "올바르지 않은 형식입니다.\\mex)!day 2023.09.08 or !디데이 23.12.31"
+
+    return strMessage
+
 def messageEat():
     randInt = random.randrange(0, 33)
     strMessage = ""
@@ -557,18 +588,6 @@ def messageGraduate():
 
     return strMessage
 
-def messageGraduateDate(y, m, d):
-    dateEnd = datetime.date(y,m,d)
-    dateToday = datetime.date.today()
-    now = datetime.datetime.now()
-    leftdays = (dateEnd - dateToday).days
-    lefthours = 24 - now.hour - 1
-    leftminutes = 60 - now.minute - 1
-    leftseconds = 60 - now.second - 1
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
-
-    return leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa
-
 def messageHa():
     randInt = random.randrange(0, 2)
     strMessage = ""
@@ -613,8 +632,8 @@ def messageHokyuGraduate():
     strMessage = ""
 
     y, m, d = int(2023), int(8), int(27)
-    messageGraduateDate(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
+    messageDateCalculator(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
     randInt = random.randrange(0, 5)
     if randInt == 0:
@@ -634,8 +653,8 @@ def messageHansuGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
     y, m, d = int(2024), int(8), int(31)
-    messageGraduateDate(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
+    messageDateCalculator(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
     if randInt == 0:
         strMessage = "ㅋㅋ"
@@ -682,8 +701,8 @@ def messageJaeminGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
     y, m, d = int(2024), int(3), int(4)
-    messageGraduateDate(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
+    messageDateCalculator(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
     if randInt == 0:
         strMessage = "404 Not Found"
@@ -875,8 +894,8 @@ def messageSeungbeomGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
     y, m, d = int(2024), int(2), int(15)
-    messageGraduateDate(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
+    messageDateCalculator(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
     if randInt == 0:
         strMessage = "승범아 대학원 가야지?"
@@ -892,8 +911,8 @@ def messageSeongminGraduate():
     strMessage = ""
     
     y, m, d = int(2024), int(2), int(22)
-    messageGraduateDate(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageGraduateDate(y, m, d)
+    messageDateCalculator(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
     if randInt == 0:
         strMessage = "24년은 오지 않습니다..."

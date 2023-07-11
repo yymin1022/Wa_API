@@ -881,7 +881,7 @@ def messageReal():
     return strMessage
 
 def messageRemember(message, room):
-    message = message.replace("!기억", "")
+    message = message.replace("!기억해", "").replace("!기억", "")
 
     if len(message) != 0:
         if os.path.isfile("rem.json"):

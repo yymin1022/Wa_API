@@ -741,7 +741,7 @@ def messageLaugh():
     return strMessage
 
 def messageMemo(message, sender):
-    message = message.replace("!메모 ", "").replace("!메모", "")
+    message = message.replace("!메모", "").strip()
 
     if len(message) != 0:
         if os.path.isfile("mem.json"):
@@ -876,7 +876,7 @@ def messageReal():
     return strMessage
 
 def messageRemember(message, room):
-    message = message.replace("!기억해", "").replace("!기억", "")
+    message = message.replace("!기억해", "").replace("!기억", "").strip()
 
     if len(message) != 0:
         if os.path.isfile("rem.json"):

@@ -403,14 +403,8 @@ def messageCAUMeal(mealTypeID):
     return strMessage
 
 def messageChalsGraduate():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "찰스가 입대한지 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,12,7)).days)
-    elif randInt == 1:
-        strMessage = "찰스가 전역한지 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2022,9,1)).days)
-
+    strMessage = "찰스가 입대한지 %d일, 전역한지는 %d일 됐습니다."%((datetime.date.today() - datetime.date(2020,12,7)).days, (datetime.date.today() - datetime.date(2022,9,1)).days)
+    
     return strMessage
 
 def messageCoding():

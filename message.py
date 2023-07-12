@@ -747,7 +747,7 @@ def messageLaugh():
     return strMessage
 
 def messageMemo(message, sender):
-    message = message.replace("!메모", "")
+    message = message.replace("!메모 ", "").replace("!메모", "")
 
     if len(message) != 0:
         if os.path.isfile("mem.json"):

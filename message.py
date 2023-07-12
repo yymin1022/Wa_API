@@ -403,14 +403,8 @@ def messageCAUMeal(mealTypeID):
     return strMessage
 
 def messageChalsGraduate():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "찰스가 입대한지 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,12,7)).days)
-    elif randInt == 1:
-        strMessage = "찰스가 전역한지 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2022,9,1)).days)
-
+    strMessage = "찰스가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,12,7)).days, (datetime.date.today() - datetime.date(2022,9,1)).days)
+    
     return strMessage
 
 def messageCoding():
@@ -477,10 +471,8 @@ def messageDDay(message):
             y, m, d = int(message[0]), int(message[1]), int(message[2])
             messageDateCalculator(y, m, d)
             leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
-            if leftdays <= 0:
-                leftdays = int(leftdays * -1)
-                leftseconds_wa = int(leftseconds_wa * -1)
-                strMessage = "%s년 %s월 %s일을 기준으로 오늘은 %s일이 지났으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
+            if leftdays < 0: strMessage = "%s년 %s월 %s일을 기준으로 오늘은 %s일이 지났으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(int(leftdays * -1), ','), format(int(leftseconds_wa * -1), ','))
+            elif leftdays == 0: strMessage = "D-DAY입니다!"
             else: strMessage = "%s년 %s월 %s일까지는 %s일이 남았으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
         else: raise
     except:
@@ -749,7 +741,7 @@ def messageLaugh():
     return strMessage
 
 def messageMemo(message, sender):
-    message = message.replace("!메모", "")
+    message = message.replace("!메모", "").strip()
 
     if len(message) != 0:
         if os.path.isfile("mem.json"):
@@ -884,7 +876,7 @@ def messageReal():
     return strMessage
 
 def messageRemember(message, room):
-    message = message.replace("!기억해", "").replace("!기억", "")
+    message = message.replace("!기억해", "").replace("!기억", "").strip()
 
     if len(message) != 0:
         if os.path.isfile("rem.json"):

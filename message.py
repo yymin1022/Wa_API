@@ -306,7 +306,7 @@ def messageBuy():
     return strMessage
 
 def messageBHGraduate():
-    strMessage = "임병희씨가 전역한지 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2021,12,29)).days)
+    strMessage = "임병희씨가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,6,30)).days, (datetime.date.today() - datetime.date(2021,12,29)).days)
 
     return strMessage
 

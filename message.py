@@ -638,6 +638,26 @@ def messageHokyuGraduate():
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
+    if leftdays == 0:
+        strMessage = "호규의 전역을 축하합니다!!!!"
+        return strMessage
+
+    if leftdays < 0:
+        randInt = random.randrange(0, 6)
+        if randInt == 0:
+            strMessage = "호규의 부사후 249기 지원을 응원합니다!"
+        elif randInt == 1:
+            strMessage = "호규의 학사 152기 지원을 응원합니다!"
+        elif randInt == 2:
+            strMessage = "호규의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2030,12,31) - datetime.date.today()).days -1)
+        elif randInt == 3:
+            strMessage = "호규의 민방위 소집해제일까지 %d일 남았습니다."%((datetime.date(2041,4,28) - datetime.date.today()).days -1)
+        elif randInt == 4:
+            strMessage = "예비군 0년차는 좀..."
+        elif randInt == 5:
+            strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%((datetime.date(2027,8,26) - datetime.date.today()).days -1)
+        return strMessage
+
     randInt = random.randrange(0, 5)
     if randInt == 0:
         randInt = random.randrange(0, 3)

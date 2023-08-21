@@ -656,6 +656,7 @@ def messageHokyuGraduate():
             strMessage = "예비군 0년차는 좀..."
         elif randInt == 5:
             strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%((datetime.date(2027,8,26) - datetime.date.today()).days -1)
+        return strMessage
 
     randInt = random.randrange(0, 5)
     if randInt == 0:

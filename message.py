@@ -411,17 +411,21 @@ def messageCalDay(cal, message):
     strMessage = ""
     day = datetime.datetime.now()
     try:
-        message = message.replace("!날짜더하기", "").replace("!날짜빼기", "").replace(" ", "").replace("일", "")
+        if "주" in message:
+            flag = 1
+        message = message.replace("!날짜더하기", "").replace("!날짜빼기", "").replace(" ", "").replace("일", "").replace("주", "")
         if message.isdigit() == False:
             raise
         if cal == 1:
+            if flag:
+                message = int(message) * 7
             dday = day + datetime.timedelta(days=int(message))
             strMessage = "오늘을 기준으로 %s일 후는 %s년 %s월 %s일입니다." % (message, dday.year, dday.month, dday.day)
         elif cal == 0:
             dday = day - datetime.timedelta(days=int(message))
             strMessage = "오늘을 기준으로 %s일 전은 %s년 %s월 %s일입니다." % (message, dday.year, dday.month, dday.day)
     except:
-        strMessage = "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !날짜더하기 100일 or !날짜빼기 1000"
+        strMessage = "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !날짜더하기 100일 or !날짜빼기 16주"
     return strMessage
 
 def messageChalsGraduate():

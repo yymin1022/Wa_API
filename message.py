@@ -1175,6 +1175,6 @@ def messageWeather():
     jsonData = json.loads(text)
     
     strMessage = "현재온도: " + str((jsonData["main"]["temp"])) +"K" + " 구름: " + str((jsonData["clouds"]["all"]))
+
     strMessage += "\n현재 날씨는 " + str((jsonData["weather"]["description"]))
-    
     return strMessage

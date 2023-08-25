@@ -182,7 +182,7 @@ def getReplyMessage(message, room, sender):
     elif "뭐더라" in message:
         strResult = messageMemreturn(sender)
     elif "아 마법의 소라고동이시여, " in message:
-        stirResult = messageSora(message)
+        strResult = messageSora(message)
 
 
     return strResult

@@ -181,6 +181,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageRemreturn(room)
     elif "뭐더라" in message:
         strResult = messageMemreturn(sender)
+    elif "아 마법의 소라고동이시여, " in message:
+        stirResult = messageSora(message)
 
 
     return strResult
@@ -1175,4 +1177,14 @@ def messageWeather():
     jsonData = json.loads(text)
     
     strMessage = "현재온도: " + str((jsonData["main"]["temp"])) + "구름: " + str((jsonData["clouds"]["all"]))
+    return strMessage
+
+def messageSora(message):
+    question = message.replace("와 마법의 소라고동이시여, ", "").strip()
+
+    if not question:
+        strMessage = "말 해"
+    else:
+        strMessage = random.choice(["그럼", "아마", "안 돼", "다시 한번 물어봐"])
+
     return strMessage

@@ -181,7 +181,7 @@ def getReplyMessage(message, room, sender):
         strResult = messageRemreturn(room)
     elif "뭐더라" in message:
         strResult = messageMemreturn(sender)
-    elif "마법의 소라고동이시여, " in message:
+    elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
 
 
@@ -1064,7 +1064,7 @@ def messageSleepy():
     return strMessage
 
 def messageSora(message):
-    question = message.replace("마법의 소라고동이시여, ", "").strip()
+    question = message.replace("마법의 소라고동이시여", "").strip()
 
     if not question:
         strMessage = "말 해"

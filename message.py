@@ -173,6 +173,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageWaSans()
     elif "!날씨" in message:
         strResult = messageWeather()
+    elif "!weather" in message:
+        strResult = messageWeatherEN()
     elif "용민" in message:
         strResult = messageYongmin()
     elif "자라" in message:
@@ -1206,4 +1208,22 @@ def messageWeather():
     strMessage +="\\n그래서 날씨는? {}".format(str(jsonData["weather"]["description"]))
     strMessage +='\\n이상 서울의 날씨였습니다!\\n다른 지역은 없냐고요? 코딩 "해줘"'
     return strMessage
+
+def messageWeatherEN():
+
+    weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?id=1835847&appid=ea9e5f8d8e4aa2c798f8eb78f361d1b4"
+
+    requestSession = requests.Session()
+    requestSession.mount(weatherAPIUrl, DESAdapter())
+    text = requestSession.get(weatherAPIUrl)
+    text = text.text
+    jsonData = json.loads(text)
+    
+    strMessage = "Now Temperature: {}K\\nClouds: {}%".format(str(jsonData["main"]["temp"]), str(jsonData["clouds"]["all"]))
+    strMessage +="\\nPressure: {}Pa\\nHumidity: {}".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
+    strMessage +="\\nSo, How's the Weather? {}".format(str(jsonData["weather"]["description"]))
+    strMessage +='\\nThat was the weather in Seoul!\\nIs there any other region? You "code" it. Plz'
+    return strMessage
+
+
 

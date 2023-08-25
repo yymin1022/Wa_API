@@ -181,6 +181,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageRemreturn(room)
     elif "뭐더라" in message:
         strResult = messageMemreturn(sender)
+    elif "마법의 소라고동이시여" in message:
+        strResult = messageSora(message)
 
 
     return strResult
@@ -1059,6 +1061,16 @@ def messageSleepy():
     elif randInt == 1:
         strMessage = "구라;;"
     
+    return strMessage
+
+def messageSora(message):
+    question = message.replace("마법의 소라고동이시여", "").strip()
+
+    if not question:
+        strMessage = "말 해"
+    else:
+        strMessage = random.choice(["그럼", "아마", "안 돼", "다시 한번 물어봐"])
+
     return strMessage
 
 def messageStop():

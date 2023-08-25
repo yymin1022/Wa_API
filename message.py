@@ -1201,7 +1201,7 @@ def messageFakeNews(message):
 
 def messageWeather():
 
-    appid = "1835847&appid=ea9e5f8d8e4aa2c798f8eb78f361d1b4"
+    appid = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
     id = 1835847    ###서울 디폴트
     weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?id={id}&appid={appid}".format(id=id, appid = appid)
     
@@ -1214,16 +1214,21 @@ def messageWeather():
     jsonData = json.loads(text)
     
     strMessage = "현재온도: {}K\\n구름: {}%".format(str(jsonData["main"]["temp"]), str(jsonData["clouds"]["all"]))
-    strMessage +="\\n압력: {}Pa\\n습도: {}".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
+    strMessage +="\\n압력: {}Pa\\n습도: {}%".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
     strMessage +="\\n그래서 날씨는? {}".format(str(jsonData["weather"]["description"]))
     strMessage +='\\n이상 서울의 날씨였습니다!\\n다른 지역은 없냐고요? !날씨부산'
     return strMessage
 
 
 def getlatlon(location):
-    apikey = "1835847&appid=ea9e5f8d8e4aa2c798f8eb78f361d1b4"
     
-    weatherAPIUrl = "http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={API_key}".format(location, apikey)
+    
+    
+    apikey = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
+    
+    weatherAPIUrl = "http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={key}".format(city_name=location, key=apikey)
+    
+    
     
     requestSession = requests.Session()
     requestSession.mount(weatherAPIUrl, DESAdapter())
@@ -1231,14 +1236,18 @@ def getlatlon(location):
     text = text.text
     jsonData = json.loads(text)
     
-    if str(jsonData["cod"]) == "401":
+    
+    lat = jsonData[0]["lat"]
+    lon = jsonData[0]["lon"]
+    
+    if "cod" in jsonData:
         return "지역이 잘못되었-와", "지역이 잘못되었-봇"
     else:
-        return (str(jsonData["lat"])), (str(jsonData["lon"]))
+        return lat, lon
     
 def messageWeather(lat, lon, loc):
-    apikey = "1835847&appid=ea9e5f8d8e4aa2c798f8eb78f361d1b4"
-    weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_key}".format(lat=lat, lon=lon, API_Key = apikey)
+    apikey = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
+    weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={key}".format(lat=lat, lon=lon, key = apikey)
     
     requestSession = requests.Session()
     requestSession.mount(weatherAPIUrl, DESAdapter())
@@ -1246,10 +1255,15 @@ def messageWeather(lat, lon, loc):
     text = text.text
     jsonData = json.loads(text)
     
+    
+    print(jsonData)
+    
     strMessage = "현재온도: {}K\\n구름: {}%".format(str(jsonData["main"]["temp"]), str(jsonData["clouds"]["all"]))
-    strMessage +="\\n압력: {}Pa\\n습도: {}".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
-    strMessage +="\\n그래서 날씨는? {}".format(str(jsonData["weather"]["description"]))
+    strMessage +="\\n압력: {}Pa\\n습도: {}%".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
+    strMessage +="\\n그래서 날씨는? {}".format(str(jsonData["weather"][0]["description"]))
     strMessage +="\\n이상 {loc}의 날씨였습니다!".format(loc = loc)
+    
+    return strMessage
     
 
 def messageWeatherEN():

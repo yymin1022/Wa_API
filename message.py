@@ -867,8 +867,10 @@ def messageNSULibrary():
     first = "제1 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (Response['data']['data'][0]['available'], Response['data']['data'][0]['inUse'])
     second = "제2 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (Response['data']['data'][1]['available'], Response['data']['data'][1]['inUse'])
     third = "제3 자유열람실 : 여석 %s석 (%s석 사용중)" % (Response['data']['data'][2]['available'], Response['data']['data'][1]['inUse'])
-        
+
     strMessage = "남서울대학교 열람실 좌석현황(성암기념중앙도서관)\n\n" + first + second + third
+    
+    return strMessage
 
 def messageNSUMeal(NSU_BAP, food_list):
     strMessage = ""

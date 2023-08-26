@@ -1215,7 +1215,7 @@ def messageWeather():
     
     strMessage = "현재온도: {}K\\n구름: {}%".format(str(jsonData["main"]["temp"]), str(jsonData["clouds"]["all"]))
     strMessage +="\\n압력: {}Pa\\n습도: {}%".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
-    strMessage +="\\n그래서 날씨는? {}".format(str(jsonData["weather"]["description"]))
+    strMessage +="\\m그래서 날씨는? {}".format(str(jsonData["weather"]["description"]))
     strMessage +='\\n이상 서울의 날씨였습니다!\\n다른 지역은 없냐고요? !날씨부산'
     return strMessage
 

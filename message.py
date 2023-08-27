@@ -33,6 +33,13 @@ def getReplyMessage(message, room, sender):
 
     if "!뉴스" in message:
         strResult = messageFakeNews(message)
+    elif "!날씨" in message:
+        loc = message.split("!날씨")
+        if(loc == "!날씨"):
+            strResult = messageWeather()
+        else:
+            lat, lon = getlatlon(loc)
+            strResult(messageWeather(lat, lon))
     elif "!기억" in message:
         strResult = messageRemember(message, room)
     elif "!날짜" in message:
@@ -171,16 +178,6 @@ def getReplyMessage(message, room, sender):
         strResult = messageWa()
     elif "와!" in message:
         strResult = messageWaSans()
-    elif "!날씨" in message:
-        loc = message.split("!날씨")
-        if(loc == "!날씨"):
-            strResult = messageWeather()
-        else:
-            lat, lon = getlatlon(loc)
-            strResult(messageWeather(lat, lon))
-        
-    elif "!weather" in message:
-        strResult = messageWeatherEN()
     elif "용민" in message:
         strResult = messageYongmin()
     elif "자라" in message:
@@ -1200,13 +1197,10 @@ def messageFakeNews(message):
     return strMessage
 
 def messageWeather():
-
     appid = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
     id = 1835847    ###서울 디폴트
     weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?id={id}&appid={appid}".format(id=id, appid = appid)
     
-    
-
     requestSession = requests.Session()
     requestSession.mount(weatherAPIUrl, DESAdapter())
     text = requestSession.get(weatherAPIUrl)
@@ -1215,36 +1209,28 @@ def messageWeather():
     
     strMessage = "현재온도: {}K\\n구름: {}%".format(str(jsonData["main"]["temp"]), str(jsonData["clouds"]["all"]))
     strMessage +="\\n압력: {}Pa\\n습도: {}%".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
-    strMessage +="\\m그래서 날씨는? {}".format(str(jsonData["weather"]["description"]))
-    strMessage +='\\n이상 서울의 날씨였습니다!\\n다른 지역은 없냐고요? !날씨부산'
+    strMessage +="\\m서울의 날씨 {}".format(str(jsonData["weather"]["description"]))
     return strMessage
 
 
 def getlatlon(location):
-    
-    
-    
     apikey = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
-    
     weatherAPIUrl = "http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={key}".format(city_name=location, key=apikey)
-    
-    
-    
+
     requestSession = requests.Session()
     requestSession.mount(weatherAPIUrl, DESAdapter())
     text = requestSession.get(weatherAPIUrl)
     text = text.text
     jsonData = json.loads(text)
     
-    
     lat = jsonData[0]["lat"]
     lon = jsonData[0]["lon"]
     
     if "cod" in jsonData:
-        return "지역이 잘못되었-와", "지역이 잘못되었-봇"
+        return "지역이 잘못되었습니다", "지역이 잘못되었습니다"
     else:
         return lat, lon
-    
+
 def messageWeather(lat, lon, loc):
     apikey = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
     weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={key}".format(lat=lat, lon=lon, key = apikey)
@@ -1255,32 +1241,8 @@ def messageWeather(lat, lon, loc):
     text = text.text
     jsonData = json.loads(text)
     
-    
-    print(jsonData)
-    
     strMessage = "현재온도: {}K\\n구름: {}%".format(str(jsonData["main"]["temp"]), str(jsonData["clouds"]["all"]))
     strMessage +="\\n압력: {}Pa\\n습도: {}%".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
-    strMessage +="\\m그래서 날씨는? {}".format(str(jsonData["weather"][0]["description"]))
-    strMessage +="\\n이상 {loc}의 날씨였습니다!".format(loc = loc)
+    strMessage +="\\m{}의 날씨 {}".format(loc, str(jsonData["weather"][0]["description"]))
     
     return strMessage
-    
-
-def messageWeatherEN():
-
-    weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?id=1835847&appid=ea9e5f8d8e4aa2c798f8eb78f361d1b4"
-
-    requestSession = requests.Session()
-    requestSession.mount(weatherAPIUrl, DESAdapter())
-    text = requestSession.get(weatherAPIUrl)
-    text = text.text
-    jsonData = json.loads(text)
-    
-    strMessage = "Now Temperature: {}K\\nClouds: {}%".format(str(jsonData["main"]["temp"]), str(jsonData["clouds"]["all"]))
-    strMessage +="\\nPressure: {}Pa\\nHumidity: {}".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
-    strMessage +="\\nSo, How's the Weather? {}".format(str(jsonData["weather"]["description"]))
-    strMessage +='\\nThat was the weather in Seoul!\\nIs there any other region? You "code" it. Plz'
-    return strMessage
-
-
-

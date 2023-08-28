@@ -674,47 +674,19 @@ def messageHokyu():
 
 def messageHokyuGraduate():
     strMessage = ""
+    randInt = random.randrange(0, 6)
 
-    y, m, d = int(2023), int(8), int(27)
-    messageDateCalculator(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
-
-    if leftdays == 0:
-        strMessage = "호규의 전역을 축하합니다!!!!"
-        return strMessage
-
-    if leftdays < 0:
-        randInt = random.randrange(0, 6)
-        if randInt == 0:
-            strMessage = "호규의 부사후 249기 지원을 응원합니다!"
-        elif randInt == 1:
-            strMessage = "호규의 학사 152기 지원을 응원합니다!"
-        elif randInt == 2:
-            strMessage = "호규의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2030,12,31) - datetime.date.today()).days -1)
-        elif randInt == 3:
-            strMessage = "호규의 민방위 소집해제일까지 %d일 남았습니다."%((datetime.date(2041,4,28) - datetime.date.today()).days -1)
-        elif randInt == 4:
-            strMessage = "예비군 0년차는 좀..."
-        elif randInt == 5:
-            strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%((datetime.date(2027,8,26) - datetime.date.today()).days -1)
-        return strMessage
-
-    randInt = random.randrange(0, 5)
     if randInt == 0:
-        randInt = random.randrange(0, 3)
-        if randInt == 0:
-            strMessage = "호규가 전역하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
-        elif randInt == 1:
-            strMessage = "zz"
-        elif randInt == 2:
-            strMessage = "답변하기 적당한 말을 찾지 못했어요."
+        strMessage = "호규의 부사후 249기 지원을 응원합니다!"
     elif randInt == 1:
-        strMessage = "호규가 입대한 지 %d일 되었습니다."%((datetime.date.today() - datetime.date(2021,12,6)).days)
+        strMessage = "호규의 학사 152기 지원을 응원합니다!"
     elif randInt == 2:
-        strMessage = "833기가 벌써 전역 따질 짬인가?"
+        strMessage = "호규의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2030,12,31) - datetime.date.today()).days -1)
     elif randInt == 3:
-        strMessage = "응 안 돼~"
+        strMessage = "호규의 민방위 소집해제일까지 %d일 남았습니다."%((datetime.date(2041,4,28) - datetime.date.today()).days -1)
     elif randInt == 4:
+        strMessage = "예비군 0년차는 좀..."
+    elif randInt == 5:
         strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%((datetime.date(2027,8,26) - datetime.date.today()).days -1)
 
     return strMessage
@@ -871,7 +843,7 @@ def messageNSULibrary():
     Response = dict(Response)
     first = "제1 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (Response['data']['data'][0]['available'], Response['data']['data'][0]['inUse'])
     second = "제2 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (Response['data']['data'][1]['available'], Response['data']['data'][1]['inUse'])
-    third = "제3 자유열람실 : 여석 %s석 (%s석 사용중)" % (Response['data']['data'][2]['available'], Response['data']['data'][1]['inUse'])
+    third = "제3 자유열람실 : 여석 %s석 (%s석 사용중)" % (Response['data']['data'][2]['available'], Response['data']['data'][2]['inUse'])
 
     strMessage = "남서울대학교 열람실 좌석현황(성암기념중앙도서관)\n\n" + first + second + third
     

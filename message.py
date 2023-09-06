@@ -875,7 +875,7 @@ def messageNSUMeal():
         for mealData in cafe1_list.items():
             MealList2.append((f"{mealData[1]}\n"))
 
-        strMessage = mealDate + " 식단표" + "\n\n" + ">> 천원의 아침밥 <<\n" + MealList1[day] + "\n\n>> 오늘의 메뉴 <<\n" + MealList0[day] + "\n\n>> 멀베리 <<\n" + MealList2[day]
+        strMessage = "남서울대학교 " + mealDate + " 식단표" + "\n" + ">> 천원의 아침밥 <<\n" + MealList1[day] + "\n>> 오늘의 메뉴 <<\n" + MealList0[day] + "\n>> 멀베리 <<\n" + MealList2[day]
     except:
         strMessage = "오늘은 학식을 운영하지 않습니다."
     return strMessage

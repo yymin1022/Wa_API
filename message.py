@@ -1203,8 +1203,8 @@ def getlatlon(location):
     text = text.text
     jsonData = json.loads(text)
     
-    lat = jsonData[0]["lat"]
-    lon = jsonData[0]["lon"]
+    lat = jsonData["lat"]
+    lon = jsonData["lon"]
     
     if "cod" in jsonData:
         return "지역이 잘못되었습니다", "지역이 잘못되었습니다"
@@ -1223,6 +1223,6 @@ def messageWeather(lat, lon, loc):
     
     strMessage = "현재온도: {}K\\n구름: {}%".format(str(jsonData["main"]["temp"]), str(jsonData["clouds"]["all"]))
     strMessage +="\\n압력: {}Pa\\n습도: {}%".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
-    strMessage +="\\m{}의 날씨 {}".format(loc, str(jsonData["weather"][0]["description"]))
+    strMessage +="\\m{}의 날씨 {}".format(loc, str(jsonData["weather"]["description"]))
     
     return strMessage

@@ -49,6 +49,9 @@ def getReplyMessage(message, room, sender):
             strResult = messageCalDay(0, message)
     elif "!메모" in message:
         strResult = messageMemo(message, sender)
+    elif "!택배" in message:
+        if "대한통운" in message or "대통" in message or "cj" in message or "CJ" in message :
+            strResult = messageLogisticsParser(0, message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "아.." in message:
@@ -762,6 +765,9 @@ def messageLaugh():
         strMessage = "안웃긴데;;"
 
     return strMessage
+
+def messageLogisticsParser(flag, message):
+    strMessage = ""
 
 def messageMemo(message, sender):
     message = message.replace("!메모", "").strip()

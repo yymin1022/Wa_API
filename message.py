@@ -772,7 +772,7 @@ def messageLogisticsParser_CJ(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("대한통운", "")
+        message = message.replace("!택배 ", "").replace("대한통운", "").replace("대통", "").replace("CJ", "").replace("cj", "")
         if message.isdigit() == False:
             raise
         request_headers = { 

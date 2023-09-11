@@ -773,6 +773,8 @@ def messageLogisticsParser_CJ(message):
     temp = ""
     try:
         message = message.replace("!택배 ", "").replace("대한통운", "")
+        if message.isdigit() == False:
+            raise
         request_headers = { 
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\

@@ -485,7 +485,7 @@ def messageDateCalculator(y, m, d):
     lefthours = 24 - now.hour - 1
     leftminutes = 60 - now.minute - 1
     leftseconds = 60 - now.second - 1
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    leftseconds_wa = ((leftdays - 1) * 24 * 60 * 60) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
 
     return leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa
 

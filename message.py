@@ -802,7 +802,42 @@ def messageLogisticsParser_CJ(message):
                 infom[_] = infom[_].replace('인수자 : ', '')
         strMessage = "//운송장번호 %s의 마지막 변동사항//\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (message, infom[1], infom[2], infom[3], infom[4], infom[5])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 대한통운123456789"
+        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 대한통운123456789 or !택배 CJ123456789"
+    
+    return strMessage
+
+def messageLogisticsParser_HJ(message):
+    strMessage = ""
+    infom = []
+    i = 1
+    temp = ""
+    try:
+        message = message.replace("!택배 ", "").replace("한진택배", "").replace("한진", "")
+        if message.isdigit() == False:
+            raise
+        request_headers = { 
+        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
+        Safari/537.36'), } 
+        strUrl = "https://www.hanjin.com/kor/CMS/DeliveryMgr/WaybillResult.do?mCode=MN038&wblnum=" + message + "&schLang=KR"
+        requestSession = requests.Session()
+        Response = requests.get(strUrl, headers = request_headers)
+        soup = BeautifulSoup(Response.text, 'html.parser')
+        while True:
+            info = soup.select('#delivery-wr > div > div.waybill-tbl > table > tbody > tr:nth-child(%d)' % i)
+            if not info:
+                info = soup.select('#delivery-wr > div > div.waybill-tbl > table > tbody > tr:nth-child(%d)' % int(i-1))
+                for tag in info:
+                    temp += tag.get_text()
+                break
+            i = i+1
+        infom = temp.split('\n')
+        for _ in range(len(infom)):
+            if infom[7] == '':
+                infom[7] = "(정보 없음)"
+        strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (infom[1], infom[2], infom[3], infom[5], infom[7])
+    except:
+        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 한진택배123456789 or !택배 한진123456789"
     
     return strMessage
 

@@ -800,7 +800,7 @@ def messageLogisticsParser_CJ(message):
                 infom[_] = infom[_].replace(u'\xa0', u'(정보 없음)')
             elif "인수자 : " in infom[_]:
                 infom[_] = infom[_].replace('인수자 : ', '')
-        strMessage = "//운송장번호 %s의 마지막 변동사항//\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (message, infom[1], infom[2], infom[3], infom[4], infom[5])
+        strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (message, infom[1], infom[2], infom[3], infom[4], infom[5])
     except:
         strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 대한통운123456789 or !택배 CJ123456789"
     

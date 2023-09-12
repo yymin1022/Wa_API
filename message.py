@@ -49,6 +49,11 @@ def getReplyMessage(message, room, sender):
             strResult = messageCalDay(0, message)
     elif "!메모" in message:
         strResult = messageMemo(message, sender)
+    elif "!택배" in message:
+        if "대한통운" in message or "대통" in message or "cj" in message or "CJ" in message :
+            strResult = messageLogisticsParser_CJ(message)
+        elif "한진택배" in message or "한진" in message:
+            strResult = messageLogisticsParser_HJ(message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "아.." in message:
@@ -485,7 +490,7 @@ def messageDateCalculator(y, m, d):
     lefthours = 24 - now.hour - 1
     leftminutes = 60 - now.minute - 1
     leftseconds = 60 - now.second - 1
-    leftseconds_wa = (leftdays * 24 * 60 * 60 - 1) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
+    leftseconds_wa = ((leftdays - 1) * 24 * 60 * 60) + (lefthours * 60 * 60) + (leftminutes * 60) + leftseconds
 
     return leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa
 
@@ -763,6 +768,79 @@ def messageLaugh():
 
     return strMessage
 
+def messageLogisticsParser_CJ(message):
+    strMessage = ""
+    infom = []
+    i = 1
+    temp = ""
+    try:
+        message = message.replace("!택배 ", "").replace("대한통운", "").replace("대통", "").replace("CJ", "").replace("cj", "")
+        if message.isdigit() == False:
+            raise
+        request_headers = { 
+        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
+        Safari/537.36'), } 
+        strUrl = "https://trace.cjlogistics.com/tracking/jsp/cmn/Tracking_new.jsp?QueryType=3&pTdNo=" + message
+        requestSession = requests.Session()
+        Response = requests.get(strUrl, headers = request_headers)
+        soup = BeautifulSoup(Response.text, 'html.parser')
+
+        while True:
+            info = soup.select('#content > div > table.tepTb02.tepDep02 > tbody > tr:nth-child(%d)' % i)
+            if not info:
+                info = soup.select('#content > div > table.tepTb02.tepDep02 > tbody > tr:nth-child(%d)' % int(i-1))
+                for tag in info:
+                    temp += tag.get_text()
+                break
+            i = i+1
+        infom = temp.split('\n')
+        for _ in range(len(infom)):
+            if infom[_] == "\xa0":
+                infom[_] = infom[_].replace(u'\xa0', u'(정보 없음)')
+            elif "인수자 : " in infom[_]:
+                infom[_] = infom[_].replace('인수자 : ', '')
+        strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (message, infom[1], infom[2], infom[3], infom[4], infom[5])
+    except:
+        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 대한통운123456789 or !택배 CJ123456789"
+    
+    return strMessage
+
+def messageLogisticsParser_HJ(message):
+    strMessage = ""
+    infom = []
+    i = 1
+    temp = ""
+    try:
+        message = message.replace("!택배 ", "").replace("한진택배", "").replace("한진", "")
+        if message.isdigit() == False:
+            raise
+        request_headers = { 
+        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
+        Safari/537.36'), } 
+        strUrl = "https://www.hanjin.com/kor/CMS/DeliveryMgr/WaybillResult.do?mCode=MN038&wblnum=" + message + "&schLang=KR"
+        requestSession = requests.Session()
+        Response = requests.get(strUrl, headers = request_headers)
+        soup = BeautifulSoup(Response.text, 'html.parser')
+        while True:
+            info = soup.select('#delivery-wr > div > div.waybill-tbl > table > tbody > tr:nth-child(%d)' % i)
+            if not info:
+                info = soup.select('#delivery-wr > div > div.waybill-tbl > table > tbody > tr:nth-child(%d)' % int(i-1))
+                for tag in info:
+                    temp += tag.get_text()
+                break
+            i = i+1
+        infom = temp.split('\n')
+        for _ in range(len(infom)):
+            if infom[7] == '':
+                infom[7] = "(정보 없음)"
+        strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (infom[1], infom[2], infom[3], infom[5], infom[7])
+    except:
+        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 한진택배123456789 or !택배 한진123456789"
+    
+    return strMessage
+
 def messageMemo(message, sender):
     message = message.replace("!메모", "").strip()
 
@@ -875,7 +953,7 @@ def messageNSUMeal():
         for mealData in cafe1_list.items():
             MealList2.append((f"{mealData[1]}\n"))
 
-        strMessage = mealDate + " 식단표" + "\n\n" + ">> 천원의 아침밥 <<\n" + MealList1[day] + "\n\n>> 오늘의 메뉴 <<\n" + MealList0[day] + "\n\n>> 멀베리 <<\n" + MealList2[day]
+        strMessage = "남서울대학교 " + mealDate + " 식단표" + "\n" + ">> 천원의 아침밥 <<\n" + MealList1[day] + "\n>> 오늘의 메뉴 <<\n" + MealList0[day] + "\n>> 멀베리 <<\n" + MealList2[day]
     except:
         strMessage = "오늘은 학식을 운영하지 않습니다."
     return strMessage

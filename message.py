@@ -56,6 +56,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageLogisticsParser_HJ(message)
         elif "우체국택배" in message or "우체국" in message:
             strResult = messageLogisticsParser_KP(message)
+        elif "로젠택배" in message or "로젠" in message:
+            strResult = messageLogisticsParser_LG(message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "아.." in message:
@@ -875,6 +877,46 @@ def messageLogisticsParser_KP(message):
         strMessage = "/// 우체국택배 배송조회 ///\n\n날짜: %s\n시간: %s\n발생국: %s\n처리현황: %s" % (infom[1], infom[2], infom[3], infom[5])
     except:
         strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 우체국택배123456789 or !택배 우체국123456789"
+    
+    return strMessage
+
+def messageLogisticsParser_LG(message):
+    strMessage = ""
+    infom = []
+    i = 1
+    temp = ""
+    try:
+        message = message.replace("!택배 ", "").replace("로젠", "").replace("로젠택배", "")
+        if message.isdigit() == False:
+            raise
+        request_headers = { 
+        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
+        Safari/537.36'), } 
+        strUrl = "https://www.ilogen.com/web/personal/trace/" + message
+        requestSession = requests.Session()
+        Response = requests.get(strUrl, headers = request_headers)
+        soup = BeautifulSoup(Response.text, 'html.parser')
+        while True:
+            info = soup.select('body > div.contents.personal.tkSearch > section > div > div.tab_container > div > table.data.tkInfo > tbody > tr:nth-child(%d)' % i)
+            if not info:
+                info = soup.select('body > div.contents.personal.tkSearch > section > div > div.tab_container > div > table.data.tkInfo > tbody > tr:nth-child(%d)' % int(i-1))
+                for tag in info:
+                    temp += tag.get_text()
+                break
+            i = i+1
+        infom = temp.split('\n')
+        for _ in range(len(infom)): 
+            if '\t' in infom[_]: infom[_] = infom[_].replace('\t', '')
+        infom = [v for v in infom if v]
+        temp = ''
+        if "전달" in infom[3]:
+            temp = '\n인수자: ' + infom[5]
+        elif "배달 준비" in infom[3]:
+            temp = '\n배달 예정 시간: ' + infom[5]
+        strMessage = "/// 로젠택배 배송조회 ///\n\n날짜: %s\n사업장: %s\n배송상태: %s\n배송내용: %s" % (infom[0], infom[1], infom[2], infom[3]) + temp
+    except:
+        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 로젠택배123456789 or !택배 로젠123456789"
     
     return strMessage
 

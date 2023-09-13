@@ -54,6 +54,10 @@ def getReplyMessage(message, room, sender):
             strResult = messageLogisticsParser_CJ(message)
         elif "한진택배" in message or "한진" in message:
             strResult = messageLogisticsParser_HJ(message)
+        elif "우체국택배" in message or "우체국" in message:
+            strResult = messageLogisticsParser_KP(message)
+        elif "로젠택배" in message or "로젠" in message:
+            strResult = messageLogisticsParser_LG(message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "아.." in message:
@@ -314,8 +318,11 @@ def messageBuy():
     return strMessage
 
 def messageBHGraduate():
-    strMessage = "임병희씨가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,6,30)).days, (datetime.date.today() - datetime.date(2021,12,29)).days)
+    strMessage = ""
 
+    i = random.randint(0,2)
+    if i == 0: strMessage = "임병희씨가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,6,30)).days, (datetime.date.today() - datetime.date(2021,12,29)).days)
+    elif i == 1: strMessage = "임병희씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date.today() - datetime.date(2029,12,31)).days)
     return strMessage
 
 def messageCAUCalendar():
@@ -800,7 +807,7 @@ def messageLogisticsParser_CJ(message):
                 infom[_] = infom[_].replace(u'\xa0', u'(정보 없음)')
             elif "인수자 : " in infom[_]:
                 infom[_] = infom[_].replace('인수자 : ', '')
-        strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (message, infom[1], infom[2], infom[3], infom[4], infom[5])
+        strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (infom[1], infom[2], infom[3], infom[4], infom[5])
     except:
         strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 대한통운123456789 or !택배 CJ123456789"
     
@@ -838,6 +845,81 @@ def messageLogisticsParser_HJ(message):
         strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (infom[1], infom[2], infom[3], infom[5], infom[7])
     except:
         strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 한진택배123456789 or !택배 한진123456789"
+    
+    return strMessage
+
+def messageLogisticsParser_KP(message):
+    strMessage = ""
+    infom = []
+    i = 1
+    temp = ""
+    try:
+        message = message.replace("!택배 ", "").replace("우체국택배", "").replace("우체국", "")
+        if message.isdigit() == False:
+            raise
+        request_headers = { 
+        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
+        Safari/537.36'), } 
+        strUrl = "https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=" + message
+        requestSession = requests.Session()
+        Response = requests.get(strUrl, headers = request_headers)
+        soup = BeautifulSoup(Response.text, 'html.parser')
+        while True:
+            info = soup.select('#processTable > tbody > tr:nth-child(%d)' % i)
+            if not info:
+                info = soup.select('#processTable > tbody > tr:nth-child(%d)' % int(i-1))
+                for tag in info:
+                    temp += tag.get_text()
+                break
+            i = i+1
+        infom = temp.split('\n')
+        for _ in range(len(infom)):
+            if '\t' in infom[_]: infom[_] = infom[_].replace('\t', '')
+        if infom[5] == '            ': infom[5] = '배달준비'
+        strMessage = "/// 우체국택배 배송조회 ///\n\n날짜: %s\n시간: %s\n발생국: %s\n처리현황: %s" % (infom[1], infom[2], infom[3], infom[5])
+    except:
+        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 우체국택배123456789 or !택배 우체국123456789"
+    
+    return strMessage
+
+def messageLogisticsParser_LG(message):
+    strMessage = ""
+    infom = []
+    i = 1
+    temp = ""
+    try:
+        message = message.replace("!택배 ", "").replace("로젠", "").replace("로젠택배", "")
+        if message.isdigit() == False:
+            raise
+        request_headers = { 
+        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
+        Safari/537.36'), } 
+        strUrl = "https://www.ilogen.com/web/personal/trace/" + message
+        requestSession = requests.Session()
+        Response = requests.get(strUrl, headers = request_headers)
+        soup = BeautifulSoup(Response.text, 'html.parser')
+        while True:
+            info = soup.select('body > div.contents.personal.tkSearch > section > div > div.tab_container > div > table.data.tkInfo > tbody > tr:nth-child(%d)' % i)
+            if not info:
+                info = soup.select('body > div.contents.personal.tkSearch > section > div > div.tab_container > div > table.data.tkInfo > tbody > tr:nth-child(%d)' % int(i-1))
+                for tag in info:
+                    temp += tag.get_text()
+                break
+            i = i+1
+        infom = temp.split('\n')
+        for _ in range(len(infom)): 
+            if '\t' in infom[_]: infom[_] = infom[_].replace('\t', '')
+        infom = [v for v in infom if v]
+        temp = ''
+        if "전달" in infom[3]:
+            temp = '\n인수자: ' + infom[5]
+        elif "배달 준비" in infom[3]:
+            temp = '\n배달 예정 시간: ' + infom[5]
+        strMessage = "/// 로젠택배 배송조회 ///\n\n날짜: %s\n사업장: %s\n배송상태: %s\n배송내용: %s" % (infom[0], infom[1], infom[2], infom[3]) + temp
+    except:
+        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 로젠택배123456789 or !택배 로젠123456789"
     
     return strMessage
 

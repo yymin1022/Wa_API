@@ -54,6 +54,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageLogisticsParser_CJ(message)
         elif "한진택배" in message or "한진" in message:
             strResult = messageLogisticsParser_HJ(message)
+        elif "우체국택배" in message or "우체국" in message:
+            strResult = messageLogisticsParser_KP(message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "아.." in message:
@@ -838,6 +840,41 @@ def messageLogisticsParser_HJ(message):
         strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (infom[1], infom[2], infom[3], infom[5], infom[7])
     except:
         strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 한진택배123456789 or !택배 한진123456789"
+    
+    return strMessage
+
+def messageLogisticsParser_KP(message):
+    strMessage = ""
+    infom = []
+    i = 1
+    temp = ""
+    try:
+        message = message.replace("!택배 ", "").replace("우체국택배", "").replace("우체국", "")
+        if message.isdigit() == False:
+            raise
+        request_headers = { 
+        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
+        Safari/537.36'), } 
+        strUrl = "https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=" + message
+        requestSession = requests.Session()
+        Response = requests.get(strUrl, headers = request_headers)
+        soup = BeautifulSoup(Response.text, 'html.parser')
+        while True:
+            info = soup.select('#processTable > tbody > tr:nth-child(%d)' % i)
+            if not info:
+                info = soup.select('#processTable > tbody > tr:nth-child(%d)' % int(i-1))
+                for tag in info:
+                    temp += tag.get_text()
+                break
+            i = i+1
+        infom = temp.split('\n')
+        for _ in range(len(infom)):
+            if '\t' in infom[_]: infom[_] = infom[_].replace('\t', '')
+        if infom[5] == '            ': infom[5] = '배달준비'
+        strMessage = "/// 우체국택배 배송조회 ///\n\n날짜: %s\n시간: %s\n발생국: %s\n처리현황: %s" % (infom[1], infom[2], infom[3], infom[5])
+    except:
+        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 우체국택배123456789 or !택배 우체국123456789"
     
     return strMessage
 

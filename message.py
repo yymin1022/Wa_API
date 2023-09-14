@@ -322,7 +322,7 @@ def messageBHGraduate():
 
     randInt = random.randrange(0,2)
     if randInt == 0: strMessage = "임병희씨가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,6,30)).days, (datetime.date.today() - datetime.date(2021,12,29)).days)
-    elif randInt == 1: strMessage = "임병희씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date.today() - datetime.date(2029,12,31)).days)
+    elif randInt == 1: strMessage = "임병희씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2029,12,31)).days - datetime.date.today())
     return strMessage
 
 def messageCAUCalendar():

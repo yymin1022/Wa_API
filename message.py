@@ -58,6 +58,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageLogisticsParser_KP(message)
         elif "로젠택배" in message or "로젠" in message:
             strResult = messageLogisticsParser_LG(message)
+        elif "롯데택배" in message or "롯데" in message:
+            strResult = messageLogisticsParser_LT(message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "아.." in message:
@@ -920,6 +922,36 @@ def messageLogisticsParser_LG(message):
         strMessage = "/// 로젠택배 배송조회 ///\n\n날짜: %s\n사업장: %s\n배송상태: %s\n배송내용: %s" % (infom[0], infom[1], infom[2], infom[3]) + temp
     except:
         strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 로젠택배123456789 or !택배 로젠123456789"
+    
+    return strMessage
+
+def messageLogisticsParser_LT(message):
+    strMessage = ""
+    infom = []
+    i = 1
+    temp = ""
+    try:
+        message = message.replace("!택배 ", "").replace("롯데", "").replace("롯데택배", "")
+        if message.isdigit() == False:
+            raise
+        request_headers = { 
+        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
+        Safari/537.36'), } 
+        strUrl = "https://www.lotteglogis.com/mobile/reservation/tracking/linkView?InvNo=" + message
+        requestSession = requests.Session()
+        Response = requests.get(strUrl, headers = request_headers)
+        soup = BeautifulSoup(Response.text, 'html.parser')
+        info = soup.find("div", "scroll_date_table")
+        for tag in info:
+            temp += tag.get_text()
+        infom = temp.split('\n')
+        for _ in range(len(infom)): 
+            infom[_] = infom[_].replace('\t', '').replace('\r', '').replace(' ', '').replace(u'\xa0', '')
+        infom = [v for v in infom if v]
+        strMessage = "/// 롯데택배 배송조회 ///\n\n단계: %s\n시간: %s\n현위치: %s\n처리현황: %s" % (infom[5], infom[6], infom[7], infom[8])
+    except:
+        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 롯데택배123456789 or !택배 롯데123456789"
     
     return strMessage
 

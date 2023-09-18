@@ -777,6 +777,11 @@ def messageLaugh():
 
     return strMessage
 
+def messageLogisticsParser():
+    strMessage = "///택배 운송장조회 사용 방법///\n\n!택배 [택배사][운송장번호]\nex)!택배 CJ1234567890\\m지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
+
+    return strMessage
+
 def messageLogisticsParser_CJ(message):
     strMessage = ""
     infom = []

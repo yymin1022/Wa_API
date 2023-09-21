@@ -9,6 +9,7 @@ import random
 import requests
 import time
 import xmltodict
+import base64
 
 CIPHERS = (
     'ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+HIGH:'
@@ -33,6 +34,10 @@ def getReplyMessage(message, room, sender):
 
     if "!뉴스" in message:
         strResult = messageFakeNews(message)
+    elif "!base64d" in message:
+        strResult = messageBase64Decode(message)
+    elif "!base64e" in message:
+        strResult = messageBase64Encode(message)
     elif "!날씨" in message:
         loc = message.split("!날씨")
         if(loc == "!날씨"):
@@ -1423,3 +1428,10 @@ def messageWeather(lat, lon, loc):
     strMessage +="\\m{}의 날씨 {}".format(loc, str(jsonData["weather"]["description"]))
     
     return strMessage
+
+def messageBase64Encode(message):
+    msg = message.split("!base64e ")[1]
+    return base64.b64encode(msg.encode('utf8'))
+def messageBase64Decode(message):
+    msg = message.split("!base64d ")
+    return base64.b64decode(msg[1]).decode('utf8')

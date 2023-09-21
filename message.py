@@ -1431,7 +1431,7 @@ def messageWeather(lat, lon, loc):
 
 def messageBase64Encode(message):
     msg = message.split("!base64e ")[1]
-    return base64.b64encode(msg.encode('utf8'))
+    return base64.b64encode(msg.encode('utf8')).decode('utf8')
 def messageBase64Decode(message):
     msg = message.split("!base64d ")
     return base64.b64decode(msg[1]).decode('utf8')

@@ -67,6 +67,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageLogisticsParser_LT(message)
         else:
             strResult = messageLogisticsParser()
+    elif "!통관" in message:
+        strResult = messageCustomTracker(message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "아.." in message:
@@ -476,6 +478,26 @@ def messageCry():
 
     return strMessage
 
+def messageCustomTracker(message):
+    strMessage = ""
+    try:
+        message = message.replace('!통관 ', '')
+        if message.isdigit() == False:
+            raise
+        key = os.environ['CUSTOM_API_KEY']
+        year = datetime.date.today().year
+        url = 'https://unipass.customs.go.kr:38010/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=%s&blYy=%s&hblNo=%s' % (key, year, message)
+        result = requests.get(url)
+        soup = BeautifulSoup(result.text, "xml")
+        name = soup.find('prnm')
+        status = soup.find('csclPrgsStts')
+        process_time = datetime.datetime.strptime(str(soup.find('prcsDttm').text), "%Y%m%d%H%M%S").strftime("%Y.%m.%d %H:%M:%S")
+        strMessage = "/// 국세청 UNIPASS 통관 조회 ///\n\n품명: %s\n통관진행상태: %s\n처리일시: %s" % (name, status, process_time)
+    except:
+        strMessage = "존재하지 않는 운송장번호이거나 잘못된 형식 혹은 아직 입항하지 않은 화물입니다.\\m사용법: !통관 123456789"
+    
+    return strMessage
+
 def messageDaelimMeal():
     todayDate = datetime.date.today()
     mealUrl = "https://www.daelim.ac.kr/ajaxf/FrBistroSvc/BistroCarteInfo.do"
@@ -706,7 +728,7 @@ def messageHokyuGraduate():
 def messageHansuGraduate():
     randInt = random.randrange(0, 4)
     strMessage = ""
-    y, m, d = int(2024), int(8), int(31)
+    y, m, d = 2024, 8, 31
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
@@ -756,7 +778,7 @@ def messageIreon():
 def messageJaeminGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-    y, m, d = int(2024), int(3), int(9)
+    y, m, d = 2024, 3, 9
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
@@ -1201,7 +1223,7 @@ def messageSaseyo():
 def messageSeungbeomGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-    y, m, d = int(2024), int(2), int(15)
+    y, m, d = 2024, 2, 15
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
@@ -1218,7 +1240,7 @@ def messageSeongminGraduate():
     randInt = random.randrange(0, 6)
     strMessage = ""
     
-    y, m, d = int(2024), int(2), int(22)
+    y, m, d = 2024, 2, 22
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 

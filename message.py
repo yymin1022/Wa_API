@@ -755,7 +755,7 @@ def messageIreon():
 def messageJaeminGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-    y, m, d = int(2024), int(3), int(4)
+    y, m, d = int(2024), int(3), int(9)
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 

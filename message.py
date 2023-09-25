@@ -65,6 +65,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageLogisticsParser_LG(message)
         elif "롯데택배" in message or "롯데" in message:
             strResult = messageLogisticsParser_LT(message)
+        else:
+            strResult = messageLogisticsParser()
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "아.." in message:
@@ -73,8 +75,6 @@ def getReplyMessage(message, room, sender):
         strResult = messageAhnsa()
     elif "응애" in message:
         strResult = messageBaby()
-    elif "병희 전역" in message:
-        strResult = messageBHGraduate()  
     elif "불편" in message:
         strResult = messageBoolpyeon()
     elif "사고싶" in message or "사야" in message or "살까" in message or "샀어" in message or "샀다" in message or "샀네" in message or "사버렸" in message:
@@ -107,8 +107,6 @@ def getReplyMessage(message, room, sender):
             strResult = messageNSUMeal()
         else:
             strResult = messageCAUMeal("")
-    elif "창환 전역" in message:
-        strResult = messageChalsGraduate()
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
     elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
@@ -121,8 +119,6 @@ def getReplyMessage(message, room, sender):
         strResult = messageGraduate()
     elif "하.." in message:
         strResult = messageHa()
-    elif "한수 소해" in message:
-        strResult = messageHansuGraduate()
     elif "호규" in message:
         if "전역" in message:
             strResult = messageHokyuGraduate()
@@ -132,8 +128,6 @@ def getReplyMessage(message, room, sender):
         strResult = messageHungry()
     elif "이런.." in message:
         strResult = messageIreon()
-    elif "재민 소해" in message:
-        strResult = messageJaeminGraduate()
     elif "주형" in message:
         strResult = messageJoohyeong()
     elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 20:
@@ -164,10 +158,19 @@ def getReplyMessage(message, room, sender):
         strResult = messageSalute()
     elif "나스" in message:
         strResult = messageSaseyo()
-    elif "승범 졸업" in message:
-        strResult = messageSeungbeomGraduate()
-    elif "성민 소해" in message:
-        strResult = messageSeongminGraduate()
+    elif "소해" in message or "졸업" in message or "전역" in message:
+        if "승범" in message:
+            strResult = messageSeungbeomGraduate()
+        elif "성민" in message:
+            strResult = messageSeongminGraduate()
+        elif "재민" in message:
+            strResult = messageJaeminGraduate()
+        elif "한수" in message:
+            strResult = messageHansuGraduate()
+        elif "병희" in message:
+            strResult = messageBHGraduate()
+        elif "창환" in message:
+            strResult = messageChalsGraduate() 
     elif "서건1우" in message:
         strResult = messageSGW()
     elif "슈슉" in message:
@@ -329,7 +332,7 @@ def messageBHGraduate():
 
     randInt = random.randrange(0,2)
     if randInt == 0: strMessage = "임병희씨가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,6,30)).days, (datetime.date.today() - datetime.date(2021,12,29)).days)
-    elif randInt == 1: strMessage = "임병희씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2029,12,31)).days - datetime.date.today())
+    elif randInt == 1: strMessage = "임병희씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2029,12,31) - datetime.date.today()).days)
     return strMessage
 
 def messageCAUCalendar():
@@ -753,7 +756,7 @@ def messageIreon():
 def messageJaeminGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-    y, m, d = int(2024), int(3), int(4)
+    y, m, d = int(2024), int(3), int(9)
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
@@ -901,7 +904,7 @@ def messageLogisticsParser_LG(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("로젠", "").replace("로젠택배", "")
+        message = message.replace("!택배 ", "").replace("로젠택배", "").replace("로젠", "")
         if message.isdigit() == False:
             raise
         request_headers = { 
@@ -941,7 +944,7 @@ def messageLogisticsParser_LT(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("롯데", "").replace("롯데택배", "")
+        message = message.replace("!택배 ", "").replace("롯데택배", "").replace("롯데", "")
         if message.isdigit() == False:
             raise
         request_headers = { 

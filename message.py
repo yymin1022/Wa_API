@@ -65,6 +65,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageLogisticsParser_LG(message)
         elif "롯데택배" in message or "롯데" in message:
             strResult = messageLogisticsParser_LT(message)
+        else:
+            strResult = messageLogisticsParser()
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "아.." in message:

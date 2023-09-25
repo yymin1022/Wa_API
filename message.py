@@ -728,7 +728,7 @@ def messageHokyuGraduate():
 def messageHansuGraduate():
     randInt = random.randrange(0, 4)
     strMessage = ""
-    y, m, d = int(2024), int(8), int(31)
+    y, m, d = 2024, 8, 31
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
@@ -1223,7 +1223,7 @@ def messageSaseyo():
 def messageSeungbeomGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-    y, m, d = int(2024), int(2), int(15)
+    y, m, d = 2024, 2, 15
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
@@ -1240,7 +1240,7 @@ def messageSeongminGraduate():
     randInt = random.randrange(0, 6)
     strMessage = ""
     
-    y, m, d = int(2024), int(2), int(22)
+    y, m, d = 2024, 2, 22
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 

@@ -904,7 +904,7 @@ def messageLogisticsParser_LG(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("로젠", "").replace("로젠택배", "")
+        message = message.replace("!택배 ", "").replace("로젠택배", "").replace("로젠", "")
         if message.isdigit() == False:
             raise
         request_headers = { 
@@ -944,7 +944,7 @@ def messageLogisticsParser_LT(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("롯데", "").replace("롯데택배", "")
+        message = message.replace("!택배 ", "").replace("롯데택배", "").replace("롯데", "")
         if message.isdigit() == False:
             raise
         request_headers = { 

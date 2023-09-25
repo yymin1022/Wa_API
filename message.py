@@ -67,6 +67,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageLogisticsParser_LT(message)
         else:
             strResult = messageLogisticsParser()
+    elif "!통관" in message:
+        strResult = messageCustomTracker(message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "아.." in message:
@@ -474,6 +476,26 @@ def messageCoding():
 def messageCry():
     strMessage = "뭘 울어요;;"
 
+    return strMessage
+
+def messageCustomTracker(message):
+    strMessage = ""
+    try:
+        message = message.replace('!통관 ', '')
+        if message.isdigit() == False:
+            raise
+        key = os.environ['CUSTOM_API_KEY']
+        year = datetime.date.today().year
+        url = 'https://unipass.customs.go.kr:38010/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=%s&blYy=%s&hblNo=%s' % (key, year, message)
+        result = requests.get(url)
+        soup = BeautifulSoup(result.text, "xml")
+        name = soup.find('prnm')
+        status = soup.find('csclPrgsStts')
+        process_time = datetime.datetime.strptime(str(soup.find('prcsDttm').text), "%Y%m%d%H%M%S").strftime("%Y.%m.%d %H:%M:%S")
+        strMessage = "/// 국세청 UNIPASS 통관 조회 ///\n\n품명: %s\n통관진행상태: %s\n처리일시: %s" % (name, status, process_time)
+    except:
+        strMessage = "존재하지 않는 운송장번호이거나 아직 입항하지 않은 화물입니다.\\m사용법: !통관 123456789"
+    
     return strMessage
 
 def messageDaelimMeal():

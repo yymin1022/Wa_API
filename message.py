@@ -1092,7 +1092,7 @@ def messageNSUMeal():
         for mealData in bokji_list.items():
             MealList0.append((f"{mealData[1]}\n"))
 
-        cafe_response = requests.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data=cafe_data).json()
+        cafe_response = requests.post(strUrl, headers={'Content-Type': 'applicatixxxxxxon/x-www-form-urlencoded'}, data=cafe_data).json()
         cafe_response = dict(cafe_response)
         cafe0_list = cafe_response["body"]["list"][0]["properties"]["food_list"][0]
         cafe1_list = cafe_response["body"]["list"][0]["properties"]["food_list"][1]

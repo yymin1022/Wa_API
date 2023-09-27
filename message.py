@@ -165,6 +165,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageSeungbeomGraduate()
         elif "성민" in message:
             strResult = messageSeongminGraduate()
+        elif "수필" in message:
+            strResult = messageSupilGraduate()
         elif "재민" in message:
             strResult = messageJaeminGraduate()
         elif "한수" in message:
@@ -482,8 +484,6 @@ def messageCustomTracker(message):
     strMessage = ""
     try:
         message = message.replace('!통관 ', '')
-        if message.isdigit() == False:
-            raise
         key = os.environ['CUSTOM_API_KEY']
         year = datetime.date.today().year
         url = 'https://unipass.customs.go.kr:38010/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=%s&blYy=%s&hblNo=%s' % (key, year, message)
@@ -492,7 +492,7 @@ def messageCustomTracker(message):
         name = soup.find('prnm')
         status = soup.find('csclPrgsStts')
         process_time = datetime.datetime.strptime(str(soup.find('prcsDttm').text), "%Y%m%d%H%M%S").strftime("%Y.%m.%d %H:%M:%S")
-        strMessage = "/// 국세청 UNIPASS 통관 조회 ///\n\n품명: %s\n통관진행상태: %s\n처리일시: %s" % (name, status, process_time)
+        strMessage = "/// 국세청 UNIPASS 통관 조회 ///\n\n품명: %s\n통관진행상태: %s\n처리일시: %s" % (name.text, status.text, process_time)
     except:
         strMessage = "존재하지 않는 운송장번호이거나 잘못된 형식 혹은 아직 입항하지 않은 화물입니다.\\m사용법: !통관 123456789"
     
@@ -1235,6 +1235,27 @@ def messageSeungbeomGraduate():
         strMessage = "승범이가 졸업하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     
     return strMessage
+
+def messageSupilGraduate():
+    randInt = random.randrange(0, 5)
+    strMessage = ""
+
+    y, m, d = 2024, 11, 27
+    messageDateCalculator(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
+
+    if randInt == 0:
+        strMessage = "24년은 오지 않습니다..."
+    elif randInt == 1:
+        strMessage = "그런거 물어볼 시간에 일이나 하세요."
+    elif randInt == 2:
+        strMessage = "박수필씨의 소집해제일까지 %d일이 남았습니다."%(leftdays)
+    elif randInt == 3:
+        strMessage = "박수필씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+    elif randInt == 4:
+        strMessage = "당신이 민간인이 될 때까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+    
+    return strMessage    
 
 def messageSeongminGraduate():
     randInt = random.randrange(0, 6)

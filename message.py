@@ -165,6 +165,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageSeungbeomGraduate()
         elif "성민" in message:
             strResult = messageSeongminGraduate()
+        elif "수필" in message:
+            strResult = messageSupilGraduate()
         elif "재민" in message:
             strResult = messageJaeminGraduate()
         elif "한수" in message:
@@ -1233,6 +1235,27 @@ def messageSeungbeomGraduate():
         strMessage = "승범이가 졸업하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     
     return strMessage
+
+def messageSupilGraduate():
+    randInt = random.randrange(0, 5)
+    strMessage = ""
+
+    y, m, d = 2024, 11, 27
+    messageDateCalculator(y, m, d)
+    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
+
+    if randInt == 0:
+        strMessage = "24년은 오지 않습니다..."
+    elif randInt == 1:
+        strMessage = "그런거 물어볼 시간에 일이나 하세요."
+    elif randInt == 2:
+        strMessage = "박수필씨의 소집해제일까지 %d일이 남았습니다."%(leftdays)
+    elif randInt == 3:
+        strMessage = "박수필씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+    elif randInt == 4:
+        strMessage = "당신이 민간인이 될 때까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+    
+    return strMessage    
 
 def messageSeongminGraduate():
     randInt = random.randrange(0, 6)

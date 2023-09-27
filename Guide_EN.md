@@ -33,7 +33,7 @@ These requirements will be installed automatically with ```setupServer.sh``` Scr
 
 ```
 sudo apt install apache2 libapache2-mod-wsgi-py3 python3 python3-pip python3-flask
-sudo python3 -m pip install flask requests
+sudo python3 -m pip install flask requests bs4 flask_cors waitress lxml
 ```
 
 ## Run

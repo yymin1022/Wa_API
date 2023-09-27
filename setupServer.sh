@@ -9,7 +9,7 @@ sudo a2enmod wsgi
 echo ""
 
 echo "Installing Python3 Dependency Modules with PIP"
-python3 -m pip install flask requests xmltodict bs4 flask_cors waitress lxml
+python3 -m pip install -r requirements.txt
 echo ""
 
 echo

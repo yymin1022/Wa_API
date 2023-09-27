@@ -40,7 +40,7 @@ chmod +x Wa_API/*.sh
 
 ```
 sudo apt install apache2 libapache2-mod-wsgi-py3 python3 python3-pip python3-flask
-sudo python3 -m pip install flask requests bs4 flask_cors waitress lxml
+sudo python3 -m pip install -r requirements.txt
 ```
 
 ---

@@ -492,7 +492,7 @@ def messageCustomTracker(message):
         name = soup.find('prnm')
         status = soup.find('csclPrgsStts')
         process_time = datetime.datetime.strptime(str(soup.find('prcsDttm').text), "%Y%m%d%H%M%S").strftime("%Y.%m.%d %H:%M:%S")
-        strMessage = "/// 국세청 UNIPASS 통관 조회 ///\n\n품명: %s\n통관진행상태: %s\n처리일시: %s" % (name.text, status.text, process_time)
+        strMessage = "/// 관세청 UNIPASS 통관 조회 ///\n\n품명: %s\n통관진행상태: %s\n처리일시: %s" % (name.text, status.text, process_time)
     except:
         strMessage = "존재하지 않는 운송장번호이거나 잘못된 형식 혹은 아직 입항하지 않은 화물입니다.\\m사용법: !통관 123456789"
     
@@ -1058,9 +1058,9 @@ def messageNSULibrary():
     requestSession = requests.Session()
     Response = requestSession.get(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}).json()
     Response = dict(Response)
-    first = "제1 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (Response['data']['data'][0]['available'], Response['data']['data'][0]['inUse'])
-    second = "제2 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (Response['data']['data'][1]['available'], Response['data']['data'][1]['inUse'])
-    third = "제3 자유열람실 : 여석 %s석 (%s석 사용중)" % (Response['data']['data'][2]['available'], Response['data']['data'][2]['inUse'])
+    first = "제1 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (str(357 - int(Response['data']['data'][0]['inUse']) - int(Response['data']['data'][0]['fix']) - int(Response['data']['data'][0]['disabled'])), Response['data']['data'][0]['inUse'])
+    second = "제2 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (str(265 - int(Response['data']['data'][1]['inUse']) - int(Response['data']['data'][1]['fix']) - int(Response['data']['data'][1]['disabled'])), Response['data']['data'][1]['inUse'])
+    third = "제3 자유열람실 : 여석 %s석 (%s석 사용중)" % (str(324 - int(Response['data']['data'][2]['inUse']) - int(Response['data']['data'][2]['fix']) - int(Response['data']['data'][2]['disabled'])), Response['data']['data'][2]['inUse'])
 
     strMessage = "남서울대학교 열람실 좌석현황(성암기념중앙도서관)\n\n" + first + second + third
     

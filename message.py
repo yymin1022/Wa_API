@@ -984,6 +984,7 @@ def messageLogisticsParser_LT(message):
         for _ in range(len(infom)): 
             infom[_] = infom[_].replace('\t', '').replace('\r', '').replace(' ', '').replace(u'\xa0', '')
         infom = [v for v in infom if v]
+        infom[6] = infom[6][:10] + ' ' + infom[6][10:]
         strMessage = "/// 롯데택배 배송조회 ///\n\n단계: %s\n시간: %s\n현위치: %s\n처리현황: %s" % (infom[5], infom[6], infom[7], infom[8])
     except:
         strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 롯데택배123456789 or !택배 롯데123456789"

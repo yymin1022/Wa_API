@@ -1078,12 +1078,12 @@ def messageNSUMeal():
         if day == 0:
             pass
         elif day > 0 and day <= 4:
-            day += 1
+            day += 2
         else:
             raise
         
         strUrl = "https://nsu.ac.kr/api/user/board/getBoardContentSummaryList"
-        bokji_data = "boardIdList=466&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4"
+        bokji_data = "boardIdList=467&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4"
         cafe_data = "boardIdList=468&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4"
 
         bokji_response = requests.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data=bokji_data).json()

@@ -96,11 +96,11 @@ def getReplyMessage(message, room, sender):
             strResult = messageCAULibrary("")
     elif "학식" in message:
         if "아침" in message or "조식" in message:
-            strResult = messageCAUMeal("10")
+            strResult = messageCAUMeal("10", "내일" in message)
         elif "점심" in message or "중식" in message:
-            strResult = messageCAUMeal("20")
+            strResult = messageCAUMeal("20", "내일" in message)
         elif "저녁" in message or "석식" in message:
-            strResult = messageCAUMeal("40")
+            strResult = messageCAUMeal("40", "내일" in message)
         elif "대림대" in message:
             strResult = messageDaelimMeal()
         elif "안양대" in message:
@@ -396,11 +396,11 @@ def messageCAULibrary(libTypeID):
 
     return strMessage
 
-def messageCAUMeal(mealTypeID):
+def messageCAUMeal(mealTypeID, isTomorrow):
     strMessage = mealTypeID
 
     mealData = {
-        "daily": 0,
+        "daily": (1 if isTomorrow else 0),
         "tabs": "1",
         "tabs2": mealTypeID
     }

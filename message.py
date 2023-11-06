@@ -71,6 +71,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageCustomTracker(message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
+    elif "!시간" in message:
+        strResult = messageFt_timezone(message)
     elif "아.." in message:
         strResult = messageAh()
     elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
@@ -1345,6 +1347,23 @@ def messageSGW():
     elif randInt == 3:
         strMessage = "이미 차단당한 유저입니다."
     
+    return strMessage
+
+def messageFt_timezone(message):
+    strMessage = ""
+    try:
+        message = message.replace("!시간 ", "").replace(" ", "")
+        if message.startswith('+') or message.startswith('-'):
+            if int(message) > 12 or int(message) < -11:
+                raise
+            offset = datetime.timedelta(hours=int(message))
+        else:
+            hours, minutes = map(int, message.split(':'))
+            offset = datetime.timedelta(hours=hours, minutes=minutes)
+        adjusted_time = datetime.datetime.now(datetime.timezone.utc) + offset
+        strMessage = f"현재 UTC{message}의 시간은 ", adjusted_time.strftime('%Y-%m-%d %H:%M:%S') , "입니다."
+    except:
+        strMessage = "사용 형식이 잘못됐거나 존재하지 않는 시간대입니다.\\m사용법: !시간 +9 or !시간 -11"
     return strMessage
 
 def messageUh():

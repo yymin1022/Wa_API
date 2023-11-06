@@ -72,7 +72,7 @@ def getReplyMessage(message, room, sender):
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "!시간" in message:
-        strResult = messageFt_timezone(message)
+        strResult = messageTimezone(message)
     elif "아.." in message:
         strResult = messageAh()
     elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
@@ -1349,7 +1349,7 @@ def messageSGW():
     
     return strMessage
 
-def messageFt_timezone(message):
+def messageTimezone(message):
     strMessage = ""
     try:
         message = message.replace("!시간 ", "").replace(" ", "")

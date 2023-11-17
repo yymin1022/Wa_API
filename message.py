@@ -1408,6 +1408,14 @@ def messageWa():
 
     return strMessage
 
+def messageWabotoff():
+    strMessage = ""
+    return strMessage
+
+def messageWaboton():
+    strMessage = ""
+    return strMessage
+
 def messageWaSans():
     strMessage = "샌즈!\\m아시는구나!\\m이거 겁.나.어.렵.습.니.다."
 

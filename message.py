@@ -208,7 +208,7 @@ def getReplyMessage(message, room, sender):
     elif "와봇" in message:
         if "끄" in message or "끄" in message:
             strResult = messageWabotPower(0, room)
-        elif "켜" in message:
+        elif "켜" in message or "키" in message:
             strResult = messageWabotPower(1, room)
     return strResult
 

@@ -205,11 +205,11 @@ def getReplyMessage(message, room, sender):
         strResult = messageRemreturn(room)
     elif "뭐더라" in message:
         strResult = messageMemreturn(sender)
-    elif "와봇 끄" in message:
-        strResult = messageWabotoff()
-    elif "와봇 켜" in message:
-        strResult = messageWaboton()
-
+    elif "와봇" in message:
+        if "끄" in message:
+            strResult = messageWabotPower(0, room)
+        elif "켜" in message:
+            strResult = messageWabotPower(1, room)
     return strResult
 
 def getCryCount(message):
@@ -1408,14 +1408,34 @@ def messageWa():
 
     return strMessage
 
-def messageWabotoff():
+def messageWabotPower(flag, room):
     strMessage = ""
+    if os.path.isfile("power.json"):
+        with open('power.json', 'r', encoding='utf-8') as f:
+            power_dict = json.load(f)
+        if flag == 0 and power_dict[room] == "0":
+            return strMessage
+        elif flag == 1 and power_dict[room] == "1":
+            return strMessage
+    else:
+        power_dict = {}
     randInt = random.randrange(0, 4)
-    return strMessage
+    if randInt == 0:
+        if flag == 0:
+            power_dict[room] = "0"
+            json_data = json.dumps(power_dict, ensure_ascii=False, indent=4)
+            strMessage = "와봇이 종료되었습니다."
+        elif flag == 1:
+            power_dict[room] = "1"
+            json_data = json.dumps(power_dict, ensure_ascii=False, indent=4)
+            strMessage = "와봇이 시작되었습니다."
+    elif randInt == 1:
+        strMessage = "싫은데? ^^"
+    elif randInt == 2:
+        strMessage = "네~"
+    elif randInt == 3:
+        strMessage = "ㅋㅋ"
 
-def messageWaboton():
-    strMessage = ""
-    randInt = random.randrange(0, 4)
     return strMessage
 
 def messageWaSans():

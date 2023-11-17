@@ -1429,6 +1429,8 @@ def messageWabotPower(flag, room):
             power_dict[room] = "1"
             json_data = json.dumps(power_dict, ensure_ascii=False, indent=4)
             strMessage = "와봇이 시작되었습니다."
+        with open('power.json', 'w', encoding='utf-8') as f:
+            f.write(json_data)
     elif randInt == 1:
         strMessage = "싫은데? ^^"
     elif randInt == 2:

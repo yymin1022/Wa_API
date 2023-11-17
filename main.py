@@ -3,6 +3,8 @@ from flask_cors import CORS
 from waitress import serve
 
 import message
+import os
+import json
 
 flaskApp = Flask(__name__)
 CORS(flaskApp, resources={r"*": {"origins": "*"}})
@@ -35,7 +37,19 @@ def getMessage():
 
         return jsonify(replyData)
 
-    replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
+    if os.path.isfile("power.json"):
+        with open('power.json', 'r', encoding='utf-8') as f:
+            power_dict = json.load(f)
+            if power_dict[inputRoom] == "0":
+                if "와봇" in inputMessage:
+                    replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
+                else:
+                    replyMessage = ""
+            else:
+                replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
+    else:
+        replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
+
     replyRoom = inputRoom
     replySender = inputSender
 

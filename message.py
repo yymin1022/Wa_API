@@ -205,6 +205,10 @@ def getReplyMessage(message, room, sender):
         strResult = messageRemreturn(room)
     elif "뭐더라" in message:
         strResult = messageMemreturn(sender)
+    elif "와봇 끄" in message:
+        strResult = messageWabotoff()
+    elif "와봇 켜" in message:
+        strResult = messageWaboton()
 
     return strResult
 

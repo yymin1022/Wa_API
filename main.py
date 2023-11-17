@@ -49,6 +49,7 @@ def getMessage():
                 replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
     else:
         replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
+
     replyRoom = inputRoom
     replySender = inputSender
 

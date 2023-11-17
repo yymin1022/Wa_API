@@ -1410,10 +1410,12 @@ def messageWa():
 
 def messageWabotoff():
     strMessage = ""
+    randInt = random.randrange(0, 4)
     return strMessage
 
 def messageWaboton():
     strMessage = ""
+    randInt = random.randrange(0, 4)
     return strMessage
 
 def messageWaSans():

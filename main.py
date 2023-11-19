@@ -40,7 +40,9 @@ def getMessage():
     if os.path.isfile("power.json"):
         with open('power.json', 'r', encoding='utf-8') as f:
             power_dict = json.load(f)
-            if power_dict[inputRoom] == "0":
+            if power_dict.get(inputRoom) == None:
+                replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
+            elif power_dict[inputRoom] == "0":
                 if "와봇" in inputMessage:
                     replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
                 else:

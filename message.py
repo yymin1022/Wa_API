@@ -1413,10 +1413,13 @@ def messageWabotPower(flag, room):
     if os.path.isfile("power.json"):
         with open('power.json', 'r', encoding='utf-8') as f:
             power_dict = json.load(f)
-        if flag == 0 and power_dict[room] == "0":
-            return strMessage
-        elif flag == 1 and power_dict[room] == "1":
-            return strMessage
+        room_power = power_dict.get(room)
+        if room_power is not None:
+            if (flag == 0 and room_power == "0") or (flag == 1 and room_power == "1"):
+                return strMessage
+        else:
+            if flag == 1: return strMessage
+            else: pass
     else:
         power_dict = {}
     randInt = random.randrange(0, 4)

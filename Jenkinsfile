@@ -18,13 +18,15 @@ pipeline {
     }
 
     stages {
-        stage("Set Variable") {
+        stage("Setup Build Environment") {
             steps {
                 script {
                     DOCKERHUB_CREDENTIAL = "dockerhub-yymin1022"
                     DOCKER_IMAGE_NAME = "wa-api"
                     DOCKER_IMAGE_STORAGE = "yymin1022"
                     DOCKER_IMAGE_TAG = "release12"
+
+                    sh "curl --location --request POST 'https://api.telegram.org/bot${TELEGRAM_BOT_ID}/sendMessage' --form text='${TEXT_PRE_BUILD}' --form chat_id='${TELEGRAM_CHAT_ID}'"
                 }
             }
         }

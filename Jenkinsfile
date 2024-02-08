@@ -50,4 +50,17 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            script{
+                sh "curl --location --request POST 'https://api.telegram.org/bot${TELEGRAM_BOT_ID}/sendMessage' --form text='${TEXT_SUCCESS_BUILD}' --form chat_id='${TELEGRAM_CHAT_ID}'"
+            }
+        }
+        failure {
+            script{
+                sh "curl --location --request POST 'https://api.telegram.org/bot${TELEGRAM_BOT_ID}/sendMessage' --form text='${TEXT_FAILURE_BUILD}' --form chat_id='${TELEGRAM_CHAT_ID}'"
+            }
+        }
+    }
 }

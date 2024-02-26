@@ -138,6 +138,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageLaugh()
     elif "민식" in message:
         strResult = messageMinsik()
+    elif "민석" in message:
+        strResult = messageMinseok()
     elif "과제" in message or "집가고싶다" in message:
         strResult = messageMinsikBooreop()
     elif "ㅡㅡ" in message:
@@ -1034,10 +1036,16 @@ def messageMemreturn(sender):
 
     return strMessage
 
+def messageMinseok():
+    strMessage = "와봇은 민석이가 지배했다!"
+
+    return strMessage
+
 def messageMinsik():
     strMessage = "민식아 그래서 학교는 언제와?"
 
     return strMessage
+
 
 def messageMinsikBooreop():
     strMessage = "2023-1학기 복학한 민식아 이제 안부럽다"

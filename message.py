@@ -1230,16 +1230,16 @@ def messageSaseyo():
 def messageSeungbeomGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-    y, m, d = 2024, 2, 15
+    y, m, d = 2031, 2, 28
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
     if randInt == 0:
         strMessage = "승범아 대학원 가야지?"
     elif randInt == 1:
-        strMessage = "승범이가 졸업하기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+        strMessage = "승범이가 박사과정을 마치기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
-        strMessage = "승범이가 졸업하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+        strMessage = "승범이가 박사과정을 마치기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     
     return strMessage
 

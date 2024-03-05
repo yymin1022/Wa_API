@@ -738,6 +738,10 @@ def messageHansuGraduate():
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
+    if leftdays == 0:
+        strMessage = "이한수씨의 소집 해제를 축하합니다!!"
+        return strMessage
+
     if randInt == 0:
         strMessage = "ㅋㅋ"
     elif randInt == 1:
@@ -787,6 +791,10 @@ def messageJaeminGraduate():
     y, m, d = 2024, 3, 9
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
+
+    if leftdays == 0:
+        strMessage = "재민이의 소집해제를 축하합니다!\\m...\\m재민아 군대가야지?"
+        return strMessage
 
     if randInt == 0:
         strMessage = "404 Not Found"

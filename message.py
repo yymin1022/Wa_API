@@ -177,6 +177,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageBHGraduate()
         elif "창환" in message:
             strResult = messageChalsGraduate() 
+        elif "태식" in message:
+            strResult = messageTjoGraduate()
     elif "서건1우" in message:
         strResult = messageSGW()
     elif "슈슉" in message:
@@ -1361,6 +1363,11 @@ def messageTimezone(message):
         strMessage = f"현재 UTC{message}의 시간은 ", adjusted_time.strftime('%Y-%m-%d %H:%M:%S') , "입니다."
     except:
         strMessage = "사용 형식이 잘못됐거나 존재하지 않는 시간대입니다.\\m사용법: !시간 +9 or !시간 -11"
+    return strMessage
+
+def messageTjoGraduate():
+    strMessage = "zz"
+
     return strMessage
 
 def messageUh():

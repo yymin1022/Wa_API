@@ -1273,26 +1273,11 @@ def messageSupilGraduate():
     return strMessage    
 
 def messageSeongminGraduate():
-    randInt = random.randrange(0, 6)
     strMessage = ""
-    
-    y, m, d = 2024, 2, 22
-    messageDateCalculator(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
-    if randInt == 0:
-        strMessage = "24년은 오지 않습니다..."
-    elif randInt == 1:
-        strMessage = "그런거 물어볼 시간에 일이나 하세요."
-    elif randInt == 2:
-        strMessage = "지성민씨의 소집해제일은 29년 12월 32일입니다."
-    elif randInt == 3:
-        strMessage = "지성민씨의 소집해제일까지 %d일이 남았습니다."%(leftdays)
-    elif randInt == 4:
-        strMessage = "지성민씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
-    elif randInt == 5:
-        strMessage = "지성민씨가 민간인이 될 때까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
-    
+    randInt = random.randrange(0,2)
+    if randInt == 0: strMessage = "지성민씨가 소집된지 %d일, 소해된지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,6,30)).days, (datetime.date.today() - datetime.date(2024,2,22)).days)
+    elif randInt == 1: strMessage = "지성민씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2031,12,31) - datetime.date.today()).days)
     return strMessage
 
 def messageShuk():

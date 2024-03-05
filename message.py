@@ -862,7 +862,7 @@ def messageLogisticsParser_CJ(message):
                 infom[_] = infom[_].replace('인수자 : ', '')
         strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (infom[1], infom[2], infom[3], infom[4], infom[5])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 대한통운123456789 or !택배 CJ123456789"
+        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배 대한통운123456789 or !택배 CJ123456789"
     
     return strMessage
 
@@ -897,7 +897,7 @@ def messageLogisticsParser_HJ(message):
                 infom[7] = "(정보 없음)"
         strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (infom[1], infom[2], infom[3], infom[5], infom[7])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 한진택배123456789 or !택배 한진123456789"
+        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배 한진택배123456789 or !택배 한진123456789"
     
     return strMessage
 
@@ -932,7 +932,7 @@ def messageLogisticsParser_KP(message):
         if infom[5] == '            ': infom[5] = '배달준비'
         strMessage = "/// 우체국택배 배송조회 ///\n\n날짜: %s\n시간: %s\n발생국: %s\n처리현황: %s" % (infom[1], infom[2], infom[3], infom[5])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 우체국택배123456789 or !택배 우체국123456789"
+        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배 우체국택배123456789 or !택배 우체국123456789"
     
     return strMessage
 
@@ -972,7 +972,7 @@ def messageLogisticsParser_LG(message):
             temp = '\n배달 예정 시간: ' + infom[5]
         strMessage = "/// 로젠택배 배송조회 ///\n\n날짜: %s\n사업장: %s\n배송상태: %s\n배송내용: %s" % (infom[0], infom[1], infom[2], infom[3]) + temp
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 로젠택배123456789 or !택배 로젠123456789"
+        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배 로젠택배123456789 or !택배 로젠123456789"
     
     return strMessage
 
@@ -1003,7 +1003,7 @@ def messageLogisticsParser_LT(message):
         infom[6] = infom[6][:10] + ' ' + infom[6][10:]
         strMessage = "/// 롯데택배 배송조회 ///\n\n단계: %s\n시간: %s\n현위치: %s\n처리현황: %s" % (infom[5], infom[6], infom[7], infom[8])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 롯데택배123456789 or !택배 롯데123456789"
+        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배 롯데택배123456789 or !택배 롯데123456789"
     
     return strMessage
 

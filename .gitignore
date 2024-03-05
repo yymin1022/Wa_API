@@ -1,7 +1,6 @@
 API_TOKEN
 .idea/
 __pycache__/
-apitest.py
 data.json
 rem.json
 mem.json

@@ -179,6 +179,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageBHGraduate()
         elif "창환" in message:
             strResult = messageChalsGraduate() 
+        elif "태식" in message:
+            strResult = messageTjoGraduate()
     elif "서건1우" in message:
         strResult = messageSGW()
     elif "슈슉" in message:
@@ -727,7 +729,7 @@ def messageHokyuGraduate():
     elif randInt == 3:
         strMessage = "호규의 민방위 소집해제일까지 %d일 남았습니다."%((datetime.date(2041,4,28) - datetime.date.today()).days -1)
     elif randInt == 4:
-        strMessage = "예비군 0년차는 좀..."
+        strMessage = "예비군 1년차는 좀..."
     elif randInt == 5:
         strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%((datetime.date(2027,8,26) - datetime.date.today()).days -1)
 
@@ -739,6 +741,10 @@ def messageHansuGraduate():
     y, m, d = 2024, 8, 31
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
+
+    if leftdays == 0:
+        strMessage = "이한수씨의 소집 해제를 축하합니다!!"
+        return strMessage
 
     if randInt == 0:
         strMessage = "ㅋㅋ"
@@ -786,9 +792,13 @@ def messageIreon():
 def messageJaeminGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-    y, m, d = 2024, 3, 9
+    y, m, d = 2024, 3, 8
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
+
+    if leftdays == 0:
+        strMessage = "재민이의 소집해제를 축하합니다!\\m...\\m재민아 군대가야지?"
+        return strMessage
 
     if randInt == 0:
         strMessage = "404 Not Found"
@@ -854,7 +864,7 @@ def messageLogisticsParser_CJ(message):
                 infom[_] = infom[_].replace('인수자 : ', '')
         strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (infom[1], infom[2], infom[3], infom[4], infom[5])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 대한통운123456789 or !택배 CJ123456789"
+        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배 대한통운123456789 or !택배 CJ123456789"
     
     return strMessage
 
@@ -889,7 +899,7 @@ def messageLogisticsParser_HJ(message):
                 infom[7] = "(정보 없음)"
         strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (infom[1], infom[2], infom[3], infom[5], infom[7])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 한진택배123456789 or !택배 한진123456789"
+        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배 한진택배123456789 or !택배 한진123456789"
     
     return strMessage
 
@@ -924,7 +934,7 @@ def messageLogisticsParser_KP(message):
         if infom[5] == '            ': infom[5] = '배달준비'
         strMessage = "/// 우체국택배 배송조회 ///\n\n날짜: %s\n시간: %s\n발생국: %s\n처리현황: %s" % (infom[1], infom[2], infom[3], infom[5])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 우체국택배123456789 or !택배 우체국123456789"
+        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배 우체국택배123456789 or !택배 우체국123456789"
     
     return strMessage
 
@@ -964,7 +974,7 @@ def messageLogisticsParser_LG(message):
             temp = '\n배달 예정 시간: ' + infom[5]
         strMessage = "/// 로젠택배 배송조회 ///\n\n날짜: %s\n사업장: %s\n배송상태: %s\n배송내용: %s" % (infom[0], infom[1], infom[2], infom[3]) + temp
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 로젠택배123456789 or !택배 로젠123456789"
+        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배 로젠택배123456789 or !택배 로젠123456789"
     
     return strMessage
 
@@ -995,7 +1005,7 @@ def messageLogisticsParser_LT(message):
         infom[6] = infom[6][:10] + ' ' + infom[6][10:]
         strMessage = "/// 롯데택배 배송조회 ///\n\n단계: %s\n시간: %s\n현위치: %s\n처리현황: %s" % (infom[5], infom[6], infom[7], infom[8])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 롯데택배123456789 or !택배 롯데123456789"
+        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배 롯데택배123456789 or !택배 롯데123456789"
     
     return strMessage
 
@@ -1238,16 +1248,16 @@ def messageSaseyo():
 def messageSeungbeomGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-    y, m, d = 2024, 2, 15
+    y, m, d = 2031, 2, 28
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
     if randInt == 0:
         strMessage = "승범아 대학원 가야지?"
     elif randInt == 1:
-        strMessage = "승범이가 졸업하기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+        strMessage = "승범이가 박사과정을 마치기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
-        strMessage = "승범이가 졸업하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+        strMessage = "승범이가 박사과정을 마치기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     
     return strMessage
 
@@ -1273,26 +1283,11 @@ def messageSupilGraduate():
     return strMessage    
 
 def messageSeongminGraduate():
-    randInt = random.randrange(0, 6)
     strMessage = ""
-    
-    y, m, d = 2024, 2, 22
-    messageDateCalculator(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
-    if randInt == 0:
-        strMessage = "24년은 오지 않습니다..."
-    elif randInt == 1:
-        strMessage = "그런거 물어볼 시간에 일이나 하세요."
-    elif randInt == 2:
-        strMessage = "지성민씨의 소집해제일은 29년 12월 32일입니다."
-    elif randInt == 3:
-        strMessage = "지성민씨의 소집해제일까지 %d일이 남았습니다."%(leftdays)
-    elif randInt == 4:
-        strMessage = "지성민씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
-    elif randInt == 5:
-        strMessage = "지성민씨가 민간인이 될 때까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
-    
+    randInt = random.randrange(0,2)
+    if randInt == 0: strMessage = "지성민씨가 소집된지 %d일, 소해된지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2022,5,22)).days, (datetime.date.today() - datetime.date(2024,2,22)).days)
+    elif randInt == 1: strMessage = "지성민씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2031,12,31) - datetime.date.today()).days)
     return strMessage
 
 def messageShuk():
@@ -1376,6 +1371,11 @@ def messageTimezone(message):
         strMessage = f"현재 UTC{message}의 시간은 ", adjusted_time.strftime('%Y-%m-%d %H:%M:%S') , "입니다."
     except:
         strMessage = "사용 형식이 잘못됐거나 존재하지 않는 시간대입니다.\\m사용법: !시간 +9 or !시간 -11"
+    return strMessage
+
+def messageTjoGraduate():
+    strMessage = "zz"
+
     return strMessage
 
 def messageUh():

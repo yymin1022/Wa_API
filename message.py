@@ -119,6 +119,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageDDay(message)
     elif "뭐먹" in message or "머먹" in message:
         strResult = messageEat()
+    elif "잼민아" in message:
+        strResult = messageGemini(message)
     elif ("제발" in message or "하고 싶다" in message) and "졸업" in message:
         strResult = messageGraduate()
     elif "하.." in message:
@@ -638,6 +640,10 @@ def messageEat():
     elif randInt == 33:
         strMessage = "쌈밥!!"
     return strMessage
+
+def messageGemini(str):
+    str = str.replace("잼민아", "").strip()
+    return(str)
 
 def messageGgobugi():
     randInt = random.randrange(0, 3)

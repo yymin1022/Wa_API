@@ -6,3 +6,4 @@ xmltodict
 waitress
 lxml
 google-generativeai
+python-dotenv

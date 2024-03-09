@@ -1,13 +1,11 @@
 from flask import Flask, jsonify, redirect, request
 from flask_cors import CORS
 from waitress import serve
-from dotenv import load_dotenv
 
 import message
 import os
 import json
 
-load_dotenv()
 flaskApp = Flask(__name__)
 CORS(flaskApp, resources={r"*": {"origins": "*"}})
  

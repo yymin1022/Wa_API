@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.ssl_ import create_urllib3_context
+from dotenv import load_dotenv
 
 import datetime
 import json
@@ -17,6 +18,9 @@ CIPHERS = (
     '!eNULL:!MD5'
     ':HIGH:!DH:!aNULL'
 )
+
+load_dotenv()
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
 
 class DESAdapter(HTTPAdapter):
     def init_poolmanager(self, *args, **kwargs):
@@ -643,7 +647,7 @@ def messageEat():
 
 def messageGemini(str):
     str = str.replace("잼민아", "").strip()
-    return(str)
+    return(str + GEMINI_API_KEY)
 
 def messageGgobugi():
     randInt = random.randrange(0, 3)

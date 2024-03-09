@@ -12,6 +12,8 @@ import time
 import xmltodict
 import base64
 
+import google.generativeai as genai
+
 CIPHERS = (
     'ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+HIGH:'
     'DH+HIGH:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+HIGH:RSA+3DES:!aNULL:'
@@ -21,6 +23,8 @@ CIPHERS = (
 
 load_dotenv()
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel('gemini-1.0-pro-latest')
 
 class DESAdapter(HTTPAdapter):
     def init_poolmanager(self, *args, **kwargs):
@@ -647,7 +651,8 @@ def messageEat():
 
 def messageGemini(str):
     str = str.replace("잼민아", "").strip()
-    return(str + GEMINI_API_KEY)
+    response = model.generate_content(str)
+    return(response.text)
 
 def messageGgobugi():
     randInt = random.randrange(0, 3)

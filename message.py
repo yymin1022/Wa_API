@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.ssl_ import create_urllib3_context
+from dotenv import load_dotenv
 
 import datetime
 import json
@@ -11,11 +12,53 @@ import time
 import xmltodict
 import base64
 
+import google.generativeai as genai
+
 CIPHERS = (
     'ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+HIGH:'
     'DH+HIGH:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+HIGH:RSA+3DES:!aNULL:'
     '!eNULL:!MD5'
     ':HIGH:!DH:!aNULL'
+)
+
+load_dotenv()
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+GEMINI_GENERATION_CONFIG = {
+  "candidate_count": 1,
+  "max_output_tokens": 256,
+  "temperature": 1.0,
+  "top_p": 0.7,
+}
+GEMINI_SAFETY_CONFIG=[
+  {
+    "category": "HARM_CATEGORY_DANGEROUS",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_HARASSMENT",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_HATE_SPEECH",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+    "threshold": "BLOCK_NONE",
+  },
+]
+
+genai.configure(
+    api_key=GEMINI_API_KEY
+)
+model = genai.GenerativeModel(
+    model_name='gemini-1.0-pro-latest',
+    generation_config=GEMINI_GENERATION_CONFIG,
+    safety_settings=GEMINI_SAFETY_CONFIG
 )
 
 class DESAdapter(HTTPAdapter):
@@ -73,6 +116,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageSora(message)
     elif "!시간" in message:
         strResult = messageTimezone(message)
+    elif "잼민아" in message:
+        strResult = messageGemini(message)
     elif "아.." in message:
         strResult = messageAh()
     elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
@@ -638,6 +683,11 @@ def messageEat():
     elif randInt == 33:
         strMessage = "쌈밥!!"
     return strMessage
+
+def messageGemini(str):
+    str = str.replace("잼민아", "").strip()
+    response = model.generate_content(f"지금부터 대한민국의 초등학생의 말투로 대답해줘. 맞춤법도 조금 틀려서 해주면 좋을 것 같아. 조금 바보같은 말투로 대답하면 돼. {str}")
+    return(response.text)
 
 def messageGgobugi():
     randInt = random.randrange(0, 3)

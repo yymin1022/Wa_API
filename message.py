@@ -23,8 +23,43 @@ CIPHERS = (
 
 load_dotenv()
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-1.0-pro-latest')
+GEMINI_GENERATION_CONFIG = {
+  "candidate_count": 1,
+  "max_output_tokens": 256,
+  "temperature": 1.0,
+  "top_p": 0.7,
+}
+GEMINI_SAFETY_CONFIG=[
+  {
+    "category": "HARM_CATEGORY_DANGEROUS",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_HARASSMENT",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_HATE_SPEECH",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+    "threshold": "BLOCK_NONE",
+  },
+]
+
+genai.configure(
+    api_key=GEMINI_API_KEY
+)
+model = genai.GenerativeModel(
+    model_name='gemini-1.0-pro-latest',
+    generation_config=GEMINI_GENERATION_CONFIG,
+    safety_settings=GEMINI_SAFETY_CONFIG
+)
 
 class DESAdapter(HTTPAdapter):
     def init_poolmanager(self, *args, **kwargs):
@@ -81,6 +116,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageSora(message)
     elif "!시간" in message:
         strResult = messageTimezone(message)
+    elif "잼민아" in message:
+        strResult = messageGemini(message)
     elif "아.." in message:
         strResult = messageAh()
     elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
@@ -127,8 +164,6 @@ def getReplyMessage(message, room, sender):
         strResult = messageDDay(message)
     elif "뭐먹" in message or "머먹" in message:
         strResult = messageEat()
-    elif "잼민아" in message:
-        strResult = messageGemini(message)
     elif ("제발" in message or "하고 싶다" in message) and "졸업" in message:
         strResult = messageGraduate()
     elif "하.." in message:
@@ -651,7 +686,7 @@ def messageEat():
 
 def messageGemini(str):
     str = str.replace("잼민아", "").strip()
-    response = model.generate_content(str)
+    response = model.generate_content(f"지금부터 대한민국의 초등학생의 말투로 대답해줘. 맞춤법도 조금 틀려서 해주면 좋을 것 같아. 조금 바보같은 말투로 대답하면 돼. {str}")
     return(response.text)
 
 def messageGgobugi():

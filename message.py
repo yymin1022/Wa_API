@@ -611,78 +611,21 @@ def messageDDay(message):
     return strMessage
 
 def messageEat():
-    randInt = random.randrange(0, 33)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "돼지"
-    elif randInt == 1:
-        strMessage = "또 먹어?"
-    elif randInt == 2:
-        strMessage = "살쪄"
-    elif randInt == 3:
-        strMessage = "그만 먹어;;"
-    elif randInt == 4:
-        strMessage = "된장찌개!!"
-    elif randInt == 5:
-        strMessage = "부리또!!"
-    elif randInt == 6:
-        strMessage = "김볶밥!!"
-    elif randInt == 7:
-        strMessage = "김치찌개!!"
-    elif randInt == 8:
-        strMessage = "햄버거!!"
-    elif randInt == 9:
-        strMessage = "부찌!!"
-    elif randInt == 10:
-        strMessage = "불고기!!"
-    elif randInt == 11:
-        strMessage = "삼겹살!!"
-    elif randInt == 12:
-        strMessage = "돼지갈비!!"
-    elif randInt == 13:
-        strMessage = "황금볶음밥!!"
-    elif randInt == 14:
-        strMessage = "미역국!!"
-    elif randInt == 15:
-        strMessage = "닭갈비!!"
-    elif randInt == 16:
-        strMessage = "떡볶이!!"
-    elif randInt == 17:
-        strMessage = "순두부찌개!!"
-    elif randInt == 18:
-        strMessage = "돈까스!!"
-    elif randInt == 19:
-        strMessage = "곱창!!"
-    elif randInt == 20:
-        strMessage = "콩나물국!!"
-    elif randInt == 21:
-        strMessage = "짜장면!!"
-    elif randInt == 22:
-        strMessage = "감자전!!"
-    elif randInt == 23:
-        strMessage = "짬뽕!!"
-    elif randInt == 24:
-        strMessage = "해물탕!!"
-    elif randInt == 25:
-        strMessage = "감자탕!!"
-    elif randInt == 26:
-        strMessage = "치킨!!"
-    elif randInt == 27:
-        strMessage = "라면!!"
-    elif randInt == 28:
-        strMessage = "샌드위치!!"
-    elif randInt == 29:
-        strMessage = "피자!!"
-    elif randInt == 30:
-        strMessage = "파스타!!"
-    elif randInt == 31:
-        strMessage = "햄버거!!"
-    elif randInt == 32:
-        strMessage = "샐러드!!"
-    elif randInt == 33:
-        strMessage = "쌈밥!!"
-    return strMessage
+    messages = [
+        "돼지", "또 먹어?", "살쪄", "그만 먹어;;", "된장찌개!!", "부리또!!", "김볶밥!!",
+        "김치찌개!!", "햄버거!!", "부찌!!", "불고기!!", "삼겹살!!", "돼지갈비!!", "황금볶음밥!!",
+        "미역국!!", "닭갈비!!", "떡볶이!!", "순두부찌개!!", "돈까스!!", "곱창!!", "콩나물국!!",
+        "짜장면!!", "감자전!!", "짬뽕!!", "해물탕!!", "감자탕!!", "치킨!!", "라면!!",
+        "샌드위치!!", "피자!!", "파스타!!", "햄버거!!", "샐러드!!", "쌈밥!!",
+        "고무장갑 구이!!", "화분 케이크!!", "민트 초코맛 라면!!", "콜라에 밥 말아먹기!!", 
+        "플라스틱 튀김!!", "LED 광케이블 라조냐!!", "아이폰 스파게티!!",
+        "바질리카 소스를 곁들인 크림리 소프트 쉘 크랩 파스타!!", 
+        "천천히 구운 로즈메리 향이 나는 양갈비와 민트 소스!!",
+        "풍미 가득 허브와 치즈가 어우러진 랙 오브 램!!",
+        "더블 초콜릿 퍼지 브라우니와 바닐라 아이스크림!!",
+        "바다의 맛이 느껴지는 신선한 랍스터 테르미도르!!"
+    ]
+    return random.choice(messages)
 
 def messageGemini(str):
     str = str.replace("잼민아", "").strip()

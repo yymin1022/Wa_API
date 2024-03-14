@@ -286,40 +286,12 @@ def getStressCount(message):
     return count
 
 def messageAh():
-    randInt = random.randrange(0, 6)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "글쿤.."
-    elif randInt == 1:
-        strMessage = "그래요.."
-    elif randInt == 2:
-        strMessage = "그렇군요.."
-    elif randInt == 3:
-        strMessage = "안돼.."
-    elif randInt == 4:
-        strMessage = "..메리카노"
-    elif randInt == 5:
-        strMessage = "..에이오우"
-    
-    return strMessage
+    messages = ["글쿤..", "그래요..", "그렇군요..", "안돼..", "..메리카노", "..에이오우", "..아르키메데스의 원리"]
+    return random.choice(messages)
 
 def messageAhnsa():
-    randInt = random.randrange(0, 5)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "이걸 안 사?"
-    elif randInt == 1:
-        strMessage = "왜요;;"
-    elif randInt == 2:
-        strMessage = "그거 사면 진짜 좋을텐데.."
-    elif randInt == 3:
-        strMessage = "아.."
-    elif randInt == 4:
-        strMessage = "헐.."
-
-    return strMessage
+    messages = ["이걸 안 사?", "왜요;;", "그거 사면 진짜 좋을텐데..", "아..", "헐..", "너한테 안 팔아;;"]
+    return random.choice(messages)
 
 def messageAnyangMeal():
     todayDate = datetime.date.today()
@@ -346,17 +318,8 @@ def messageAnyangMeal():
     return strMessage
 
 def messageBaby():
-    randInt = random.randrange(0, 3)
-    strMessage = ""
-    
-    if randInt == 0:
-        strMessage = "귀여운척 하지 마세요;;"
-    elif randInt == 1:
-        strMessage = "응애 나 애기"
-    elif randInt == 2:
-        strMessage = "응애 나 코린이"
-
-    return strMessage
+    messages = ["귀여운척 하지 마세요;;", "응애 나 애기", "응애 나 아기 코린이"]
+    return random.choice(messages)
 
 def messageBoolpyeon():
     strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불편하니깐 그런거아냐!!"
@@ -364,27 +327,10 @@ def messageBoolpyeon():
     return strMessage
 
 def messageBuy():
-    randInt = random.randrange(0, 8)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "축하합니다!!!"
-    elif randInt == 1:
-        strMessage = "그걸 샀네;;"
-    elif randInt == 2:
-        strMessage = "개부자;;"
-    elif randInt == 3:
-        strMessage = "와 샀네"
-    elif randInt == 4:
-        strMessage = "이걸 산다고?"
-    elif randInt == 5:
-        strMessage = "ㅋㅋ"
-    elif randInt == 6:
-        strMessage = "왜요"
-    elif randInt == 7:
-        strMessage = "그거 살 돈이면 차라리..\\m........."
-
-    return strMessage
+    messages = ["축하합니다!!!", "그걸 샀네;;", "개부자;;", "와 샀네", 
+                "이걸 산다고?", "ㅋㅋ", "왜요", "그거 살 돈이면 차라리..\\m.........",
+                "ㅋㅋ 그걸 누가 삼"]
+    return random.choice(messages)
 
 def messageBHGraduate():
     strMessage = ""
@@ -520,20 +466,12 @@ def messageChalsGraduate():
     return strMessage
 
 def messageCoding():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "구라ㅡㅡ;;"
-    elif randInt == 1:
-        strMessage = "ㅋ"
-
-    return strMessage
+    messages = ["구라ㅡㅡ;;", "ㅋ", "밤새도 못 할 듯?ㅋㅋ"]
+    return random.choice(messages)
 
 def messageCry():
-    strMessage = "뭘 울어요;;"
-
-    return strMessage
+    messages = ["뭘 울어요;;", "왜 우시는 거예요?", "ㅋㅋ얘 운다"]
+    return random.choice(messages)
 
 def messageCustomTracker(message):
     strMessage = ""
@@ -655,59 +593,41 @@ def messageGgobugi():
     return strMessage
 
 def messageGraduate():
-    randInt = random.randrange(0, 4)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "대학원 가셔야죠 ㅋㅋ"
-    elif randInt == 1:
-        strMessage = "졸업은 무슨"
-    elif randInt == 2:
-        strMessage = "노예 하셔야죠 ㅋㅋ"
-    elif randInt == 3:
-        strMessage = "어림도 없지 ㅋㅋ"
-
-    return strMessage
+    messages = [
+        "대학원 가셔야죠 ㅋㅋ",
+        "졸업은 무슨",
+        "노예 하셔야죠 ㅋㅋ",
+        "어림도 없지 ㅋㅋ",
+        "졸업은 무슨 ㅋㅋ",
+        "박사도 해야죠 ㅋㅋ",
+    ]
+    return random.choice(messages)
 
 def messageHa():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
+    messages = [
+        "코딩하기 싫다..",
+        "과제하기 싫다..",
+        "걍 놀고 싶다..",
+        "걍 자고 싶다..",
+        "걍 쉬고 싶다..",
+    ]
+    return random.choice(messages)
 
-    if randInt == 0:
-        strMessage = "코딩하기 싫다.."
-    elif randInt == 1:
-        strMessage = "과제하기 싫다.."
-
-    return strMessage
-    
 def messageHokyu():
-    strMessage = ""
-    
-    randInt = random.randrange(0, 11)
-    if randInt == 0:
-        strMessage = "필승! 전문-38기 하사 김호규입니다!"
-    elif randInt == 1:
-        strMessage = "예! 하사 김호규!"
-    elif randInt == 2:
-        strMessage = "ㅍ승!"
-    elif randInt == 3:
-        strMessage = "안녕하세요? 전역하지 않기로 한 김호규입니다."
-    elif randInt == 4:
-        strMessage = "팬택 핥짝"
-    elif randInt == 5:
-        strMessage = "베가 핥짝 핥짝"
-    elif randInt == 6:
-        strMessage = "호구"
-    elif randInt == 7:
-        strMessage = "K2C1 핥짝핥짝"
-    elif randInt == 8:
-        strMessage = "감사합니다. 314대대 통신반 김호규 하사입니다. 머슼타드일까요?"
-    elif randInt == 9:
-        strMessage = "악! 소위 김호규!"
-    elif randInt == 10:
-       strMessage = "아...\\m전역하기 싫다..."
-    
-    return strMessage
+    messages = [
+        "필승! 전문-38기 하사 김호규입니다!",
+        "예! 하사 김호규!",
+        "ㅍ승!",
+        "안녕하세요? 전역하지 않기로 한 김호규입니다.",
+        "팬택 핥짝",
+        "베가 핥짝 핥짝",
+        "호구",
+        "K2C1 핥짝핥짝",
+        "감사합니다. 314대대 통신반 김호규 하사입니다. 머슼타드일까요?",
+        "악! 소위 김호규!",
+        "아...\\m전역하기 싫다..."
+    ]
+    return random.choice(messages)
 
 def messageHokyuGraduate():
     strMessage = ""
@@ -751,36 +671,13 @@ def messageHansuGraduate():
     return strMessage
 
 def messageHungry():
-    strMessage = ""
-    
-    randInt = random.randrange(0, 4)
-    if randInt == 0:
-        strMessage = "돼지"
-    elif randInt == 1:
-        strMessage = "또 먹어?"
-    elif randInt == 2:
-        strMessage = "살쪄"
-    elif randInt == 3:
-        strMessage = "그만 먹어;;"
-    	
-    return strMessage
+    messages = ["돼지", "또 먹어?", "살쪄", "그만 먹어;;", "아까 먹었잖아"]
+    return random.choice(messages)
 
 def messageIreon():
-    randInt = random.randrange(0, 5)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "안됐군요.."
-    elif randInt == 1:
-        strMessage = "안타깝네요.."
-    elif randInt == 2:
-        strMessage = "눈물이 납니다.."
-    elif randInt == 3:
-        strMessage = "유감입니다.."
-    elif randInt == 4:
-        strMessage = "불쌍하네요.."
-    
-    return strMessage
+    messages = ["안됐군요..", "안타깝네요..", "눈물이 납니다..", "유감입니다..", "불쌍하네요..",
+                "아쉽네요..", "저런.."]
+    return random.choice(messages)
 
 def messageJaeminGraduate():
     randInt = random.randrange(0, 3)
@@ -808,15 +705,8 @@ def messageJoohyeong():
     return strMessage
 
 def messageLaugh():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "뭘 웃어요;;"
-    elif randInt == 1:
-        strMessage = "안웃긴데;;"
-
-    return strMessage
+    messages = ["뭘 웃어요;;", "안웃긴데;;", "이게 웃겨요?"]
+    return random.choice(messages)
 
 def messageLogisticsParser():
     strMessage = "///택배 운송장조회 사용 방법///\n\n!택배 [택배사][운송장번호]\nex)!택배 CJ1234567890\\m지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
@@ -1131,28 +1021,12 @@ def messageOff():
     return strMessage
 
 def messageOh():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "..레오"
-    elif randInt == 1:
-        strMessage = "..렌지쥬스"
-    
-    return strMessage
+    messages = ["..레오", "..렌지쥬스", "..필승 코리아", "..카리나", "..리 꽥꽥"]
+    return random.choice(messages)
 
 def messageOutwork():
-    randInt = random.randrange(0, 3)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "출근하세요"
-    elif randInt == 1:
-        strMessage = "평생 쉬세요~"
-    elif randInt == 2:
-        strMessage = "집가고싶다"
-
-    return strMessage
+    messages = ["출근하세요", "평생 쉬세요~", "집가고싶다", "어딜 쉬러가요", "오늘 야근이에요"]
+    return random.choice(messages)
 
 def messageOho(message):
     strMessage = message[::-1]
@@ -1165,15 +1039,8 @@ def messageOkay():
     return strMessage
 
 def messageReal():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "ㄹㅇㅋㅋ"
-    elif randInt == 1:
-        strMessage = "아닌데요"
-
-    return strMessage
+    messages = ["ㄹㅇㅋㅋ", "아닌데요", "ㄹㅇ임ㅋㅋ"]
+    return random.choice(messages)
 
 def messageRemember(message, room):
     message = message.replace("!기억해", "").replace("!기억", "").strip()
@@ -1213,30 +1080,12 @@ def messageRemreturn(room):
     return strMessage
 
 def messageSalute():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "필승! ^^7"
-    elif randInt == 1:
-        strMessage = "충성! ^^7"
-
-    return strMessage
+    messages = ["필승! ^^7", "충성! ^^7", "훈련병들은 충성! ^^7", "훈련병들은 필승! ^^7"]
+    return random.choice(messages)
 
 def messageSaseyo():
-    randInt = random.randrange(0, 4)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "사세요"
-    elif randInt == 1:
-        strMessage = "안 사도 돼요"
-    elif randInt == 2:
-        strMessage = "나스는 역시 시놀로지죠~"
-    elif randInt == 3:
-        strMessage = "나스는 역시 큐냅이죠~"
-
-    return strMessage
+    messages = ["사세요", "안 사도 돼요", "나스는 역시 시놀로지죠~", "나스는 역시 큐냅이죠~"]
+    return random.choice(messages)
 
 def messageSeungbeomGraduate():
     randInt = random.randrange(0, 3)
@@ -1284,35 +1133,14 @@ def messageSeongminGraduate():
     return strMessage
 
 def messageShuk():
-    randInt = random.randrange(0, 4)
     strMessage = "슈슉"
-    
-    while randInt != 4:
-        if randInt == 0:
-            strMessage += ".슉.슈슉.시.발럼"
-        elif randInt == 1:
-            strMessage += ".슈슉.슉.슉시"
-        elif randInt == 2:
-            strMessage += ".슈발놈아.슉.시발.슈슉.슉"
-        elif randInt == 3:
-            strMessage += ".슈슉.시발.럼아.슉.슈슉.슉.슉슉.슈슉.시.발놈아"
-        
-        randInt = random.randrange(0, 5)
-
-    strMessage += ".슉"
-
-    return strMessage
+    messages = [".슉.슈슉.시.발럼", ".슈슉.슉.슉시",
+                ".슈발놈아.슉.시발.슈슉.슉", ".슈슉.시발.럼아.슉.슈슉.슉.슉슉.슈슉.시.발놈아"]
+    return strMessage + random.choice(messages) + ".슉"
 
 def messageSleepy():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-    
-    if randInt == 0:
-        strMessage = "자라;;"
-    elif randInt == 1:
-        strMessage = "구라;;"
-    
-    return strMessage
+    messages = ["자라;;", "구라;;", "자야지;;", "자야겠다;;", "자야겠다..", "졸린게 말이 돼?", "그만 좀 자라;;"]
+    return random.choice(messages)
 
 def messageSora(message):
     question = message.replace("마법의 소라고동이시여", "").strip()
@@ -1335,19 +1163,8 @@ def messageStress():
     return strMessage
 
 def messageSGW():
-    randInt = random.randrange(0, 4)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "좀 나가라;;"
-    elif randInt == 1:
-        strMessage = "뭐하냐;"
-    elif randInt == 2:
-        strMessage = "좀 꺼라;"
-    elif randInt == 3:
-        strMessage = "이미 차단당한 유저입니다."
-    
-    return strMessage
+    messages = ["좀 나가라;;", "뭐하냐;", "좀 꺼라;", "이미 차단당한 유저입니다."]
+    return random.choice(messages)
 
 def messageTimezone(message):
     strMessage = ""
@@ -1372,42 +1189,13 @@ def messageTjoGraduate():
     return strMessage
 
 def messageUh():
-    randInt = random.randrange(0, 3)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "..이가없네;;"
-    elif randInt == 1:
-        strMessage = "..피치"
-    elif randInt == 2:
-        strMessage = "..기여차"
-
-    return strMessage
+    messages = ["..이가없네;;", "..피치", "..기여차"]
+    return random.choice(messages)
 
 def messageWa():
-    randInt = random.randrange(0, 9)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "갑부;;"
-    elif randInt == 1:
-        strMessage = "기만;;"
-    elif randInt == 2:
-        strMessage = "ㄹㅇ;;"
-    elif randInt == 3:
-        strMessage = "마스터;;"
-    elif randInt == 4:
-        strMessage = "역시;;"
-    elif randInt == 5:
-        strMessage = "이건 좀;;"
-    elif randInt == 6:
-        strMessage = "극혐;;"
-    elif randInt == 7:
-        strMessage = "플;;"
-    elif randInt == 8:
-        strMessage = "이파이;;"
-
-    return strMessage
+    messages = ["갑부;;", "기만;;", "ㄹㅇ;;", "마스터;;", "역시;;", 
+                "이건 좀;;", "극혐;;", "플;;", "이파이;;", "내가 봐도 선 넘었네;;", "사비;;"]
+    return random.choice(messages)
 
 def messageWabotPower(flag, room):
     strMessage = ""
@@ -1455,19 +1243,15 @@ def messageYongmin():
     return strMessage
 
 def messageZara():
-    randInt = random.randrange(0, 4)
-    strMessage = ""
-    
-    if randInt == 0:
-        strMessage = "전기세 아깝다ㅡㅡ;;"
-    elif randInt == 1:
-        strMessage = "거북이"
-    elif randInt == 2:
-        strMessage = "..투스트라는 이렇게 말했다."
-    elif randInt == 3:
-        strMessage = "..ZARA는 스페인에 본사를 둔 글로벌 패션 그룹 인디텍스를 모회사로 두고 있는 SPA 브랜드로, SPA 브랜드 중 세계 최대 매출을 기록하고 있습니다."
-        
-    return strMessage
+    messages = [
+        "전기세 아깝다ㅡㅡ;;",
+        "거북이",
+        "..투스트라는 이렇게 말했다.",
+        "..ZARA는 스페인에 본사를 둔 글로벌 패션 그룹 인디텍스를 모회사로 두고 있는 SPA 브랜드로, SPA 브랜드 중 세계 최대 매출을 기록하고 있습니다.",
+        "잘 자라^^",
+        "자라는 토끼랑 달리기 경주 중",
+    ]
+    return random.choice(messages)
 
 def messageZayazi():
     strMessage = "구라ㅡㅡ;;"

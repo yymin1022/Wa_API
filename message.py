@@ -259,6 +259,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageWabotPower(0, room)
         elif "켜" in message or "키" in message:
             strResult = messageWabotPower(1, room)
+    elif "비트코인" in message:
+        strResult = messageBitcoin()
     return strResult
 
 def getCryCount(message):
@@ -338,6 +340,23 @@ def messageBHGraduate():
     randInt = random.randrange(0,2)
     if randInt == 0: strMessage = "임병희씨가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,6,30)).days, (datetime.date.today() - datetime.date(2021,12,29)).days)
     elif randInt == 1: strMessage = "임병희씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2029,12,31) - datetime.date.today()).days)
+    return strMessage
+
+def messageBitcoin():
+    strMessage = ""
+
+    requestSession = requests.Session()
+    url = "https://api.upbit.com/v1/ticker?markets=KRW-BTC"
+    
+    try:
+        response = requestSession.get(url)
+        response.raise_for_status()
+        data = response.json()
+        current_price = data[0]['trade_price']
+        strMessage = f"와! 비트코인 현재가 : {current_price}원! 지금 사요?"    
+    except requests.exceptions.RequestException as e:
+        strMessage = "비트코인 가격을 불러오는 중 오류가 발생했습니다."
+
     return strMessage
 
 def messageCAUCalendar():

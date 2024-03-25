@@ -347,6 +347,7 @@ def messageBitcoin():
 
     requestSession = requests.Session()
     url = "https://api.upbit.com/v1/ticker?markets=KRW-BTC"
+    requestSession.mount(url, DESAdapter())
     
     try:
         response = requestSession.get(url)

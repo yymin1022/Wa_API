@@ -680,22 +680,11 @@ def messageIreon():
     return random.choice(messages)
 
 def messageJaeminGraduate():
-    randInt = random.randrange(0, 3)
+    randInt = random.randrange(0, 2)
     strMessage = ""
-    y, m, d = 2024, 3, 8
-    messageDateCalculator(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
-    if leftdays == 0:
-        strMessage = "재민이의 소집해제를 축하합니다!\\m...\\m재민아 군대가야지?"
-        return strMessage
-
-    if randInt == 0:
-        strMessage = "404 Not Found"
-    elif randInt == 1:
-        strMessage = "재민이가 민간인(진)이 되기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
-    elif randInt == 2:
-        strMessage = "재민이가 사람이 되기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+    if randInt == 0: strMessage = "재민이가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2021,5,9)).days, (datetime.date.today() - datetime.date(2024,3,8)).days)
+    elif randInt == 1: strMessage = "재민이의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2031,12,31) - datetime.date.today()).days)
 
     return strMessage
 

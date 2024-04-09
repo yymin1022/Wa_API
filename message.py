@@ -98,18 +98,17 @@ def getReplyMessage(message, room, sender):
     elif "!메모" in message:
         strResult = messageMemo(message, sender)
     elif "!택배" in message:
-        if "대한통운" in message or "대통" in message or "cj" in message or "CJ" in message :
-            strResult = messageLogisticsParser_CJ(message)
-        elif "한진택배" in message or "한진" in message:
-            strResult = messageLogisticsParser_HJ(message)
-        elif "우체국택배" in message or "우체국" in message:
-            strResult = messageLogisticsParser_KP(message)
-        elif "로젠택배" in message or "로젠" in message:
-            strResult = messageLogisticsParser_LG(message)
-        elif "롯데택배" in message or "롯데" in message:
-            strResult = messageLogisticsParser_LT(message)
-        else:
-            strResult = messageLogisticsParser()
+        strResult = messageLogisticsParser()
+    if "!대한통운" in message or "!대통" in message or "!cj" in message or "!CJ" in message :
+        strResult = messageLogisticsParser_CJ(message)
+    if "!한진택배" in message or "!한진" in message:
+        strResult = messageLogisticsParser_HJ(message)
+    if "!우체국택배" in message or "!우체국" in message:
+        strResult = messageLogisticsParser_KP(message)
+    if "!로젠택배" in message or "!로젠" in message:
+        strResult = messageLogisticsParser_LG(message)
+    if "!롯데택배" in message or "!롯데" in message:
+        strResult = messageLogisticsParser_LT(message)
     elif "!통관" in message:
         strResult = messageCustomTracker(message)
     elif "마법의 소라고동이시여" in message:
@@ -698,7 +697,7 @@ def messageLaugh():
     return random.choice(messages)
 
 def messageLogisticsParser():
-    strMessage = "///택배 운송장조회 사용 방법///\n\n!택배 [택배사][운송장번호]\nex)!택배 CJ1234567890\\m지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
+    strMessage = "///택배 운송장조회 사용 방법///\n\n![택배사][운송장번호]\nex)!CJ1234567890\\m지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
 
     return strMessage
 
@@ -708,9 +707,8 @@ def messageLogisticsParser_CJ(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("대한통운", "").replace("대통", "").replace("CJ", "").replace("cj", "")
-        if message.isdigit() == False:
-            raise
+        message = message.replace("!대한통운", "").replace("!대통", "").replace("!CJ", "").replace("!cj", "")
+        if message.isdigit() == False: raise
         request_headers = { 
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
@@ -746,9 +744,8 @@ def messageLogisticsParser_HJ(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("한진택배", "").replace("한진", "")
-        if message.isdigit() == False:
-            raise
+        message = message.replace("!한진택배", "").replace("!한진", "")
+        if message.isdigit() == False: raise
         request_headers = { 
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
@@ -781,9 +778,8 @@ def messageLogisticsParser_KP(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("우체국택배", "").replace("우체국", "")
-        if message.isdigit() == False:
-            raise
+        message = message.replace("!우체국택배", "").replace("!우체국", "")
+        if message.isdigit() == False: raise
         request_headers = { 
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
@@ -816,7 +812,7 @@ def messageLogisticsParser_LG(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("로젠택배", "").replace("로젠", "")
+        message = message.replace("!로젠택배", "").replace("!로젠", "")
         if message.isdigit() == False:
             raise
         request_headers = { 
@@ -856,7 +852,7 @@ def messageLogisticsParser_LT(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("롯데택배", "").replace("롯데", "")
+        message = message.replace("!롯데택배", "").replace("!롯데", "")
         if message.isdigit() == False:
             raise
         request_headers = { 

@@ -98,17 +98,7 @@ def getReplyMessage(message, room, sender):
     elif "!메모" in message:
         strResult = messageMemo(message, sender)
     elif "!택배" in message:
-        strResult = messageLogisticsParser()
-    if "!대한통운" in message or "!대통" in message or "!cj" in message or "!CJ" in message :
-        strResult = messageLogisticsParser_CJ(message)
-    if "!한진택배" in message or "!한진" in message:
-        strResult = messageLogisticsParser_HJ(message)
-    if "!우체국택배" in message or "!우체국" in message:
-        strResult = messageLogisticsParser_KP(message)
-    if "!로젠택배" in message or "!로젠" in message:
-        strResult = messageLogisticsParser_LG(message)
-    if "!롯데택배" in message or "!롯데" in message:
-        strResult = messageLogisticsParser_LT(message)
+        strResult = messageLogisticsParser(message)
     elif "!통관" in message:
         strResult = messageCustomTracker(message)
     elif "마법의 소라고동이시여" in message:
@@ -716,9 +706,27 @@ def messageLaugh():
     messages = ["뭘 웃어요;;", "안웃긴데;;", "이게 웃겨요?"]
     return random.choice(messages)
 
-def messageLogisticsParser():
-    strMessage = "///택배 운송장조회 사용 방법///\n\n![택배사][운송장번호]\nex)!CJ1234567890\\m지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
+def messageLogisticsParser(message):
+    strMessage = ""
+    message = message.replace("!택배", "").replace(" ", "")
+    if message == "": 
+        strMessage = "///택배 운송장조회 사용 방법///\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
+        return strMessage
 
+    logistics = [
+        messageLogisticsParser_CJ,
+        messageLogisticsParser_HJ,
+        messageLogisticsParser_KP,
+        messageLogisticsParser_LG,
+        messageLogisticsParser_LT
+    ]
+
+    for parser in logistics:
+        strMessage = parser(message)
+        if strMessage: return strMessage
+
+    strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
+    
     return strMessage
 
 def messageLogisticsParser_CJ(message):
@@ -727,7 +735,6 @@ def messageLogisticsParser_CJ(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!대한통운", "").replace("!대통", "").replace("!CJ", "").replace("!cj", "")
         if message.isdigit() == False: raise
         request_headers = { 
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
@@ -754,7 +761,7 @@ def messageLogisticsParser_CJ(message):
                 infom[_] = infom[_].replace('인수자 : ', '')
         strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (infom[1], infom[2], infom[3], infom[4], infom[5])
     except:
-        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !대한통운123456789 or !CJ123456789"
+        strMessage = ""
     
     return strMessage
 
@@ -764,7 +771,6 @@ def messageLogisticsParser_HJ(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!한진택배", "").replace("!한진", "")
         if message.isdigit() == False: raise
         request_headers = { 
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
@@ -788,7 +794,7 @@ def messageLogisticsParser_HJ(message):
                 infom[7] = "(정보 없음)"
         strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (infom[1], infom[2], infom[3], infom[5], infom[7])
     except:
-        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !한진택배123456789 or !한진123456789"
+        strMessage = ""
     
     return strMessage
 
@@ -798,7 +804,6 @@ def messageLogisticsParser_KP(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!우체국택배", "").replace("!우체국", "")
         if message.isdigit() == False: raise
         request_headers = { 
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
@@ -822,7 +827,7 @@ def messageLogisticsParser_KP(message):
         if infom[5] == '            ': infom[5] = '배달준비'
         strMessage = "/// 우체국택배 배송조회 ///\n\n날짜: %s\n시간: %s\n발생국: %s\n처리현황: %s" % (infom[1], infom[2], infom[3], infom[5])
     except:
-        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !우체국택배123456789 or !우체국123456789"
+        strMessage = ""
     
     return strMessage
 
@@ -832,7 +837,6 @@ def messageLogisticsParser_LG(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!로젠택배", "").replace("!로젠", "")
         if message.isdigit() == False:
             raise
         request_headers = { 
@@ -862,7 +866,7 @@ def messageLogisticsParser_LG(message):
             temp = '\n배달 예정 시간: ' + infom[5]
         strMessage = "/// 로젠택배 배송조회 ///\n\n날짜: %s\n사업장: %s\n배송상태: %s\n배송내용: %s" % (infom[0], infom[1], infom[2], infom[3]) + temp
     except:
-        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !로젠택배123456789 or !로젠123456789"
+        strMessage = ""
     
     return strMessage
 
@@ -872,7 +876,6 @@ def messageLogisticsParser_LT(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!롯데택배", "").replace("!롯데", "")
         if message.isdigit() == False:
             raise
         request_headers = { 
@@ -893,7 +896,7 @@ def messageLogisticsParser_LT(message):
         infom[6] = infom[6][:10] + ' ' + infom[6][10:]
         strMessage = "/// 롯데택배 배송조회 ///\n\n단계: %s\n시간: %s\n현위치: %s\n처리현황: %s" % (infom[5], infom[6], infom[7], infom[8])
     except:
-        strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !롯데택배123456789 or !롯데123456789"
+        strMessage = ""
     
     return strMessage
 

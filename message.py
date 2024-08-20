@@ -667,15 +667,17 @@ def messageHansuGraduate():
     if leftdays == 0:
         strMessage = "이한수씨의 소집 해제를 축하합니다!!"
         return strMessage
+    elif leftdays < 0:
+        strMessage = "이한수씨가 소집된지 %d일, 소집 해제된지는 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2020,6,30)).days, (datetime.date.today() - datetime.date(2024,8,31)).days)
 
     if randInt == 0:
         strMessage = "ㅋㅋ"
     elif randInt == 1:
-        strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+        strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다.\\m.....\\m사실 거짓말입니다ㅎㅎ"%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
-        strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+        strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다.\\m.....\\m사실 거짓말입니다ㅎㅎ"
     elif randInt == 3:
-        strMessage = "답변하기 적당한 말을 찾지 못했어요."
+        strMessage = "에이 거짓말"
     
     return strMessage
 

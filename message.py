@@ -485,7 +485,7 @@ def messageCry():
 def messageCustomTracker(message):
     strMessage = ""
     try:
-        message = message.replace('!통관 ', '')
+        message = message.replace('!통관', '').replace(" ", "")
         key = os.environ['CUSTOM_API_KEY']
         year = datetime.date.today().year
         url = 'https://unipass.customs.go.kr:38010/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=%s&blYy=%s&hblNo=%s' % (key, year, message)

@@ -485,16 +485,17 @@ def messageCry():
 def messageCustomTracker(message):
     strMessage = ""
     try:
-        message = message.replace('!통관 ', '')
+        message = message.replace('!통관', '').replace(" ", "")
         key = os.environ['CUSTOM_API_KEY']
         year = datetime.date.today().year
         url = 'https://unipass.customs.go.kr:38010/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=%s&blYy=%s&hblNo=%s' % (key, year, message)
         result = requests.get(url)
         soup = BeautifulSoup(result.text, "xml")
         name = soup.find('prnm')
-        status = soup.find('csclPrgsStts')
+        customs_name = soup.find('etprCstm')
+        status = soup.find('prgsStts')
         process_time = datetime.datetime.strptime(str(soup.find('prcsDttm').text), "%Y%m%d%H%M%S").strftime("%Y.%m.%d %H:%M:%S")
-        strMessage = "/// 관세청 UNIPASS 통관 조회 ///\n\n품명: %s\n통관진행상태: %s\n처리일시: %s" % (name.text, status.text, process_time)
+        strMessage = "/// 관세청 UNIPASS 통관 조회 ///\n\n품명: %s\입항세관: %s\n통관진행상태: %s\n처리일시: %s" % (name.text, customs_name.text, status.text, process_time)
     except:
         strMessage = "존재하지 않는 운송장번호이거나 잘못된 형식 혹은 아직 입항하지 않은 화물입니다.\\m사용법: !통관 123456789"
     
@@ -667,15 +668,17 @@ def messageHansuGraduate():
     if leftdays == 0:
         strMessage = "이한수씨의 소집 해제를 축하합니다!!"
         return strMessage
+    elif leftdays < 0:
+        strMessage = "이한수씨가 소집된지 %d일, 소집 해제된지는 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2022,12,1)).days, (datetime.date.today() - datetime.date(2024,8,31)).days)
 
     if randInt == 0:
         strMessage = "ㅋㅋ"
     elif randInt == 1:
-        strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+        strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다.\\m.....\\m사실 거짓말입니다ㅎㅎ"%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
-        strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+        strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다.\\m.....\\m사실 거짓말입니다ㅎㅎ"
     elif randInt == 3:
-        strMessage = "답변하기 적당한 말을 찾지 못했어요."
+        strMessage = "에이 거짓말"
     
     return strMessage
 

@@ -669,7 +669,7 @@ def messageHansuGraduate():
         strMessage = "이한수씨의 소집 해제를 축하합니다!!"
         return strMessage
     elif leftdays < 0:
-        strMessage = "이한수씨가 소집된지 %d일, 소집 해제된지는 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2020,6,30)).days, (datetime.date.today() - datetime.date(2024,8,31)).days)
+        strMessage = "이한수씨가 소집된지 %d일, 소집 해제된지는 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2022,12,1)).days, (datetime.date.today() - datetime.date(2024,8,31)).days)
 
     if randInt == 0:
         strMessage = "ㅋㅋ"

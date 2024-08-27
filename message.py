@@ -213,7 +213,7 @@ def getReplyMessage(message, room, sender):
         elif "병희" in message:
             strResult = messageBHGraduate()
         elif "창환" in message:
-            strResult = messageChalsGraduate() 
+            strResult = messageChalsGraduate()
         elif "태식" in message:
             strResult = messageTjoGraduate()
     elif "서건1우" in message:
@@ -319,7 +319,7 @@ def messageBoolpyeon():
     return strMessage
 
 def messageBuy():
-    messages = ["축하합니다!!!", "그걸 샀네;;", "개부자;;", "와 샀네", 
+    messages = ["축하합니다!!!", "그걸 샀네;;", "개부자;;", "와 샀네",
                 "이걸 산다고?", "ㅋㅋ", "왜요", "그거 살 돈이면 차라리..\\m.........",
                 "ㅋㅋ 그걸 누가 삼"]
     return random.choice(messages)
@@ -338,13 +338,13 @@ def messageBitcoin():
     requestSession = requests.Session()
     url = "https://api.upbit.com/v1/ticker?markets=KRW-BTC"
     requestSession.mount(url, DESAdapter())
-    
+
     try:
         response = requestSession.get(url)
         response.raise_for_status()
         data = response.json()
         current_price = data[0]['trade_price']
-        strMessage = f"와! 비트코인 현재가 : {current_price}원! 지금 사요?"    
+        strMessage = f"와! 비트코인 현재가 : {current_price}원! 지금 사요?"
     except requests.exceptions.RequestException as e:
         strMessage = "비트코인 가격을 불러오는 중 오류가 발생했습니다."
 
@@ -566,9 +566,9 @@ def messageEat():
         "미역국!!", "닭갈비!!", "떡볶이!!", "순두부찌개!!", "돈까스!!", "곱창!!", "콩나물국!!",
         "짜장면!!", "감자전!!", "짬뽕!!", "해물탕!!", "감자탕!!", "치킨!!", "라면!!",
         "샌드위치!!", "피자!!", "파스타!!", "햄버거!!", "샐러드!!", "쌈밥!!",
-        "고무장갑 구이!!", "화분 케이크!!", "민트 초코맛 라면!!", "콜라에 밥 말아먹기!!", 
+        "고무장갑 구이!!", "화분 케이크!!", "민트 초코맛 라면!!", "콜라에 밥 말아먹기!!",
         "플라스틱 튀김!!", "LED 광케이블 라조냐!!", "아이폰 스파게티!!",
-        "바질리카 소스를 곁들인 크림리 소프트 쉘 크랩 파스타!!", 
+        "바질리카 소스를 곁들인 크림리 소프트 쉘 크랩 파스타!!",
         "천천히 구운 로즈메리 향이 나는 양갈비와 민트 소스!!",
         "풍미 가득 허브와 치즈가 어우러진 랙 오브 램!!",
         "더블 초콜릿 퍼지 브라우니와 바닐라 아이스크림!!",
@@ -680,7 +680,7 @@ def messageHansuGraduate():
         strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다.\\m.....\\m사실 거짓말입니다ㅎㅎ"
     elif randInt == 3:
         strMessage = "에이 거짓말"
-    
+
     return strMessage
 
 def messageHungry():
@@ -713,7 +713,7 @@ def messageLaugh():
 def messageLogisticsParser(message):
     strMessage = ""
     message = message.replace("!택배", "").replace(" ", "")
-    if message == "": 
+    if message == "":
         strMessage = "///택배 운송장조회 사용 방법///\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
         return strMessage
 
@@ -730,7 +730,7 @@ def messageLogisticsParser(message):
         if strMessage: return strMessage
 
     strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
-    
+
     return strMessage
 
 def messageLogisticsParser_CJ(message):
@@ -740,7 +740,7 @@ def messageLogisticsParser_CJ(message):
     temp = ""
     try:
         if message.isdigit() == False: raise
-        request_headers = { 
+        request_headers = {
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
@@ -775,7 +775,7 @@ def messageLogisticsParser_HJ(message):
     temp = ""
     try:
         if message.isdigit() == False: raise
-        request_headers = { 
+        request_headers = {
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
@@ -807,7 +807,7 @@ def messageLogisticsParser_KP(message):
     temp = ""
     try:
         if message.isdigit() == False: raise
-        request_headers = { 
+        request_headers = {
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
@@ -1030,7 +1030,7 @@ def messageOff():
 def messageOh():
     messages = ["..레오", "..렌지쥬스", "..필승 코리아", "..카리나", "..리 꽥꽥"]
     return random.choice(messages)
-  
+
 def messageOutwork():
     messages = ["출근하세요", "평생 쉬세요~", "집가고싶다", "어딜 쉬러가요", "오늘 야근이에요"]
     return random.choice(messages)
@@ -1198,7 +1198,7 @@ def messageUh():
     return random.choice(messages)
 
 def messageWa():
-    messages = ["갑부;;", "기만;;", "ㄹㅇ;;", "마스터;;", "역시;;", 
+    messages = ["갑부;;", "기만;;", "ㄹㅇ;;", "마스터;;", "역시;;",
                 "이건 좀;;", "극혐;;", "플;;", "이파이;;", "내가 봐도 선 넘었네;;", "사비;;"]
     return random.choice(messages)
 
@@ -1268,7 +1268,7 @@ def messageFakeNews(message):
     keyword = message.split("!뉴스:")[1]
     requestSession = requests.Session()
     requestSession.mount(fake_news_url, DESAdapter())
-    response = requestSession.post(fake_news_url, json={'message':keyword, 'len':64, verify=certifi.where()})
+    response = requestSession.post(fake_news_url, json={'message':keyword, 'len':64}, verify=certifi.where())
     strMessage = '\\m'.join(response.text.split('\n')[2:-4])
 
     return strMessage

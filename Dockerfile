@@ -1,12 +1,10 @@
-FROM ubuntu:20.04
+FROM python:3.10.6
 
 ENV TZ Asia/Seoul
 
 WORKDIR /app
 ADD ./ /app
 
-RUN apt-get update
-RUN apt-get install -y python3 python3-pip
 RUN python3 -m pip install -r requirements.txt
 
 EXPOSE 80

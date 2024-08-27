@@ -1,5 +1,6 @@
 FROM python:3.10.6
 
+ENV PYTHONHTTPSVERIFY 0
 ENV TZ Asia/Seoul
 
 WORKDIR /app

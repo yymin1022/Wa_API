@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.ssl_ import create_urllib3_context
+from dotenv import load_dotenv
 
 import certifi
 import datetime
@@ -12,11 +13,53 @@ import time
 import xmltodict
 import base64
 
+import google.generativeai as genai
+
 CIPHERS = (
     'ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+HIGH:'
     'DH+HIGH:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+HIGH:RSA+3DES:!aNULL:'
     '!eNULL:!MD5'
     ':HIGH:!DH:!aNULL'
+)
+
+load_dotenv()
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+GEMINI_GENERATION_CONFIG = {
+  "candidate_count": 1,
+  "max_output_tokens": 256,
+  "temperature": 1.0,
+  "top_p": 0.7,
+}
+GEMINI_SAFETY_CONFIG=[
+  {
+    "category": "HARM_CATEGORY_DANGEROUS",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_HARASSMENT",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_HATE_SPEECH",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+    "threshold": "BLOCK_NONE",
+  },
+]
+
+genai.configure(
+    api_key=GEMINI_API_KEY
+)
+model = genai.GenerativeModel(
+    model_name='gemini-1.0-pro-latest',
+    generation_config=GEMINI_GENERATION_CONFIG,
+    safety_settings=GEMINI_SAFETY_CONFIG
 )
 
 class DESAdapter(HTTPAdapter):
@@ -56,22 +99,15 @@ def getReplyMessage(message, room, sender):
     elif "!메모" in message:
         strResult = messageMemo(message, sender)
     elif "!택배" in message:
-        if "대한통운" in message or "대통" in message or "cj" in message or "CJ" in message :
-            strResult = messageLogisticsParser_CJ(message)
-        elif "한진택배" in message or "한진" in message:
-            strResult = messageLogisticsParser_HJ(message)
-        elif "우체국택배" in message or "우체국" in message:
-            strResult = messageLogisticsParser_KP(message)
-        elif "로젠택배" in message or "로젠" in message:
-            strResult = messageLogisticsParser_LG(message)
-        elif "롯데택배" in message or "롯데" in message:
-            strResult = messageLogisticsParser_LT(message)
-        else:
-            strResult = messageLogisticsParser()
+        strResult = messageLogisticsParser(message)
     elif "!통관" in message:
         strResult = messageCustomTracker(message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
+    elif "!시간" in message:
+        strResult = messageTimezone(message)
+    elif "잼민아" in message:
+        strResult = messageGemini(message)
     elif "아.." in message:
         strResult = messageAh()
     elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:
@@ -97,11 +133,11 @@ def getReplyMessage(message, room, sender):
             strResult = messageCAULibrary("")
     elif "학식" in message:
         if "아침" in message or "조식" in message:
-            strResult = messageCAUMeal("10")
+            strResult = messageCAUMeal("10", "내일" in message)
         elif "점심" in message or "중식" in message:
-            strResult = messageCAUMeal("20")
+            strResult = messageCAUMeal("20", "내일" in message)
         elif "저녁" in message or "석식" in message:
-            strResult = messageCAUMeal("40")
+            strResult = messageCAUMeal("40", "내일" in message)
         elif "대림대" in message:
             strResult = messageDaelimMeal()
         elif "안양대" in message:
@@ -137,6 +173,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageLaugh()
     elif "민식" in message:
         strResult = messageMinsik()
+    elif "민석" in message:
+        strResult = messageMinseok()
     elif "과제" in message or "집가고싶다" in message:
         strResult = messageMinsikBooreop()
     elif "ㅡㅡ" in message:
@@ -175,7 +213,9 @@ def getReplyMessage(message, room, sender):
         elif "병희" in message:
             strResult = messageBHGraduate()
         elif "창환" in message:
-            strResult = messageChalsGraduate()
+            strResult = messageChalsGraduate() 
+        elif "태식" in message:
+            strResult = messageTjoGraduate()
     elif "서건1우" in message:
         strResult = messageSGW()
     elif "슈슉" in message:
@@ -204,7 +244,13 @@ def getReplyMessage(message, room, sender):
         strResult = messageRemreturn(room)
     elif "뭐더라" in message:
         strResult = messageMemreturn(sender)
-
+    elif "와봇" in message:
+        if "꺼" in message or "끄" in message:
+            strResult = messageWabotPower(0, room)
+        elif "켜" in message or "키" in message:
+            strResult = messageWabotPower(1, room)
+    elif "비트코인" in message:
+        strResult = messageBitcoin()
     return strResult
 
 def getCryCount(message):
@@ -232,40 +278,12 @@ def getStressCount(message):
     return count
 
 def messageAh():
-    randInt = random.randrange(0, 6)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "글쿤.."
-    elif randInt == 1:
-        strMessage = "그래요.."
-    elif randInt == 2:
-        strMessage = "그렇군요.."
-    elif randInt == 3:
-        strMessage = "안돼.."
-    elif randInt == 4:
-        strMessage = "..메리카노"
-    elif randInt == 5:
-        strMessage = "..에이오우"
-
-    return strMessage
+    messages = ["글쿤..", "그래요..", "그렇군요..", "안돼..", "..메리카노", "..에이오우", "..아르키메데스의 원리"]
+    return random.choice(messages)
 
 def messageAhnsa():
-    randInt = random.randrange(0, 5)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "이걸 안 사?"
-    elif randInt == 1:
-        strMessage = "왜요;;"
-    elif randInt == 2:
-        strMessage = "그거 사면 진짜 좋을텐데.."
-    elif randInt == 3:
-        strMessage = "아.."
-    elif randInt == 4:
-        strMessage = "헐.."
-
-    return strMessage
+    messages = ["이걸 안 사?", "왜요;;", "그거 사면 진짜 좋을텐데..", "아..", "헐..", "너한테 안 팔아;;"]
+    return random.choice(messages)
 
 def messageAnyangMeal():
     todayDate = datetime.date.today()
@@ -292,17 +310,8 @@ def messageAnyangMeal():
     return strMessage
 
 def messageBaby():
-    randInt = random.randrange(0, 3)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "귀여운척 하지 마세요;;"
-    elif randInt == 1:
-        strMessage = "응애 나 애기"
-    elif randInt == 2:
-        strMessage = "응애 나 코린이"
-
-    return strMessage
+    messages = ["귀여운척 하지 마세요;;", "응애 나 애기", "응애 나 아기 코린이"]
+    return random.choice(messages)
 
 def messageBoolpyeon():
     strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불편하니깐 그런거아냐!!"
@@ -310,27 +319,10 @@ def messageBoolpyeon():
     return strMessage
 
 def messageBuy():
-    randInt = random.randrange(0, 8)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "축하합니다!!!"
-    elif randInt == 1:
-        strMessage = "그걸 샀네;;"
-    elif randInt == 2:
-        strMessage = "개부자;;"
-    elif randInt == 3:
-        strMessage = "와 샀네"
-    elif randInt == 4:
-        strMessage = "이걸 산다고?"
-    elif randInt == 5:
-        strMessage = "ㅋㅋ"
-    elif randInt == 6:
-        strMessage = "왜요"
-    elif randInt == 7:
-        strMessage = "그거 살 돈이면 차라리..\\m........."
-
-    return strMessage
+    messages = ["축하합니다!!!", "그걸 샀네;;", "개부자;;", "와 샀네", 
+                "이걸 산다고?", "ㅋㅋ", "왜요", "그거 살 돈이면 차라리..\\m.........",
+                "ㅋㅋ 그걸 누가 삼"]
+    return random.choice(messages)
 
 def messageBHGraduate():
     strMessage = ""
@@ -338,6 +330,24 @@ def messageBHGraduate():
     randInt = random.randrange(0,2)
     if randInt == 0: strMessage = "임병희씨가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,6,30)).days, (datetime.date.today() - datetime.date(2021,12,29)).days)
     elif randInt == 1: strMessage = "임병희씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2029,12,31) - datetime.date.today()).days)
+    return strMessage
+
+def messageBitcoin():
+    strMessage = ""
+
+    requestSession = requests.Session()
+    url = "https://api.upbit.com/v1/ticker?markets=KRW-BTC"
+    requestSession.mount(url, DESAdapter())
+    
+    try:
+        response = requestSession.get(url)
+        response.raise_for_status()
+        data = response.json()
+        current_price = data[0]['trade_price']
+        strMessage = f"와! 비트코인 현재가 : {current_price}원! 지금 사요?"    
+    except requests.exceptions.RequestException as e:
+        strMessage = "비트코인 가격을 불러오는 중 오류가 발생했습니다."
+
     return strMessage
 
 def messageCAUCalendar():
@@ -397,11 +407,11 @@ def messageCAULibrary(libTypeID):
 
     return strMessage
 
-def messageCAUMeal(mealTypeID):
+def messageCAUMeal(mealTypeID, isTomorrow):
     strMessage = mealTypeID
 
     mealData = {
-        "daily": 0,
+        "daily": (1 if isTomorrow else 0),
         "tabs": "1",
         "tabs2": mealTypeID
     }
@@ -466,34 +476,27 @@ def messageChalsGraduate():
     return strMessage
 
 def messageCoding():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "구라ㅡㅡ;;"
-    elif randInt == 1:
-        strMessage = "ㅋ"
-
-    return strMessage
+    messages = ["구라ㅡㅡ;;", "ㅋ", "밤새도 못 할 듯?ㅋㅋ"]
+    return random.choice(messages)
 
 def messageCry():
-    strMessage = "뭘 울어요;;"
-
-    return strMessage
+    messages = ["뭘 울어요;;", "왜 우시는 거예요?", "ㅋㅋ얘 운다"]
+    return random.choice(messages)
 
 def messageCustomTracker(message):
     strMessage = ""
     try:
-        message = message.replace('!통관 ', '')
+        message = message.replace('!통관', '').replace(" ", "")
         key = os.environ['CUSTOM_API_KEY']
         year = datetime.date.today().year
         url = 'https://unipass.customs.go.kr:38010/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=%s&blYy=%s&hblNo=%s' % (key, year, message)
         result = requests.get(url)
         soup = BeautifulSoup(result.text, "xml")
         name = soup.find('prnm')
-        status = soup.find('csclPrgsStts')
+        customs_name = soup.find('etprCstm')
+        status = soup.find('prgsStts')
         process_time = datetime.datetime.strptime(str(soup.find('prcsDttm').text), "%Y%m%d%H%M%S").strftime("%Y.%m.%d %H:%M:%S")
-        strMessage = "/// 관세청 UNIPASS 통관 조회 ///\n\n품명: %s\n통관진행상태: %s\n처리일시: %s" % (name.text, status.text, process_time)
+        strMessage = "/// 관세청 UNIPASS 통관 조회 ///\n\n품명: %s\n입항세관: %s\n통관진행상태: %s\n처리일시: %s" % (name.text, customs_name.text, status.text, process_time)
     except:
         strMessage = "존재하지 않는 운송장번호이거나 잘못된 형식 혹은 아직 입항하지 않은 화물입니다.\\m사용법: !통관 123456789"
 
@@ -557,78 +560,26 @@ def messageDDay(message):
     return strMessage
 
 def messageEat():
-    randInt = random.randrange(0, 33)
-    strMessage = ""
+    messages = [
+        "돼지", "또 먹어?", "살쪄", "그만 먹어;;", "된장찌개!!", "부리또!!", "김볶밥!!",
+        "김치찌개!!", "햄버거!!", "부찌!!", "불고기!!", "삼겹살!!", "돼지갈비!!", "황금볶음밥!!",
+        "미역국!!", "닭갈비!!", "떡볶이!!", "순두부찌개!!", "돈까스!!", "곱창!!", "콩나물국!!",
+        "짜장면!!", "감자전!!", "짬뽕!!", "해물탕!!", "감자탕!!", "치킨!!", "라면!!",
+        "샌드위치!!", "피자!!", "파스타!!", "햄버거!!", "샐러드!!", "쌈밥!!",
+        "고무장갑 구이!!", "화분 케이크!!", "민트 초코맛 라면!!", "콜라에 밥 말아먹기!!", 
+        "플라스틱 튀김!!", "LED 광케이블 라조냐!!", "아이폰 스파게티!!",
+        "바질리카 소스를 곁들인 크림리 소프트 쉘 크랩 파스타!!", 
+        "천천히 구운 로즈메리 향이 나는 양갈비와 민트 소스!!",
+        "풍미 가득 허브와 치즈가 어우러진 랙 오브 램!!",
+        "더블 초콜릿 퍼지 브라우니와 바닐라 아이스크림!!",
+        "바다의 맛이 느껴지는 신선한 랍스터 테르미도르!!"
+    ]
+    return random.choice(messages)
 
-    if randInt == 0:
-        strMessage = "돼지"
-    elif randInt == 1:
-        strMessage = "또 먹어?"
-    elif randInt == 2:
-        strMessage = "살쪄"
-    elif randInt == 3:
-        strMessage = "그만 먹어;;"
-    elif randInt == 4:
-        strMessage = "된장찌개!!"
-    elif randInt == 5:
-        strMessage = "부리또!!"
-    elif randInt == 6:
-        strMessage = "김볶밥!!"
-    elif randInt == 7:
-        strMessage = "김치찌개!!"
-    elif randInt == 8:
-        strMessage = "햄버거!!"
-    elif randInt == 9:
-        strMessage = "부찌!!"
-    elif randInt == 10:
-        strMessage = "불고기!!"
-    elif randInt == 11:
-        strMessage = "삼겹살!!"
-    elif randInt == 12:
-        strMessage = "돼지갈비!!"
-    elif randInt == 13:
-        strMessage = "황금볶음밥!!"
-    elif randInt == 14:
-        strMessage = "미역국!!"
-    elif randInt == 15:
-        strMessage = "닭갈비!!"
-    elif randInt == 16:
-        strMessage = "떡볶이!!"
-    elif randInt == 17:
-        strMessage = "순두부찌개!!"
-    elif randInt == 18:
-        strMessage = "돈까스!!"
-    elif randInt == 19:
-        strMessage = "곱창!!"
-    elif randInt == 20:
-        strMessage = "콩나물국!!"
-    elif randInt == 21:
-        strMessage = "짜장면!!"
-    elif randInt == 22:
-        strMessage = "감자전!!"
-    elif randInt == 23:
-        strMessage = "짬뽕!!"
-    elif randInt == 24:
-        strMessage = "해물탕!!"
-    elif randInt == 25:
-        strMessage = "감자탕!!"
-    elif randInt == 26:
-        strMessage = "치킨!!"
-    elif randInt == 27:
-        strMessage = "라면!!"
-    elif randInt == 28:
-        strMessage = "샌드위치!!"
-    elif randInt == 29:
-        strMessage = "피자!!"
-    elif randInt == 30:
-        strMessage = "파스타!!"
-    elif randInt == 31:
-        strMessage = "햄버거!!"
-    elif randInt == 32:
-        strMessage = "샐러드!!"
-    elif randInt == 33:
-        strMessage = "쌈밥!!"
-    return strMessage
+def messageGemini(str):
+    str = str.replace("잼민아", "").strip()
+    response = model.generate_content(f"지금부터 대한민국의 초등학생의 말투로 대답해줘. 맞춤법도 조금 틀려서 해주면 좋을 것 같아. 조금 바보같은 말투로 대답하면 돼. {str}")
+    return(response.text)
 
 def messageGgobugi():
     randInt = random.randrange(0, 3)
@@ -653,59 +604,41 @@ def messageGgobugi():
     return strMessage
 
 def messageGraduate():
-    randInt = random.randrange(0, 4)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "대학원 가셔야죠 ㅋㅋ"
-    elif randInt == 1:
-        strMessage = "졸업은 무슨"
-    elif randInt == 2:
-        strMessage = "노예 하셔야죠 ㅋㅋ"
-    elif randInt == 3:
-        strMessage = "어림도 없지 ㅋㅋ"
-
-    return strMessage
+    messages = [
+        "대학원 가셔야죠 ㅋㅋ",
+        "졸업은 무슨",
+        "노예 하셔야죠 ㅋㅋ",
+        "어림도 없지 ㅋㅋ",
+        "졸업은 무슨 ㅋㅋ",
+        "박사도 해야죠 ㅋㅋ",
+    ]
+    return random.choice(messages)
 
 def messageHa():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "코딩하기 싫다.."
-    elif randInt == 1:
-        strMessage = "과제하기 싫다.."
-
-    return strMessage
+    messages = [
+        "코딩하기 싫다..",
+        "과제하기 싫다..",
+        "걍 놀고 싶다..",
+        "걍 자고 싶다..",
+        "걍 쉬고 싶다..",
+    ]
+    return random.choice(messages)
 
 def messageHokyu():
-    strMessage = ""
-
-    randInt = random.randrange(0, 11)
-    if randInt == 0:
-        strMessage = "필승! 전문-38기 하사 김호규입니다!"
-    elif randInt == 1:
-        strMessage = "예! 하사 김호규!"
-    elif randInt == 2:
-        strMessage = "ㅍ승!"
-    elif randInt == 3:
-        strMessage = "안녕하세요? 전역하지 않기로 한 김호규입니다."
-    elif randInt == 4:
-        strMessage = "팬택 핥짝"
-    elif randInt == 5:
-        strMessage = "베가 핥짝 핥짝"
-    elif randInt == 6:
-        strMessage = "호구"
-    elif randInt == 7:
-        strMessage = "K2C1 핥짝핥짝"
-    elif randInt == 8:
-        strMessage = "감사합니다. 314대대 통신반 김호규 하사입니다. 머슼타드일까요?"
-    elif randInt == 9:
-        strMessage = "악! 소위 김호규!"
-    elif randInt == 10:
-       strMessage = "아...\\m전역하기 싫다..."
-
-    return strMessage
+    messages = [
+        "필승! 전문-38기 하사 김호규입니다!",
+        "예! 하사 김호규!",
+        "ㅍ승!",
+        "안녕하세요? 전역하지 않기로 한 김호규입니다.",
+        "팬택 핥짝",
+        "베가 핥짝 핥짝",
+        "호구",
+        "K2C1 핥짝핥짝",
+        "감사합니다. 314대대 통신반 김호규 하사입니다. 머슼타드일까요?",
+        "악! 소위 김호규!",
+        "아...\\m전역하기 싫다..."
+    ]
+    return random.choice(messages)
 
 def messageHokyuGraduate():
     strMessage = ""
@@ -720,7 +653,7 @@ def messageHokyuGraduate():
     elif randInt == 3:
         strMessage = "호규의 민방위 소집해제일까지 %d일 남았습니다."%((datetime.date(2041,4,28) - datetime.date.today()).days -1)
     elif randInt == 4:
-        strMessage = "예비군 0년차는 좀..."
+        strMessage = "예비군 1년차는 좀..."
     elif randInt == 5:
         strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%((datetime.date(2027,8,26) - datetime.date.today()).days -1)
 
@@ -733,62 +666,38 @@ def messageHansuGraduate():
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
+    if leftdays == 0:
+        strMessage = "이한수씨의 소집 해제를 축하합니다!!"
+        return strMessage
+    elif leftdays < 0:
+        strMessage = "이한수씨가 소집된지 %d일, 소집 해제된지는 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2022,12,1)).days, (datetime.date.today() - datetime.date(2024,8,31)).days)
+
     if randInt == 0:
         strMessage = "ㅋㅋ"
     elif randInt == 1:
-        strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+        strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다.\\m.....\\m사실 거짓말입니다ㅎㅎ"%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
-        strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+        strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다.\\m.....\\m사실 거짓말입니다ㅎㅎ"
     elif randInt == 3:
-        strMessage = "답변하기 적당한 말을 찾지 못했어요."
-
+        strMessage = "에이 거짓말"
+    
     return strMessage
 
 def messageHungry():
-    strMessage = ""
-
-    randInt = random.randrange(0, 4)
-    if randInt == 0:
-        strMessage = "돼지"
-    elif randInt == 1:
-        strMessage = "또 먹어?"
-    elif randInt == 2:
-        strMessage = "살쪄"
-    elif randInt == 3:
-        strMessage = "그만 먹어;;"
-
-    return strMessage
+    messages = ["돼지", "또 먹어?", "살쪄", "그만 먹어;;", "아까 먹었잖아"]
+    return random.choice(messages)
 
 def messageIreon():
-    randInt = random.randrange(0, 5)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "안됐군요.."
-    elif randInt == 1:
-        strMessage = "안타깝네요.."
-    elif randInt == 2:
-        strMessage = "눈물이 납니다.."
-    elif randInt == 3:
-        strMessage = "유감입니다.."
-    elif randInt == 4:
-        strMessage = "불쌍하네요.."
-
-    return strMessage
+    messages = ["안됐군요..", "안타깝네요..", "눈물이 납니다..", "유감입니다..", "불쌍하네요..",
+                "아쉽네요..", "저런.."]
+    return random.choice(messages)
 
 def messageJaeminGraduate():
-    randInt = random.randrange(0, 3)
+    randInt = random.randrange(0, 2)
     strMessage = ""
-    y, m, d = 2024, 3, 9
-    messageDateCalculator(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
-    if randInt == 0:
-        strMessage = "404 Not Found"
-    elif randInt == 1:
-        strMessage = "재민이가 민간인(진)이 되기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
-    elif randInt == 2:
-        strMessage = "재민이가 사람이 되기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
+    if randInt == 0: strMessage = "재민이가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2021,5,9)).days, (datetime.date.today() - datetime.date(2024,3,8)).days)
+    elif randInt == 1: strMessage = "재민이의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2031,12,31) - datetime.date.today()).days)
 
     return strMessage
 
@@ -798,19 +707,30 @@ def messageJoohyeong():
     return strMessage
 
 def messageLaugh():
-    randInt = random.randrange(0, 2)
+    messages = ["뭘 웃어요;;", "안웃긴데;;", "이게 웃겨요?"]
+    return random.choice(messages)
+
+def messageLogisticsParser(message):
     strMessage = ""
+    message = message.replace("!택배", "").replace(" ", "")
+    if message == "": 
+        strMessage = "///택배 운송장조회 사용 방법///\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
+        return strMessage
 
-    if randInt == 0:
-        strMessage = "뭘 웃어요;;"
-    elif randInt == 1:
-        strMessage = "안웃긴데;;"
+    logistics = [
+        messageLogisticsParser_CJ,
+        messageLogisticsParser_HJ,
+        messageLogisticsParser_KP,
+        messageLogisticsParser_LG,
+        messageLogisticsParser_LT
+    ]
 
-    return strMessage
+    for parser in logistics:
+        strMessage = parser(message)
+        if strMessage: return strMessage
 
-def messageLogisticsParser():
-    strMessage = "///택배 운송장조회 사용 방법///\n\n!택배 [택배사][운송장번호]\nex)!택배 CJ1234567890\\m지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
-
+    strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
+    
     return strMessage
 
 def messageLogisticsParser_CJ(message):
@@ -819,10 +739,8 @@ def messageLogisticsParser_CJ(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("대한통운", "").replace("대통", "").replace("CJ", "").replace("cj", "")
-        if message.isdigit() == False:
-            raise
-        request_headers = {
+        if message.isdigit() == False: raise
+        request_headers = { 
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
@@ -847,8 +765,7 @@ def messageLogisticsParser_CJ(message):
                 infom[_] = infom[_].replace('인수자 : ', '')
         strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (infom[1], infom[2], infom[3], infom[4], infom[5])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 대한통운123456789 or !택배 CJ123456789"
-
+        strMessage = ""
     return strMessage
 
 def messageLogisticsParser_HJ(message):
@@ -857,10 +774,8 @@ def messageLogisticsParser_HJ(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("한진택배", "").replace("한진", "")
-        if message.isdigit() == False:
-            raise
-        request_headers = {
+        if message.isdigit() == False: raise
+        request_headers = { 
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
@@ -882,8 +797,7 @@ def messageLogisticsParser_HJ(message):
                 infom[7] = "(정보 없음)"
         strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (infom[1], infom[2], infom[3], infom[5], infom[7])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 한진택배123456789 or !택배 한진123456789"
-
+        strMessage = ""
     return strMessage
 
 def messageLogisticsParser_KP(message):
@@ -892,10 +806,8 @@ def messageLogisticsParser_KP(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("우체국택배", "").replace("우체국", "")
-        if message.isdigit() == False:
-            raise
-        request_headers = {
+        if message.isdigit() == False: raise
+        request_headers = { 
         'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
@@ -917,8 +829,7 @@ def messageLogisticsParser_KP(message):
         if infom[5] == '            ': infom[5] = '배달준비'
         strMessage = "/// 우체국택배 배송조회 ///\n\n날짜: %s\n시간: %s\n발생국: %s\n처리현황: %s" % (infom[1], infom[2], infom[3], infom[5])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 우체국택배123456789 or !택배 우체국123456789"
-
+        strMessage = ""
     return strMessage
 
 def messageLogisticsParser_LG(message):
@@ -927,7 +838,6 @@ def messageLogisticsParser_LG(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("로젠택배", "").replace("로젠", "")
         if message.isdigit() == False:
             raise
         request_headers = {
@@ -957,8 +867,7 @@ def messageLogisticsParser_LG(message):
             temp = '\n배달 예정 시간: ' + infom[5]
         strMessage = "/// 로젠택배 배송조회 ///\n\n날짜: %s\n사업장: %s\n배송상태: %s\n배송내용: %s" % (infom[0], infom[1], infom[2], infom[3]) + temp
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 로젠택배123456789 or !택배 로젠123456789"
-
+        strMessage = ""
     return strMessage
 
 def messageLogisticsParser_LT(message):
@@ -967,7 +876,6 @@ def messageLogisticsParser_LT(message):
     i = 1
     temp = ""
     try:
-        message = message.replace("!택배 ", "").replace("롯데택배", "").replace("롯데", "")
         if message.isdigit() == False:
             raise
         request_headers = {
@@ -988,8 +896,7 @@ def messageLogisticsParser_LT(message):
         infom[6] = infom[6][:10] + ' ' + infom[6][10:]
         strMessage = "/// 롯데택배 배송조회 ///\n\n단계: %s\n시간: %s\n현위치: %s\n처리현황: %s" % (infom[5], infom[6], infom[7], infom[8])
     except:
-        strMessage = "잘못된 형식이거나 존재하지 않는 운송장번호입니다.\\m사용 예시: !택배 롯데택배123456789 or !택배 롯데123456789"
-
+        strMessage = ""
     return strMessage
 
 def messageMemo(message, sender):
@@ -1029,10 +936,16 @@ def messageMemreturn(sender):
 
     return strMessage
 
+def messageMinseok():
+    strMessage = "와봇은 민석이가 지배했다!"
+
+    return strMessage
+
 def messageMinsik():
     strMessage = "민식아 그래서 학교는 언제와?"
 
     return strMessage
+
 
 def messageMinsikBooreop():
     strMessage = "2023-1학기 복학한 민식아 이제 안부럽다"
@@ -1115,28 +1028,12 @@ def messageOff():
     return strMessage
 
 def messageOh():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "..레오"
-    elif randInt == 1:
-        strMessage = "..렌지쥬스"
-
-    return strMessage
-
+    messages = ["..레오", "..렌지쥬스", "..필승 코리아", "..카리나", "..리 꽥꽥"]
+    return random.choice(messages)
+  
 def messageOutwork():
-    randInt = random.randrange(0, 3)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "출근하세요"
-    elif randInt == 1:
-        strMessage = "평생 쉬세요~"
-    elif randInt == 2:
-        strMessage = "집가고싶다"
-
-    return strMessage
+    messages = ["출근하세요", "평생 쉬세요~", "집가고싶다", "어딜 쉬러가요", "오늘 야근이에요"]
+    return random.choice(messages)
 
 def messageOho(message):
     strMessage = message[::-1]
@@ -1149,15 +1046,8 @@ def messageOkay():
     return strMessage
 
 def messageReal():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "ㄹㅇㅋㅋ"
-    elif randInt == 1:
-        strMessage = "아닌데요"
-
-    return strMessage
+    messages = ["ㄹㅇㅋㅋ", "아닌데요", "ㄹㅇ임ㅋㅋ"]
+    return random.choice(messages)
 
 def messageRemember(message, room):
     message = message.replace("!기억해", "").replace("!기억", "").strip()
@@ -1197,45 +1087,26 @@ def messageRemreturn(room):
     return strMessage
 
 def messageSalute():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "필승! ^^7"
-    elif randInt == 1:
-        strMessage = "충성! ^^7"
-
-    return strMessage
+    messages = ["필승! ^^7", "충성! ^^7", "훈련병들은 충성! ^^7", "훈련병들은 필승! ^^7"]
+    return random.choice(messages)
 
 def messageSaseyo():
-    randInt = random.randrange(0, 4)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "사세요"
-    elif randInt == 1:
-        strMessage = "안 사도 돼요"
-    elif randInt == 2:
-        strMessage = "나스는 역시 시놀로지죠~"
-    elif randInt == 3:
-        strMessage = "나스는 역시 큐냅이죠~"
-
-    return strMessage
+    messages = ["사세요", "안 사도 돼요", "나스는 역시 시놀로지죠~", "나스는 역시 큐냅이죠~"]
+    return random.choice(messages)
 
 def messageSeungbeomGraduate():
     randInt = random.randrange(0, 3)
     strMessage = ""
-    y, m, d = 2024, 2, 15
+    y, m, d = 2031, 2, 28
     messageDateCalculator(y, m, d)
     leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
     if randInt == 0:
         strMessage = "승범아 대학원 가야지?"
     elif randInt == 1:
-        strMessage = "승범이가 졸업하기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+        strMessage = "승범이가 박사과정을 마치기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
-        strMessage = "승범이가 졸업하기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
-
+        strMessage = "승범이가 박사과정을 마치기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     return strMessage
 
 def messageSupilGraduate():
@@ -1260,58 +1131,21 @@ def messageSupilGraduate():
     return strMessage
 
 def messageSeongminGraduate():
-    randInt = random.randrange(0, 6)
     strMessage = ""
-
-    y, m, d = 2024, 2, 22
-    messageDateCalculator(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
-
-    if randInt == 0:
-        strMessage = "24년은 오지 않습니다..."
-    elif randInt == 1:
-        strMessage = "그런거 물어볼 시간에 일이나 하세요."
-    elif randInt == 2:
-        strMessage = "지성민씨의 소집해제일은 29년 12월 32일입니다."
-    elif randInt == 3:
-        strMessage = "지성민씨의 소집해제일까지 %d일이 남았습니다."%(leftdays)
-    elif randInt == 4:
-        strMessage = "지성민씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
-    elif randInt == 5:
-        strMessage = "지성민씨가 민간인이 될 때까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
-
+    randInt = random.randrange(0,2)
+    if randInt == 0: strMessage = "지성민씨가 소집된지 %d일, 소해된지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2022,5,22)).days, (datetime.date.today() - datetime.date(2024,2,22)).days)
+    elif randInt == 1: strMessage = "지성민씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2031,12,31) - datetime.date.today()).days)
     return strMessage
 
 def messageShuk():
-    randInt = random.randrange(0, 4)
     strMessage = "슈슉"
-
-    while randInt != 4:
-        if randInt == 0:
-            strMessage += ".슉.슈슉.시.발럼"
-        elif randInt == 1:
-            strMessage += ".슈슉.슉.슉시"
-        elif randInt == 2:
-            strMessage += ".슈발놈아.슉.시발.슈슉.슉"
-        elif randInt == 3:
-            strMessage += ".슈슉.시발.럼아.슉.슈슉.슉.슉슉.슈슉.시.발놈아"
-
-        randInt = random.randrange(0, 5)
-
-    strMessage += ".슉"
-
-    return strMessage
+    messages = [".슉.슈슉.시.발럼", ".슈슉.슉.슉시",
+                ".슈발놈아.슉.시발.슈슉.슉", ".슈슉.시발.럼아.슉.슈슉.슉.슉슉.슈슉.시.발놈아"]
+    return strMessage + random.choice(messages) + ".슉"
 
 def messageSleepy():
-    randInt = random.randrange(0, 2)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "자라;;"
-    elif randInt == 1:
-        strMessage = "구라;;"
-
-    return strMessage
+    messages = ["자라;;", "구라;;", "자야지;;", "자야겠다;;", "자야겠다..", "졸린게 말이 돼?", "그만 좀 자라;;"]
+    return random.choice(messages)
 
 def messageSora(message):
     question = message.replace("마법의 소라고동이시여", "").strip()
@@ -1334,55 +1168,72 @@ def messageStress():
     return strMessage
 
 def messageSGW():
-    randInt = random.randrange(0, 4)
-    strMessage = ""
+    messages = ["좀 나가라;;", "뭐하냐;", "좀 꺼라;", "이미 차단당한 유저입니다."]
+    return random.choice(messages)
 
-    if randInt == 0:
-        strMessage = "좀 나가라;;"
-    elif randInt == 1:
-        strMessage = "뭐하냐;"
-    elif randInt == 2:
-        strMessage = "좀 꺼라;"
-    elif randInt == 3:
-        strMessage = "이미 차단당한 유저입니다."
+def messageTimezone(message):
+    strMessage = ""
+    try:
+        message = message.replace("!시간 ", "").replace(" ", "")
+        if message.startswith('+') or message.startswith('-'):
+            if int(message) > 12 or int(message) < -11:
+                raise
+            offset = datetime.timedelta(hours=int(message))
+        else:
+            hours, minutes = map(int, message.split(':'))
+            offset = datetime.timedelta(hours=hours, minutes=minutes)
+        adjusted_time = datetime.datetime.now(datetime.timezone.utc) + offset
+        strMessage = f"현재 UTC{message}의 시간은 ", adjusted_time.strftime('%Y-%m-%d %H:%M:%S') , "입니다."
+    except:
+        strMessage = "사용 형식이 잘못됐거나 존재하지 않는 시간대입니다.\\m사용법: !시간 +9 or !시간 -11"
+    return strMessage
+
+def messageTjoGraduate():
+    strMessage = "zz"
 
     return strMessage
 
 def messageUh():
-    randInt = random.randrange(0, 3)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "..이가없네;;"
-    elif randInt == 1:
-        strMessage = "..피치"
-    elif randInt == 2:
-        strMessage = "..기여차"
-
-    return strMessage
+    messages = ["..이가없네;;", "..피치", "..기여차"]
+    return random.choice(messages)
 
 def messageWa():
-    randInt = random.randrange(0, 9)
-    strMessage = ""
+    messages = ["갑부;;", "기만;;", "ㄹㅇ;;", "마스터;;", "역시;;", 
+                "이건 좀;;", "극혐;;", "플;;", "이파이;;", "내가 봐도 선 넘었네;;", "사비;;"]
+    return random.choice(messages)
 
+def messageWabotPower(flag, room):
+    strMessage = ""
+    if os.path.isfile("power.json"):
+        with open('power.json', 'r', encoding='utf-8') as f:
+            power_dict = json.load(f)
+        room_power = power_dict.get(room)
+        if room_power is not None:
+            if (flag == 0 and room_power == "0") or (flag == 1 and room_power == "1"):
+                return strMessage
+        else:
+            if flag == 1: return strMessage
+            else: pass
+    else:
+        power_dict = {}
+    randInt = random.randrange(0, 4)
     if randInt == 0:
-        strMessage = "갑부;;"
+        if flag == 0:
+            power_dict[room] = "0"
+            json_data = json.dumps(power_dict, ensure_ascii=False, indent=4)
+            strMessage = "와봇이 종료되었습니다."
+        elif flag == 1:
+            power_dict[room] = "1"
+            json_data = json.dumps(power_dict, ensure_ascii=False, indent=4)
+            strMessage = "와봇이 시작되었습니다."
+        with open('power.json', 'w', encoding='utf-8') as f:
+            f.write(json_data)
     elif randInt == 1:
-        strMessage = "기만;;"
+        strMessage = "싫은데? ^^"
     elif randInt == 2:
-        strMessage = "ㄹㅇ;;"
+        strMessage = "네~"
     elif randInt == 3:
-        strMessage = "마스터;;"
-    elif randInt == 4:
-        strMessage = "역시;;"
-    elif randInt == 5:
-        strMessage = "이건 좀;;"
-    elif randInt == 6:
-        strMessage = "극혐;;"
-    elif randInt == 7:
-        strMessage = "플;;"
-    elif randInt == 8:
-        strMessage = "이파이;;"
+        strMessage = "ㅋㅋ"
 
     return strMessage
 
@@ -1397,19 +1248,15 @@ def messageYongmin():
     return strMessage
 
 def messageZara():
-    randInt = random.randrange(0, 4)
-    strMessage = ""
-
-    if randInt == 0:
-        strMessage = "전기세 아깝다ㅡㅡ;;"
-    elif randInt == 1:
-        strMessage = "거북이"
-    elif randInt == 2:
-        strMessage = "..투스트라는 이렇게 말했다."
-    elif randInt == 3:
-        strMessage = "..ZARA는 스페인에 본사를 둔 글로벌 패션 그룹 인디텍스를 모회사로 두고 있는 SPA 브랜드로, SPA 브랜드 중 세계 최대 매출을 기록하고 있습니다."
-
-    return strMessage
+    messages = [
+        "전기세 아깝다ㅡㅡ;;",
+        "거북이",
+        "..투스트라는 이렇게 말했다.",
+        "..ZARA는 스페인에 본사를 둔 글로벌 패션 그룹 인디텍스를 모회사로 두고 있는 SPA 브랜드로, SPA 브랜드 중 세계 최대 매출을 기록하고 있습니다.",
+        "잘 자라^^",
+        "자라는 토끼랑 달리기 경주 중",
+    ]
+    return random.choice(messages)
 
 def messageZayazi():
     strMessage = "구라ㅡㅡ;;"

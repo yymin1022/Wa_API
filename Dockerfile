@@ -6,6 +6,7 @@ WORKDIR /app
 ADD ./ /app
 
 RUN python3 -m pip install -r requirements.txt
+RUN python3 -m pip install --upgrade certifi
 
 EXPOSE 80
 

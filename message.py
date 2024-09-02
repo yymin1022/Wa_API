@@ -660,27 +660,11 @@ def messageHokyuGraduate():
     return strMessage
 
 def messageHansuGraduate():
-    randInt = random.randrange(0, 4)
     strMessage = ""
-    y, m, d = 2024, 8, 31
-    messageDateCalculator(y, m, d)
-    leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
 
-    if leftdays == 0:
-        strMessage = "이한수씨의 소집 해제를 축하합니다!!"
-        return strMessage
-    elif leftdays < 0:
-        strMessage = "이한수씨가 소집된지 %d일, 소집 해제된지는 %d일이 지났습니다."%((datetime.date.today() - datetime.date(2022,12,1)).days, (datetime.date.today() - datetime.date(2024,8,31)).days)
-
-    if randInt == 0:
-        strMessage = "ㅋㅋ"
-    elif randInt == 1:
-        strMessage = "이한수씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다.\\m.....\\m사실 거짓말입니다ㅎㅎ"%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
-    elif randInt == 2:
-        strMessage = "이한수씨의 소집해제일까지 " + format(leftseconds_wa, ',') + "초 남았습니다.\\m.....\\m사실 거짓말입니다ㅎㅎ"
-    elif randInt == 3:
-        strMessage = "에이 거짓말"
-
+    randInt = random.randrange(0,2)
+    if randInt == 0: strMessage = "이한수씨가 소집된지 %d일, 해제된지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2022,12,1)).days, (datetime.date.today() - datetime.date(2024,8,31)).days)
+    elif randInt == 1: strMessage = "이한수씨의 민방위 소집해제일까지 %d일 남았습니다."%((datetime.date(2039,1,1) - datetime.date.today()).days)
     return strMessage
 
 def messageHungry():

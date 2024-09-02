@@ -782,7 +782,9 @@ def messageLogisticsParser_HJ(message):
         for _ in range(len(infom)):
             if infom[7] == '':
                 infom[7] = "(정보 없음)"
-        strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (infom[1], infom[2], infom[3], infom[5], infom[7])
+        goods_name = soup.select('#delivery-wr > div > table > tbody > tr > td:nth-child(1)')
+        goods_name = goods_name[0].get_text().strip()
+        strMessage = "/// 한진택배 배송조회 ///\n\n상품명: %s\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (goods_name, infom[1], infom[2], infom[3], infom[5], infom[7])
     except:
         strMessage = ""
     return strMessage

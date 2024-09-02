@@ -621,9 +621,6 @@ def messageHa():
         "걍 놀고 싶다..",
         "걍 자고 싶다..",
         "걍 쉬고 싶다..",
-        "퇴근하고 싶다..",
-        "집 가고 싶다..",
-        "퇴사하고 싶다.."
     ]
     return random.choice(messages)
 
@@ -639,8 +636,7 @@ def messageHokyu():
         "K2C1 핥짝핥짝",
         "감사합니다. 314대대 통신반 김호규 하사입니다. 머슼타드일까요?",
         "악! 소위 김호규!",
-        "아...\\m전역하기 싫다...",
-        "SFF 핥짝핥짝"
+        "아...\\m전역하기 싫다..."
     ]
     return random.choice(messages)
 
@@ -745,13 +741,16 @@ def messageLogisticsParser_CJ(message):
                     temp += tag.get_text()
                 break
             i = i+1
+        goods_name = soup.select('#content > div > table.tepTb02.tepDep > tbody > tr:nth-child(6) > td:nth-child(2)')
+        goods_name = goods_name[0].get_text().strip()
+        goods_name = goods_name.replace('[<td>제품,', '').replace('</td>]', '')
         infom = temp.split('\n')
         for _ in range(len(infom)):
             if infom[_] == "\xa0":
                 infom[_] = infom[_].replace(u'\xa0', u'(정보 없음)')
             elif "인수자 : " in infom[_]:
                 infom[_] = infom[_].replace('인수자 : ', '')
-        strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (infom[1], infom[2], infom[3], infom[4], infom[5])
+        strMessage = "/// CJ대한통운 배송조회 ///\n\n품목: %s\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (goods_name, infom[1], infom[2], infom[3], infom[4], infom[5])
     except:
         strMessage = ""
     return strMessage

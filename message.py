@@ -752,13 +752,16 @@ def messageLogisticsParser_CJ(message):
                     temp += tag.get_text()
                 break
             i = i+1
+        goods_name = soup.select('#content > div > table.tepTb02.tepDep > tbody > tr:nth-child(6) > td:nth-child(2)')
+        goods_name = goods_name[0].get_text().strip()
+        goods_name = goods_name.replace('[<td>제품,', '').replace('</td>]', '')
         infom = temp.split('\n')
         for _ in range(len(infom)):
             if infom[_] == "\xa0":
                 infom[_] = infom[_].replace(u'\xa0', u'(정보 없음)')
             elif "인수자 : " in infom[_]:
                 infom[_] = infom[_].replace('인수자 : ', '')
-        strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (infom[1], infom[2], infom[3], infom[4], infom[5])
+        strMessage = "/// CJ대한통운 배송조회 ///\n\n품목: %s\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (goods_name, infom[1], infom[2], infom[3], infom[4], infom[5])
     except:
         strMessage = ""
     return strMessage
@@ -790,7 +793,9 @@ def messageLogisticsParser_HJ(message):
         for _ in range(len(infom)):
             if infom[7] == '':
                 infom[7] = "(정보 없음)"
-        strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (infom[1], infom[2], infom[3], infom[5], infom[7])
+        goods_name = soup.select('#delivery-wr > div > table > tbody > tr > td:nth-child(1)')
+        goods_name = goods_name[0].get_text().strip()
+        strMessage = "/// 한진택배 배송조회 ///\n\n상품명: %s\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (goods_name, infom[1], infom[2], infom[3], infom[5], infom[7])
     except:
         strMessage = ""
     return strMessage

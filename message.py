@@ -251,6 +251,13 @@ def getReplyMessage(message, room, sender):
             strResult = messageWabotPower(1, room)
     elif "비트코인" in message:
         strResult = messageBitcoin()
+    elif "유용민" in message:
+        if "바보" in message:
+            strResult = messageStupidYongmin(0)
+        elif "천재" in message:
+            strResult = messageStupidYongmin(1)
+        else:
+            strResult = messageStupidYongmin(2)
     return strResult
 
 def getCryCount(message):
@@ -1309,6 +1316,17 @@ def messageWeather(lat, lon, loc):
     strMessage = "현재온도: {}K\\n구름: {}%".format(str(jsonData["main"]["temp"]), str(jsonData["clouds"]["all"]))
     strMessage +="\\n압력: {}Pa\\n습도: {}%".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
     strMessage +="\\m{}의 날씨 {}".format(loc, str(jsonData["weather"]["description"]))
+
+    return strMessage
+
+def messageStupidYongmin(type):
+    strMessage = ""
+    if type == 0:
+        strMessage = "그렇지~"
+    elif type == 1:
+        strMessage = "겠냐?"
+    elif type == 2:
+        strMessage = "바보~"
 
     return strMessage
 

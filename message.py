@@ -232,6 +232,13 @@ def getReplyMessage(message, room, sender):
         strResult = messageWa()
     elif "와!" in message:
         strResult = messageWaSans()
+    elif "유용민" in message:
+        if "바보" in message:
+            strResult = messageStupidYongmin(0)
+        elif "천재" in message:
+            strResult = messageStupidYongmin(1)
+        else:
+            strResult = messageStupidYongmin(2)
     elif "용민" in message:
         strResult = messageYongmin()
     elif "자라" in message:
@@ -251,13 +258,6 @@ def getReplyMessage(message, room, sender):
             strResult = messageWabotPower(1, room)
     elif "비트코인" in message:
         strResult = messageBitcoin()
-    elif "유용민" in message:
-        if "바보" in message:
-            strResult = messageStupidYongmin(0)
-        elif "천재" in message:
-            strResult = messageStupidYongmin(1)
-        else:
-            strResult = messageStupidYongmin(2)
     return strResult
 
 def getCryCount(message):

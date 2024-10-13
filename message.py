@@ -258,6 +258,8 @@ def getReplyMessage(message, room, sender):
             strResult = messageWabotPower(1, room)
     elif "비트코인" in message:
         strResult = messageBitcoin()
+    elif "GDG" in message:
+        strResult = messageGDG()
     return strResult
 
 def getCryCount(message):
@@ -1333,6 +1335,11 @@ def messageStupidYongmin(type):
     elif type == 2:
         strMessage = "바보~"
 
+    return strMessage
+
+def messageGDG():
+    strMessage = "GDG on Campus: CAU 최고 ~!~!~!~!@"
+    
     return strMessage
 
 def messageBase64Encode(message):

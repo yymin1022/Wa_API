@@ -260,6 +260,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageBitcoin()
     elif "GDG" in message:
         strResult = messageGDG()
+    elif "GDSG" in message:
+        strResult = messageNotGDSC()
     return strResult
 
 def getCryCount(message):
@@ -1339,8 +1341,12 @@ def messageStupidYongmin(type):
 
 def messageGDG():
     strMessage = "GDG on Campus: CAU 최고 ~!~!~!~!@"
-    
+
     return strMessage
+
+def messageNotGDSC():
+    strMessage = ["아뇨. GDG 인데요.", "이제 GDG라니깐요?!", "GDG입니다.", "GDSC는 이제 없어요.", "GDG! GDG!! GDG!@!@!@!"]
+    return random.choice(strMessage)
 
 def messageBase64Encode(message):
     msg = message.split("!base64e ")[1]

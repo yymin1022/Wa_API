@@ -260,7 +260,7 @@ def getReplyMessage(message, room, sender):
         strResult = messageBitcoin()
     elif "GDG" in message:
         strResult = messageGDG()
-    elif "GDSG" in message:
+    elif "GDSC" in message:
         strResult = messageNotGDSC()
     return strResult
 

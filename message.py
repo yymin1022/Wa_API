@@ -1368,7 +1368,7 @@ def messageSoohyun():
     return strMessage
 
 def messageLimsoo():
-    messages = ["임수현이 졸업했는데 왜 찾아?","안녕티비 ㅋㅋ","아 진짜?"]
+    messages = ["임수현이 졸업했는데 왜 찾아?","안녕티비 ㅋㅋ","아 진짜?","넹구리"]
     return random.choice(messages)
 
 def messageBase64Encode(message):

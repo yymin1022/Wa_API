@@ -264,6 +264,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageNotGDSC()
     elif "여진" in message or "김여진" in message:
         strResult = messageYeojin()
+    elif "수현" in message:
+        strResult = messageSoohyun()
     return strResult
 
 def getCryCount(message):
@@ -1357,6 +1359,10 @@ def messageYeojin():
               "여지니 왜 불러요?\\m난 왜 안 찾아?"
     ]
     return random.choice(messages)
+
+def messageSoohyun():
+    strMessage = "수현이? 무슨 수현이?\\m신수현? 임수현? 윤수현? 누구???" 
+    return strMessage
 
 def messageBase64Encode(message):
     msg = message.split("!base64e ")[1]

@@ -263,7 +263,7 @@ def getReplyMessage(message, room, sender):
     elif "GDSC" in message:
         strResult = messageNotGDSC()
     elif "여진" in message or "김여진" in message:
-        strResult= messageYeojin()
+        strResult = messageYeojin()
     return strResult
 
 def getCryCount(message):
@@ -1351,7 +1351,7 @@ def messageNotGDSC():
     return random.choice(strMessage)
 
 def messageYeojin():
-    messages=["오나핑 여진이",
+    messages = ["오나핑 여진이",
               "여진이 바빠요",
               "2024 GDG 오거나이저!\\m김여진!",
               "여지니 왜 불러요?\\m난 왜 안 찾아?"

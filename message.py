@@ -358,7 +358,7 @@ def messageBitcoin():
     requestSession.mount(url, DESAdapter())
 
     try:
-        response = requestSession.get(url)
+        response = requestSession.get(url, verify=certifi.where())
         response.raise_for_status()
         data = response.json()
         current_price = data[0]['trade_price']

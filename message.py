@@ -264,7 +264,7 @@ def getReplyMessage(message, room, sender):
         strResult = messageNotGDSC()
     elif "여진" in message or "김여진" in message:
         strResult = messageYeojin()
-    elif "수현" in message:
+    elif "수현" in message or "수휫" in message:
         if "임수현" in message or "수휫" in message:
             strResult = messageLimsoo()
         else:    

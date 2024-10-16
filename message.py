@@ -269,6 +269,10 @@ def getReplyMessage(message, room, sender):
             strResult = messageLimsoo()
         else:    
             strResult = messageSoohyun()
+    elif "유빈" in message or "서유빈" in messege:
+        strResult = messageVini()
+    elif "럭키비키" in message or "운세" in messege:
+        strResult = messageViki()
     return strResult
 
 def getCryCount(message):
@@ -1363,6 +1367,7 @@ def messageYeojin():
     ]
     return random.choice(messages)
 
+
 def messageSoohyun():
     strMessage = "수현이? 무슨 수현이?\\m신수현? 임수현? 윤수현? 누구???" 
     return strMessage
@@ -1377,3 +1382,11 @@ def messageBase64Encode(message):
 def messageBase64Decode(message):
     msg = message.split("!base64d ")
     return base64.b64decode(msg[1]).decode('utf8')
+
+def messageVini():
+    messages = ["안녕하세용가리","우리 유빈이 즐~대 디자이너 아입니다!","┌───────────────┐\\n        방금 유빈이 부른 사람\\n└───────────────┘\\n　　ᕱ ᕱ ||\\n　 ( ･ω･ ||\\n　 /　つΦ\\n"," ⋆͛*͛ ͙͛ ⁑͛⋆͛*͛ ͙͛(๑•﹏•)⋆͛*͛ ͙͛ ⁑͛⋆͛*͛ ͙͛ "]
+    return random.choice(messages)
+
+def messageViki():
+    messages = ["오늘의 운세는 이븐~하게 익지 않았어요.","오늘은 평범-한 날이예요","오늘 당신 초-럭키༘˚⋆𐙚｡ \\n 동방에 방문하면 좋은 일이 생길지도⋆𖦹.✧˚", "♡ ♡ ♡ ₍ᐢɞ̴̶̷.̮ɞ̴̶̷ᐢ₎ ♡ ♡ ♡\\n┏━♡━ U U━♡━━┓\\n♡오늘의 운세는···     ♡\\n♡초초초럭키-예요!   ♡\\n┗━♡━━━━♡━━┛"]
+    return random.choice(messages)

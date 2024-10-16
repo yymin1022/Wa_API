@@ -269,9 +269,9 @@ def getReplyMessage(message, room, sender):
             strResult = messageLimsoo()
         else:    
             strResult = messageSoohyun()
-    elif "유빈" in message or "서유빈" in messege:
+    elif "유빈" in message or "서유빈" in message:
         strResult = messageVini()
-    elif "럭키비키" in message or "운세" in messege:
+    elif "럭키" in message or "운세" in message:
         strResult = messageViki()
     return strResult
 

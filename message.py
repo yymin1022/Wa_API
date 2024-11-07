@@ -502,7 +502,19 @@ def messageChalsGraduate():
     return strMessage
 
 def messageChopchop(message):
-    strMessage = message
+    chopchopUrl = 'http://check.bboo.co.kr/check.bboo.co.kr.html'
+
+    data = {
+        'r_name': '유용민',
+        'r_hp': '01081821022'
+    }
+
+    requestSession = requests.Session()
+    requestSession.mount(chopchopUrl, DESAdapter())
+    response = requestSession.post(chopchopUrl, data=data)
+
+    strMessage = response.text
+
     return strMessage
 
 def messageCoding():

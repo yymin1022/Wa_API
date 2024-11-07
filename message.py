@@ -504,16 +504,39 @@ def messageChalsGraduate():
 def messageChopchop(message):
     chopchopUrl = 'http://check.bboo.co.kr/check.bboo.co.kr.html'
 
+    if len(message.split()) != 3:
+        return "사용법: !촙촙 <가입자 이름> <회선 번호>"
+
+    r_name = message.split()[1]
+    r_hp = message.split()[2]
+
     data = {
-        'r_name': '유용민',
-        'r_hp': '01081821022'
+        'r_name': r_name,
+        'r_hp': r_hp
     }
 
     requestSession = requests.Session()
     requestSession.mount(chopchopUrl, DESAdapter())
     response = requestSession.post(chopchopUrl, data=data)
 
-    strMessage = response.text
+    if "등록된 데이터가 없습니다" in response.text:
+        return "등록된 데이터가 없습니다. 다시 확인해주세요."
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    strStatus = soup.find("td", text="업무진행상황").find_next_sibling("td").get_text(strip=True)
+
+    strMessage = f"업무진행상황: {strStatus}\n" \
+                    f"통신사/유형: {soup.find('td', text='통신사/유형').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"모델명: {soup.find('td', text='모델명').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"색상: {soup.find('td', text='색상').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"요금제: {soup.find('td', text='요금제').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"약정: {soup.find('td', text='약정').find_next_sibling('td').get_text(strip=True)}\n"
+
+    if strStatus == "개통완료":
+        strMessage += f"회선유지기간: {soup.find('td', text='회선유지기간').find_next_sibling('td').get_text(strip=True)}\n" \
+                        f"요금제유지기간: {soup.find('td', text='요금제유지기간').find_next_sibling('td').get_text(strip=True)}"
+    else:
+        strMessage += f"배송정보: {soup.find('td', text='배송등록').find_next_sibling('td').get_text(strip=True)}"
 
     return strMessage
 

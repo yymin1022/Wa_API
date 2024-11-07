@@ -102,6 +102,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageLogisticsParser(message)
     elif "!통관" in message:
         strResult = messageCustomTracker(message)
+    elif "!촙촙" in message:
+        strResult = messageChopchop(message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "!시간" in message:
@@ -267,7 +269,7 @@ def getReplyMessage(message, room, sender):
     elif "수현" in message or "수휫" in message:
         if "임수현" in message or "수휫" in message:
             strResult = messageLimsoo()
-        else:    
+        else:
             strResult = messageSoohyun()
     elif "유빈" in message or "서유빈" in message:
         strResult = messageVini()
@@ -499,6 +501,10 @@ def messageChalsGraduate():
 
     return strMessage
 
+def messageChopchop(message):
+    strMessage = message
+    return strMessage
+
 def messageCoding():
     messages = ["구라ㅡㅡ;;", "ㅋ", "밤새도 못 할 듯?ㅋㅋ"]
     return random.choice(messages)
@@ -689,10 +695,10 @@ def messageHokyuGraduate():
 
 def messageHansuGraduate():
     strMessage = ""
-
     randInt = random.randrange(0,2)
     if randInt == 0: strMessage = "이한수씨가 소집된지 %d일, 해제된지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2022,12,1)).days, (datetime.date.today() - datetime.date(2024,8,31)).days)
     elif randInt == 1: strMessage = "이한수씨의 민방위 소집해제일까지 %d일 남았습니다."%((datetime.date(2039,1,1) - datetime.date.today()).days)
+
     return strMessage
 
 def messageHungry():
@@ -1354,7 +1360,6 @@ def messageStupidYongmin(type):
 
 def messageGDG():
     strMessage = "GDG on Campus: CAU 최고 ~!~!~!~!@"
-
     return strMessage
 
 def messageNotGDSC():
@@ -1367,11 +1372,12 @@ def messageYeojin():
               "2024 GDG 오거나이저!\\m김여진!",
               "여지니 왜 불러요?\\m난 왜 안 찾아?"
     ]
+
     return random.choice(messages)
 
 
 def messageSoohyun():
-    strMessage = "수현이? 무슨 수현이?\\m신수현? 임수현? 윤수현? 누구???" 
+    strMessage = "수현이? 무슨 수현이?\\m신수현? 임수현? 윤수현? 누구???"
     return strMessage
 
 def messageLimsoo():
@@ -1392,8 +1398,7 @@ def messageVini():
 def messageViki():
     messages = ["오늘의 운세는 이븐~하게 익지 않았어요.","오늘의 운세는 이븐~하게 익지 않았어요.",".....∧_∧\\n.. ( ̳• ·̫ • ̳) \\n┏ー∪∪━━━━━━━━┓\\n  °•. 오늘운세구려요.. . .•°\\n┗━--━━━━━•━━━┛",".....∧_∧\\n.. ( ̳• ·̫ • ̳) \\n┏ー∪∪━━━━━━━━┓\\n  °•. 오늘운세구려요.. . .•°\\n┗━--━━━━━•━━━┛",". /)_/)\\n( ̳• ·̫ • ̳)   럭키. .ꕥ 할지도\\n/>ꕥ<","＿人人人人人人人人＿\\n＞ 오늘 운세 낫배드! ＜\\n￣Y^Y^Y^Y^Y^Y^Y^Y￣\\n　 _n　( ｜　 ハ_ハ\\n　 ＼＼ ( ‘-^　)\\n　　 ＼￣￣　 )\\n　　　 ７　　/","오늘은 평범-한 날이예요","오늘 당신 초-럭키༘˚⋆𐙚｡ \\n 동방에 방문하면 좋은 일이 생길지도⋆𖦹.✧˚", "♡ ♡ ♡ ₍ᐢɞ̴̶̷.̮ɞ̴̶̷ᐢ₎ ♡ ♡ ♡\\n┏━♡━ U U━♡━━┓\\n♡오늘의 운세는···     ♡\\n♡초초초럭키-예요!   ♡\\n┗━♡━━━━♡━━┛"]
     return random.choice(messages)
-
+    
 def messageTaehwan():
     messages = ["와..~ 용민형님","용민형님 기다리고 있었습니다","굿아이디어","그게 맞지","뭔지 알지","그건 틀렸어"]
     return random.choice(messages)
-

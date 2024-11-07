@@ -25,32 +25,32 @@ CIPHERS = (
 load_dotenv()
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
 GEMINI_GENERATION_CONFIG = {
-  "candidate_count": 1,
-  "max_output_tokens": 256,
-  "temperature": 1.0,
-  "top_p": 0.7,
+    "candidate_count": 1,
+    "max_output_tokens": 256,
+    "temperature": 1.0,
+    "top_p": 0.7,
 }
-GEMINI_SAFETY_CONFIG=[
-  {
-    "category": "HARM_CATEGORY_DANGEROUS",
-    "threshold": "BLOCK_NONE",
-  },
-  {
-    "category": "HARM_CATEGORY_HARASSMENT",
-    "threshold": "BLOCK_NONE",
-  },
-  {
-    "category": "HARM_CATEGORY_HATE_SPEECH",
-    "threshold": "BLOCK_NONE",
-  },
-  {
-    "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-    "threshold": "BLOCK_NONE",
-  },
-  {
-    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-    "threshold": "BLOCK_NONE",
-  },
+GEMINI_SAFETY_CONFIG = [
+    {
+        "category": "HARM_CATEGORY_DANGEROUS",
+        "threshold": "BLOCK_NONE",
+    },
+    {
+        "category": "HARM_CATEGORY_HARASSMENT",
+        "threshold": "BLOCK_NONE",
+    },
+    {
+        "category": "HARM_CATEGORY_HATE_SPEECH",
+        "threshold": "BLOCK_NONE",
+    },
+    {
+        "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        "threshold": "BLOCK_NONE",
+    },
+    {
+        "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+        "threshold": "BLOCK_NONE",
+    },
 ]
 
 genai.configure(
@@ -61,6 +61,7 @@ model = genai.GenerativeModel(
     generation_config=GEMINI_GENERATION_CONFIG,
     safety_settings=GEMINI_SAFETY_CONFIG
 )
+
 
 class DESAdapter(HTTPAdapter):
     def init_poolmanager(self, *args, **kwargs):
@@ -73,6 +74,7 @@ class DESAdapter(HTTPAdapter):
         kwargs['ssl_context'] = context
         return super(DESAdapter, self).proxy_manager_for(*args, **kwargs)
 
+
 def getReplyMessage(message, room, sender):
     strResult = ""
 
@@ -84,7 +86,7 @@ def getReplyMessage(message, room, sender):
         strResult = messageBase64Encode(message)
     elif "!날씨" in message:
         loc = message.split("!날씨")
-        if(loc == "!날씨"):
+        if (loc == "!날씨"):
             strResult = messageWeather()
         else:
             lat, lon = getlatlon(loc)
@@ -258,13 +260,17 @@ def getReplyMessage(message, room, sender):
             strResult = messageWabotPower(1, room)
     elif "비트코인" in message:
         strResult = messageBitcoin()
+    elif "준섭" in message:
+        strResult = messageJunseob()
     return strResult
+
 
 def getCryCount(message):
     count = message.count("ㅠ")
     count += message.count("ㅜ")
 
     return count
+
 
 def getLaughCount(message):
     count = message.count("ㅋ")
@@ -276,6 +282,7 @@ def getLaughCount(message):
 
     return count
 
+
 def getStressCount(message):
     count = message.count(";")
     count += message.count(":")
@@ -284,13 +291,16 @@ def getStressCount(message):
 
     return count
 
+
 def messageAh():
     messages = ["글쿤..", "그래요..", "그렇군요..", "안돼..", "..메리카노", "..에이오우", "..아르키메데스의 원리"]
     return random.choice(messages)
 
+
 def messageAhnsa():
     messages = ["이걸 안 사?", "왜요;;", "그거 사면 진짜 좋을텐데..", "아..", "헐..", "너한테 안 팔아;;"]
     return random.choice(messages)
+
 
 def messageAnyangMeal():
     todayDate = datetime.date.today()
@@ -316,14 +326,17 @@ def messageAnyangMeal():
 
     return strMessage
 
+
 def messageBaby():
     messages = ["귀여운척 하지 마세요;;", "응애 나 애기", "응애 나 아기 코린이"]
     return random.choice(messages)
+
 
 def messageBoolpyeon():
     strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불편하니깐 그런거아냐!!"
 
     return strMessage
+
 
 def messageBuy():
     messages = ["축하합니다!!!", "그걸 샀네;;", "개부자;;", "와 샀네",
@@ -331,13 +344,18 @@ def messageBuy():
                 "ㅋㅋ 그걸 누가 삼"]
     return random.choice(messages)
 
+
 def messageBHGraduate():
     strMessage = ""
 
-    randInt = random.randrange(0,2)
-    if randInt == 0: strMessage = "임병희씨가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,6,30)).days, (datetime.date.today() - datetime.date(2021,12,29)).days)
-    elif randInt == 1: strMessage = "임병희씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2029,12,31) - datetime.date.today()).days)
+    randInt = random.randrange(0, 2)
+    if randInt == 0:
+        strMessage = "임병희씨가 입대한지 %d일, 전역한지는 %d일이 됐습니다." % ((datetime.date.today() - datetime.date(2020, 6, 30)).days,
+                                                           (datetime.date.today() - datetime.date(2021, 12, 29)).days)
+    elif randInt == 1:
+        strMessage = "임병희씨의 예비군 소집해제일까지 %d일 남았습니다." % ((datetime.date(2029, 12, 31) - datetime.date.today()).days)
     return strMessage
+
 
 def messageBitcoin():
     strMessage = ""
@@ -356,6 +374,7 @@ def messageBitcoin():
         strMessage = "비트코인 가격을 불러오는 중 오류가 발생했습니다."
 
     return strMessage
+
 
 def messageCAUCalendar():
     strMessage = ""
@@ -383,21 +402,22 @@ def messageCAUCalendar():
 
     return strMessage
 
+
 def messageCAULibrary(libTypeID):
     strMessage = libTypeID
 
     libData = {
-       "tabNo": libTypeID
+        "tabNo": libTypeID
     }
     libType = ""
     libUrl = "https://mportal.cau.ac.kr/portlet/p017/p017.ajax"
 
     if libTypeID == "1":
-       libType = "서울"
+        libType = "서울"
     elif libTypeID == "2":
-       libType = "법학"
+        libType = "법학"
     elif libTypeID == "3":
-       libType = "안성"
+        libType = "안성"
     else:
         strMessage = "중앙대학교 열람실 좌석현황\n\n사용법 : 열람실 키워드와 함께 서울 / 안성 / 법학 키워드 언급"
         return strMessage
@@ -410,9 +430,10 @@ def messageCAULibrary(libTypeID):
 
     strMessage = f"중앙대학교 열람실 좌석현황({libType})\n"
     for libItem in libList:
-       strMessage += f"\n{libItem['roomName']} : 여석 {libItem['remainCnt']}석 ({libItem['useCnt']}석 사용중)"
+        strMessage += f"\n{libItem['roomName']} : 여석 {libItem['remainCnt']}석 ({libItem['useCnt']}석 사용중)"
 
     return strMessage
+
 
 def messageCAUMeal(mealTypeID, isTomorrow):
     strMessage = mealTypeID
@@ -449,6 +470,7 @@ def messageCAUMeal(mealTypeID, isTomorrow):
 
     return strMessage
 
+
 def messageCalDay(cal, message):
     strMessage = ""
     weekly = 0
@@ -477,18 +499,23 @@ def messageCalDay(cal, message):
         strMessage = "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !날짜더하기 100일 or !날짜빼기 16주"
     return strMessage
 
+
 def messageChalsGraduate():
-    strMessage = "찰스가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2020,12,7)).days, (datetime.date.today() - datetime.date(2022,9,1)).days)
+    strMessage = "찰스가 입대한지 %d일, 전역한지는 %d일이 됐습니다." % (
+    (datetime.date.today() - datetime.date(2020, 12, 7)).days, (datetime.date.today() - datetime.date(2022, 9, 1)).days)
 
     return strMessage
+
 
 def messageCoding():
     messages = ["구라ㅡㅡ;;", "ㅋ", "밤새도 못 할 듯?ㅋㅋ"]
     return random.choice(messages)
 
+
 def messageCry():
     messages = ["뭘 울어요;;", "왜 우시는 거예요?", "ㅋㅋ얘 운다"]
     return random.choice(messages)
+
 
 def messageCustomTracker(message):
     strMessage = ""
@@ -496,18 +523,22 @@ def messageCustomTracker(message):
         message = message.replace('!통관', '').replace(" ", "")
         key = os.environ['CUSTOM_API_KEY']
         year = datetime.date.today().year
-        url = 'https://unipass.customs.go.kr:38010/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=%s&blYy=%s&hblNo=%s' % (key, year, message)
+        url = 'https://unipass.customs.go.kr:38010/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=%s&blYy=%s&hblNo=%s' % (
+        key, year, message)
         result = requests.get(url)
         soup = BeautifulSoup(result.text, "xml")
         name = soup.find('prnm')
         customs_name = soup.find('etprCstm')
         status = soup.find('prgsStts')
-        process_time = datetime.datetime.strptime(str(soup.find('prcsDttm').text), "%Y%m%d%H%M%S").strftime("%Y.%m.%d %H:%M:%S")
-        strMessage = "/// 관세청 UNIPASS 통관 조회 ///\n\n품명: %s\n입항세관: %s\n통관진행상태: %s\n처리일시: %s" % (name.text, customs_name.text, status.text, process_time)
+        process_time = datetime.datetime.strptime(str(soup.find('prcsDttm').text), "%Y%m%d%H%M%S").strftime(
+            "%Y.%m.%d %H:%M:%S")
+        strMessage = "/// 관세청 UNIPASS 통관 조회 ///\n\n품명: %s\n입항세관: %s\n통관진행상태: %s\n처리일시: %s" % (
+        name.text, customs_name.text, status.text, process_time)
     except:
         strMessage = "존재하지 않는 운송장번호이거나 잘못된 형식 혹은 아직 입항하지 않은 화물입니다.\\m사용법: !통관 123456789"
 
     return strMessage
+
 
 def messageDaelimMeal():
     todayDate = datetime.date.today()
@@ -532,8 +563,9 @@ def messageDaelimMeal():
 
     return strMessage
 
+
 def messageDateCalculator(y, m, d):
-    dateEnd = datetime.date(y,m,d)
+    dateEnd = datetime.date(y, m, d)
     dateToday = datetime.date.today()
     now = datetime.datetime.now()
     leftdays = (dateEnd - dateToday).days
@@ -544,27 +576,38 @@ def messageDateCalculator(y, m, d):
 
     return leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa
 
+
 def messageDDay(message):
     try:
         strMessage = ""
         message = message.replace("!디데이", "").replace("!day", "").replace(" ", "")
         if message.strip()[-1] == '.': message = message[:-1]
         if message.count('-') == 2 or message.count('.') == 2:
-            if "-" in message: message = message.split("-")
-            elif "." in message: message = message.split(".")
+            if "-" in message:
+                message = message.split("-")
+            elif "." in message:
+                message = message.split(".")
             if len(str(message[0])) == 2:
                 message[0] = "20" + message[0]
             y, m, d = int(message[0]), int(message[1]), int(message[2])
             messageDateCalculator(y, m, d)
             leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = messageDateCalculator(y, m, d)
-            if leftdays < 0: strMessage = "%s년 %s월 %s일을 기준으로 오늘은 %s일이 지났으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(int(leftdays * -1), ','), format(int(leftseconds_wa * -1), ','))
-            elif leftdays == 0: strMessage = "D-DAY입니다!"
-            else: strMessage = "%s년 %s월 %s일까지는 %s일이 남았으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
-        else: raise
+            if leftdays < 0:
+                strMessage = "%s년 %s월 %s일을 기준으로 오늘은 %s일이 지났으며, 이를 초 단위로 환산하면 %s초입니다." % (
+                message[0], message[1], message[2], format(int(leftdays * -1), ','),
+                format(int(leftseconds_wa * -1), ','))
+            elif leftdays == 0:
+                strMessage = "D-DAY입니다!"
+            else:
+                strMessage = "%s년 %s월 %s일까지는 %s일이 남았으며, 이를 초 단위로 환산하면 %s초입니다." % (
+                message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
+        else:
+            raise
     except:
         strMessage = "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !day 2023.9.8 or !디데이 23.12.31"
 
     return strMessage
+
 
 def messageEat():
     messages = [
@@ -583,16 +626,18 @@ def messageEat():
     ]
     return random.choice(messages)
 
+
 def messageGemini(str):
     str = str.replace("잼민아", "").strip()
     response = model.generate_content(f"지금부터 대한민국의 초등학생의 말투로 대답해줘. 맞춤법도 조금 틀려서 해주면 좋을 것 같아. 조금 바보같은 말투로 대답하면 돼. {str}")
-    return(response.text)
+    return (response.text)
+
 
 def messageGgobugi():
     randInt = random.randrange(0, 3)
     strMessage = ""
 
-    if randInt == 1 or randInt == 2 :
+    if randInt == 1 or randInt == 2:
         ggobugiInt = random.randrange(0, 2)
         ggobugiMessage = ""
 
@@ -610,6 +655,7 @@ def messageGgobugi():
 
     return strMessage
 
+
 def messageGraduate():
     messages = [
         "대학원 가셔야죠 ㅋㅋ",
@@ -620,6 +666,7 @@ def messageGraduate():
         "박사도 해야죠 ㅋㅋ",
     ]
     return random.choice(messages)
+
 
 def messageHa():
     messages = [
@@ -633,6 +680,7 @@ def messageHa():
         "퇴사하고 싶다.."
     ]
     return random.choice(messages)
+
 
 def messageHokyu():
     messages = [
@@ -651,6 +699,7 @@ def messageHokyu():
     ]
     return random.choice(messages)
 
+
 def messageHokyuGraduate():
     strMessage = ""
     randInt = random.randrange(0, 6)
@@ -660,50 +709,64 @@ def messageHokyuGraduate():
     elif randInt == 1:
         strMessage = "호규의 학사 152기 지원을 응원합니다!"
     elif randInt == 2:
-        strMessage = "호규의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2030,12,31) - datetime.date.today()).days -1)
+        strMessage = "호규의 예비군 소집해제일까지 %d일 남았습니다." % ((datetime.date(2030, 12, 31) - datetime.date.today()).days - 1)
     elif randInt == 3:
-        strMessage = "호규의 민방위 소집해제일까지 %d일 남았습니다."%((datetime.date(2041,4,28) - datetime.date.today()).days -1)
+        strMessage = "호규의 민방위 소집해제일까지 %d일 남았습니다." % ((datetime.date(2041, 4, 28) - datetime.date.today()).days - 1)
     elif randInt == 4:
         strMessage = "예비군 1년차는 좀..."
     elif randInt == 5:
-        strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다."%((datetime.date(2027,8,26) - datetime.date.today()).days -1)
+        strMessage = "하사 김호규의 임기제부사관 만기복무일까지 %d일 남았습니다." % (
+                    (datetime.date(2027, 8, 26) - datetime.date.today()).days - 1)
 
     return strMessage
+
 
 def messageHansuGraduate():
     strMessage = ""
 
-    randInt = random.randrange(0,2)
-    if randInt == 0: strMessage = "이한수씨가 소집된지 %d일, 해제된지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2022,12,1)).days, (datetime.date.today() - datetime.date(2024,8,31)).days)
-    elif randInt == 1: strMessage = "이한수씨의 민방위 소집해제일까지 %d일 남았습니다."%((datetime.date(2039,1,1) - datetime.date.today()).days)
+    randInt = random.randrange(0, 2)
+    if randInt == 0:
+        strMessage = "이한수씨가 소집된지 %d일, 해제된지는 %d일이 됐습니다." % ((datetime.date.today() - datetime.date(2022, 12, 1)).days,
+                                                           (datetime.date.today() - datetime.date(2024, 8, 31)).days)
+    elif randInt == 1:
+        strMessage = "이한수씨의 민방위 소집해제일까지 %d일 남았습니다." % ((datetime.date(2039, 1, 1) - datetime.date.today()).days)
     return strMessage
+
 
 def messageHungry():
     messages = ["돼지", "또 먹어?", "살쪄", "그만 먹어;;", "아까 먹었잖아"]
     return random.choice(messages)
+
 
 def messageIreon():
     messages = ["안됐군요..", "안타깝네요..", "눈물이 납니다..", "유감입니다..", "불쌍하네요..",
                 "아쉽네요..", "저런.."]
     return random.choice(messages)
 
+
 def messageJaeminGraduate():
     randInt = random.randrange(0, 2)
     strMessage = ""
 
-    if randInt == 0: strMessage = "재민이가 입대한지 %d일, 전역한지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2021,5,9)).days, (datetime.date.today() - datetime.date(2024,3,8)).days)
-    elif randInt == 1: strMessage = "재민이의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2031,12,31) - datetime.date.today()).days)
+    if randInt == 0:
+        strMessage = "재민이가 입대한지 %d일, 전역한지는 %d일이 됐습니다." % ((datetime.date.today() - datetime.date(2021, 5, 9)).days,
+                                                          (datetime.date.today() - datetime.date(2024, 3, 8)).days)
+    elif randInt == 1:
+        strMessage = "재민이의 예비군 소집해제일까지 %d일 남았습니다." % ((datetime.date(2031, 12, 31) - datetime.date.today()).days)
 
     return strMessage
+
 
 def messageJoohyeong():
     strMessage = "예! 2025년도 CECOM 회장 이주형!"
 
     return strMessage
 
+
 def messageLaugh():
     messages = ["뭘 웃어요;;", "안웃긴데;;", "이게 웃겨요?"]
     return random.choice(messages)
+
 
 def messageLogisticsParser(message):
     strMessage = ""
@@ -728,6 +791,7 @@ def messageLogisticsParser(message):
 
     return strMessage
 
+
 def messageLogisticsParser_CJ(message):
     strMessage = ""
     infom = []
@@ -736,32 +800,34 @@ def messageLogisticsParser_CJ(message):
     try:
         if message.isdigit() == False: raise
         request_headers = {
-        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+            'User-Agent': ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
         strUrl = "https://trace.cjlogistics.com/tracking/jsp/cmn/Tracking_new.jsp?QueryType=3&pTdNo=" + message
         requestSession = requests.Session()
-        Response = requests.get(strUrl, headers = request_headers, verify=certifi.where())
+        Response = requests.get(strUrl, headers=request_headers, verify=certifi.where())
         soup = BeautifulSoup(Response.text, 'html.parser')
 
         while True:
             info = soup.select('#content > div > table.tepTb02.tepDep02 > tbody > tr:nth-child(%d)' % i)
             if not info:
-                info = soup.select('#content > div > table.tepTb02.tepDep02 > tbody > tr:nth-child(%d)' % int(i-1))
+                info = soup.select('#content > div > table.tepTb02.tepDep02 > tbody > tr:nth-child(%d)' % int(i - 1))
                 for tag in info:
                     temp += tag.get_text()
                 break
-            i = i+1
+            i = i + 1
         infom = temp.split('\n')
         for _ in range(len(infom)):
             if infom[_] == "\xa0":
                 infom[_] = infom[_].replace(u'\xa0', u'(정보 없음)')
             elif "인수자 : " in infom[_]:
                 infom[_] = infom[_].replace('인수자 : ', '')
-        strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (infom[1], infom[2], infom[3], infom[4], infom[5])
+        strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (
+        infom[1], infom[2], infom[3], infom[4], infom[5])
     except:
         strMessage = ""
     return strMessage
+
 
 def messageLogisticsParser_HJ(message):
     strMessage = ""
@@ -771,29 +837,32 @@ def messageLogisticsParser_HJ(message):
     try:
         if message.isdigit() == False: raise
         request_headers = {
-        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+            'User-Agent': ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
         strUrl = "https://www.hanjin.com/kor/CMS/DeliveryMgr/WaybillResult.do?mCode=MN038&wblnum=" + message + "&schLang=KR"
         requestSession = requests.Session()
-        Response = requests.get(strUrl, headers = request_headers, verify=certifi.where())
+        Response = requests.get(strUrl, headers=request_headers, verify=certifi.where())
         soup = BeautifulSoup(Response.text, 'html.parser')
         while True:
             info = soup.select('#delivery-wr > div > div.waybill-tbl > table > tbody > tr:nth-child(%d)' % i)
             if not info:
-                info = soup.select('#delivery-wr > div > div.waybill-tbl > table > tbody > tr:nth-child(%d)' % int(i-1))
+                info = soup.select(
+                    '#delivery-wr > div > div.waybill-tbl > table > tbody > tr:nth-child(%d)' % int(i - 1))
                 for tag in info:
                     temp += tag.get_text()
                 break
-            i = i+1
+            i = i + 1
         infom = temp.split('\n')
         for _ in range(len(infom)):
             if infom[7] == '':
                 infom[7] = "(정보 없음)"
-        strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (infom[1], infom[2], infom[3], infom[5], infom[7])
+        strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (
+        infom[1], infom[2], infom[3], infom[5], infom[7])
     except:
         strMessage = ""
     return strMessage
+
 
 def messageLogisticsParser_KP(message):
     strMessage = ""
@@ -803,29 +872,31 @@ def messageLogisticsParser_KP(message):
     try:
         if message.isdigit() == False: raise
         request_headers = {
-        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+            'User-Agent': ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
         strUrl = "https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=" + message
         requestSession = requests.Session()
-        Response = requests.get(strUrl, headers = request_headers, verify=certifi.where())
+        Response = requests.get(strUrl, headers=request_headers, verify=certifi.where())
         soup = BeautifulSoup(Response.text, 'html.parser')
         while True:
             info = soup.select('#processTable > tbody > tr:nth-child(%d)' % i)
             if not info:
-                info = soup.select('#processTable > tbody > tr:nth-child(%d)' % int(i-1))
+                info = soup.select('#processTable > tbody > tr:nth-child(%d)' % int(i - 1))
                 for tag in info:
                     temp += tag.get_text()
                 break
-            i = i+1
+            i = i + 1
         infom = temp.split('\n')
         for _ in range(len(infom)):
             if '\t' in infom[_]: infom[_] = infom[_].replace('\t', '')
         if infom[5] == '            ': infom[5] = '배달준비'
-        strMessage = "/// 우체국택배 배송조회 ///\n\n날짜: %s\n시간: %s\n발생국: %s\n처리현황: %s" % (infom[1], infom[2], infom[3], infom[5])
+        strMessage = "/// 우체국택배 배송조회 ///\n\n날짜: %s\n시간: %s\n발생국: %s\n처리현황: %s" % (
+        infom[1], infom[2], infom[3], infom[5])
     except:
         strMessage = ""
     return strMessage
+
 
 def messageLogisticsParser_LG(message):
     strMessage = ""
@@ -836,21 +907,24 @@ def messageLogisticsParser_LG(message):
         if message.isdigit() == False:
             raise
         request_headers = {
-        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+            'User-Agent': ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
         strUrl = "https://www.ilogen.com/web/personal/trace/" + message
         requestSession = requests.Session()
-        Response = requests.get(strUrl, headers = request_headers, verify=certifi.where())
+        Response = requests.get(strUrl, headers=request_headers, verify=certifi.where())
         soup = BeautifulSoup(Response.text, 'html.parser')
         while True:
-            info = soup.select('body > div.contents.personal.tkSearch > section > div > div.tab_container > div > table.data.tkInfo > tbody > tr:nth-child(%d)' % i)
+            info = soup.select(
+                'body > div.contents.personal.tkSearch > section > div > div.tab_container > div > table.data.tkInfo > tbody > tr:nth-child(%d)' % i)
             if not info:
-                info = soup.select('body > div.contents.personal.tkSearch > section > div > div.tab_container > div > table.data.tkInfo > tbody > tr:nth-child(%d)' % int(i-1))
+                info = soup.select(
+                    'body > div.contents.personal.tkSearch > section > div > div.tab_container > div > table.data.tkInfo > tbody > tr:nth-child(%d)' % int(
+                        i - 1))
                 for tag in info:
                     temp += tag.get_text()
                 break
-            i = i+1
+            i = i + 1
         infom = temp.split('\n')
         for _ in range(len(infom)):
             if '\t' in infom[_]: infom[_] = infom[_].replace('\t', '')
@@ -860,10 +934,12 @@ def messageLogisticsParser_LG(message):
             temp = '\n인수자: ' + infom[5]
         elif "배달 준비" in infom[3]:
             temp = '\n배달 예정 시간: ' + infom[5]
-        strMessage = "/// 로젠택배 배송조회 ///\n\n날짜: %s\n사업장: %s\n배송상태: %s\n배송내용: %s" % (infom[0], infom[1], infom[2], infom[3]) + temp
+        strMessage = "/// 로젠택배 배송조회 ///\n\n날짜: %s\n사업장: %s\n배송상태: %s\n배송내용: %s" % (
+        infom[0], infom[1], infom[2], infom[3]) + temp
     except:
         strMessage = ""
     return strMessage
+
 
 def messageLogisticsParser_LT(message):
     strMessage = ""
@@ -874,12 +950,12 @@ def messageLogisticsParser_LT(message):
         if message.isdigit() == False:
             raise
         request_headers = {
-        'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+            'User-Agent': ('Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
         strUrl = "https://www.lotteglogis.com/mobile/reservation/tracking/linkView?InvNo=" + message
         requestSession = requests.Session()
-        Response = requests.get(strUrl, headers = request_headers, verify=certifi.where())
+        Response = requests.get(strUrl, headers=request_headers, verify=certifi.where())
         soup = BeautifulSoup(Response.text, 'html.parser')
         info = soup.find("div", "scroll_date_table")
         for tag in info:
@@ -893,6 +969,7 @@ def messageLogisticsParser_LT(message):
     except:
         strMessage = ""
     return strMessage
+
 
 def messageMemo(message, sender):
     message = message.replace("!메모", "").strip()
@@ -915,6 +992,7 @@ def messageMemo(message, sender):
     strMessage = ""
     return strMessage
 
+
 def messageMemreturn(sender):
     strMessage = ""
 
@@ -931,10 +1009,12 @@ def messageMemreturn(sender):
 
     return strMessage
 
+
 def messageMinseok():
     strMessage = "와봇은 민석이가 지배했다!"
 
     return strMessage
+
 
 def messageMinsik():
     strMessage = "민식아 그래서 학교는 언제와?"
@@ -947,34 +1027,46 @@ def messageMinsikBooreop():
 
     return strMessage
 
+
 def messageMoloo():
     strMessage = "몰?루"
 
     return strMessage
+
 
 def messageMooYaHo():
     strMessage = "그만큼 신나신다는거지~"
 
     return strMessage
 
+
 def messageMM():
     strMessage = "정색하지 마세요;;"
 
     return strMessage
 
+
 def messageNSULibrary():
     strMessage = ""
     strUrl = "http://220.68.191.20/setting"
     requestSession = requests.Session()
-    Response = requestSession.get(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, verify=certifi.where()).json()
+    Response = requestSession.get(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'},
+                                  verify=certifi.where()).json()
     Response = dict(Response)
-    first = "제1 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (str(357 - int(Response['data']['data'][0]['inUse']) - int(Response['data']['data'][0]['fix']) - int(Response['data']['data'][0]['disabled'])), Response['data']['data'][0]['inUse'])
-    second = "제2 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (str(265 - int(Response['data']['data'][1]['inUse']) - int(Response['data']['data'][1]['fix']) - int(Response['data']['data'][1]['disabled'])), Response['data']['data'][1]['inUse'])
-    third = "제3 자유열람실 : 여석 %s석 (%s석 사용중)" % (str(324 - int(Response['data']['data'][2]['inUse']) - int(Response['data']['data'][2]['fix']) - int(Response['data']['data'][2]['disabled'])), Response['data']['data'][2]['inUse'])
+    first = "제1 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (
+    str(357 - int(Response['data']['data'][0]['inUse']) - int(Response['data']['data'][0]['fix']) - int(
+        Response['data']['data'][0]['disabled'])), Response['data']['data'][0]['inUse'])
+    second = "제2 자유열람실 : 여석 %s석 (%s석 사용중)\n" % (
+    str(265 - int(Response['data']['data'][1]['inUse']) - int(Response['data']['data'][1]['fix']) - int(
+        Response['data']['data'][1]['disabled'])), Response['data']['data'][1]['inUse'])
+    third = "제3 자유열람실 : 여석 %s석 (%s석 사용중)" % (
+    str(324 - int(Response['data']['data'][2]['inUse']) - int(Response['data']['data'][2]['fix']) - int(
+        Response['data']['data'][2]['disabled'])), Response['data']['data'][2]['inUse'])
 
     strMessage = "남서울대학교 열람실 좌석현황(성암기념중앙도서관)\n\n" + first + second + third
 
     return strMessage
+
 
 def messageNSUMeal():
     try:
@@ -995,14 +1087,16 @@ def messageNSUMeal():
         bokji_data = "boardIdList=467&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4"
         cafe_data = "boardIdList=468&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4"
 
-        bokji_response = requests.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data=bokji_data).json()
+        bokji_response = requests.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'},
+                                       data=bokji_data).json()
         bokji_response = dict(bokji_response)
         mealDate = bokji_response["body"]["list"][0]["title"]
         bokji_list = bokji_response["body"]["list"][0]["properties"]["food_list"][0]
         for mealData in bokji_list.items():
             MealList0.append((f"{mealData[1]}\n"))
 
-        cafe_response = requests.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'}, data=cafe_data).json()
+        cafe_response = requests.post(strUrl, headers={'Content-Type': 'application/x-www-form-urlencoded'},
+                                      data=cafe_data).json()
         cafe_response = dict(cafe_response)
         cafe0_list = cafe_response["body"]["list"][0]["properties"]["food_list"][0]
         cafe1_list = cafe_response["body"]["list"][0]["properties"]["food_list"][1]
@@ -1012,37 +1106,45 @@ def messageNSUMeal():
         for mealData in cafe1_list.items():
             MealList2.append((f"{mealData[1]}\n"))
 
-        strMessage = "남서울대학교 " + mealDate + " 식단표" + "\n" + ">> 천원의 아침밥 <<\n" + MealList1[day] + "\n>> 오늘의 메뉴 <<\n" + MealList0[day] + "\n>> 멀베리 <<\n" + MealList2[day]
+        strMessage = "남서울대학교 " + mealDate + " 식단표" + "\n" + ">> 천원의 아침밥 <<\n" + MealList1[day] + "\n>> 오늘의 메뉴 <<\n" + \
+                     MealList0[day] + "\n>> 멀베리 <<\n" + MealList2[day]
     except:
         strMessage = "오늘은 학식을 운영하지 않습니다."
     return strMessage
+
 
 def messageOff():
     strMessage = "전기세 아깝다ㅡㅡ;;"
 
     return strMessage
 
+
 def messageOh():
     messages = ["..레오", "..렌지쥬스", "..필승 코리아", "..카리나", "..리 꽥꽥"]
     return random.choice(messages)
 
+
 def messageOutwork():
     messages = ["출근하세요", "평생 쉬세요~", "집가고싶다", "어딜 쉬러가요", "오늘 야근이에요"]
     return random.choice(messages)
+
 
 def messageOho(message):
     strMessage = message[::-1]
 
     return strMessage
 
+
 def messageOkay():
     strMessage = "땡큐! 4딸라!"
 
     return strMessage
 
+
 def messageReal():
     messages = ["ㄹㅇㅋㅋ", "아닌데요", "ㄹㅇ임ㅋㅋ"]
     return random.choice(messages)
+
 
 def messageRemember(message, room):
     message = message.replace("!기억해", "").replace("!기억", "").strip()
@@ -1065,6 +1167,7 @@ def messageRemember(message, room):
     strMessage = ""
     return strMessage
 
+
 def messageRemreturn(room):
     strMessage = ""
 
@@ -1081,13 +1184,16 @@ def messageRemreturn(room):
 
     return strMessage
 
+
 def messageSalute():
     messages = ["필승! ^^7", "충성! ^^7", "훈련병들은 충성! ^^7", "훈련병들은 필승! ^^7"]
     return random.choice(messages)
 
+
 def messageSaseyo():
     messages = ["사세요", "안 사도 돼요", "나스는 역시 시놀로지죠~", "나스는 역시 큐냅이죠~"]
     return random.choice(messages)
+
 
 def messageSeungbeomGraduate():
     randInt = random.randrange(0, 3)
@@ -1099,10 +1205,12 @@ def messageSeungbeomGraduate():
     if randInt == 0:
         strMessage = "승범아 대학원 가야지?"
     elif randInt == 1:
-        strMessage = "승범이가 박사과정을 마치기까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+        strMessage = "승범이가 박사과정을 마치기까지 %d일 %d시간 %d분 %d초 남았습니다." % (
+        leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 2:
         strMessage = "승범이가 박사과정을 마치기까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
     return strMessage
+
 
 def messageSupilGraduate():
     randInt = random.randrange(0, 5)
@@ -1117,20 +1225,25 @@ def messageSupilGraduate():
     elif randInt == 1:
         strMessage = "그런거 물어볼 시간에 일이나 하세요."
     elif randInt == 2:
-        strMessage = "박수필씨의 소집해제일까지 %d일이 남았습니다."%(leftdays)
+        strMessage = "박수필씨의 소집해제일까지 %d일이 남았습니다." % (leftdays)
     elif randInt == 3:
-        strMessage = "박수필씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다."%(leftdays - 1, abs(lefthours), leftminutes, leftseconds)
+        strMessage = "박수필씨의 소집해제일까지 %d일 %d시간 %d분 %d초 남았습니다." % (leftdays - 1, abs(lefthours), leftminutes, leftseconds)
     elif randInt == 4:
         strMessage = "당신이 민간인이 될 때까지 " + format(leftseconds_wa, ',') + "초 남았습니다."
 
     return strMessage
 
+
 def messageSeongminGraduate():
     strMessage = ""
-    randInt = random.randrange(0,2)
-    if randInt == 0: strMessage = "지성민씨가 소집된지 %d일, 소해된지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2022,5,22)).days, (datetime.date.today() - datetime.date(2024,2,22)).days)
-    elif randInt == 1: strMessage = "지성민씨의 예비군 소집해제일까지 %d일 남았습니다."%((datetime.date(2031,12,31) - datetime.date.today()).days)
+    randInt = random.randrange(0, 2)
+    if randInt == 0:
+        strMessage = "지성민씨가 소집된지 %d일, 소해된지는 %d일이 됐습니다." % ((datetime.date.today() - datetime.date(2022, 5, 22)).days,
+                                                           (datetime.date.today() - datetime.date(2024, 2, 22)).days)
+    elif randInt == 1:
+        strMessage = "지성민씨의 예비군 소집해제일까지 %d일 남았습니다." % ((datetime.date(2031, 12, 31) - datetime.date.today()).days)
     return strMessage
+
 
 def messageShuk():
     strMessage = "슈슉"
@@ -1138,9 +1251,11 @@ def messageShuk():
                 ".슈발놈아.슉.시발.슈슉.슉", ".슈슉.시발.럼아.슉.슈슉.슉.슉슉.슈슉.시.발놈아"]
     return strMessage + random.choice(messages) + ".슉"
 
+
 def messageSleepy():
     messages = ["자라;;", "구라;;", "자야지;;", "자야겠다;;", "자야겠다..", "졸린게 말이 돼?", "그만 좀 자라;;"]
     return random.choice(messages)
+
 
 def messageSora(message):
     question = message.replace("마법의 소라고동이시여", "").strip()
@@ -1152,19 +1267,23 @@ def messageSora(message):
 
     return strMessage
 
+
 def messageStop():
     strMessage = "멈춰!!"
 
     return strMessage
+
 
 def messageStress():
     strMessage = "어림도 없지"
 
     return strMessage
 
+
 def messageSGW():
     messages = ["좀 나가라;;", "뭐하냐;", "좀 꺼라;", "이미 차단당한 유저입니다."]
     return random.choice(messages)
+
 
 def messageTimezone(message):
     strMessage = ""
@@ -1178,24 +1297,28 @@ def messageTimezone(message):
             hours, minutes = map(int, message.split(':'))
             offset = datetime.timedelta(hours=hours, minutes=minutes)
         adjusted_time = datetime.datetime.now(datetime.timezone.utc) + offset
-        strMessage = f"현재 UTC{message}의 시간은 ", adjusted_time.strftime('%Y-%m-%d %H:%M:%S') , "입니다."
+        strMessage = f"현재 UTC{message}의 시간은 ", adjusted_time.strftime('%Y-%m-%d %H:%M:%S'), "입니다."
     except:
         strMessage = "사용 형식이 잘못됐거나 존재하지 않는 시간대입니다.\\m사용법: !시간 +9 or !시간 -11"
     return strMessage
+
 
 def messageTjoGraduate():
     strMessage = "zz"
 
     return strMessage
 
+
 def messageUh():
     messages = ["..이가없네;;", "..피치", "..기여차"]
     return random.choice(messages)
+
 
 def messageWa():
     messages = ["갑부;;", "기만;;", "ㄹㅇ;;", "마스터;;", "역시;;",
                 "이건 좀;;", "극혐;;", "플;;", "이파이;;", "내가 봐도 선 넘었네;;", "사비;;"]
     return random.choice(messages)
+
 
 def messageWabotPower(flag, room):
     strMessage = ""
@@ -1207,8 +1330,10 @@ def messageWabotPower(flag, room):
             if (flag == 0 and room_power == "0") or (flag == 1 and room_power == "1"):
                 return strMessage
         else:
-            if flag == 1: return strMessage
-            else: pass
+            if flag == 1:
+                return strMessage
+            else:
+                pass
     else:
         power_dict = {}
     randInt = random.randrange(0, 4)
@@ -1232,15 +1357,18 @@ def messageWabotPower(flag, room):
 
     return strMessage
 
+
 def messageWaSans():
     strMessage = "샌즈!\\m아시는구나!\\m이거 겁.나.어.렵.습.니.다."
 
     return strMessage
 
+
 def messageYongmin():
     strMessage = "집가고싶다"
 
     return strMessage
+
 
 def messageZara():
     messages = [
@@ -1253,25 +1381,28 @@ def messageZara():
     ]
     return random.choice(messages)
 
+
 def messageZayazi():
     strMessage = "구라ㅡㅡ;;"
 
     return strMessage
+
 
 def messageFakeNews(message):
     fake_news_url = os.environ['FAKE_NEWS_URL']
     keyword = message.split("!뉴스:")[1]
     requestSession = requests.Session()
     requestSession.mount(fake_news_url, DESAdapter())
-    response = requestSession.post(fake_news_url, json={'message':keyword, 'len':64}, verify=certifi.where())
+    response = requestSession.post(fake_news_url, json={'message': keyword, 'len': 64}, verify=certifi.where())
     strMessage = '\\m'.join(response.text.split('\n')[2:-4])
 
     return strMessage
 
+
 def messageWeather():
     appid = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
-    id = 1835847    ###서울 디폴트
-    weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?id={id}&appid={appid}".format(id=id, appid = appid)
+    id = 1835847  ###서울 디폴트
+    weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?id={id}&appid={appid}".format(id=id, appid=appid)
 
     requestSession = requests.Session()
     requestSession.mount(weatherAPIUrl, DESAdapter())
@@ -1280,14 +1411,15 @@ def messageWeather():
     jsonData = json.loads(text)
 
     strMessage = "현재온도: {}K\\n구름: {}%".format(str(jsonData["main"]["temp"]), str(jsonData["clouds"]["all"]))
-    strMessage +="\\n압력: {}Pa\\n습도: {}%".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
-    strMessage +="\\m서울의 날씨 {}".format(str(jsonData["weather"]["description"]))
+    strMessage += "\\n압력: {}Pa\\n습도: {}%".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
+    strMessage += "\\m서울의 날씨 {}".format(str(jsonData["weather"]["description"]))
     return strMessage
 
 
 def getlatlon(location):
     apikey = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
-    weatherAPIUrl = "http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={key}".format(city_name=location, key=apikey)
+    weatherAPIUrl = "http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={key}".format(city_name=location,
+                                                                                                    key=apikey)
 
     requestSession = requests.Session()
     requestSession.mount(weatherAPIUrl, DESAdapter())
@@ -1303,9 +1435,12 @@ def getlatlon(location):
     else:
         return lat, lon
 
+
 def messageWeather(lat, lon, loc):
     apikey = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
-    weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={key}".format(lat=lat, lon=lon, key = apikey)
+    weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={key}".format(lat=lat,
+                                                                                                             lon=lon,
+                                                                                                             key=apikey)
 
     requestSession = requests.Session()
     requestSession.mount(weatherAPIUrl, DESAdapter())
@@ -1314,10 +1449,11 @@ def messageWeather(lat, lon, loc):
     jsonData = json.loads(text)
 
     strMessage = "현재온도: {}K\\n구름: {}%".format(str(jsonData["main"]["temp"]), str(jsonData["clouds"]["all"]))
-    strMessage +="\\n압력: {}Pa\\n습도: {}%".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
-    strMessage +="\\m{}의 날씨 {}".format(loc, str(jsonData["weather"]["description"]))
+    strMessage += "\\n압력: {}Pa\\n습도: {}%".format(str(jsonData["main"]["pressure"]), str(jsonData["main"]["humidity"]))
+    strMessage += "\\m{}의 날씨 {}".format(loc, str(jsonData["weather"]["description"]))
 
     return strMessage
+
 
 def messageStupidYongmin(type):
     strMessage = ""
@@ -1330,9 +1466,26 @@ def messageStupidYongmin(type):
 
     return strMessage
 
+
+def messageJunseob():
+    messages = [
+        "준섭아 컴공인 척 하지마",
+        "준섭이는 유명한 납땜러",
+        "준섭아 이상한거 좀 그만 사...",
+        "준섭이가 사주는 술 마시러 갈사람~",
+        "김준섭 박사기원 N일차",
+        "그거 아세요? 준섭이가 미래의 CECOM 회장이래요",
+        "준섭이는 미래의 코딩의 신",
+        "준섭아 맛있는거 만들어줘",
+    ]
+    return random.choice(messages)
+
+
 def messageBase64Encode(message):
     msg = message.split("!base64e ")[1]
     return base64.b64encode(msg.encode('utf8')).decode('utf8')
+
+
 def messageBase64Decode(message):
     msg = message.split("!base64d ")
     return base64.b64decode(msg[1]).decode('utf8')

@@ -277,6 +277,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageViki()
     elif "태환" in message:
         strResult = messageTaehwan()
+    elif "준섭" in message:
+        strResult = messageJunseob()
     return strResult
 
 def getCryCount(message):
@@ -1436,4 +1438,17 @@ def messageViki():
     
 def messageTaehwan():
     messages = ["와..~ 용민형님","용민형님 기다리고 있었습니다","굿아이디어","그게 맞지","뭔지 알지","그건 틀렸어"]
+    return random.choice(messages)
+
+def messageJunseob():
+    messages = [
+        "준섭아 컴공인 척 하지마",
+        "준섭이는 유명한 납땜러",
+        "준섭아 이상한거 좀 그만 사...",
+        "준섭이가 사주는 술 마시러 갈사람~",
+        "김준섭 박사기원 N일차",
+        "그거 아세요? 준섭이가 미래의 CECOM 회장이래요",
+        "준섭이는 미래의 코딩의 신",
+        "준섭아 맛있는거 만들어줘",
+    ]
     return random.choice(messages)

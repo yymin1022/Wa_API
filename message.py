@@ -104,6 +104,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageLogisticsParser(message)
     elif "!통관" in message:
         strResult = messageCustomTracker(message)
+    elif "!촙촙" in message:
+        strResult = messageChopchop(message)
     elif "마법의 소라고동이시여" in message:
         strResult = messageSora(message)
     elif "!시간" in message:
@@ -262,6 +264,23 @@ def getReplyMessage(message, room, sender):
         strResult = messageBitcoin()
     elif "준섭" in message:
         strResult = messageJunseob()
+    elif "GDG" in message:
+        strResult = messageGDG()
+    elif "GDSC" in message:
+        strResult = messageNotGDSC()
+    elif "여진" in message or "김여진" in message:
+        strResult = messageYeojin()
+    elif "수현" in message or "수휫" in message:
+        if "임수현" in message or "수휫" in message:
+            strResult = messageLimsoo()
+        else:
+            strResult = messageSoohyun()
+    elif "유빈" in message or "서유빈" in message:
+        strResult = messageVini()
+    elif "럭키" in message or "운세" in message:
+        strResult = messageViki()
+    elif "태환" in message:
+        strResult = messageTaehwan()
     return strResult
 
 
@@ -365,7 +384,7 @@ def messageBitcoin():
     requestSession.mount(url, DESAdapter())
 
     try:
-        response = requestSession.get(url)
+        response = requestSession.get(url, verify=certifi.where())
         response.raise_for_status()
         data = response.json()
         current_price = data[0]['trade_price']
@@ -506,7 +525,45 @@ def messageChalsGraduate():
 
     return strMessage
 
+def messageChopchop(message):
+    chopchopUrl = 'http://check.bboo.co.kr/check.bboo.co.kr.html'
 
+    if len(message.split()) != 3:
+        return "사용법: !촙촙 <가입자 이름> <회선 번호>"
+
+    r_name = message.split()[1]
+    r_hp = message.split()[2]
+
+    data = {
+        'r_name': r_name,
+        'r_hp': r_hp
+    }
+
+    requestSession = requests.Session()
+    requestSession.mount(chopchopUrl, DESAdapter())
+    response = requestSession.post(chopchopUrl, data=data)
+
+    if "등록된 데이터가 없습니다" in response.text:
+        return "등록된 데이터가 없습니다. 다시 확인해주세요."
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    strStatus = soup.find("td", text="업무진행상황").find_next_sibling("td").get_text(strip=True)
+
+    strMessage = f"업무진행상황: {strStatus}\n" \
+                    f"통신사/유형: {soup.find('td', text='통신사/유형').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"모델명: {soup.find('td', text='모델명').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"색상: {soup.find('td', text='색상').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"요금제: {soup.find('td', text='요금제').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"약정: {soup.find('td', text='약정').find_next_sibling('td').get_text(strip=True)}\n"
+
+    if strStatus == "개통완료":
+        strMessage += f"회선유지기간: {soup.find('td', text='회선유지기간').find_next_sibling('td').get_text(strip=True)}\n" \
+                        f"요금제유지기간: {soup.find('td', text='요금제유지기간').find_next_sibling('td').get_text(strip=True)}"
+    else:
+        strMessage += f"배송정보: {soup.find('td', text='배송등록').find_next_sibling('td').get_text(strip=True)}"
+
+    return strMessage
+  
 def messageCoding():
     messages = ["구라ㅡㅡ;;", "ㅋ", "밤새도 못 할 듯?ㅋㅋ"]
     return random.choice(messages)
@@ -724,12 +781,10 @@ def messageHokyuGraduate():
 def messageHansuGraduate():
     strMessage = ""
 
-    randInt = random.randrange(0, 2)
-    if randInt == 0:
-        strMessage = "이한수씨가 소집된지 %d일, 해제된지는 %d일이 됐습니다." % ((datetime.date.today() - datetime.date(2022, 12, 1)).days,
-                                                           (datetime.date.today() - datetime.date(2024, 8, 31)).days)
-    elif randInt == 1:
-        strMessage = "이한수씨의 민방위 소집해제일까지 %d일 남았습니다." % ((datetime.date(2039, 1, 1) - datetime.date.today()).days)
+    randInt = random.randrange(0,2)
+    if randInt == 0: strMessage = "이한수씨가 소집된지 %d일, 해제된지는 %d일이 됐습니다."%((datetime.date.today() - datetime.date(2022,12,1)).days, (datetime.date.today() - datetime.date(2024,8,31)).days)
+    elif randInt == 1: strMessage = "이한수씨의 민방위 소집해제일까지 %d일 남았습니다."%((datetime.date(2039,1,1) - datetime.date.today()).days)
+
     return strMessage
 
 
@@ -815,15 +870,17 @@ def messageLogisticsParser_CJ(message):
                 for tag in info:
                     temp += tag.get_text()
                 break
-            i = i + 1
+            i = i+1
+        goods_name = soup.select('#content > div > table.tepTb02.tepDep > tbody > tr:nth-child(6) > td:nth-child(2)')
+        goods_name = goods_name[0].get_text().strip()
+        goods_name = goods_name.replace('[<td>제품,', '').replace('</td>]', '')
         infom = temp.split('\n')
         for _ in range(len(infom)):
             if infom[_] == "\xa0":
                 infom[_] = infom[_].replace(u'\xa0', u'(정보 없음)')
             elif "인수자 : " in infom[_]:
                 infom[_] = infom[_].replace('인수자 : ', '')
-        strMessage = "/// CJ대한통운 배송조회 ///\n\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (
-        infom[1], infom[2], infom[3], infom[4], infom[5])
+        strMessage = "/// CJ대한통운 배송조회 ///\n\n품목: %s\n처리장소: %s\n전화번호: %s\n구분: %s\n처리일자: %s\n상대장소(배송장소): %s" % (goods_name, infom[1], infom[2], infom[3], infom[4], infom[5])
     except:
         strMessage = ""
     return strMessage
@@ -857,8 +914,9 @@ def messageLogisticsParser_HJ(message):
         for _ in range(len(infom)):
             if infom[7] == '':
                 infom[7] = "(정보 없음)"
-        strMessage = "/// 한진택배 배송조회 ///\n\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (
-        infom[1], infom[2], infom[3], infom[5], infom[7])
+        goods_name = soup.select('#delivery-wr > div > table > tbody > tr > td:nth-child(1)')
+        goods_name = goods_name[0].get_text().strip()
+        strMessage = "/// 한진택배 배송조회 ///\n\n상품명: %s\n날짜: %s\n시간: %s\n상품위치: %s\n배송 진행상황: %s\n전화번호: %s" % (goods_name, infom[1], infom[2], infom[3], infom[5], infom[7])
     except:
         strMessage = ""
     return strMessage
@@ -1466,7 +1524,6 @@ def messageStupidYongmin(type):
 
     return strMessage
 
-
 def messageJunseob():
     messages = [
         "준섭아 컴공인 척 하지마",
@@ -1481,6 +1538,32 @@ def messageJunseob():
     return random.choice(messages)
 
 
+def messageGDG():
+    strMessage = "GDG on Campus: CAU 최고 ~!~!~!~!@"
+    return strMessage
+
+def messageNotGDSC():
+    strMessage = ["아뇨. GDG 인데요.", "이제 GDG라니깐요?!", "GDG입니다.", "GDSC는 이제 없어요.", "GDG! GDG!! GDG!@!@!@!"]
+    return random.choice(strMessage)
+
+def messageYeojin():
+    messages = ["오나핑 여진이",
+              "여진이 바빠요",
+              "2024 GDG 오거나이저!\\m김여진!",
+              "여지니 왜 불러요?\\m난 왜 안 찾아?"
+    ]
+
+    return random.choice(messages)
+
+
+def messageSoohyun():
+    strMessage = "수현이? 무슨 수현이?\\m신수현? 임수현? 윤수현? 누구???"
+    return strMessage
+
+def messageLimsoo():
+    messages = ["임수현이 졸업했는데 왜 찾아?","안녕티비 ㅋㅋ","아 진짜?","넹구리"]
+    return random.choice(messages)
+
 def messageBase64Encode(message):
     msg = message.split("!base64e ")[1]
     return base64.b64encode(msg.encode('utf8')).decode('utf8')
@@ -1489,3 +1572,15 @@ def messageBase64Encode(message):
 def messageBase64Decode(message):
     msg = message.split("!base64d ")
     return base64.b64decode(msg[1]).decode('utf8')
+
+def messageVini():
+    messages = ["|￣￣￣￣￣￣￣￣￣|\\n| *ﾟ 방금 서유빈 +    |\\n|　 왜 불렀지... .　 ﾟ  |\\n|＿＿＿＿　＿＿＿＿|\\n　　 ∧　∧||∧　∧\\n　　(｡･Α･∩∩･∀･｡)\\n　　 Οu_ΟΘ_uΘ","안녕하세용가리","우리 유빈이 즐~대 디자이너 아입니다!","┌───────────────┐\\n        방금 유빈이 부른 사람\\n└───────────────┘\\n　　ᕱ ᕱ ||\\n　 ( ･ω･ ||\\n　 /　つΦ\\n"," ⋆͛*͛ ͙͛ ⁑͛⋆͛*͛ ͙͛(๑•﹏•)⋆͛*͛ ͙͛ ⁑͛⋆͛*͛ ͙͛ "]
+    return random.choice(messages)
+
+def messageViki():
+    messages = ["오늘의 운세는 이븐~하게 익지 않았어요.","오늘의 운세는 이븐~하게 익지 않았어요.",".....∧_∧\\n.. ( ̳• ·̫ • ̳) \\n┏ー∪∪━━━━━━━━┓\\n  °•. 오늘운세구려요.. . .•°\\n┗━--━━━━━•━━━┛",".....∧_∧\\n.. ( ̳• ·̫ • ̳) \\n┏ー∪∪━━━━━━━━┓\\n  °•. 오늘운세구려요.. . .•°\\n┗━--━━━━━•━━━┛",". /)_/)\\n( ̳• ·̫ • ̳)   럭키. .ꕥ 할지도\\n/>ꕥ<","＿人人人人人人人人＿\\n＞ 오늘 운세 낫배드! ＜\\n￣Y^Y^Y^Y^Y^Y^Y^Y￣\\n　 _n　( ｜　 ハ_ハ\\n　 ＼＼ ( ‘-^　)\\n　　 ＼￣￣　 )\\n　　　 ７　　/","오늘은 평범-한 날이예요","오늘 당신 초-럭키༘˚⋆𐙚｡ \\n 동방에 방문하면 좋은 일이 생길지도⋆𖦹.✧˚", "♡ ♡ ♡ ₍ᐢɞ̴̶̷.̮ɞ̴̶̷ᐢ₎ ♡ ♡ ♡\\n┏━♡━ U U━♡━━┓\\n♡오늘의 운세는···     ♡\\n♡초초초럭키-예요!   ♡\\n┗━♡━━━━♡━━┛"]
+    return random.choice(messages)
+    
+def messageTaehwan():
+    messages = ["와..~ 용민형님","용민형님 기다리고 있었습니다","굿아이디어","그게 맞지","뭔지 알지","그건 틀렸어"]
+    return random.choice(messages)

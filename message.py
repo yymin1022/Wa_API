@@ -98,9 +98,9 @@ def getReplyMessage(message, room, sender):
             strResult = messageCalDay(0, message)
     elif "!메모" in message:
         strResult = messageMemo(message, sender)
-    elif "!택배" in message:
-        strResult = messageLogisticsParser(message)
-    elif "!통관" in message:
+    elif "!택배" in message or "!ㅌㅂ" in message:
+        strResult = messageLogistics(message)
+    elif "!통관" in message or "!ㅌㄱ" in message:
         strResult = messageCustomTracker(message)
     elif "!촙촙" in message:
         strResult = messageChopchop(message)
@@ -553,7 +553,7 @@ def messageCry():
 def messageCustomTracker(message):
     strMessage = ""
     try:
-        message = message.replace('!통관', '').replace(" ", "")
+        message = message.replace('!통관', '').replace('!ㅌㄱ', '').replace(" ", "")
         key = os.environ['CUSTOM_API_KEY']
         year = datetime.date.today().year
         url = 'https://unipass.customs.go.kr:38010/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=%s&blYy=%s&hblNo=%s' % (key, year, message)
@@ -765,13 +765,27 @@ def messageLaugh():
     messages = ["뭘 웃어요;;", "안웃긴데;;", "이게 웃겨요?"]
     return random.choice(messages)
 
-def messageLogisticsParser(message):
+def messageLogistics(message):
     strMessage = ""
-    message = message.replace("!택배", "").replace(" ", "")
+    message = message.replace("!택배", "").replace("!ㅌㅂ", "").replace(" ", "")
+
     if message == "":
-        strMessage = "///택배 운송장조회 사용 방법///\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
+        strMessage = "///택배 운송장조회 사용 방법///\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배\n만약 통관 중인 택배라면 우선적으로 통관 상황을 조회합니다."
         return strMessage
 
+    strMessage = messageCustomTracker(message)
+    if "존재하지 않는 운송장" in strMessage:
+        strMessage = messageLogisticsParser(message)
+    else:
+        tmpmsg = messageLogisticsParser(message)
+        if "존재하지 않는 운송장" in tmpmsg:
+            strMessage =  strMessage + "\\m현재 택배사에 인계되지 않은 화물입니다."
+        else:
+            strMessage = strMessage + "\\m" + tmpmsg
+
+    return strMessage
+
+def messageLogisticsParser(message):
     logistics = [
         messageLogisticsParser_CJ,
         messageLogisticsParser_HJ,
@@ -784,7 +798,7 @@ def messageLogisticsParser(message):
         strMessage = parser(message)
         if strMessage: return strMessage
 
-    strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
+    strMessage = "미집하된 택배이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
 
     return strMessage
 
@@ -886,6 +900,7 @@ def messageLogisticsParser_KP(message):
         infom = temp.split('\n')
         for _ in range(len(infom)):
             if '\t' in infom[_]: infom[_] = infom[_].replace('\t', '')
+        if infom[5] == '': infom[5] = '접수'
         if infom[5] == '            ': infom[5] = '배달준비'
         strMessage = "/// 우체국택배 배송조회 ///\n\n날짜: %s\n시간: %s\n발생국: %s\n처리현황: %s" % (infom[1], infom[2], infom[3], infom[5])
     except:

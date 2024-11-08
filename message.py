@@ -98,9 +98,9 @@ def getReplyMessage(message, room, sender):
             strResult = messageCalDay(0, message)
     elif "!메모" in message:
         strResult = messageMemo(message, sender)
-    elif "!택배" in message:
+    elif "!택배" in message or "!ㅌㅂ" in message:
         strResult = messageLogisticsParser(message)
-    elif "!통관" in message:
+    elif "!통관" in message or "!ㅌㄱ" in message:
         strResult = messageCustomTracker(message)
     elif "!촙촙" in message:
         strResult = messageChopchop(message)
@@ -553,7 +553,7 @@ def messageCry():
 def messageCustomTracker(message):
     strMessage = ""
     try:
-        message = message.replace('!통관', '').replace(" ", "")
+        message = message.replace('!통관', '').replace('!ㅌㄱ', '').replace(" ", "")
         key = os.environ['CUSTOM_API_KEY']
         year = datetime.date.today().year
         url = 'https://unipass.customs.go.kr:38010/ext/rest/cargCsclPrgsInfoQry/retrieveCargCsclPrgsInfo?crkyCn=%s&blYy=%s&hblNo=%s' % (key, year, message)
@@ -767,7 +767,7 @@ def messageLaugh():
 
 def messageLogisticsParser(message):
     strMessage = ""
-    message = message.replace("!택배", "").replace(" ", "")
+    message = message.replace("!택배", "").replace("!ㅌㅂ", "").replace(" ", "")
     if message == "":
         strMessage = "///택배 운송장조회 사용 방법///\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
         return strMessage

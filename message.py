@@ -99,7 +99,7 @@ def getReplyMessage(message, room, sender):
     elif "!메모" in message:
         strResult = messageMemo(message, sender)
     elif "!택배" in message or "!ㅌㅂ" in message:
-        strResult = messageLogisticsParser(message)
+        strResult = messageLogistics(message)
     elif "!통관" in message or "!ㅌㄱ" in message:
         strResult = messageCustomTracker(message)
     elif "!촙촙" in message:
@@ -765,13 +765,27 @@ def messageLaugh():
     messages = ["뭘 웃어요;;", "안웃긴데;;", "이게 웃겨요?"]
     return random.choice(messages)
 
-def messageLogisticsParser(message):
+def messageLogistics(message):
     strMessage = ""
     message = message.replace("!택배", "").replace("!ㅌㅂ", "").replace(" ", "")
+
     if message == "":
-        strMessage = "///택배 운송장조회 사용 방법///\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
+        strMessage = "///택배 운송장조회 사용 방법///\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배\n만약 통관 중인 택배라면 우선적으로 통관 상황을 조회합니다."
         return strMessage
 
+    strMessage = messageCustomTracker(message)
+    if "존재하지 않는 운송장" in strMessage:
+        strMessage = messageLogisticsParser(message)
+    else:
+        tmpmsg = messageLogisticsParser(message)
+        if "존재하지 않는 운송장" in tmpmsg:
+            strMessage =  strMessage + "\\m현재 택배사에 인계되지 않은 화물입니다."
+        else:
+            strMessage = strMessage + "\\m" + tmpmsg
+
+    return strMessage
+
+def messageLogisticsParser(message):
     logistics = [
         messageLogisticsParser_CJ,
         messageLogisticsParser_HJ,
@@ -784,7 +798,7 @@ def messageLogisticsParser(message):
         strMessage = parser(message)
         if strMessage: return strMessage
 
-    strMessage = "미집하된 화물이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
+    strMessage = "미집하된 택배이거나 존재하지 않는 운송장 번호입니다.\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배"
 
     return strMessage
 

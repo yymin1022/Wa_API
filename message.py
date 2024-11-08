@@ -886,6 +886,7 @@ def messageLogisticsParser_KP(message):
         infom = temp.split('\n')
         for _ in range(len(infom)):
             if '\t' in infom[_]: infom[_] = infom[_].replace('\t', '')
+        if infom[5] == '': infom[5] = '접수'
         if infom[5] == '            ': infom[5] = '배달준비'
         strMessage = "/// 우체국택배 배송조회 ///\n\n날짜: %s\n시간: %s\n발생국: %s\n처리현황: %s" % (infom[1], infom[2], infom[3], infom[5])
     except:

@@ -57,7 +57,7 @@ genai.configure(
     api_key=GEMINI_API_KEY
 )
 model = genai.GenerativeModel(
-    model_name='gemini-1.0-pro-latest',
+    model_name='gemini-1.5-flash-latest',
     generation_config=GEMINI_GENERATION_CONFIG,
     safety_settings=GEMINI_SAFETY_CONFIG
 )

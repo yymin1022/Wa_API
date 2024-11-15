@@ -57,9 +57,10 @@ genai.configure(
     api_key=GEMINI_API_KEY
 )
 model = genai.GenerativeModel(
-    model_name='gemini-1.5-flash-latest',
+    model_name='gemini-1.5-pro-latest',
     generation_config=GEMINI_GENERATION_CONFIG,
-    safety_settings=GEMINI_SAFETY_CONFIG
+    safety_settings=GEMINI_SAFETY_CONFIG,
+    system_instruction="당신은 대한민국의 초등학생입니다. 한국어 반말을 이용해서 대답을 해주면 됩니다. 하지만 답변의 진실 여부는 절대로 틀리면 안됩니다. 무조건 옳은 답변을 지정된 말투로 말해주세요."
 )
 
 class DESAdapter(HTTPAdapter):
@@ -645,7 +646,7 @@ def messageEat():
 
 def messageGemini(str):
     str = str.replace("잼민아", "").strip()
-    response = model.generate_content(f"지금부터 대한민국의 초등학생의 말투로 대답해줘. 맞춤법도 조금 틀려서 해주면 좋을 것 같아. 조금 바보같은 말투로 대답하면 돼. {str}")
+    response = model.generate_content(str)
     return(response.text)
 
 def messageGgobugi():

@@ -248,6 +248,10 @@ def getReplyMessage(message, room, sender):
         strResult = messageTaehwan()
     elif "준섭" in message:
         strResult = messageJunseob()
+    elif "상윤" in message:
+        strResult = messageSangyoon()
+    elif "동훈" in message:
+        strResult = messageDonghoon()
     return strResult
 
 def getCryCount(message):
@@ -1398,11 +1402,11 @@ def messageYeojin():
 
 
 def messageSoohyun():
-    strMessage = "수현이? 무슨 수현이?\\m신수현? 임수현? 윤수현? 누구???"
+    strMessage = "수현이? 무슨 수현이?"
     return strMessage
 
 def messageLimsoo():
-    messages = ["임수현이 졸업했는데 왜 찾아?","안녕티비 ㅋㅋ","아 진짜?","넹구리"]
+    messages = ["임수현이 졸업했는데 왜 찾아?","안녕티비 ㅋㅋ","아 진짜?","넹구리","엥?","수현이는 혼자서도 잘 살아요"]
     return random.choice(messages)
 
 def messageBase64Encode(message):
@@ -1421,7 +1425,7 @@ def messageViki():
     return random.choice(messages)
     
 def messageTaehwan():
-    messages = ["와..~ 용민형님","용민형님 기다리고 있었습니다","굿아이디어","그게 맞지","뭔지 알지","그건 틀렸어"]
+    messages = ["와..~ 용민형님","용민형님 기다리고 있었습니다","굿아이디어","그게 맞지","뭔지 알지","그건 틀렸어","헉..","와! 알바메일 권태환!"]
     return random.choice(messages)
 
 def messageJunseob():
@@ -1434,5 +1438,27 @@ def messageJunseob():
         "그거 아세요? 준섭이가 미래의 CECOM 회장이래요",
         "준섭이는 미래의 코딩의 신",
         "준섭아 맛있는거 만들어줘",
+    ]
+    return random.choice(messages)
+
+def messageSangyoon():
+    messages=[
+        "상윤아 트월킹 춰 줘",
+        "상윤아 잠 좀 자",
+        "상윤아 커피 좀 그만 마셔",
+        "알파 메일 김상윤!",
+        "똥훈아 따랑해",
+        "동훈이 보러가자!"
+    ]
+    return random.choice(messages)
+
+def messageDonghoon():
+    messages=[
+        "ㅋㅋ 동훈이 바보",
+        "상윤이는 내꺼야.",
+        "땅유나 따랑해",
+        "똥후니는 똑똑하고 귀엽고 잘생기고 멋지고 착해. 구치 애두랍~?",
+        "예. 저는 대졸입니다.",
+        "대학원 올래?"
     ]
     return random.choice(messages)

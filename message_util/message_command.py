@@ -86,7 +86,7 @@ def message_fake_news(message):
     keyword = message.split("!뉴스:")[1]
     requestSession = requests.Session()
     requestSession.mount(fake_news_url, DESAdapter())
-    response = requestSession.post(fake_news_url, json={'message':keyword, 'len':64}, verify=certifi.where())
+    response = requestSession.post(fake_news_url, json={'message_util':keyword, 'len':64}, verify=certifi.where())
     return '\\m'.join(response.text.split('\n')[2:-4])
 
 def message_memo(message, sender):

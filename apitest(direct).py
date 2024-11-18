@@ -1,9 +1,11 @@
-import message
+import message_util
 import os
 import json
 
+from message import getReplyMessage
+
 inputMessage = input("테스트 할 Message를 입력하세요: ")
-replyMessage = message.getReplyMessage(inputMessage, "Test_Room1", "Test_Sender1")
+replyMessage = getReplyMessage(inputMessage, "Test_Room1", "Test_Sender1")
 
 if replyMessage == "":
     replyMessage = "None WA Bot Message Found"

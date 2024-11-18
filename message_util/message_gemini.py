@@ -1,7 +1,9 @@
 import os
 
+import dotenv
 import google.generativeai as genai
 
+dotenv.load_dotenv()
 
 genai.configure(api_key = os.environ.get("GEMINI_API_KEY"))
 gemini_model = genai.GenerativeModel(
@@ -12,4 +14,5 @@ gemini_model = genai.GenerativeModel(
 def message_gemini(message, sender, room):
     if "잼민아" in message:
         str = message.replace("잼민아", "").strip()
-        return gemini_model.generate_content(str)
+        return gemini_model.generate_content(str).text
+    return None

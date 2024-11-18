@@ -1,5 +1,12 @@
+from message_util.message_command import message_command
+from message_util.message_cry_laugh_stress import message_cry_laugh_stress
+from message_util.message_friends import message_friends
+from message_util.message_gemini import message_gemini
+from message_util.message_graduate import message_graduate
+from message_util.message_logistics import message_logistics
+from message_util.message_meal import message_meal
+from message_util.message_meme import message_meme
 from util.cipher_util import DESAdapter
-from message.message_gemini import gemini_model
 
 import certifi
 import datetime
@@ -11,36 +18,36 @@ import requests
 
 def getReplyMessage(message, room, sender):
     # Special Command Messages
-    result_message = message.message_command(message, room, sender)
+    result_message = message_command(message, room, sender)
     if result_message is not None:
         return result_message
 
-    result_message = message.message_gemini(message, room, sender)
+    result_message = message_gemini(message, room, sender)
     if result_message is not None:
         return result_message
 
-    result_message = message.message_logistics(message, room, sender)
+    result_message = message_logistics(message, room, sender)
     if result_message is not None:
         return result_message
 
     # Normal Text Messages
-    result_message = message.message_cry_laugh_stress(message, room, sender)
+    result_message = message_cry_laugh_stress(message, room, sender)
     if result_message is not None:
         return result_message
 
-    result_message = message.message_friends(message, room, sender)
+    result_message = message_friends(message, room, sender)
     if result_message is not None:
         return result_message
 
-    result_message = message.message_graduate(message, room, sender)
+    result_message = message_graduate(message, room, sender)
     if result_message is not None:
         return result_message
 
-    result_message = message.message_meal(message, room, sender)
+    result_message = message_meal(message, room, sender)
     if result_message is not None:
         return result_message
 
-    result_message = message.message_meme(message, room, sender)
+    result_message = message_meme(message, room, sender)
     if result_message is not None:
         return result_message
 

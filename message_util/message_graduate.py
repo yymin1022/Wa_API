@@ -1,7 +1,7 @@
 import datetime
 import random
 
-from message import message_datetime
+from message_util import message_datetime
 
 
 def message_graduate(message, room, sender):

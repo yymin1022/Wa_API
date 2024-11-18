@@ -252,6 +252,8 @@ def getReplyMessage(message, room, sender):
         strResult = messageSangyoon()
     elif "동훈" in message:
         strResult = messageDonghoon()
+    elif "상혁" in message:
+        strResult = messageSanghyuk()
     return strResult
 
 def getCryCount(message):
@@ -1461,4 +1463,8 @@ def messageDonghoon():
         "예. 저는 대졸입니다.",
         "대학원 올래?"
     ]
+    return random.choice(messages)
+
+def messageSanghyuk():
+    messages = ["대.상.혁", "상혁아 이거 어떻게 해?", "적분의 신", "대대대"]
     return random.choice(messages)

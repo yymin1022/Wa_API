@@ -254,7 +254,7 @@ def getReplyMessage(message, room, sender):
         strResult = messageDonghoon()
     elif "상혁" in message:
         strResult = messageSanghyuk()
-    elif "훈이" in message:
+    elif "훈의" in message:
         strResult = messageHoon()
     return strResult
 

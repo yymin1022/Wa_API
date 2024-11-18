@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.ssl_ import create_urllib3_context
+
 from dotenv import load_dotenv
 
 import certifi
@@ -13,12 +12,7 @@ import base64
 
 import google.generativeai as genai
 
-CIPHERS = (
-    'ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+HIGH:'
-    'DH+HIGH:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+HIGH:RSA+3DES:!aNULL:'
-    '!eNULL:!MD5'
-    ':HIGH:!DH:!aNULL'
-)
+from util.cipher_util import DESAdapter
 
 load_dotenv()
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
@@ -28,17 +22,6 @@ model = genai.GenerativeModel(
     model_name='gemini-1.5-flash-8b-latest',
     system_instruction="당신은 대한민국의 초등학생입니다. 한국어 반말을 이용해서 대답을 해주면 됩니다. 하지만 답변의 진실 여부는 절대로 틀리면 안됩니다. 무조건 옳은 답변을 지정된 말투로 말해주세요."
 )
-
-class DESAdapter(HTTPAdapter):
-    def init_poolmanager(self, *args, **kwargs):
-        context = create_urllib3_context(ciphers=CIPHERS)
-        kwargs['ssl_context'] = context
-        return super(DESAdapter, self).init_poolmanager(*args, **kwargs)
-
-    def proxy_manager_for(self, *args, **kwargs):
-        context = create_urllib3_context(ciphers=CIPHERS)
-        kwargs['ssl_context'] = context
-        return super(DESAdapter, self).proxy_manager_for(*args, **kwargs)
 
 def getReplyMessage(message, room, sender):
     strResult = ""

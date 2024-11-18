@@ -1466,5 +1466,5 @@ def messageDonghoon():
     return random.choice(messages)
 
 def messageSanghyuk():
-    messages = ["대.상.혁", "상혁아 이거 어떻게 해?", "적분의 신"]
+    messages = ["대.상.혁", "상혁아 이거 어떻게 해?", "적분의 신", "대대대"]
     return random.choice(messages)

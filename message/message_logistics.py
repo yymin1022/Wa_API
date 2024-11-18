@@ -1,9 +1,9 @@
-import certifi
 from bs4 import BeautifulSoup
 
 import datetime
 import os
 
+import certifi
 import requests
 
 

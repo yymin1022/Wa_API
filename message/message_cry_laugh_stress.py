@@ -1,6 +1,7 @@
 import random
 
-def message_cry_laugh_stress(message):
+
+def message_cry_laugh_stress(message, room, sender):
     if ("ㅠ" in message or "ㅜ" in message) and get_cry_count(message) >= 3:
         return message_cry()
     elif ("ㅋ" in message or "ㅎ" in message) and get_laugh_count(message) >= 20:

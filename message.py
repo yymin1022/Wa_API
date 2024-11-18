@@ -1,5 +1,5 @@
 from util.cipher_util import DESAdapter
-from message.gemini_util import gemini_model
+from message.message_gemini import gemini_model
 
 import certifi
 import datetime
@@ -10,7 +10,12 @@ import requests
 
 
 def getReplyMessage(message, room, sender):
+    # Special Command Messages
     result_message = message.message_command(message, room, sender)
+    if result_message is not None:
+        return result_message
+
+    result_message = message.message_gemini(message, room, sender)
     if result_message is not None:
         return result_message
 
@@ -18,6 +23,7 @@ def getReplyMessage(message, room, sender):
     if result_message is not None:
         return result_message
 
+    # Normal Text Messages
     result_message = message.message_cry_laugh_stress(message, room, sender)
     if result_message is not None:
         return result_message
@@ -38,9 +44,7 @@ def getReplyMessage(message, room, sender):
     if result_message is not None:
         return result_message
 
-    elif "잼민아" in message:
-        strResult = messageGemini(message)
-    elif "학사일정" in message:
+    if "학사일정" in message:
         strResult = messageCAUCalendar()
     elif "열람실" in message:
         if "서울" in message:
@@ -140,11 +144,6 @@ def messageCAULibrary(libTypeID):
        strMessage += f"\n{libItem['roomName']} : 여석 {libItem['remainCnt']}석 ({libItem['useCnt']}석 사용중)"
 
     return strMessage
-
-def messageGemini(str):
-    str = str.replace("잼민아", "").strip()
-    response = gemini_model.generate_content(str)
-    return(response.text)
 
 def messageMemreturn(sender):
     strMessage = ""

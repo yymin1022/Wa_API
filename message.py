@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 
+from message.message_cry_laugh_stress import message_cry_laugh_stress
 from util.cipher_util import DESAdapter
 from util.gemini_util import gemini_model
 
@@ -13,7 +14,9 @@ import base64
 
 
 def getReplyMessage(message, room, sender):
-    strResult = ""
+    strResult = message_cry_laugh_stress(message)
+    if strResult != None:
+        return strResult
 
     if "!뉴스" in message:
         strResult = messageFakeNews(message)
@@ -89,8 +92,6 @@ def getReplyMessage(message, room, sender):
             strResult = messageCAUMeal("")
     elif "개발해야" in message or "코딩해야" in message or "과제해야" in message:
         strResult = messageCoding()
-    elif ("ㅠ" in message or "ㅜ" in message) and getCryCount(message) >= 3:
-        strResult = messageCry()
     elif "!디데이" in message or "!day" in message:
         strResult = messageDDay(message)
     elif "뭐먹" in message or "머먹" in message:
@@ -110,8 +111,6 @@ def getReplyMessage(message, room, sender):
         strResult = messageIreon()
     elif "주형" in message:
         strResult = messageJoohyeong()
-    elif ("ㅋ" in message or "ㅎ" in message) and getLaughCount(message) >= 20:
-        strResult = messageLaugh()
     elif "민식" in message:
         strResult = messageMinsik()
     elif "민석" in message:
@@ -165,8 +164,6 @@ def getReplyMessage(message, room, sender):
         strResult = messageSleepy()
     elif "멈춰" in message:
         strResult = messageStop()
-    elif ";" in message and getStressCount(message) >= 4:
-        strResult = messageStress()
     elif "어.." in message:
         strResult = messageUh()
     elif "와.." in message:
@@ -227,30 +224,6 @@ def getReplyMessage(message, room, sender):
     elif "훈의" in message:
         strResult = messageHoon()
     return strResult
-
-def getCryCount(message):
-    count = message.count("ㅠ")
-    count += message.count("ㅜ")
-
-    return count
-
-def getLaughCount(message):
-    count = message.count("ㅋ")
-    count += message.count("ㄱ")
-    count += message.count("ㄲ")
-    count += message.count("ㄴ")
-    count += message.count("ㅌ")
-    count += message.count("ㅎ")
-
-    return count
-
-def getStressCount(message):
-    count = message.count(";")
-    count += message.count(":")
-    count += message.count(",")
-    count += message.count(".")
-
-    return count
 
 def messageAh():
     messages = ["글쿤..", "그래요..", "그렇군요..", "안돼..", "..메리카노", "..에이오우", "..아르키메데스의 원리"]
@@ -493,10 +466,6 @@ def messageCoding():
     messages = ["구라ㅡㅡ;;", "ㅋ", "밤새도 못 할 듯?ㅋㅋ"]
     return random.choice(messages)
 
-def messageCry():
-    messages = ["뭘 울어요;;", "왜 우시는 거예요?", "ㅋㅋ얘 운다"]
-    return random.choice(messages)
-
 def messageCustomTracker(message):
     strMessage = ""
     try:
@@ -707,10 +676,6 @@ def messageJoohyeong():
     strMessage = "예! 2025년도 CECOM 회장 이주형!"
 
     return strMessage
-
-def messageLaugh():
-    messages = ["뭘 웃어요;;", "안웃긴데;;", "이게 웃겨요?"]
-    return random.choice(messages)
 
 def messageLogistics(message):
     strMessage = ""
@@ -1181,11 +1146,6 @@ def messageSora(message):
 
 def messageStop():
     strMessage = "멈춰!!"
-
-    return strMessage
-
-def messageStress():
-    strMessage = "어림도 없지"
 
     return strMessage
 

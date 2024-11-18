@@ -1,5 +1,5 @@
 from util.cipher_util import DESAdapter
-from util.gemini_util import gemini_model
+from message.gemini_util import gemini_model
 
 import certifi
 import datetime

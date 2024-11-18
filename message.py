@@ -9,8 +9,6 @@ import json
 import os
 import random
 import requests
-import time
-import xmltodict
 import base64
 
 import google.generativeai as genai

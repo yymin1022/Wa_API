@@ -1,5 +1,10 @@
 import random
 
+import certifi
+import requests
+
+from util.cipher_util import DESAdapter
+
 
 def message_meme(message, room, sender):
     if "아.." in message:
@@ -8,6 +13,8 @@ def message_meme(message, room, sender):
         return message_ahnsa()
     elif "응애" in message:
         return message_baby()
+    elif "비트코인" in message:
+        return messageBitcoin()
     elif "불편" in message:
         return message_boolpyeon()
     elif "사고싶" in message or "사야" in message or "살까" in message or "샀어" in message or "샀다" in message or "샀네" in message or "사버렸" in message:
@@ -83,6 +90,24 @@ def message_ahnsa():
 def message_baby():
     messages = ["귀여운척 하지 마세요;;", "응애 나 애기", "응애 나 아기 코린이"]
     return random.choice(messages)
+
+def messageBitcoin():
+    strMessage = ""
+
+    requestSession = requests.Session()
+    url = "https://api.upbit.com/v1/ticker?markets=KRW-BTC"
+    requestSession.mount(url, DESAdapter())
+
+    try:
+        response = requestSession.get(url, verify=certifi.where())
+        response.raise_for_status()
+        data = response.json()
+        current_price = data[0]['trade_price']
+        strMessage = f"와! 비트코인 현재가 : {current_price}원! 지금 사요?"
+    except requests.exceptions.RequestException as e:
+        strMessage = "비트코인 가격을 불러오는 중 오류가 발생했습니다."
+
+    return strMessage
 
 def message_boolpyeon():
     strMessage = "불편해?\\m불편하면 자세를 고쳐앉아!\\m보는 자세가 불편하니깐 그런거아냐!!"

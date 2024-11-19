@@ -1,11 +1,12 @@
 from message import get_wa_reply
 
-inputMessage = input("테스트 할 Message를 입력하세요: ")
-replyMessage = get_wa_reply(inputMessage, "Test_Room1", "Test_Sender1")
 
-if replyMessage == "":
+input_message = input("테스트 할 Message를 입력하세요: ")
+reply_message = get_wa_reply(input_message, "Test_Room1", "Test_Sender1")
+
+if reply_message is None:
     replyMessage = "None WA Bot Message Found"
-elif "\\m" in replyMessage:
-    replyMessage = replyMessage.replace("\\m", "\n")
+elif "\\m" in reply_message:
+    replyMessage = reply_message.replace("\\m", "\n")
 
-print(replyMessage)
+print(reply_message)

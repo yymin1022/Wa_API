@@ -2,9 +2,10 @@ from flask import Flask, jsonify, redirect, request
 from flask_cors import CORS
 from waitress import serve
 
-import message_util
 import os
 import json
+
+from message import get_wa_reply
 
 flaskApp = Flask(__name__)
 CORS(flaskApp, resources={r"*": {"origins": "*"}})
@@ -17,11 +18,6 @@ def mainPage():
 def getMessage():
     errCode = 0
     errMessage = "RESULT OK"
-
-    inputData = ""
-    inputMessage = ""
-    inputRoom = ""
-    inputSender = ""
 
     try:
         inputData = request.get_json()
@@ -37,29 +33,28 @@ def getMessage():
 
         return jsonify(replyData)
 
+    reply_message = None
     if os.path.isfile("power.json"):
         with open('power.json', 'r', encoding='utf-8') as f:
             power_dict = json.load(f)
             if power_dict.get(inputRoom) == None:
-                replyMessage = message_util.getReplyMessage(inputMessage, inputRoom, inputSender)
+                reply_message = get_wa_reply(inputMessage, inputRoom, inputSender)
             elif power_dict[inputRoom] == "0":
                 if "와봇" in inputMessage:
-                    replyMessage = message_util.getReplyMessage(inputMessage, inputRoom, inputSender)
-                else:
-                    replyMessage = ""
+                    reply_message = get_wa_reply(inputMessage, inputRoom, inputSender)
             else:
-                replyMessage = message_util.getReplyMessage(inputMessage, inputRoom, inputSender)
+                reply_message = get_wa_reply(inputMessage, inputRoom, inputSender)
     else:
-        replyMessage = message_util.getReplyMessage(inputMessage, inputRoom, inputSender)
+        reply_message = get_wa_reply(inputMessage, inputRoom, inputSender)
 
     replyRoom = inputRoom
     replySender = inputSender
 
-    if(replyMessage == ""):
+    if reply_message is None:
         errCode = 100
         errMessage = "None WA Bot Message Found"
 
-    replyData = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([("msg", replyMessage), ("room", replyRoom), ("sender", replySender)]))])
+    replyData = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([("msg", reply_message), ("room", replyRoom), ("sender", replySender)]))])
 
     return jsonify(replyData)
  

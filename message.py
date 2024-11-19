@@ -6,6 +6,7 @@ from message_util.message_graduate import message_graduate
 from message_util.message_logistics import message_logistics
 from message_util.message_meal import message_meal
 from message_util.message_meme import message_meme
+from message_util.message_memory import message_memory
 from util.cipher_util import DESAdapter
 
 import certifi
@@ -51,6 +52,10 @@ def getReplyMessage(message, room, sender):
     if result_message is not None:
         return result_message
 
+    result_message = message_memory(message, room, sender)
+    if result_message is not None:
+        return result_message
+
     if "학사일정" in message:
         strResult = messageCAUCalendar()
     elif "열람실" in message:
@@ -64,10 +69,6 @@ def getReplyMessage(message, room, sender):
             strResult = messageNSULibrary()
         else:
             strResult = messageCAULibrary("")
-    elif "뭐였" in message:
-        strResult = messageRemreturn(room)
-    elif "뭐더라" in message:
-        strResult = messageMemreturn(sender)
     elif "와봇" in message:
         if "꺼" in message or "끄" in message:
             strResult = messageWabotPower(0, room)
@@ -152,22 +153,6 @@ def messageCAULibrary(libTypeID):
 
     return strMessage
 
-def messageMemreturn(sender):
-    strMessage = ""
-
-    if os.path.isfile("mem.json"):
-        with open('mem.json', 'r', encoding='utf-8') as f:
-            mem_dict = json.load(f)
-
-        if sender in mem_dict:
-            strMessage = mem_dict[sender] + "\\m^^7"
-        else:
-            strMessage = ""
-    else:
-        strMessage = ""
-
-    return strMessage
-
 def messageNSULibrary():
     strMessage = ""
     strUrl = "http://220.68.191.20/setting"
@@ -179,22 +164,6 @@ def messageNSULibrary():
     third = "제3 자유열람실 : 여석 %s석 (%s석 사용중)" % (str(324 - int(Response['data']['data'][2]['inUse']) - int(Response['data']['data'][2]['fix']) - int(Response['data']['data'][2]['disabled'])), Response['data']['data'][2]['inUse'])
 
     strMessage = "남서울대학교 열람실 좌석현황(성암기념중앙도서관)\n\n" + first + second + third
-
-    return strMessage
-
-def messageRemreturn(room):
-    strMessage = ""
-
-    if os.path.isfile("rem.json"):
-        with open('rem.json', 'r', encoding='utf-8') as f:
-            rem_dict = json.load(f)
-
-        if room in rem_dict:
-            strMessage = rem_dict[room] + "\\m아마 이거일 듯?"
-        else:
-            strMessage = ""
-    else:
-        strMessage = ""
 
     return strMessage
 

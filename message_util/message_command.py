@@ -15,8 +15,6 @@ def message_command(message, room, sender):
         return message_base64_decode(message)
     if "!base64e" in message:
         return message_base64_encode(message)
-    if "!기억" in message:
-        return message_remember(message, room)
     if "!날씨" in message:
         loc = message.split("!날씨")
         if(loc == "!날씨"):
@@ -103,27 +101,6 @@ def message_memo(message, sender):
         json_data = json.dumps(mem_dict, ensure_ascii=False, indent=4)
 
         with open('mem.json', 'w', encoding='utf-8') as f:
-            f.write(json_data)
-    else:
-        pass
-
-    strMessage = ""
-    return strMessage
-
-def message_remember(message, room):
-    message = message.replace("!기억해", "").replace("!기억", "").strip()
-
-    if len(message) != 0:
-        if os.path.isfile("rem.json"):
-            with open('rem.json', 'r', encoding='utf-8') as f:
-                rem_dict = json.load(f)
-        else:
-            rem_dict = {}
-
-        rem_dict[room] = message
-        json_data = json.dumps(rem_dict, ensure_ascii=False, indent=4)
-
-        with open('rem.json', 'w', encoding='utf-8') as f:
             f.write(json_data)
     else:
         pass

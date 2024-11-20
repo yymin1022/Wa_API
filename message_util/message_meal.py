@@ -43,7 +43,7 @@ def message_meal_anyang():
     meal_data = json.loads(bs.find("input", id = "mealList").get("value"))
 
     str_date = ["mon", "tue", "wed", "thu", "fri"]
-    str_message = f"{today_date.strftime("%Y.%m.%d.")} 안양대학교 학식메뉴\n"
+    str_message = f"{today_date.strftime('%Y.%m.%d.')} 안양대학교 학식메뉴\n"
     str_message += f"{meal_data[f"{str_date[num_date]}Main02"]}"
     for item in meal_data[f"{str_date[num_date]}Sub02"]:
         str_message += f"\n{item}"
@@ -73,12 +73,12 @@ def message_meal_cau(meal_type_id, is_tomorrow):
     meal_response = request_session.post(meal_url, json=meal_data, verify=certifi.where()).json()
     meal_list = meal_response["list"]
 
-    str_message = f"{meal_list[0]["date"]}. 중앙대학교 학식메뉴({meal_type})\n"
+    str_message = f"{meal_list[0]['date']}. 중앙대학교 학식메뉴({meal_type})\n"
     for meal_item in meal_list:
         str_menu = meal_item["menuDetail"]
         if str_menu is None:
             str_menu = "정보가 없습니다."
-        str_message += f"\n{meal_item["rest"]} : {str_menu}"
+        str_message += f"\n{meal_item['rest']} : {str_menu}"
 
     return str_message
 
@@ -86,7 +86,7 @@ def message_meal_daelim():
     today_date = datetime.date.today()
 
     meal_header = {"Content-Type": "application/x-www-form-urlencoded"}
-    meal_input = f"MENU_ID=1470&BISTRO_SEQ=1&START_DAY={today_date.strftime("%Y.%m.%d")}&END_DAY={today_date.strftime("%Y.%m.%d")}"
+    meal_input = f"MENU_ID=1470&BISTRO_SEQ=1&START_DAY={today_date.strftime('%Y.%m.%d')}&END_DAY={today_date.strftime('%Y.%m.%d')}"
     meal_url = "https://www.daelim.ac.kr/ajaxf/FrBistroSvc/BistroCarteInfo.do"
 
     request_session = requests.Session()
@@ -94,11 +94,11 @@ def message_meal_daelim():
     meal_response = request_session.post(meal_url, data=meal_input, headers=meal_header, verify=certifi.where()).json()
 
     str_date = today_date.weekday() + 1
-    str_message = f"{today_date.strftime("%Y.%m.%d.")} 대림대학교 학식메뉴\n"
+    str_message = f"{today_date.strftime('%Y.%m.%d.')} 대림대학교 학식메뉴\n"
     if str_date < 6:
         for idx in range(1, 10):
             try:
-                str_message += f">> {meal_response["data"][f"CNM1{idx}"]} <<\n{meal_response["data"][f"CCT{str_date}{idx}"].strip()}\n"
+                str_message += f">> {meal_response['data'][f'CNM1{idx}']} <<\n{meal_response['data'][f'CCT{str_date}{idx}'].strip()}\n"
             except (IndexError, TypeError):
                 pass
     else:

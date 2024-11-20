@@ -66,11 +66,11 @@ def message_dday(message):
             message_date_calculator(y, m, d)
             left_days, left_hours, left_minutes, left_seconds, left_seconds_wa = message_date_calculator(y, m, d)
             if left_days < 0:
-                return f"{message[0]}년 {message[1]}월 {message[2]}일을 기준으로 오늘은 {format(int(left_days * -1), ",")}일이 지났으며, 이를 초 단위로 환산하면 {format(int(left_seconds_wa * -1), ",")}초입니다."
+                return f"{message[0]}년 {message[1]}월 {message[2]}일을 기준으로 오늘은 {format(int(left_days * -1), ',')}일이 지났으며, 이를 초 단위로 환산하면 {format(int(left_seconds_wa * -1), ',')}초입니다."
             elif left_days == 0:
                 return "D-DAY입니다!"
             else:
-                return f"{message[0]}년 {message[1]}월 {message[2]}일까지는 {format(left_days, ",")}일이 남았으며, 이를 초 단위로 환산하면 {format(left_seconds_wa, ",")}초입니다."
+                return f"{message[0]}년 {message[1]}월 {message[2]}일까지는 {format(left_days, ',')}일이 남았으며, 이를 초 단위로 환산하면 {format(left_seconds_wa, ',')}초입니다."
     except TypeError:
         pass
     return "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !day 2023.9.8 or !디데이 23.12.31"
@@ -86,7 +86,7 @@ def message_timezone(message):
             hours, minutes = map(int, message.split(":"))
             offset = datetime.timedelta(hours=hours, minutes=minutes)
         adjusted_time = datetime.datetime.now(datetime.timezone.utc) + offset
-        return f"현재 UTC{message}의 시간은 {adjusted_time.strftime("%Y-%m-%d %H:%M:%S")}입니다."
+        return f"현재 UTC{message}의 시간은 {adjusted_time.strftime('%Y-%m-%d %H:%M:%S')}입니다."
     except (TypeError, ValueError):
         pass
     return "사용 형식이 잘못됐거나 존재하지 않는 시간대입니다.\\m사용법: !시간 +9 or !시간 -11"

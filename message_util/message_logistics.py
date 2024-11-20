@@ -30,7 +30,7 @@ def message_custom_tracker(message):
         status = soup.find("prgsStts")
         process_time = datetime.datetime.strptime(str(soup.find("prcsDttm").text), "%Y%m%d%H%M%S").strftime("%Y.%m.%d %H:%M:%S")
         return f"/// 관세청 UNIPASS 통관 조회 ///\n\n품명: {name.text}\n입항세관: {customs_name.text}\n통관진행상태: {status.text}\n처리일시: {process_time}"
-    except TypeError:
+    except (TypeError, AttributeError):
         return "존재하지 않는 운송장번호이거나 잘못된 형식 혹은 아직 입항하지 않은 화물입니다.\\m사용법: !통관 123456789"
 
 def message_logistics_main(message):
@@ -72,9 +72,10 @@ def message_logistics_parser_cj(message):
     try:
         if not message.isdigit(): raise TypeError
         request_headers = {
-        "User-Agent" : ("Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
-        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
-        Safari/537.36"), }
+            "User-Agent" : ("Mozilla/5.0 (Windows NT 10.0;Win64; x64)\
+            AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
+            Safari/537.36")
+        }
         str_url = "https://trace.cjlogistics.com/tracking/jsp/cmn/Tracking_new.jsp?QueryType=3&pTdNo=" + message
         request_session = requests.Session()
         request_response = request_session.get(str_url, headers = request_headers, verify=certifi.where())
@@ -98,7 +99,7 @@ def message_logistics_parser_cj(message):
             elif "인수자 : " in infom[_]:
                 infom[_] = infom[_].replace("인수자 : ", "")
         return f"/// CJ대한통운 배송조회 ///\n\n품목: {goods_name}\n처리장소: {infom[1]}\n전화번호: {infom[2]}\n구분: {infom[3]}\n처리일자: {infom[4]}\n상대장소(배송장소): {infom[5]}"
-    except TypeError:
+    except (TypeError, IndexError):
         return ""
 
 def message_logistics_parser_hanjin(message):
@@ -130,7 +131,7 @@ def message_logistics_parser_hanjin(message):
         goods_name = soup.select("#delivery-wr > div > table > tbody > tr > td:nth-child(1)")
         goods_name = goods_name[0].get_text().strip()
         return f"/// 한진택배 배송조회 ///\n\n상품명: {goods_name}\n날짜: {infom[1]}\n시간: {infom[2]}\n상품위치: {infom[3]}\n배송 진행상황: {infom[5]}\n전화번호: {infom[7]}"
-    except TypeError:
+    except (TypeError, IndexError):
         return ""
 
 def message_logistics_parser_koreapost(message):
@@ -160,7 +161,7 @@ def message_logistics_parser_koreapost(message):
         if infom[5] == "": infom[5] = "접수"
         if infom[5] == "            ": infom[5] = "배달준비"
         return f"/// 우체국택배 배송조회 ///\n\n날짜: {infom[1]}\n시간: {infom[2]}\n발생국: {infom[3]}\n처리현황: {infom[5]}"
-    except TypeError:
+    except (TypeError, IndexError):
         return ""
 
 def message_logistics_parser_logen(message):
@@ -195,7 +196,7 @@ def message_logistics_parser_logen(message):
         elif "배달 준비" in infom[3]:
             temp = "\n배달 예정 시간: " + infom[5]
         return f"/// 로젠택배 배송조회 ///\n\n날짜: {infom[0]}\n사업장: {infom[1]}\n배송상태: {infom[2]}\n배송내용: {infom[3]}" + temp
-    except TypeError:
+    except (TypeError, IndexError):
         return ""
 
 def message_logistics_parser_lotte(message):
@@ -220,5 +221,5 @@ def message_logistics_parser_lotte(message):
         infom = [v for v in infom if v]
         infom[6] = infom[6][:10] + " " + infom[6][10:]
         return f"/// 롯데택배 배송조회 ///\n\n단계: {infom[5]}\n시간: {infom[6]}\n현위치: {infom[7]}\n처리현황: {infom[8]}"
-    except TypeError:
+    except (TypeError, IndexError):
         return ""

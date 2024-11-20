@@ -11,11 +11,9 @@ CIPHERS = (
 
 class DESAdapter(HTTPAdapter):
     def init_poolmanager(self, *args, **kwargs):
-        context = create_urllib3_context(ciphers=CIPHERS)
-        kwargs['ssl_context'] = context
+        kwargs['ssl_context'] = create_urllib3_context(ciphers=CIPHERS)
         return super(DESAdapter, self).init_poolmanager(*args, **kwargs)
 
     def proxy_manager_for(self, *args, **kwargs):
-        context = create_urllib3_context(ciphers=CIPHERS)
-        kwargs['ssl_context'] = context
+        kwargs['ssl_context'] = create_urllib3_context(ciphers=CIPHERS)
         return super(DESAdapter, self).proxy_manager_for(*args, **kwargs)

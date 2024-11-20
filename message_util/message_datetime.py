@@ -87,6 +87,6 @@ def message_timezone(message):
             offset = datetime.timedelta(hours=hours, minutes=minutes)
         adjusted_time = datetime.datetime.now(datetime.timezone.utc) + offset
         return f"현재 UTC{message}의 시간은 {adjusted_time.strftime("%Y-%m-%d %H:%M:%S")}입니다."
-    except TypeError and ValueError:
+    except (TypeError, ValueError):
         pass
     return "사용 형식이 잘못됐거나 존재하지 않는 시간대입니다.\\m사용법: !시간 +9 or !시간 -11"

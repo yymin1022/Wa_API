@@ -4,6 +4,7 @@
 > - Python 표준 스타일링에 따라, Snake Case 형식으로 코드를 작성해주세요.
 > - 적절한 Message Util 내부에 코드를 작성해주세요.
 > - 올바르지 않거나 규칙이 지켜지지 않은 부분이 있는 경우, PR이 거부될 수 있습니다.
+> - 한국어 또는 영어로 작성해주시기 바랍니다. Korean or Engligh are only acceptable.
 
 ## Summary
 - PR 항목의 내용을 간략히 요약해 적어주세요.

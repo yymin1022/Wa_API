@@ -44,7 +44,7 @@ def message_meal_anyang():
 
     str_date = ["mon", "tue", "wed", "thu", "fri"]
     str_message = f"{today_date.strftime('%Y.%m.%d.')} 안양대학교 학식메뉴\n"
-    str_message += f"{meal_data[f"{str_date[num_date]}Main02"]}"
+    str_message += f"{meal_data[f'{str_date[num_date]}Main02']}"
     for item in meal_data[f"{str_date[num_date]}Sub02"]:
         str_message += f"\n{item}"
 

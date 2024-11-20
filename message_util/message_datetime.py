@@ -50,7 +50,6 @@ def message_date_calculator(y, m, d):
     left_minutes = 60 - now.minute - 1
     left_seconds = 60 - now.second - 1
     left_seconds_wa = ((left_days - 1) * 24 * 60 * 60) + (left_hours * 60 * 60) + (left_minutes * 60) + left_seconds
-
     return left_days, left_hours, left_minutes, left_seconds, left_seconds_wa
 
 def message_dday(message):
@@ -64,14 +63,16 @@ def message_dday(message):
                 message[0] = "20" + message[0]
             y, m, d = int(message[0]), int(message[1]), int(message[2])
             message_date_calculator(y, m, d)
-            leftdays, lefthours, leftminutes, leftseconds, leftseconds_wa = message_date_calculator(y, m, d)
-            if leftdays < 0: str_message = "%s년 %s월 %s일을 기준으로 오늘은 %s일이 지났으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(int(leftdays * -1), ','), format(int(leftseconds_wa * -1), ','))
-            elif leftdays == 0: str_message = "D-DAY입니다!"
-            else: str_message = "%s년 %s월 %s일까지는 %s일이 남았으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(leftdays, ','), format(leftseconds_wa, ','))
+            left_days, left_hours, left_minutes, left_seconds, left_seconds_wa = message_date_calculator(y, m, d)
+            if left_days < 0:
+                str_message = "%s년 %s월 %s일을 기준으로 오늘은 %s일이 지났으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(int(left_days * -1), ','), format(int(left_seconds_wa * -1), ','))
+            elif left_days == 0:
+                str_message = "D-DAY입니다!"
+            else:
+                str_message = "%s년 %s월 %s일까지는 %s일이 남았으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(left_days, ','), format(left_seconds_wa, ','))
         else: raise
     except TypeError:
         str_message = "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !day 2023.9.8 or !디데이 23.12.31"
-
     return str_message
 
 def message_timezone(message):

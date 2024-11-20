@@ -13,6 +13,6 @@ gemini_model = genai.GenerativeModel(
 
 def message_gemini(message, sender, room):
     if "잼민아" in message:
-        str = message.replace("잼민아", "").strip()
-        return gemini_model.generate_content(str).text
+        str_message = message.replace("잼민아", "").strip()
+        return gemini_model.generate_content(str_message).text.strip()
     return None

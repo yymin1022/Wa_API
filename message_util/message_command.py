@@ -5,10 +5,12 @@ import json
 import os
 
 import certifi
+import dotenv
 import requests
 
 from util.cipher_util import DESAdapter
 
+dotenv.load_dotenv()
 
 def message_command(message, room, sender):
     if "!base64d" in message:
@@ -115,13 +117,15 @@ def message_weather():
     text = text.text
     json_data = json.loads(text)
 
-    str_message = f"현재온도: {str(json_data['main']['temp'])}K\\n구름: {str(json_data['clouds']['all'])}%\\n"\
-                  f"압력: {str(json_data['main']['pressure'])}Pa\\n습도: {str(json_data['main']['humidity'])}%\\m"\
-                  f"서울의 날씨 {str(json_data['weather']['description'])}"
-    return str_message
+    try:
+        return f"현재온도: {str(json_data["main"]["temp"])}K\\n구름: {str(json_data["clouds"]["all"])}%\\n"\
+                  f"압력: {str(json_data["main"]["pressure"])}Pa\\n습도: {str(json_data["main"]["humidity"])}%\\m"\
+                  f"서울의 날씨 {str(json_data["weather"]["description"])}"
+    except KeyError:
+        return None
 
 def message_weather_latlon(lat, lon, loc):
-    apikey = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
+    apikey = os.environ.get("WEATHER_API_KEY")
     weather_api_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apikey}"
 
     request_session = requests.Session()
@@ -130,11 +134,12 @@ def message_weather_latlon(lat, lon, loc):
     text = text.text
     json_data = json.loads(text)
 
-    str_message = f"현재온도: {str(json_data['main']['temp'])}K\\n구름: {str(json_data['clouds']['all'])}%\\n"\
-                  f"압력: {str(json_data['main']['pressure'])}Pa\\n습도: {str(json_data['main']['humidity'])}%\\m"\
-                  f"{loc}의 날씨 {str(json_data['weather']['description'])}"
-
-    return str_message
+    try:
+        return f"현재온도: {str(json_data["main"]["temp"])}K\\n구름: {str(json_data["clouds"]["all"])}%\\n"\
+                  f"압력: {str(json_data["main"]["pressure"])}Pa\\n습도: {str(json_data["main"]["humidity"])}%\\m"\
+                  f"{loc}의 날씨 {str(json_data["weather"]["description"])}"
+    except KeyError:
+        return None
 
 def get_weather_lat_lon(location):
     apikey = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
@@ -146,10 +151,13 @@ def get_weather_lat_lon(location):
     text = text.text
     json_data = json.loads(text)
 
-    lat = json_data["lat"]
-    lon = json_data["lon"]
+    try:
+        lat = json_data["lat"]
+        lon = json_data["lon"]
 
-    if "cod" in json_data:
-        return "지역이 잘못되었습니다", "지역이 잘못되었습니다"
-    else:
-        return lat, lon
+        if "cod" in json_data:
+            return "지역이 잘못되었습니다", "지역이 잘못되었습니다"
+        else:
+            return lat, lon
+    except TypeError:
+        return None, None

@@ -135,4 +135,5 @@ You can check all messages on ```message.py```
 
 ## Want Contribute?
 
-If you want contribute on this Bot, check ```message.py``` and write code. I will ```Merge``` the code when you register ```Pull Request``` after checking code.
+If you want contribute on this Bot, check ```message.py``` and write code. I will ```Merge``` the code when you register ```Pull Request``` after checking code.<br/>
+However, please write your code in the correct ```message_util``` directory file to match the overall code style.<br/>

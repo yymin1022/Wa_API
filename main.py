@@ -2,66 +2,66 @@ from flask import Flask, jsonify, redirect, request
 from flask_cors import CORS
 from waitress import serve
 
-import message
 import os
 import json
 
+from message import get_wa_reply
+
 flaskApp = Flask(__name__)
-CORS(flaskApp, resources={r"*": {"origins": "*"}})
+CORS(flaskApp, resources = {r"*": {"origins": "*"}})
  
 @flaskApp.route("/")
-def mainPage():
-    return redirect("https://github.com/yymin1022/Wa_API", code=302)
+def main_page():
+    return redirect("https://github.com/yymin1022/Wa_API", code = 302)
 
 @flaskApp.route("/getMessage", methods = ["POST"])
-def getMessage():
-    errCode = 0
-    errMessage = "RESULT OK"
-
-    inputData = ""
-    inputMessage = ""
-    inputRoom = ""
-    inputSender = ""
+def get_message():
+    err_code = 0
+    err_message = "RESULT OK"
 
     try:
-        inputData = request.get_json()
+        input_data = request.get_json()
+        input_message = input_data["msg"]
+        input_room = input_data["room"]
+        input_sender = input_data["sender"]
+    except Exception as err_data:
+        err_code = 200
+        err_message = repr(err_data)
+        reply_data = dict([("RESULT",
+                            dict([("RESULT_CODE", err_code),
+                                    ("RESULT_MSG", err_message)])),
+                            ("DATA",
+                             dict([("msg", ""),
+                                   ("room", ""),
+                                   ("sender", "")]))])
+        return jsonify(reply_data)
 
-        inputMessage = inputData["msg"]
-        inputRoom = inputData["room"]
-        inputSender = inputData["sender"]
-    except Exception as errContent:
-        errCode = 200
-        errMessage = repr(errContent)
-
-        replyData = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([("msg", ""), ("room", ""), ("sender", "")]))])
-
-        return jsonify(replyData)
-
+    reply_message = None
     if os.path.isfile("power.json"):
         with open('power.json', 'r', encoding='utf-8') as f:
             power_dict = json.load(f)
-            if power_dict.get(inputRoom) == None:
-                replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
-            elif power_dict[inputRoom] == "0":
-                if "와봇" in inputMessage:
-                    replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
-                else:
-                    replyMessage = ""
+            if power_dict.get(input_room) is None:
+                reply_message = get_wa_reply(input_message, input_room, input_sender)
+            elif power_dict[input_room] == "0":
+                if "와봇" in input_message:
+                    reply_message = get_wa_reply(input_message, input_room, input_sender)
             else:
-                replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
+                reply_message = get_wa_reply(input_message, input_room, input_sender)
     else:
-        replyMessage = message.getReplyMessage(inputMessage, inputRoom, inputSender)
+        reply_message = get_wa_reply(input_message, input_room, input_sender)
 
-    replyRoom = inputRoom
-    replySender = inputSender
+    if reply_message is None:
+        err_code = 100
+        err_message = "None WA Bot Message Found"
 
-    if(replyMessage == ""):
-        errCode = 100
-        errMessage = "None WA Bot Message Found"
-
-    replyData = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([("msg", replyMessage), ("room", replyRoom), ("sender", replySender)]))])
-
-    return jsonify(replyData)
+    reply_data = dict([("RESULT",
+                        dict([("RESULT_CODE", err_code),
+                              ("RESULT_MSG", err_message)])),
+                       ("DATA",
+                        dict([("msg", reply_message),
+                              ("room", input_room),
+                              ("sender", input_sender)]))])
+    return jsonify(reply_data)
  
 if __name__ == "__main__":
     serve(flaskApp, host="0.0.0.0", port=80)

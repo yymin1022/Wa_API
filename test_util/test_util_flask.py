@@ -1,6 +1,5 @@
-# 이 코드를 실행하기 전에 먼저 Wa API를 구동해야 합니다.
 import requests
-import json
+
 
 url = "http://localhost/getMessage"
 json_data = {

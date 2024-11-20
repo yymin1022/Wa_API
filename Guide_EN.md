@@ -22,14 +22,14 @@ docker run --name wa -p 8080:80 wa-api
 ```
 git clone https://github.com/yymin1022/Wa_API.git
 chmod +x Wa_API/*.sh
-./setupServer.sh
+./server_setup_util/setupServer.sh
 ```
 
 ## Requirements
 
 Tested on ```Ubuntu 20.04 LTS amd64```. Other platform might need some modifying.
 
-These requirements will be installed automatically with ```setupServer.sh``` Script.
+These requirements will be installed automatically with ```server_setup_util/setupServer.sh``` Script.
 
 ```
 sudo apt install apache2 libapache2-mod-wsgi-py3 python3 python3-pip python3-flask
@@ -38,7 +38,7 @@ sudo python3 -m pip install -r requirements.txt
 
 ## Run
 
-If installed with ```setupServer.sh``` script, Apach2 service will be installed automatically.
+If installed with ```server_setup_util/setupServer.sh``` script, Apach2 service will be installed automatically.
 
 Service can be started with command one of these.
 
@@ -135,4 +135,5 @@ You can check all messages on ```message.py```
 
 ## Want Contribute?
 
-If you want contribute on this Bot, check ```message.py``` and write code. I will ```Merge``` the code when you register ```Pull Request``` after checking code.
+If you want contribute on this Bot, check ```message.py``` and write code. I will ```Merge``` the code when you register ```Pull Request``` after checking code.<br/>
+However, please write your code in the correct ```message_util``` directory file to match the overall code style.<br/>

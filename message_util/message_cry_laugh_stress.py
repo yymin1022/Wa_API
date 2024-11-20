@@ -2,47 +2,31 @@ import random
 
 
 def message_cry_laugh_stress(message, room, sender):
-    if ("ㅠ" in message or "ㅜ" in message) and get_cry_count(message) >= 3:
-        return message_cry()
-    elif ("ㅋ" in message or "ㅎ" in message) and get_laugh_count(message) >= 20:
-        return message_laugh()
-    elif ";" in message and get_stress_count(message) >= 4:
-        return message_stress()
+    if "ㅠ" in message or "ㅜ" in message:
+        return message_cry(message)
+    elif "ㅋ" in message or "ㅎ" in message:
+        return message_laugh(message)
+    elif ";" in message:
+        return message_stress(message)
     return None
 
-def get_cry_count(message):
-    count = message.count("ㅠ")
-    count += message.count("ㅜ")
+def message_cry(message):
+    messages = ["뭘 울어요;;",
+                "왜 우시는 거예요?",
+                "ㅋㅋ얘 운다"]
+    if sum(message.count(char) for char in "ㅠㅜ") >= 3:
+        return random.choice(messages)
+    return None
 
-    return count
+def message_laugh(message):
+    messages = ["뭘 웃어요;;",
+                "안웃긴데;;",
+                "이게 웃겨요?"]
+    if sum(message.count(char) for char in "ㅋㄱㄲㄴㅌㅎ") >= 20:
+        return random.choice(messages)
+    return None
 
-def get_laugh_count(message):
-    count = message.count("ㅋ")
-    count += message.count("ㄱ")
-    count += message.count("ㄲ")
-    count += message.count("ㄴ")
-    count += message.count("ㅌ")
-    count += message.count("ㅎ")
-
-    return count
-
-def get_stress_count(message):
-    count = message.count(";")
-    count += message.count(":")
-    count += message.count(",")
-    count += message.count(".")
-
-    return count
-
-def message_cry():
-    messages = ["뭘 울어요;;", "왜 우시는 거예요?", "ㅋㅋ얘 운다"]
-    return random.choice(messages)
-
-def message_laugh():
-    messages = ["뭘 웃어요;;", "안웃긴데;;", "이게 웃겨요?"]
-    return random.choice(messages)
-
-def message_stress():
-    strMessage = "어림도 없지"
-
-    return strMessage
+def message_stress(message):
+    if sum(message.count(char) for char in ";:,.") >= 4:
+        return "어림도 없지"
+    return None

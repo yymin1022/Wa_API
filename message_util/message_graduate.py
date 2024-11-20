@@ -1,8 +1,6 @@
 import datetime
 import random
 
-from message_util import message_datetime
-
 
 def message_graduate(message, room, sender):
     if "소해" in message or "졸업" in message or "전역" in message:
@@ -56,25 +54,17 @@ def message_jaemin_graduate():
     return random.choice(messages)
 
 def message_seungbeom_graduate():
-    y, m, d = 2031, 2, 28
-    message_datetime.message_date_calculator(y, m, d)
-    left_days, left_hours, left_minutes, left_seconds, left_seconds_wa = message_datetime.message_date_calculator(y, m, d)
-
     messages = ["승범아 대학원 가야지?",
-                f"승범이가 박사과정을 마치기까지 {left_days - 1:d}일 {abs(left_hours):d}시간 {left_minutes:d}분 {left_seconds:d}초 남았습니다.",
-                f"승범이가 박사과정을 마치기까지 {format(left_seconds_wa, ",")}초 남았습니다."]
+                f"승범이가 박사과정을 마치기까지 {(datetime.date(2031, 2, 28) - datetime.date.today()).days - 1}일 {(datetime.datetime(2031, 2, 28) - datetime.datetime.now()).seconds // 3600}시간 {((datetime.datetime(2031, 2, 28) - datetime.datetime.now()).seconds // 60) % 60}분 {(datetime.datetime(2031, 2, 28) - datetime.datetime.now()).seconds % 60}초 남았습니다.",
+                f"승범이가 박사과정을 마치기까지 {int((datetime.datetime(2031, 2, 28) - datetime.datetime.now()).total_seconds()):,}초 남았습니다."]
     return random.choice(messages)
 
 def message_supil_graduate():
-    y, m, d = 2024, 11, 27
-    message_datetime.message_date_calculator(y, m, d)
-    left_days, left_hours, left_minutes, left_seconds, left_seconds_wa = message_datetime.message_date_calculator(y, m, d)
-
     messages = ["24년은 오지 않습니다...",
                 "그런거 물어볼 시간에 일이나 하세요.",
-                f"박수필씨의 소집해제일까지 {left_days:d}일이 남았습니다.",
-                f"박수필씨의 소집해제일까지 {left_days - 1:d}일 {abs(left_hours):d}시간 {left_minutes:d}분 {left_seconds:d}초 남았습니다.",
-                f"당신이 민간인이 될 때까지 {format(left_seconds_wa, ",")}초 남았습니다."]
+                f"박수필씨의 소집해제일까지 {(datetime.date(2024, 11, 27) - datetime.date.today()).days}일이 남았습니다.",
+                f"박수필씨의 소집해제일까지 {(datetime.date(2024, 11, 27) - datetime.date.today()).days - 1}일 {(datetime.datetime(2024, 11, 27) - datetime.datetime.now()).seconds // 3600}시간 {((datetime.datetime(2024, 11, 27) - datetime.datetime.now()).seconds // 60) % 60}분 {(datetime.datetime(2024, 11, 27) - datetime.datetime.now()).seconds % 60}초 남았습니다.",
+                f"당신이 민간인이 될 때까지 {int((datetime.datetime(2024, 11, 27) - datetime.datetime.now()).total_seconds()):,}초 남았습니다."]
     return random.choice(messages)
 
 def message_seongmin_graduate():

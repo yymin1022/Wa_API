@@ -71,9 +71,9 @@ def message_dday(message):
                 return "D-DAY입니다!"
             else:
                 return f"{message[0]}년 {message[1]}월 {message[2]}일까지는 {format(left_days, ",")}일이 남았으며, 이를 초 단위로 환산하면 {format(left_seconds_wa, ",")}초입니다."
-        else: raise
     except TypeError:
-        return "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !day 2023.9.8 or !디데이 23.12.31"
+        pass
+    return "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !day 2023.9.8 or !디데이 23.12.31"
 
 def message_timezone(message):
     try:

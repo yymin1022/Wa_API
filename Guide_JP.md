@@ -25,7 +25,7 @@ docker run --name wa -p 8080:80 wa-api
 ```
 git clone https://github.com/yymin1022/Wa_API.git
 chmod +x Wa_API/*.sh
-./setupServer.sh
+./server_setup_util/setupServer.sh
 ```
 
 ---
@@ -36,7 +36,7 @@ chmod +x Wa_API/*.sh
 
 その他のプラットフォームで利用しようとする場合には、環境の設定条件に変更があるかもしれませんのでご注意ください。
 
-```setupServer.sh``` を使ってインストールする場合、下記のRequirementsも自動的にインストールされます。
+```server_setup_util/setupServer.sh``` を使ってインストールする場合、下記のRequirementsも自動的にインストールされます。
 
 ```
 sudo apt install apache2 libapache2-mod-wsgi-py3 python3 python3-pip python3-flask
@@ -47,7 +47,7 @@ sudo python3 -m pip install -r requirements.txt
 
 ## サービス実行
 
-```setupServer.sh``` を使ってインストールする場合、Apach2 サービスも自動的にインストールされます。
+```server_setup_util/setupServer.sh``` を使ってインストールする場合、Apach2 サービスも自動的にインストールされます。
 
 下記のコードを実行して、サービスを稼働することができます。
 

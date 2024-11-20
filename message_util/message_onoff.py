@@ -6,41 +6,40 @@ import random
 def message_onoff(message, room, sender):
     if "와봇" in message:
         if "꺼" in message or "끄" in message:
-            return messageWabotPower(0, room)
+            return message_wabot_power(0, room)
         elif "켜" in message or "키" in message:
-            return messageWabotPower(1, room)
+            return message_wabot_power(1, room)
 
-def messageWabotPower(flag, room):
-    strMessage = ""
+def message_wabot_power(is_on, room):
     if os.path.isfile("power.json"):
-        with open('power.json', 'r', encoding='utf-8') as f:
+        with open("power.json", "r", encoding = "utf-8") as f:
             power_dict = json.load(f)
         room_power = power_dict.get(room)
         if room_power is not None:
-            if (flag == 0 and room_power == "0") or (flag == 1 and room_power == "1"):
-                return strMessage
+            if (is_on == 0 and room_power == "0") or (is_on == 1 and room_power == "1"):
+                return None
         else:
-            if flag == 1: return strMessage
-            else: pass
+            if is_on == 1:
+                return None
     else:
         power_dict = {}
-    randInt = random.randrange(0, 4)
-    if randInt == 0:
-        if flag == 0:
+    rand_int = random.randrange(0, 4)
+    if rand_int == 0:
+        if is_on == 0:
             power_dict[room] = "0"
-            json_data = json.dumps(power_dict, ensure_ascii=False, indent=4)
-            strMessage = "와봇이 종료되었습니다."
-        elif flag == 1:
+            json_data = json.dumps(power_dict, ensure_ascii = False, indent = 4)
+            str_message = "와봇이 종료되었습니다."
+        else:
             power_dict[room] = "1"
-            json_data = json.dumps(power_dict, ensure_ascii=False, indent=4)
-            strMessage = "와봇이 시작되었습니다."
-        with open('power.json', 'w', encoding='utf-8') as f:
+            json_data = json.dumps(power_dict, ensure_ascii = False, indent = 4)
+            str_message = "와봇이 시작되었습니다."
+        with open("power.json", "w", encoding = "utf-8") as f:
             f.write(json_data)
-    elif randInt == 1:
-        strMessage = "싫은데? ^^"
-    elif randInt == 2:
-        strMessage = "네~"
-    elif randInt == 3:
-        strMessage = "ㅋㅋ"
-
-    return strMessage
+        return str_message
+    elif rand_int == 1:
+        return "싫은데? ^^"
+    elif rand_int == 2:
+        return "네~"
+    elif rand_int == 3:
+        return "ㅋㅋ"
+    return None

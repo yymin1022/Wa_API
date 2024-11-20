@@ -54,8 +54,8 @@ def message_date_calculator(y, m, d):
 def message_dday(message):
     try:
         message = message.replace("!디데이", "").replace("!day", "").replace(" ", "")
-        if message.strip()[-1] == '.': message = message[:-1]
-        if message.count('-') == 2 or message.count('.') == 2:
+        if message.strip()[-1] == ".": message = message[:-1]
+        if message.count("-") == 2 or message.count(".") == 2:
             if "-" in message:
                 message = message.split("-")
             elif "." in message:
@@ -66,11 +66,11 @@ def message_dday(message):
             message_date_calculator(y, m, d)
             left_days, left_hours, left_minutes, left_seconds, left_seconds_wa = message_date_calculator(y, m, d)
             if left_days < 0:
-                return f"{message[0]}년 {message[1]}월 {message[2]}일을 기준으로 오늘은 {format(int(left_days * -1), ',')}일이 지났으며, 이를 초 단위로 환산하면 {format(int(left_seconds_wa * -1), ',')}초입니다."
+                return f"{message[0]}년 {message[1]}월 {message[2]}일을 기준으로 오늘은 {format(int(left_days * -1), ",")}일이 지났으며, 이를 초 단위로 환산하면 {format(int(left_seconds_wa * -1), ",")}초입니다."
             elif left_days == 0:
                 return "D-DAY입니다!"
             else:
-                return f"{message[0]}년 {message[1]}월 {message[2]}일까지는 {format(left_days, ',')}일이 남았으며, 이를 초 단위로 환산하면 {format(left_seconds_wa, ',')}초입니다."
+                return f"{message[0]}년 {message[1]}월 {message[2]}일까지는 {format(left_days, ",")}일이 남았으며, 이를 초 단위로 환산하면 {format(left_seconds_wa, ",")}초입니다."
         else: raise
     except TypeError:
         return "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !day 2023.9.8 or !디데이 23.12.31"
@@ -78,15 +78,15 @@ def message_dday(message):
 def message_timezone(message):
     try:
         message = message.replace("!시간 ", "").replace(" ", "")
-        if message.startswith('+') or message.startswith('-'):
+        if message.startswith("+") or message.startswith("-"):
             if int(message) > 12 or int(message) < -11:
                 raise
             offset = datetime.timedelta(hours=int(message))
         else:
-            hours, minutes = map(int, message.split(':'))
+            hours, minutes = map(int, message.split(":"))
             offset = datetime.timedelta(hours=hours, minutes=minutes)
         adjusted_time = datetime.datetime.now(datetime.timezone.utc) + offset
-        str_message = f"현재 UTC{message}의 시간은 ", adjusted_time.strftime('%Y-%m-%d %H:%M:%S') , "입니다."
+        str_message = f"현재 UTC{message}의 시간은 ", adjusted_time.strftime("%Y-%m-%d %H:%M:%S") , "입니다."
     except TypeError:
         str_message = "사용 형식이 잘못됐거나 존재하지 않는 시간대입니다.\\m사용법: !시간 +9 or !시간 -11"
     return str_message

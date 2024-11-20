@@ -102,11 +102,7 @@ def message_memo(message, sender):
 
         with open("mem.json", "w", encoding="utf-8") as f:
             f.write(json_data)
-    else:
-        pass
-
-    str_message = ""
-    return str_message
+    return None
 
 def message_weather():
     app_id = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
@@ -119,9 +115,9 @@ def message_weather():
     text = text.text
     json_data = json.loads(text)
 
-    str_message = "현재온도: {}K\\n구름: {}%".format(str(json_data["main"]["temp"]), str(json_data["clouds"]["all"]))
-    str_message +="\\n압력: {}Pa\\n습도: {}%".format(str(json_data["main"]["pressure"]), str(json_data["main"]["humidity"]))
-    str_message +="\\m서울의 날씨 {}".format(str(json_data["weather"]["description"]))
+    str_message = f"현재온도: {str(json_data['main']['temp'])}K\\n구름: {str(json_data['clouds']['all'])}%\\n"\
+                  f"압력: {str(json_data['main']['pressure'])}Pa\\n습도: {str(json_data['main']['humidity'])}%\\m"\
+                  f"서울의 날씨 {str(json_data['weather']['description'])}"
     return str_message
 
 def message_weather_latlon(lat, lon, loc):
@@ -134,9 +130,9 @@ def message_weather_latlon(lat, lon, loc):
     text = text.text
     json_data = json.loads(text)
 
-    str_message = "현재온도: {}K\\n구름: {}%".format(str(json_data["main"]["temp"]), str(json_data["clouds"]["all"]))
-    str_message +="\\n압력: {}Pa\\n습도: {}%".format(str(json_data["main"]["pressure"]), str(json_data["main"]["humidity"]))
-    str_message +="\\m{}의 날씨 {}".format(loc, str(json_data["weather"]["description"]))
+    str_message = f"현재온도: {str(json_data['main']['temp'])}K\\n구름: {str(json_data['clouds']['all'])}%\\n"\
+                  f"압력: {str(json_data['main']['pressure'])}Pa\\n습도: {str(json_data['main']['humidity'])}%\\m"\
+                  f"{loc}의 날씨 {str(json_data['weather']['description'])}"
 
     return str_message
 

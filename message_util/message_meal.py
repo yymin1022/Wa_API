@@ -21,8 +21,6 @@ def message_meal(message, room, sender):
             return message_meal_daelim()
         elif "안양대" in message:
             return message_meal_anyang()
-        elif "남샤" in message:
-            return message_meal_nsu()
         else:
             return message_meal_cau("", False)
 

@@ -62,20 +62,20 @@ def message_chopchop(message):
         return "등록된 데이터가 없습니다. 다시 확인해주세요."
 
     soup = BeautifulSoup(response.text, "html.parser")
-    str_status = soup.find("td", text="업무진행상황").find_next_sibling("td").get_text(strip=True)
+    str_status = soup.find('td', text='업무진행상황').find_next_sibling('td').get_text(strip=True)
 
     str_message = f"업무진행상황: {str_status}\n" \
-                    f"통신사/유형: {soup.find("td", text="통신사/유형").find_next_sibling("td").get_text(strip=True)}\n" \
-                    f"모델명: {soup.find("td", text="모델명").find_next_sibling("td").get_text(strip=True)}\n" \
-                    f"색상: {soup.find("td", text="색상").find_next_sibling("td").get_text(strip=True)}\n" \
-                    f"요금제: {soup.find("td", text="요금제").find_next_sibling("td").get_text(strip=True)}\n" \
-                    f"약정: {soup.find("td", text="약정").find_next_sibling("td").get_text(strip=True)}\n"
+                    f"통신사/유형: {soup.find('td', text='통신사/유형').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"모델명: {soup.find('td', text='모델명').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"색상: {soup.find('td', text='색상').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"요금제: {soup.find('td', text='요금제').find_next_sibling('td').get_text(strip=True)}\n" \
+                    f"약정: {soup.find('td', text='약정').find_next_sibling('td').get_text(strip=True)}\n"
 
     if str_status == "개통완료":
-        str_message += f"회선유지기간: {soup.find("td", text="회선유지기간").find_next_sibling("td").get_text(strip=True)}\n" \
-                        f"요금제유지기간: {soup.find("td", text="요금제유지기간").find_next_sibling("td").get_text(strip=True)}"
+        str_message += f"회선유지기간: {soup.find('td', text='회선유지기간').find_next_sibling('td').get_text(strip=True)}\n" \
+                        f"요금제유지기간: {soup.find('td', text='요금제유지기간').find_next_sibling('td').get_text(strip=True)}"
     else:
-        str_message += f"배송정보: {soup.find("td", text="배송등록").find_next_sibling("td").get_text(strip=True)}"
+        str_message += f"배송정보: {soup.find('td', text='배송등록').find_next_sibling('td').get_text(strip=True)}"
 
     return str_message
 

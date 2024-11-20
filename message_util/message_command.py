@@ -118,9 +118,9 @@ def message_weather():
     json_data = json.loads(text)
 
     try:
-        return f"현재온도: {str(json_data["main"]["temp"])}K\\n구름: {str(json_data["clouds"]["all"])}%\\n"\
-                  f"압력: {str(json_data["main"]["pressure"])}Pa\\n습도: {str(json_data["main"]["humidity"])}%\\m"\
-                  f"서울의 날씨 {str(json_data["weather"]["description"])}"
+        return f"현재온도: {str(json_data['main']['temp'])}K\\n구름: {str(json_data['clouds']['all'])}%\\n"\
+                  f"압력: {str(json_data['main']['pressure'])}Pa\\n습도: {str(json_data['main']['humidity'])}%\\m"\
+                  f"서울의 날씨 {str(json_data['weather']['description'])}"
     except KeyError:
         return None
 
@@ -135,9 +135,9 @@ def message_weather_latlon(lat, lon, loc):
     json_data = json.loads(text)
 
     try:
-        return f"현재온도: {str(json_data["main"]["temp"])}K\\n구름: {str(json_data["clouds"]["all"])}%\\n"\
-                  f"압력: {str(json_data["main"]["pressure"])}Pa\\n습도: {str(json_data["main"]["humidity"])}%\\m"\
-                  f"{loc}의 날씨 {str(json_data["weather"]["description"])}"
+        return f"현재온도: {str(json_data['main']['temp'])}K\\n구름: {str(json_data['clouds']['all'])}%\\n"\
+                  f"압력: {str(json_data['main']['pressure'])}Pa\\n습도: {str(json_data['main']['humidity'])}%\\m"\
+                  f"{loc}의 날씨 {str(json_data['weather']['description'])}"
     except KeyError:
         return None
 

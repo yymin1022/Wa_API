@@ -14,7 +14,6 @@ def message_datetime(message, room, sender):
     return None
 
 def message_cal_day(cal, message):
-    str_message = ""
     weekly = 0
     day = datetime.datetime.now()
     try:
@@ -26,20 +25,20 @@ def message_cal_day(cal, message):
         if cal == 1:
             if weekly == 1:
                 dday = day + datetime.timedelta(days=int(message) * 7)
-                str_message = "오늘을 기준으로 %s주 후는 %s년 %s월 %s일입니다." % (message, dday.year, dday.month, dday.day)
+                return f"오늘을 기준으로 {message}주 후는 {dday.year}년 {dday.month}월 {dday.day}일입니다."
             else:
                 dday = day + datetime.timedelta(days=int(message))
-                str_message = "오늘을 기준으로 %s일 후는 %s년 %s월 %s일입니다." % (message, dday.year, dday.month, dday.day)
+                return f"오늘을 기준으로 {message}일 후는 {dday.year}년 {dday.month}월 {dday.day}일입니다."
         elif cal == 0:
             if weekly == 1:
                 dday = day - datetime.timedelta(days=int(message) * 7)
-                str_message = "오늘을 기준으로 %s주 전은 %s년 %s월 %s일입니다." % (message, dday.year, dday.month, dday.day)
+                return f"오늘을 기준으로 {message}주 전은 {dday.year}년 {dday.month}월 {dday.day}일입니다."
             else:
                 dday = day - datetime.timedelta(days=int(message))
-                str_message = "오늘을 기준으로 %s일 전은 %s년 %s월 %s일입니다." % (message, dday.year, dday.month, dday.day)
+                return f"오늘을 기준으로 {message}일 전은 {dday.year}년 {dday.month}월 {dday.day}일입니다."
     except TypeError:
-        str_message = "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !날짜더하기 100일 or !날짜빼기 16주"
-    return str_message
+        return "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !날짜더하기 100일 or !날짜빼기 16주"
+    return None
 
 def message_date_calculator(y, m, d):
     date_end = datetime.date(y,m,d)
@@ -57,23 +56,24 @@ def message_dday(message):
         message = message.replace("!디데이", "").replace("!day", "").replace(" ", "")
         if message.strip()[-1] == '.': message = message[:-1]
         if message.count('-') == 2 or message.count('.') == 2:
-            if "-" in message: message = message.split("-")
-            elif "." in message: message = message.split(".")
+            if "-" in message:
+                message = message.split("-")
+            elif "." in message:
+                message = message.split(".")
             if len(str(message[0])) == 2:
                 message[0] = "20" + message[0]
             y, m, d = int(message[0]), int(message[1]), int(message[2])
             message_date_calculator(y, m, d)
             left_days, left_hours, left_minutes, left_seconds, left_seconds_wa = message_date_calculator(y, m, d)
             if left_days < 0:
-                str_message = "%s년 %s월 %s일을 기준으로 오늘은 %s일이 지났으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(int(left_days * -1), ','), format(int(left_seconds_wa * -1), ','))
+                return f"{message[0]}년 {message[1]}월 {message[2]}일을 기준으로 오늘은 {format(int(left_days * -1), ',')}일이 지났으며, 이를 초 단위로 환산하면 {format(int(left_seconds_wa * -1), ',')}초입니다."
             elif left_days == 0:
-                str_message = "D-DAY입니다!"
+                return "D-DAY입니다!"
             else:
-                str_message = "%s년 %s월 %s일까지는 %s일이 남았으며, 이를 초 단위로 환산하면 %s초입니다."%(message[0], message[1], message[2], format(left_days, ','), format(left_seconds_wa, ','))
+                return f"{message[0]}년 {message[1]}월 {message[2]}일까지는 {format(left_days, ',')}일이 남았으며, 이를 초 단위로 환산하면 {format(left_seconds_wa, ',')}초입니다."
         else: raise
     except TypeError:
-        str_message = "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !day 2023.9.8 or !디데이 23.12.31"
-    return str_message
+        return "존재하지 않는 날짜이거나 사용 불가능한 형식입니다.\\mex) !day 2023.9.8 or !디데이 23.12.31"
 
 def message_timezone(message):
     try:

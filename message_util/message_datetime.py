@@ -21,7 +21,7 @@ def message_cal_day(cal, message):
             weekly = 1
         message = message.replace("!날짜더하기", "").replace("!날짜빼기", "").replace(" ", "").replace("일", "").replace("주", "")
         if not message.isdigit():
-            raise
+            raise TypeError
         if cal == 1:
             if weekly == 1:
                 dday = day + datetime.timedelta(days=int(message) * 7)

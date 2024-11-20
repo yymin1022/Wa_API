@@ -37,10 +37,10 @@ def message_meal_anyang():
 
     request_session = requests.Session()
     request_session.mount(meal_url, DESAdapter())
-    meal_response = request_session.get(meal_url, verify=certifi.where()).text
+    meal_response = request_session.get(meal_url, verify = certifi.where()).text
 
     bs = BeautifulSoup(meal_response, "html.parser")
-    meal_data = json.loads(bs.find("input", id="mealList").get("value"))
+    meal_data = json.loads(bs.find("input", id = "mealList").get("value"))
 
     str_date = ["mon", "tue", "wed", "thu", "fri"]
     str_message = f"{today_date.strftime("%Y.%m.%d.")} 안양대학교 학식메뉴\n"
@@ -99,7 +99,7 @@ def message_meal_daelim():
         for idx in range(1, 10):
             try:
                 str_message += f">> {meal_response["data"][f"CNM1{idx}"]} <<\n{meal_response["data"][f"CCT{str_date}{idx}"].strip()}\n"
-            except IndexError or TypeError:
+            except (IndexError, TypeError):
                 pass
     else:
         str_message += "금일은 학식을 운영하지 않습니다"
@@ -118,7 +118,7 @@ def message_meal_nsu():
         elif 0 < day <= 4:
             day += 2
         else:
-            raise
+            raise IndexError
 
         meal_url = "https://nsu.ac.kr/api/user/board/getBoardContentSummaryList"
         bokji_data = "boardIdList=467&includeProperties=1&parentBoardContentId=-1&isAvailable=1&isPrivate=0&isAlwaysOnTop=0&isDeleted=0&orderByCode=4"
@@ -142,6 +142,6 @@ def message_meal_nsu():
             meal_list_2.append(f"{meal_data[1]}\n")
 
         str_message = f"남서울대학교 {meal_date} 식단표\n>> 천원의 아침밥 <<\n{meal_list_1[day]}\n>> 오늘의 메뉴 <<\n{meal_list_0[day]}\n>> 멀베리 <<\n{meal_list_2[day]}"
-    except IndexError or TypeError:
+    except (IndexError, TypeError):
         str_message = "오늘은 학식을 운영하지 않습니다."
     return str_message

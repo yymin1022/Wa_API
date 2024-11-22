@@ -42,6 +42,8 @@ def message_friends(message, room, sends):
         return message_hokyu()
     elif "훈의" in message:
         return message_hoon()
+    elif "해승" in message:
+        return message_haeseung()
     elif "GDG" in message:
         return message_gdg()
     elif "GDSC" in message:
@@ -195,3 +197,10 @@ def message_not_gdsc():
                    "GDSC는 이제 없어요.",
                    "GDG! GDG!! GDG!@!@!@!"]
     return random.choice(str_message)
+
+def message_haeseung():
+    messages = [ "와! 알빠메일 이해승!",
+                 "알파메일, 알바메일을 잇는 알빠메일 이해승의 등장 . . 가슴이 웅장해진다.",
+                 "이탈리안 돈까스",
+                 "한라산 드실 분~!~"  ]
+    return random.choice(messages)

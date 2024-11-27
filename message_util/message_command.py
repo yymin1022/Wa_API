@@ -1,3 +1,6 @@
+import datetime
+import re
+
 from bs4 import BeautifulSoup
 
 import base64
@@ -30,6 +33,8 @@ def message_command(message, room, sender):
         return message_memo(message, sender)
     if "!촙촙" in message:
         return message_chopchop(message)
+    if "!환율" in message:
+        return message_currency()
     return None
 
 def message_base64_decode(message):
@@ -79,7 +84,20 @@ def message_chopchop(message):
 
     return str_message
 
+def message_currency():
+    today_date = datetime.date.today()
+    currency_url = f"http://www.smbs.biz/Flash/TodayExRate_flash.jsp?tr_date={today_date.strftime('%Y-%m-%d')}"
 
+    request_session = requests.Session()
+    request_session.mount(currency_url, DESAdapter())
+    response = request_session.get(currency_url, verify=certifi.where())
+
+    parse_data = re.findall(r"([A-Z]+)=([\d.,]+)", response.text)
+    str_message = f"{today_date.strftime('%m월 %d일')} 환율 정보"
+    for data in parse_data:
+        str_message += f"\\n1 {data[0]} : {data[1].replace(',', '')} KRW"
+
+    return str_message
 
 def message_fake_news(message):
     fake_news_url = os.environ["FAKE_NEWS_URL"]

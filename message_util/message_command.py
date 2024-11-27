@@ -30,6 +30,8 @@ def message_command(message, room, sender):
         return message_memo(message, sender)
     if "!촙촙" in message:
         return message_chopchop(message)
+    if "!환율" in message:
+        return message_currency()
     return None
 
 def message_base64_decode(message):
@@ -79,7 +81,8 @@ def message_chopchop(message):
 
     return str_message
 
-
+def message_currency():
+    return ""
 
 def message_fake_news(message):
     fake_news_url = os.environ["FAKE_NEWS_URL"]

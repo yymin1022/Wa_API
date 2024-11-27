@@ -93,7 +93,7 @@ def message_currency():
     response = request_session.get(currency_url, verify=certifi.where())
 
     parse_data = re.findall(r"([A-Z]+)=([\d.,]+)", response.text)
-    str_message = ""
+    str_message = f"{today_date.strftime('%m월 %d일')} 환율 정보"
     for data in parse_data:
         str_message += f"\\n1 {data[0]} : {data[1].replace(',', '')} KRW"
 

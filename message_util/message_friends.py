@@ -70,7 +70,8 @@ def message_hokyu():
                 "감사합니다. 314대대 통신반 김호규 하사입니다. 머슼타드일까요?",
                 "악! 소위 김호규!",
                 "아...\\m전역하기 싫다...",
-                "SFF 핥짝핥짝"]
+                "SFF 핥짝핥짝",
+                "호규미 호규미"]
     return random.choice(messages)
 
 def message_hoon():

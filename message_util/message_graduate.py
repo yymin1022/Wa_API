@@ -73,6 +73,6 @@ def message_seongmin_graduate():
     return random.choice(messages)
 
 def message_tjo_graduate():
-    str_message = "zz"
-
-    return str_message
+    messages = [f"조태식의 즐거운 공익 생활이 {(datetime.date(2026, 11, 5) - datetime.date.today()).days}일 남았습니다.",
+                f"조태식의 행복한 예비군 생활이 {(datetime.date(2033, 12, 31) - datetime.date.today()).days:d}일 남았습니다."]
+    return random.choice(messages)

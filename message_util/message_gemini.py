@@ -18,3 +18,9 @@ def message_gemini(message, sender, room):
         gemini_response = gemini_model.generate_content(str_message)
         return gemini_response.text.strip()
     return None
+
+def message_gemini_child(message):
+    return "result_string"
+
+def message_gemini_normal(message):
+    return "result_string"

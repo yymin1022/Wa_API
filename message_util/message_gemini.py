@@ -14,13 +14,14 @@ gemini_model = genai.GenerativeModel(
 
 def message_gemini(message, sender, room):
     if "잼민아" in message:
-        str_message = message.replace("잼민아", "").strip()
-        gemini_response = gemini_model.generate_content(str_message)
-        return gemini_response.text.strip()
+        return message_gemini_child(message.replace("잼민아", "").strip())
+    elif "헤이구글" in message:
+        message_gemini_normal(message)
     return None
 
 def message_gemini_child(message):
-    return "result_string"
+    gemini_response = gemini_model.generate_content(message)
+    return gemini_response.text.strip()
 
 def message_gemini_normal(message):
     return "result_string"

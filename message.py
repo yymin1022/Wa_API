@@ -17,6 +17,7 @@ def get_wa_reply(message, room, sender):
     result_message = message_command(message, room, sender)
     if result_message is not None:
         return result_message
+    
     result_message = message_datetime(message, room, sender)
     if result_message is not None:
         return result_message

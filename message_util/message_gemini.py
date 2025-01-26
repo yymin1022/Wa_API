@@ -16,7 +16,7 @@ def message_gemini(message, sender, room):
     if "잼민아" in message:
         return message_gemini_child(message.replace("잼민아", "").strip())
     elif "헤이구글" in message:
-        message_gemini_normal(message)
+        return message_gemini_normal(message.replace("헤이구글", "").strip())
     return None
 
 def message_gemini_child(message):
@@ -24,4 +24,5 @@ def message_gemini_child(message):
     return gemini_response.text.strip()
 
 def message_gemini_normal(message):
-    return "result_string"
+    gemini_response = gemini_model.generate_content(message)
+    return gemini_response.text.strip()

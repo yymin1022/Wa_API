@@ -29,10 +29,12 @@ def message_gemini(message, sender, room):
         return message_gemini_smart(message.replace("헤이구글", "").strip())
     return None
 
-def message_gemini_child(message):
-    gemini_response = gemini_model_child.generate_content(message)
+def get_gemini_result(model: genai.GenerativeModel, message: str):
+    gemini_response = model.generate_content(message)
     return gemini_response.text.strip()
 
+def message_gemini_child(message):
+    return get_gemini_result(gemini_model_child, message)
+
 def message_gemini_smart(message):
-    gemini_response = gemini_model_smart.generate_content(message)
-    return gemini_response.text.strip()
+    return get_gemini_result(gemini_model_smart, message)

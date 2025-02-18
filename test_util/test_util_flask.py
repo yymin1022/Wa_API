@@ -3,7 +3,7 @@ import requests
 
 url = "http://localhost/getMessage"
 json_data = {
-    "msg": "!택배 6091439711728",
+    "msg": "!택배 123",
     "room": "아 1집가고싶다",
     "sender": "Changhwan"
 }

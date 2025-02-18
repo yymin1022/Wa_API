@@ -38,18 +38,18 @@ def message_logistics_main(message):
 
     if message == "":
         return "///택배 운송장조회 사용 방법///\\m사용 예시: !택배[운송장번호]\nex)!택배1234567890\n지원중인 택배사: 우체국택배, 대한통운(CJ, 대통), 로젠택배, 롯데택배, 한진택배\n만약 통관 중인 택배라면 우선적으로 통관 상황을 조회합니다."
-    tmp_message = message_logistics_parser(message)
-    # str_message = message_custom_tracker(message)
-    # if "존재하지 않는 운송장" in str_message:
-    #     str_message = message_logistics_parser(message)
-    # else:
-    #     tmp_message = message_logistics_parser(message)
-    #     if "존재하지 않는 운송장" in tmp_message:
-    #         str_message = f"{str_message}\\m현재 택배사에 인계되지 않은 화물입니다."
-    #     else:
-    #         str_message = f"{str_message}\\m{tmp_message}"
 
-    return tmp_message
+    str_message = message_custom_tracker(message)
+    if "존재하지 않는 운송장" in str_message:
+        str_message = message_logistics_parser(message)
+    else:
+        tmp_message = message_logistics_parser(message)
+        if "존재하지 않는 운송장" in tmp_message:
+            str_message = f"{str_message}\\m현재 택배사에 인계되지 않은 화물입니다."
+        else:
+            str_message = f"{str_message}\\m{tmp_message}"
+
+    return str_message
 
 def message_logistics_parser(message):
     logistics = [message_logistics_parser_cj,

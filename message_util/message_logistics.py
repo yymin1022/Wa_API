@@ -89,26 +89,34 @@ def message_logistics_parser_cj(message):
         acpr_nm = get_value("acprNm")
         status_url = "https://trace.cjlogistics.com/next/rest/selectTrackingDetailList.do"
         status_response = requests.post(status_url, headers=headers, data=data)
-        status_info = "CJ 대한통운의 배송 상태 정보를 가져오지 못했습니다."
+        status_info = "배송 상태 정보를 가져오지 못했습니다."
         if status_response.status_code == 200 and status_response.json().get("data") and status_response.json()["data"].get("svcOutList"):
             latest_status = status_response.json()["data"]["svcOutList"][-1]
             def get_status_value(key):
                 value = latest_status.get(key, "정보 없음")
                 return value if value.strip() else "정보 없음"
-            
-            status_info = (f"처리장소: {get_status_value('branNm')}\n"
-                           f"전화번호: {get_status_value('procBranTelNo')}\n"
-                           f"처리일자: {get_status_value('workDt')} {get_status_value('workHms')}\n"
-                           f"상품상태: {get_status_value('crgStDnm')}\n"
-                           f"상세정보: {get_status_value('crgStDcdVal')}\n"
-                           f"상대장소: {get_status_value('patnBranNm')}")
+            patn_bran_nm = get_status_value('patnBranNm')
+            if "인수자" in patn_bran_nm:
+                status_info = (f"처리장소: {get_status_value('branNm')}\n"
+                               f"전화번호: {get_status_value('procBranTelNo')}\n"
+                               f"처리일자: {get_status_value('workDt')} {get_status_value('workHms')}\n"
+                               f"상품상태: {get_status_value('crgStDnm')}\n"
+                               f"상세정보: {get_status_value('crgStDcdVal')}\n"
+                               f"{patn_bran_nm}")
+            else:
+                status_info = (f"처리장소: {get_status_value('branNm')}\n"
+                               f"전화번호: {get_status_value('procBranTelNo')}\n"
+                               f"처리일자: {get_status_value('workDt')} {get_status_value('workHms')}\n"
+                               f"상품상태: {get_status_value('crgStDnm')}\n"
+                               f"상세정보: {get_status_value('crgStDcdVal')}\n"
+                               f"상대장소: {patn_bran_nm}")
         return (f"/// CJ대한통운 배송조회 ///\n\n"
                 f"운송장번호: {invc_no}\n"
                 f"송화인: {sndr_nm}\n"
                 f"수화인: {rcvr_nm}\n"
                 f"품목: {goods_nm} (수량: {qty})\n"
                 f"인수자: {acpr_nm}\n\n"
-                f"{status_info}")
+                f"/// 최신 배송 상태 ///\n{status_info}")
     except:
         return ""
 

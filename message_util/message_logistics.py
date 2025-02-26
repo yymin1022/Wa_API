@@ -68,56 +68,49 @@ def message_logistics_parser(message):
 
 def message_logistics_parser_cj(message):
     try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36",
+        request_headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                          "AppleWebKit/537.36 (KHTML, like Gecko) "
+                          "Chrome/71.0.3578.98 Safari/537.36",
             "Content-Type": "application/x-www-form-urlencoded"
         }
-        data = {"wblNo": message}
-        info_url = "https://trace.cjlogistics.com/next/rest/selectTrackingWaybil.do"
-        info_response = requests.post(info_url, headers=headers, data=data)
-        if info_response.status_code != 200 or not info_response.json().get("data"):
-            return ""
-        tracking_data = info_response.json()["data"]
-        def get_value(key):
-            value = tracking_data.get(key, "정보 없음")
-            return value if value.strip() else "정보 없음"
-        invc_no = get_value("wblNo")
-        sndr_nm = get_value("sndrNm")
-        rcvr_nm = get_value("rcvrNm")
-        goods_nm = get_value("repGoodsNm")
-        qty = get_value("qty")
-        acpr_nm = get_value("acprNm")
-        status_url = "https://trace.cjlogistics.com/next/rest/selectTrackingDetailList.do"
-        status_response = requests.post(status_url, headers=headers, data=data)
-        status_info = "배송 상태 정보를 가져오지 못했습니다."
-        if status_response.status_code == 200 and status_response.json().get("data") and status_response.json()["data"].get("svcOutList"):
-            latest_status = status_response.json()["data"]["svcOutList"][-1]
-            def get_status_value(key):
-                value = latest_status.get(key, "정보 없음")
-                return value if value.strip() else "정보 없음"
-            patn_bran_nm = get_status_value('patnBranNm')
-            if "인수자" in patn_bran_nm:
-                status_info = (f"처리장소: {get_status_value('branNm')}\n"
-                               f"전화번호: {get_status_value('procBranTelNo')}\n"
-                               f"처리일자: {get_status_value('workDt')} {get_status_value('workHms')}\n"
-                               f"상품상태: {get_status_value('crgStDnm')}\n"
-                               f"상세정보: {get_status_value('crgStDcdVal')}\n"
-                               f"{patn_bran_nm}")
-            else:
-                status_info = (f"처리장소: {get_status_value('branNm')}\n"
-                               f"전화번호: {get_status_value('procBranTelNo')}\n"
-                               f"처리일자: {get_status_value('workDt')} {get_status_value('workHms')}\n"
-                               f"상품상태: {get_status_value('crgStDnm')}\n"
-                               f"상세정보: {get_status_value('crgStDcdVal')}\n"
-                               f"상대장소: {patn_bran_nm}")
-        return (f"/// CJ대한통운 배송조회 ///\n\n"
-                f"운송장번호: {invc_no}\n"
-                f"송화인: {sndr_nm}\n"
-                f"수화인: {rcvr_nm}\n"
-                f"품목: {goods_nm} (수량: {qty})\n"
-                f"인수자: {acpr_nm}\n\n"
-                f"/// 최신 배송 상태 ///\n{status_info}")
-    except:
+        post_data = {"wblNo": message}
+        str_url_info = "https://trace.cjlogistics.com/next/rest/selectTrackingWaybil.do"
+        request_response = requests.post(str_url_info, headers=request_headers, data=post_data)
+        if request_response.status_code != 200 or not request_response.json().get("data"): return ""
+        tracking_data = request_response.json()["data"]
+        sndr_nm = (tracking_data.get("sndrNm") or "").strip() or "(정보 없음)"
+        rcvr_nm = (tracking_data.get("rcvrNm") or "").strip() or "(정보 없음)"
+        goods_nm = (tracking_data.get("repGoodsNm") or "").strip() or "(정보 없음)"
+        qty = (tracking_data.get("qty") or "").strip() or "(정보 없음)"
+        acpr_nm = (tracking_data.get("acprNm") or "").strip() or "(정보 없음)"
+        
+        str_url_status = "https://trace.cjlogistics.com/next/rest/selectTrackingDetailList.do"
+        request_response = requests.post(str_url_status, headers=request_headers, data=post_data)
+        status_info = "현재 집하되지 않은 택배입니다."
+        if (request_response.status_code == 200 and
+            request_response.json().get("data") and
+            request_response.json()["data"].get("svcOutList")):
+            latest_status = request_response.json()["data"]["svcOutList"][-1]
+            status_info = (
+                f"처리장소: {(latest_status.get('branNm') or '').strip() or '(정보 없음)'}\n"
+                f"전화번호: {(latest_status.get('procBranTelNo') or '').strip() or '(정보 없음)'}\n"
+                f"처리일자: {(latest_status.get('workDt') or '').strip() or '(정보 없음)'} "
+                f"{(latest_status.get('workHms') or '').strip() or '(정보 없음)'}\n"
+                f"상품상태: {(latest_status.get('crgStDnm') or '').strip() or '(정보 없음)'}\n"
+                f"상세정보: {(latest_status.get('crgStDcdVal') or '').strip() or '(정보 없음)'}\n"
+                f"{'인수자' if '인수자' in ((latest_status.get('patnBranNm') or '').strip() or '(정보 없음)') else '상대장소'}: "
+                f"{(latest_status.get('patnBranNm') or '').strip() or '(정보 없음)'}"
+            )
+        return (
+            f"/// CJ대한통운 배송조회 ///\n\n"
+            f"송화인: {sndr_nm}\n"
+            f"수화인: {rcvr_nm}\n"
+            f"품목: {goods_nm} (수량: {qty})\n"
+            f"인수자: {acpr_nm}\n\n"
+            f"{status_info}"
+        )
+    except (TypeError, IndexError):
         return ""
 
 def message_logistics_parser_hanjin(message):

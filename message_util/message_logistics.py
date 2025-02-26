@@ -69,49 +69,39 @@ def message_logistics_parser(message):
 def message_logistics_parser_cj(message):
     try:
         request_headers = {
-            "User-Agent"   : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                              "AppleWebKit/537.36 (KHTML, like Gecko) "
-                              "Chrome/71.0.3578.98 Safari/537.36",
-            "Content-Type" : "application/x-www-form-urlencoded"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                          "AppleWebKit/537.36 (KHTML, like Gecko) "
+                          "Chrome/71.0.3578.98 Safari/537.36",
+            "Content-Type": "application/x-www-form-urlencoded"
         }
-
-        post_data = {"wblNo" : message}
+        post_data = {"wblNo": message}
         str_url_info = "https://trace.cjlogistics.com/next/rest/selectTrackingWaybil.do"
-        request_response = requests.post(str_url_info, headers = request_headers, data = post_data)
-
+        request_response = requests.post(str_url_info, headers=request_headers, data=post_data)
         if request_response.status_code != 200 or not request_response.json().get("data"): return ""
-
         tracking_data = request_response.json()["data"]
         sndr_nm = (tracking_data.get("sndrNm") or "").strip() or "(정보 없음)"
         rcvr_nm = (tracking_data.get("rcvrNm") or "").strip() or "(정보 없음)"
         goods_nm = (tracking_data.get("repGoodsNm") or "").strip() or "(정보 없음)"
         qty = (tracking_data.get("qty") or "").strip() or "(정보 없음)"
         acpr_nm = (tracking_data.get("acprNm") or "").strip() or "(정보 없음)"
-        str_url_status = "https://trace.cjlogistics.com/next/rest/selectTrackingDetailList.do"
-        request_response = requests.post(str_url_status, headers = request_headers, data = post_data)
-        status_info = "현재 집하되지 않은 택배입니다."
         
+        str_url_status = "https://trace.cjlogistics.com/next/rest/selectTrackingDetailList.do"
+        request_response = requests.post(str_url_status, headers=request_headers, data=post_data)
+        status_info = "현재 집하되지 않은 택배입니다."
         if (request_response.status_code == 200 and
             request_response.json().get("data") and
             request_response.json()["data"].get("svcOutList")):
             latest_status = request_response.json()["data"]["svcOutList"][-1]
-            bran_nm = (latest_status.get("branNm") or "").strip() or "(정보 없음)"
-            proc_bran_tel = (latest_status.get("procBranTelNo") or "").strip() or "(정보 없음)"
-            work_dt = (latest_status.get("workDt") or "").strip() or "(정보 없음)"
-            work_hms = (latest_status.get("workHms") or "").strip() or "(정보 없음)"
-            crg_st_dnm = (latest_status.get("crgStDnm") or "").strip() or "(정보 없음)"
-            crg_st_dcd_val = (latest_status.get("crgStDcdVal") or "").strip() or "(정보 없음)"
-            patn_bran_nm = (latest_status.get("patnBranNm") or "").strip() or "(정보 없음)"
-            location_type = "인수자" if "인수자" in patn_bran_nm else "상대장소"
             status_info = (
-                f"처리장소: {bran_nm}\n"
-                f"전화번호: {proc_bran_tel}\n"
-                f"처리일자: {work_dt} {work_hms}\n"
-                f"상품상태: {crg_st_dnm}\n"
-                f"상세정보: {crg_st_dcd_val}\n"
-                f"{location_type}: {patn_bran_nm}"
+                f"처리장소: {(latest_status.get('branNm') or '').strip() or '(정보 없음)'}\n"
+                f"전화번호: {(latest_status.get('procBranTelNo') or '').strip() or '(정보 없음)'}\n"
+                f"처리일자: {(latest_status.get('workDt') or '').strip() or '(정보 없음)'} "
+                f"{(latest_status.get('workHms') or '').strip() or '(정보 없음)'}\n"
+                f"상품상태: {(latest_status.get('crgStDnm') or '').strip() or '(정보 없음)'}\n"
+                f"상세정보: {(latest_status.get('crgStDcdVal') or '').strip() or '(정보 없음)'}\n"
+                f"{'인수자' if '인수자' in ((latest_status.get('patnBranNm') or '').strip() or '(정보 없음)') else '상대장소'}: "
+                f"{(latest_status.get('patnBranNm') or '').strip() or '(정보 없음)'}"
             )
-            
         return (
             f"/// CJ대한통운 배송조회 ///\n\n"
             f"송화인: {sndr_nm}\n"

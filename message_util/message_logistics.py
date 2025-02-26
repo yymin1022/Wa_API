@@ -89,7 +89,7 @@ def message_logistics_parser_cj(message):
         acpr_nm = (tracking_data.get("acprNm") or "").strip() or "(정보 없음)"
         str_url_status = "https://trace.cjlogistics.com/next/rest/selectTrackingDetailList.do"
         request_response = requests.post(str_url_status, headers = request_headers, data = post_data)
-        status_info = "현재 수거되지 않았거나 미집하된 택배입니다."
+        status_info = "현재 집하되지 않은 택배입니다."
         
         if (request_response.status_code == 200 and
             request_response.json().get("data") and

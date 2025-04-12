@@ -1,9 +1,8 @@
 beautifulsoup4
-flask
-flask_cors
-requests
-xmltodict
-waitress
-lxml
+fastapi
 google-generativeai
+lxml
 python-dotenv
+requests
+uvicorn
+xmltodict

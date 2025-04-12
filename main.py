@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 import json
 import os
@@ -8,7 +9,14 @@ import uvicorn
 from message import get_wa_reply
 
 fastApiApp = FastAPI()
- 
+fastApiApp.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_headers=["*"],
+    allow_methods=["*"],
+    allow_origins=["*"]
+)
+
 @fastApiApp.get("/")
 def main_page():
     return RedirectResponse(url = "https://github.com/yymin1022/Wa_API")

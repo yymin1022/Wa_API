@@ -11,9 +11,9 @@ import requests
 dotenv.load_dotenv()
 
 def message_logistics(message, room, sender):
-    if "!택배" in message or "!ㅌㅂ" in message:
+    if message.startswith("!택배") or message.startswith("!ㅌㅂ"):
         return message_logistics_main(message)
-    if "!통관" in message or "!ㅌㄱ" in message:
+    if message.startswith("!통관") or message.startswith("!ㅌㄱ"):
         return message_custom_tracker(message)
     return None
 

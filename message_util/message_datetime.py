@@ -2,14 +2,14 @@ import datetime
 
 
 def message_datetime(message, room, sender):
-    if "!날짜" in message:
+    if message.startswith("!날짜"):
         if "더하기" in message:
             return message_cal_day(1, message)
         elif "빼기" in message:
             return message_cal_day(0, message)
-    if "!디데이" in message or "!day" in message:
+    if message.startswith("!디데이") or message.startswith("!day"):
         return message_dday(message)
-    if "!시간" in message:
+    if message.startswith("!시간"):
         return message_timezone(message)
     return None
 

@@ -1,3 +1,5 @@
+import asyncio
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,10 +13,10 @@ from message import get_wa_reply
 fastApiApp = FastAPI()
 fastApiApp.add_middleware(
     CORSMiddleware,
-    allow_credentials=True,
-    allow_headers=["*"],
-    allow_methods=["*"],
-    allow_origins=["*"]
+    allow_credentials = True,
+    allow_headers = ["*"],
+    allow_methods = ["*"],
+    allow_origins = ["*"]
 )
 
 @fastApiApp.get("/")
@@ -23,51 +25,39 @@ def main_page():
 
 @fastApiApp.post("/getMessage")
 async def get_message(request: Request):
-    err_code = 0
-    err_message = "RESULT OK"
+    reply_data = dict([("RESULT",
+                        dict([("RESULT_CODE", 0),
+                                ("RESULT_MSG", "RESULT OK")])),
+                        ("DATA",
+                         dict([("msg", ""),
+                               ("room", ""),
+                               ("sender", "")]))])
 
+    # Message Input Parse
     try:
         input_data = await request.json()
         input_message = input_data["msg"]
         input_room = input_data["room"]
         input_sender = input_data["sender"]
     except Exception as err_data:
-        err_code = 200
-        err_message = repr(err_data)
-        reply_data = dict([("RESULT",
-                            dict([("RESULT_CODE", err_code),
-                                    ("RESULT_MSG", err_message)])),
-                            ("DATA",
-                             dict([("msg", ""),
-                                   ("room", ""),
-                                   ("sender", "")]))])
+        reply_data["RESULT"]["RESULT_CODE"] = 200
+        reply_data["RESULT"]["RESULT_MSG"] = repr(err_data)
         return JSONResponse(content = reply_data)
 
-    reply_message = None
-    if os.path.isfile("power.json"):
-        with open('power.json', 'r', encoding='utf-8') as f:
-            power_dict = json.load(f)
-            if power_dict.get(input_room) is None:
-                reply_message = get_wa_reply(input_message, input_room, input_sender)
-            elif power_dict[input_room] == "0":
-                if "와봇" in input_message:
-                    reply_message = get_wa_reply(input_message, input_room, input_sender)
-            else:
-                reply_message = get_wa_reply(input_message, input_room, input_sender)
+    # Get Message
+    reply_message = await asyncio.to_thread(get_wa_reply, input_message, input_room, input_sender)
+
+    # Reply Message
+    if reply_message is not None:
+        reply_data["RESULT"]["RESULT_CODE"] = 0
+        reply_data["RESULT"]["RESULT_MSG"] = "RESULT OK"
+        reply_data["DATA"]["msg"] = reply_message
+        reply_data["DATA"]["room"] = input_room
+        reply_data["DATA"]["sender"] = input_sender
     else:
-        reply_message = get_wa_reply(input_message, input_room, input_sender)
+        reply_data["RESULT"]["RESULT_CODE"] = 100
+        reply_data["RESULT"]["RESULT_MSG"] = "None WA Bot Message Found or Disabled Chatroom"
 
-    if reply_message is None:
-        err_code = 100
-        err_message = "None WA Bot Message Found"
-
-    reply_data = dict([("RESULT",
-                        dict([("RESULT_CODE", err_code),
-                              ("RESULT_MSG", err_message)])),
-                       ("DATA",
-                        dict([("msg", reply_message),
-                              ("room", input_room),
-                              ("sender", input_sender)]))])
     return JSONResponse(content = reply_data)
  
 if __name__ == "__main__":

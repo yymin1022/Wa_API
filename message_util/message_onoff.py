@@ -3,6 +3,21 @@ import os
 import random
 
 
+def check_onoff(input_message, input_room):
+    if os.path.isfile("power.json"):
+        with open("power.json", "r", encoding = "utf-8") as f:
+            power_dict = json.load(f)
+            if power_dict.get(input_room) is None:
+                return True
+            elif power_dict[input_room] == "0":
+                if "와봇" in input_message:
+                    return True
+            else:
+                return True
+    else:
+        return True
+    return False
+
 def message_onoff(message, room, sender):
     if "와봇" in message:
         if "꺼" in message or "끄" in message:

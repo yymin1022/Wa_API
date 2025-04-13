@@ -9,10 +9,14 @@ from message_util.message_logistics import message_logistics
 from message_util.message_meal import message_meal
 from message_util.message_meme import message_meme
 from message_util.message_memory import message_memory
-from message_util.message_onoff import message_onoff
+from message_util.message_onoff import check_onoff, message_onoff
 
 
 def get_wa_reply(message, room, sender):
+    # Check for disabled room
+    if check_onoff(message, room) is False:
+        return None
+
     # Special Command Messages
     result_message = message_command(message, room, sender)
     if result_message is not None:

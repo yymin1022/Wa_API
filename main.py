@@ -31,6 +31,7 @@ async def get_message(request: Request):
                                ("room", ""),
                                ("sender", "")]))])
 
+    # Message Input Parse
     try:
         input_data = await request.json()
         input_message = input_data["msg"]
@@ -41,20 +42,10 @@ async def get_message(request: Request):
         reply_data["RESULT"]["RESULT_MSG"] = repr(err_data)
         return JSONResponse(content = reply_data)
 
-    reply_message = None
-    if os.path.isfile("power.json"):
-        with open("power.json", "r", encoding = "utf-8") as f:
-            power_dict = json.load(f)
-            if power_dict.get(input_room) is None:
-                reply_message = get_wa_reply(input_message, input_room, input_sender)
-            elif power_dict[input_room] == "0":
-                if "와봇" in input_message:
-                    reply_message = get_wa_reply(input_message, input_room, input_sender)
-            else:
-                reply_message = get_wa_reply(input_message, input_room, input_sender)
-    else:
-        reply_message = get_wa_reply(input_message, input_room, input_sender)
+    # Get Message
+    reply_message = get_wa_reply(input_message, input_room, input_sender)
 
+    # Reply Message
     if reply_message is not None:
         reply_data["RESULT"]["RESULT_CODE"] = 0
         reply_data["RESULT"]["RESULT_MSG"] = "RESULT OK"
@@ -63,7 +54,7 @@ async def get_message(request: Request):
         reply_data["DATA"]["sender"] = input_sender
     else:
         reply_data["RESULT"]["RESULT_CODE"] = 100
-        reply_data["RESULT"]["RESULT_MSG"] = "None WA Bot Message Found"
+        reply_data["RESULT"]["RESULT_MSG"] = "None WA Bot Message Found or Disabled Chatroom"
 
     return JSONResponse(content = reply_data)
  

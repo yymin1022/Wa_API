@@ -16,24 +16,24 @@ from util.cipher_util import DESAdapter
 dotenv.load_dotenv()
 
 def message_command(message, room, sender):
-    if "!base64d" in message:
+    if message.startswith("!base64d"):
         return message_base64_decode(message)
-    if "!base64e" in message:
+    if message.startswith("!base64e"):
         return message_base64_encode(message)
-    if "!날씨" in message:
+    if message.startswith("!날씨"):
         loc = message.split("!날씨")
         if len(loc) == 1:
             return message_weather()
         else:
             lat, lon = get_weather_lat_lon(loc)
             return message_weather_latlon(lat, lon, loc)
-    if "!뉴스" in message:
+    if message.startswith("!뉴스"):
         return message_fake_news(message)
-    if "!메모" in message:
+    if message.startswith("!메모"):
         return message_memo(message, sender)
-    if "!촙촙" in message:
+    if message.startswith("!촙촙"):
         return message_chopchop(message)
-    if "!환율" in message:
+    if message.startswith("!환율"):
         return message_currency()
     return None
 

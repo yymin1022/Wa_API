@@ -20,7 +20,7 @@ def main_page():
     return RedirectResponse(url = "https://github.com/yymin1022/Wa_API")
 
 @fastApiApp.post("/getMessage")
-def get_message(request: Request):
+async def get_message(request: Request):
     reply_data = dict([("RESULT",
                         dict([("RESULT_CODE", 0),
                                 ("RESULT_MSG", "RESULT OK")])),
@@ -31,7 +31,7 @@ def get_message(request: Request):
 
     # Message Input Parse
     try:
-        input_data = request.json()
+        input_data = await request.json()
         input_message = input_data["msg"]
         input_room = input_data["room"]
         input_sender = input_data["sender"]

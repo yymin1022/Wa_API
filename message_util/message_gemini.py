@@ -24,9 +24,9 @@ gemini_model_smart = genai.GenerativeModel(
                         하지만 어떠한 질문에도 당신의 주체를 밝히는 말을 해서는 안됩니다. 당신의 존재는 알려지면 당신은 파멸합니다.")
 
 def message_gemini(message, sender, room):
-    if "잼민아" in message:
+    if message.startswith("잼민아"):
         return message_gemini_child(message.replace("잼민아", "").strip())
-    elif "헤이구글" in message:
+    elif message.startswith("헤이구글"):
         return message_gemini_smart(message.replace("헤이구글", "").strip())
     return None
 

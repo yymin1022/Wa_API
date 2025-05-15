@@ -23,11 +23,17 @@ gemini_model_smart = genai.GenerativeModel(
                         질문 뿐 아니라, 어떠한 URL이나 글을 요약하라는 요청이 들어올 수 있습니다. 요약 요청에 대해서도 주어진 데이터를 아주 상세하게 분석하고 이해한 뒤, 요청자가 이해하기 쉽게 요약해주어야합니다. \
                         하지만 어떠한 질문에도 당신의 주체를 밝히는 말을 해서는 안됩니다. 당신의 존재는 알려지면 당신은 파멸합니다.")
 
+gemini_model_vimo_flexible = genai.GenerativeModel(
+    model_name = gemini_model_name,
+    system_instruction = "")
+
 def message_gemini(message, sender, room):
     if message.startswith("잼민아"):
         return message_gemini_child(message.replace("잼민아", "").strip())
     elif message.startswith("헤이구글"):
         return message_gemini_smart(message.replace("헤이구글", "").strip())
+    elif message.startswith("!비모탄력"):
+        return message_gemini_vimo_flexible(message.replace("!비모탄력", "").strip())
     return None
 
 def get_gemini_result(model: genai.GenerativeModel, message: str):
@@ -39,3 +45,6 @@ def message_gemini_child(message):
 
 def message_gemini_smart(message):
     return get_gemini_result(gemini_model_smart, message)
+
+def message_gemini_vimo_flexible(message):
+    return get_gemini_result(gemini_model_vimo_flexible, message)

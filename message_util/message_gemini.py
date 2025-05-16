@@ -25,7 +25,11 @@ gemini_model_smart = genai.GenerativeModel(
 
 gemini_model_vimo_flexible = genai.GenerativeModel(
     model_name = gemini_model_name,
-    system_instruction = "")
+    system_instruction = "월화수목요일의 출퇴근 시간과 금요일의 출근시간을 입력하겠습니다. \
+                        다음 계산 방식에 따라 금요일의 퇴근 시간을 계산해주세요. \
+                        - 주간 표준 근무시간은 45시간입니다. \
+                        - 하루에 최대 10시간 근무할 수 있으며, 만약 10시간을 넘기더라도 그만큼은 무시됩니다. \
+                        - 근무시간이 주 45시간을 만족했다면 즉시 퇴근할 수 있습니다.")
 
 def message_gemini(message, sender, room):
     if message.startswith("잼민아"):

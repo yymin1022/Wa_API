@@ -36,8 +36,8 @@ def message_gemini(message, sender, room):
         return message_gemini_child(message.replace("잼민아", "").strip())
     elif message.startswith("헤이구글"):
         return message_gemini_smart(message.replace("헤이구글", "").strip())
-    elif message.startswith("!비모탄력"):
-        return message_gemini_vimo_flexible(message.replace("!비모탄력", "").strip())
+    elif message.startswith("!탄력"):
+        return message_gemini_vimo_flexible(message.replace("!탄력", "").strip())
     return None
 
 def get_gemini_result(model: genai.GenerativeModel, message: str):

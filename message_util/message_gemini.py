@@ -7,7 +7,7 @@ import google.generativeai as genai
 dotenv.load_dotenv()
 
 genai.configure(api_key = os.environ.get("GEMINI_API_KEY"))
-gemini_model_name = os.environ.get("GEMINI_MODEL_NAME", "gemini-1.5-flash-8b-latest")
+gemini_model_name = os.environ.get("GEMINI_MODEL_NAME", "gemini-2.0-flash")
 gemini_model_child = genai.GenerativeModel(
     model_name = gemini_model_name,
     system_instruction = "당신은 대한민국의 초등학생입니다. \

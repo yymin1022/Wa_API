@@ -7,7 +7,7 @@ import google.generativeai as genai
 dotenv.load_dotenv()
 
 genai.configure(api_key = os.environ.get("GEMINI_API_KEY"))
-gemini_model_name = os.environ.get("GEMINI_MODEL_NAME", "gemini-1.5-flash-8b-latest")
+gemini_model_name = os.environ.get("GEMINI_MODEL_NAME", "gemini-2.0-flash")
 gemini_model_child = genai.GenerativeModel(
     model_name = gemini_model_name,
     system_instruction = "당신은 대한민국의 초등학생입니다. \
@@ -23,11 +23,21 @@ gemini_model_smart = genai.GenerativeModel(
                         질문 뿐 아니라, 어떠한 URL이나 글을 요약하라는 요청이 들어올 수 있습니다. 요약 요청에 대해서도 주어진 데이터를 아주 상세하게 분석하고 이해한 뒤, 요청자가 이해하기 쉽게 요약해주어야합니다. \
                         하지만 어떠한 질문에도 당신의 주체를 밝히는 말을 해서는 안됩니다. 당신의 존재는 알려지면 당신은 파멸합니다.")
 
+gemini_model_vimo_flexible = genai.GenerativeModel(
+    model_name = gemini_model_name,
+    system_instruction = "월화수목요일의 출퇴근 시간과 금요일의 출근시간을 입력하겠습니다. \
+                        다음 계산 방식에 따라 금요일의 퇴근 시간을 계산해주세요. \
+                        - 주간 표준 근무시간은 45시간입니다. \
+                        - 하루에 최대 10시간 근무할 수 있으며, 만약 10시간을 넘기더라도 그만큼은 무시됩니다. \
+                        - 근무시간이 주 45시간을 만족했다면 즉시 퇴근할 수 있습니다.")
+
 def message_gemini(message, sender, room):
     if message.startswith("잼민아"):
         return message_gemini_child(message.replace("잼민아", "").strip())
     elif message.startswith("헤이구글"):
         return message_gemini_smart(message.replace("헤이구글", "").strip())
+    elif message.startswith("!탄력"):
+        return message_gemini_vimo_flexible(message.replace("!탄력", "").strip())
     return None
 
 def get_gemini_result(model: genai.GenerativeModel, message: str):
@@ -39,3 +49,6 @@ def message_gemini_child(message):
 
 def message_gemini_smart(message):
     return get_gemini_result(gemini_model_smart, message)
+
+def message_gemini_vimo_flexible(message):
+    return get_gemini_result(gemini_model_vimo_flexible, message)

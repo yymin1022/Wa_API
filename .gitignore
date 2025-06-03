@@ -6,3 +6,4 @@ rem.json
 mem.json
 power.json
 .env
+venv/

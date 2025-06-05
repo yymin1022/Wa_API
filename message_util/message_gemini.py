@@ -28,8 +28,8 @@ gemini_model_smart = genai.GenerativeModel(
 gemini_model_vimo_flexible = genai.GenerativeModel(
     model_name = gemini_model_name,
     system_instruction = "\
-    월화수목요일의 출퇴근 시간과 금요일의 출근시간을 제공하겠습니다. \
-    다음과 같은 근무시간 계산 방식에 따라 금요일의 퇴근 시간을 계산해주세요. \
+    이번 주 각 요일의 출퇴근 시간과 오늘의 출근시간을 제공하겠습니다. \
+    다음과 같은 근무시간 계산 방식에 따라 오늘의 퇴근 시간을 계산해주세요. \
     - 하루의 표준 근무 시간은 점심시간 포함 9시간입니다. \
     - 모든 요일의 시간에는 점심시간 1ㅅ이 포함되어 있습니다. \
     - 탄력근무제가 적용되기 때문에, 하루에 표준 근무시간보다 더 근무할수도, 덜 근무할수도 있습니다. \

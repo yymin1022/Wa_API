@@ -8,7 +8,7 @@ import dotenv
 
 dotenv.load_dotenv()
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "gemini_api_key")
-GEMINI_MODEL_NAME = os.environ.get("GEMINI_MODEL_NAME", "gemini-2.0-flash")
+GEMINI_MODEL_NAME = os.environ.get("GEMINI_MODEL_NAME", "gemini-2.5-flash")
 
 genai_system_instruction_child = "\
     당신은 대한민국의 초등학생입니다. \

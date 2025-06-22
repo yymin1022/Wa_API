@@ -9,6 +9,8 @@ import dotenv
 dotenv.load_dotenv()
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "gemini_api_key")
 GEMINI_MODEL_NAME = os.environ.get("GEMINI_MODEL_NAME", "gemini-2.5-flash")
+GEMINI_MODEL_TEMPERATURE = float(os.environ.get("GEMINI_MODEL_TEMPERATURE", 0.5))
+GEMINI_MODEL_THINKING_BUDGET = int(os.environ.get("GEMINI_MODEL_THINKING_BUDGET", 256))
 
 genai_system_instruction_child = "\
     당신은 대한민국의 초등학생입니다. \
@@ -41,18 +43,18 @@ genai_system_instruction_vimo_flexible = "\
 
 genai_config_child = types.GenerateContentConfig(
     system_instruction = genai_system_instruction_child,
-    temperature = 0.5,
-    thinking_config = types.ThinkingConfig(thinking_budget = 0)
+    temperature = GEMINI_MODEL_TEMPERATURE,
+    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET)
 )
 genai_config_smart = types.GenerateContentConfig(
     system_instruction = genai_system_instruction_smart,
-    temperature = 0.5,
-    thinking_config = types.ThinkingConfig(thinking_budget = 512)
+    temperature = GEMINI_MODEL_TEMPERATURE,
+    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET)
 )
 genai_config_vimo_flexible = types.GenerateContentConfig(
     system_instruction = genai_system_instruction_vimo_flexible,
-    temperature = 0.5,
-    thinking_config = types.ThinkingConfig(thinking_budget = 256)
+    temperature = GEMINI_MODEL_TEMPERATURE,
+    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET)
 )
 
 genai_client = genai.Client(api_key = GEMINI_API_KEY)

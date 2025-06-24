@@ -48,7 +48,8 @@ genai_grounding_tool = types.Tool(
 genai_config_child = types.GenerateContentConfig(
     system_instruction = genai_system_instruction_child,
     temperature = GEMINI_MODEL_TEMPERATURE,
-    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET)
+    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET),
+    tools = [genai_grounding_tool]
 )
 genai_config_smart = types.GenerateContentConfig(
     system_instruction = genai_system_instruction_smart,

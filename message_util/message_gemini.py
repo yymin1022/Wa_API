@@ -53,7 +53,8 @@ genai_config_child = types.GenerateContentConfig(
 genai_config_smart = types.GenerateContentConfig(
     system_instruction = genai_system_instruction_smart,
     temperature = GEMINI_MODEL_TEMPERATURE,
-    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET)
+    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET),
+    tools = [genai_grounding_tool]
 )
 genai_config_vimo_flexible = types.GenerateContentConfig(
     system_instruction = genai_system_instruction_vimo_flexible,

@@ -38,7 +38,7 @@ pipeline {
     post {
         success {
             withCredentials([string(credentialsId: "discord-default", variable: "DISCORD_WEBHOOK_URL")]) {
-                discordSend description: "## #${BUILD_NUMBER} Build가 성공하였습니다.\n\n### Git Info\n${GIT_INFO}\n${JOB_NAME}",
+                discordSend description: "### Build ${BUILD_NUMBER}가 성공하였습니다.\n\n### Git Info\n${GIT_INFO}\n${JOB_NAME}",
                             link: env.BUILD_URL,
                             result: currentBuild.currentResult,
                             title: env.JOB_NAME,
@@ -47,7 +47,7 @@ pipeline {
         }
         failure {
             withCredentials([string(credentialsId: "discord-default", variable: "DISCORD_WEBHOOK_URL")]) {
-                discordSend description: "## #${BUILD_NUMBER} Build가 실패하였습니다.\n\n### Git Info\n${GIT_INFO}\n${JOB_NAME}.",
+                discordSend description: "## Build ${BUILD_NUMBER}가 실패하였습니다.\n\n### Git Info\n${GIT_INFO}\n${JOB_NAME}.",
                             link: env.BUILD_URL,
                             result: currentBuild.currentResult,
                             title: env.JOB_NAME,

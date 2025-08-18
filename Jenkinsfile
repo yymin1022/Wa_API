@@ -34,7 +34,7 @@ pipeline {
 
     post {
         always {
-            discordSend(webhookURL: ${DISCORD_WEBHOOK_URL})
+            discordSend(webhookURL: "${DISCORD_WEBHOOK_URL}")
         }
     }
 }

@@ -6,7 +6,6 @@ pipeline {
         GIT_AUTHOR = sh(returnStdout: true, script: "git log -n 1 --format=%ae ${GIT_COMMIT}").trim()
         GIT_COMMIT_SHORT = sh(returnStdout: true, script: "git rev-parse --short ${GIT_COMMIT}").trim()
         GIT_INFO = "Branch(Version): ${GIT_BRANCH}\nLast Message: ${GIT_MESSAGE}\nAuthor: ${GIT_AUTHOR}\nCommit: ${GIT_COMMIT_SHORT}"
-        TEXT_BREAK = "New Build Task Started !!"
         
         DOCKERHUB_CREDENTIAL = "dockerhub-yymin1022"
         DOCKER_IMAGE_NAME = "wa-api"
@@ -39,7 +38,7 @@ pipeline {
     post {
         success {
             withCredentials([string(credentialsId: "discord-default", variable: "DISCORD_WEBHOOK_URL")]) {
-                discordSend description: "${TEXT_BREAK}\n${GIT_INFO}\n${JOB_NAME}\n\nBuild가 성공하였습니다.",
+                discordSend description: "## #${BUILD_NUMBER} Build가 성공하였습니다.\n\n### Git Info\n${GIT_INFO}\n${JOB_NAME}",
                             link: env.BUILD_URL,
                             result: currentBuild.currentResult,
                             title: env.JOB_NAME,
@@ -48,7 +47,7 @@ pipeline {
         }
         failure {
             withCredentials([string(credentialsId: "discord-default", variable: "DISCORD_WEBHOOK_URL")]) {
-                discordSend description: "${TEXT_BREAK}\n${GIT_INFO}\n${JOB_NAME}\n\nBuild가 실패하였습니다.",
+                discordSend description: "## #${BUILD_NUMBER} Build가 실패하였습니다.\n\n### Git Info\n${GIT_INFO}\n${JOB_NAME}.",
                             link: env.BUILD_URL,
                             result: currentBuild.currentResult,
                             title: env.JOB_NAME,

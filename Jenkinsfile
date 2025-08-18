@@ -2,8 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DISCORD_WEBHOOK_URL = credentials("discord-default")
-
         DOCKERHUB_CREDENTIAL = "dockerhub-yymin1022"
         DOCKER_IMAGE_NAME = "wa-api"
         DOCKER_IMAGE_STORAGE = "yymin1022"
@@ -34,7 +32,9 @@ pipeline {
 
     post {
         always {
-            discordSend webhookURL: "${DISCORD_WEBHOOK_URL}"
+            withCredentials([string(credentialsId: "discord-default", variable: "DISCORD_WEBHOOK_URL")]) {
+                discordSend webhookURL: "${DISCORD_WEBHOOK_URL}"
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "gemini_api_key")
 GEMINI_MODEL_NAME = os.environ.get("GEMINI_MODEL_NAME", "gemini-2.5-flash")
 GEMINI_MODEL_TEMPERATURE = float(os.environ.get("GEMINI_MODEL_TEMPERATURE", 0.5))
 GEMINI_MODEL_THINKING_BUDGET = int(os.environ.get("GEMINI_MODEL_THINKING_BUDGET", 256))
+GEMINI_MAX_HISTORY_LENGTH = int(os.environ.get("GEMINI_MAX_HISTORY_LENGTH", 50))
 
 genai_system_instruction_child = """
     당신은 대한민국의 초등학생입니다.
@@ -71,47 +72,52 @@ genai_grounding_tool = types.Tool(
     google_search = types.GoogleSearch()
 )
 
-genai_config_child = types.GenerateContentConfig(
-    system_instruction = genai_system_instruction_child,
-    temperature = GEMINI_MODEL_TEMPERATURE,
-    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET),
-    tools = [genai_grounding_tool]
-)
-genai_config_smart = types.GenerateContentConfig(
-    system_instruction = genai_system_instruction_smart,
-    temperature = GEMINI_MODEL_TEMPERATURE,
-    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET),
-    tools = [genai_grounding_tool]
-)
-genai_config_vimo_flexible = types.GenerateContentConfig(
-    system_instruction = genai_system_instruction_vimo_flexible,
-    temperature = GEMINI_MODEL_TEMPERATURE,
-    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET)
-)
-
 genai_client = genai.Client(api_key = GEMINI_API_KEY)
+
+chat_histories = {}
 
 def message_gemini(message, sender, room):
     if message.startswith("잼민아"):
-        return message_gemini_child(message.replace("잼민아", "").strip())
+        return message_gemini_child(message.replace("잼민아", "").strip(), room)
     elif message.startswith("헤이구글"):
-        return message_gemini_smart(message.replace("헤이구글", "").strip())
+        return message_gemini_smart(message.replace("헤이구글", "").strip(), room)
     elif message.startswith("!탄력"):
         return message_gemini_vimo_flexible(message.replace("!탄력", "").strip())
     return None
 
-def get_gemini_result(config: types.GenerateContentConfig, message: str):
+def get_gemini_result(instruction: str, tools: list, message: str, history: list):
+    history.append(
+        types.Content(parts = [types.Part(text = message)]))
+
+    config = types.GenerateContentConfig(
+        system_instruction = instruction,
+        temperature = GEMINI_MODEL_TEMPERATURE,
+        tools = tools
+    )
     gemini_response = genai_client.models.generate_content(
         model = GEMINI_MODEL_NAME,
         config = config,
-        contents = message)
+        contents = history
+    )
+
+    history.append(
+        gemini_response.candidates[0].content)
+
+    rotate_gemini_history(history)
+
     return gemini_response.text.strip()
 
-def message_gemini_child(message):
-    return get_gemini_result(genai_config_child, message)
+def message_gemini_child(message, room):
+    history = chat_histories.setdefault(room, {}).setdefault("child", [])
+    return get_gemini_result(genai_system_instruction_child, [genai_grounding_tool], message, history)
 
-def message_gemini_smart(message):
-    return get_gemini_result(genai_config_smart, message)
+def message_gemini_smart(message, room):
+    history = chat_histories.setdefault(room, {}).setdefault("smart", [])
+    return get_gemini_result(genai_system_instruction_smart, [genai_grounding_tool], message, history)
 
 def message_gemini_vimo_flexible(message):
-    return get_gemini_result(genai_config_vimo_flexible, message)
+    return get_gemini_result(genai_system_instruction_vimo_flexible, [], message, [])
+
+def rotate_gemini_history(history: list):
+    while len(history) > GEMINI_MAX_HISTORY_LENGTH:
+        history.pop(0)

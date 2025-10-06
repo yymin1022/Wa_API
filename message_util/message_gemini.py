@@ -71,24 +71,6 @@ genai_grounding_tool = types.Tool(
     google_search = types.GoogleSearch()
 )
 
-genai_config_child = types.GenerateContentConfig(
-    system_instruction = genai_system_instruction_child,
-    temperature = GEMINI_MODEL_TEMPERATURE,
-    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET),
-    tools = [genai_grounding_tool]
-)
-genai_config_smart = types.GenerateContentConfig(
-    system_instruction = genai_system_instruction_smart,
-    temperature = GEMINI_MODEL_TEMPERATURE,
-    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET),
-    tools = [genai_grounding_tool]
-)
-genai_config_vimo_flexible = types.GenerateContentConfig(
-    system_instruction = genai_system_instruction_vimo_flexible,
-    temperature = GEMINI_MODEL_TEMPERATURE,
-    thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET)
-)
-
 genai_client = genai.Client(api_key = GEMINI_API_KEY)
 
 def message_gemini(message, sender, room):
@@ -100,18 +82,24 @@ def message_gemini(message, sender, room):
         return message_gemini_vimo_flexible(message.replace("!탄력", "").strip())
     return None
 
-def get_gemini_result(config: types.GenerateContentConfig, message: str):
+def get_gemini_result(instruction: str, tools: list, message: str):
+    config = types.GenerateContentConfig(
+        system_instruction = instruction,
+        temperature = GEMINI_MODEL_TEMPERATURE,
+        tools = tools
+    )
     gemini_response = genai_client.models.generate_content(
         model = GEMINI_MODEL_NAME,
         config = config,
-        contents = message)
+        contents = message
+    )
     return gemini_response.text.strip()
 
 def message_gemini_child(message):
-    return get_gemini_result(genai_config_child, message)
+    return get_gemini_result(genai_system_instruction_child, [genai_grounding_tool], message)
 
 def message_gemini_smart(message):
-    return get_gemini_result(genai_config_smart, message)
+    return get_gemini_result(genai_system_instruction_smart, [genai_grounding_tool], message)
 
 def message_gemini_vimo_flexible(message):
-    return get_gemini_result(genai_config_vimo_flexible, message)
+    return get_gemini_result(genai_system_instruction_vimo_flexible, [], message)

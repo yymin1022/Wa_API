@@ -78,16 +78,16 @@ chat_histories = {}
 
 def message_gemini(message, sender, room):
     if message.startswith("잼민아"):
-        return message_gemini_child(message.replace("잼민아", "").strip(), room)
+        return message_gemini_child(message.replace("잼민아", "").strip(), sender, room)
     elif message.startswith("헤이구글"):
-        return message_gemini_smart(message.replace("헤이구글", "").strip(), room)
+        return message_gemini_smart(message.replace("헤이구글", "").strip(), sender, room)
     elif message.startswith("!탄력"):
         return message_gemini_vimo_flexible(message.replace("!탄력", "").strip())
     return None
 
-def get_gemini_result(instruction: str, tools: list, message: str, history: list):
+def get_gemini_result(instruction: str, tools: list, message: str, history: list, sender: str):
     history.append(
-        types.Content(parts = [types.Part(text = message)]))
+        types.Content(parts = [types.Part(text = f"{sender}: {message}")]))
 
     config = types.GenerateContentConfig(
         system_instruction = instruction,
@@ -108,16 +108,16 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
 
     return gemini_response.text.strip()
 
-def message_gemini_child(message, room):
+def message_gemini_child(message, sender, room):
     history = chat_histories.setdefault(room, {}).setdefault("child", [])
-    return get_gemini_result(genai_system_instruction_child, [genai_grounding_tool], message, history)
+    return get_gemini_result(genai_system_instruction_child, [genai_grounding_tool], message, history, sender)
 
-def message_gemini_smart(message, room):
+def message_gemini_smart(message, sender, room):
     history = chat_histories.setdefault(room, {}).setdefault("smart", [])
-    return get_gemini_result(genai_system_instruction_smart, [genai_grounding_tool], message, history)
+    return get_gemini_result(genai_system_instruction_smart, [genai_grounding_tool], message, history, sender)
 
 def message_gemini_vimo_flexible(message):
-    return get_gemini_result(genai_system_instruction_vimo_flexible, [], message, [])
+    return get_gemini_result(genai_system_instruction_vimo_flexible, [], message, [], "")
 
 def rotate_gemini_history(history: list):
     while len(history) > GEMINI_MAX_HISTORY_LENGTH:

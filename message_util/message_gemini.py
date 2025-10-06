@@ -11,6 +11,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "gemini_api_key")
 GEMINI_MODEL_NAME = os.environ.get("GEMINI_MODEL_NAME", "gemini-2.5-flash")
 GEMINI_MODEL_TEMPERATURE = float(os.environ.get("GEMINI_MODEL_TEMPERATURE", 0.5))
 GEMINI_MODEL_THINKING_BUDGET = int(os.environ.get("GEMINI_MODEL_THINKING_BUDGET", 256))
+GEMINI_MAX_HISTORY_LENGTH = int(os.environ.get("GEMINI_MAX_HISTORY_LENGTH", 50))
 
 genai_system_instruction_child = """
     당신은 대한민국의 초등학생입니다.
@@ -102,6 +103,8 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
     history.append(
         gemini_response.candidates[0].content)
 
+    rotate_gemini_history(history)
+
     return gemini_response.text.strip()
 
 def message_gemini_child(message, room):
@@ -114,3 +117,7 @@ def message_gemini_smart(message, room):
 
 def message_gemini_vimo_flexible(message):
     return get_gemini_result(genai_system_instruction_vimo_flexible, [], message, [])
+
+def rotate_gemini_history(history: list):
+    while len(history) > GEMINI_MAX_HISTORY_LENGTH:
+        history.pop(0)

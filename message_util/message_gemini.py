@@ -92,6 +92,7 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
     config = types.GenerateContentConfig(
         system_instruction = instruction,
         temperature = GEMINI_MODEL_TEMPERATURE,
+        thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET),
         tools = tools
     )
     gemini_response = genai_client.models.generate_content(

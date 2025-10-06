@@ -57,4 +57,4 @@ async def get_message(request: Request):
     return JSONResponse(content = reply_data)
  
 if __name__ == "__main__":
-    uvicorn.run("main:fastApiApp", host = "0.0.0.0", port = 80, workers = 4)
+    uvicorn.run("main:fastApiApp", host = "0.0.0.0", port = 80)

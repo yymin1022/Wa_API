@@ -5,8 +5,6 @@
 <img src="README_IMG/Usage_Discord.png" width="30%" height="30%" alt="Discord Example"></img>
 
 **와..** 하면 대답하는 ~~헛소리~~ 봇입니다.<br/>
-하지만 **코로나 몇명** 등의 쓸모 있는 정보를 제공하기도 합니다.
-
 Python Flask를 이용해 개발되었습니다.
 
 반응하는 키워드 목록과 API 사용법, 서버 설정 방법은 아래 링크에서 확인하실 수 있습니다.

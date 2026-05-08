@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.concurrency import run_in_threadpool
 
 import uvicorn
 
@@ -41,7 +42,7 @@ async def get_message(request: Request):
         return JSONResponse(content = reply_data)
 
     # Get Message
-    reply_message = get_wa_reply(input_message, input_room, input_sender)
+    reply_message = await run_in_threadpool(get_wa_reply, input_message, input_room, input_sender)
 
     # Reply Message
     if reply_message is not None:

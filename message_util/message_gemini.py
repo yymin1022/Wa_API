@@ -11,7 +11,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "gemini_api_key")
 GEMINI_MODEL_NAME = os.environ.get("GEMINI_MODEL_NAME", "gemini-2.5-flash")
 GEMINI_MODEL_TEMPERATURE = float(os.environ.get("GEMINI_MODEL_TEMPERATURE", 0.5))
 GEMINI_MODEL_THINKING_BUDGET = int(os.environ.get("GEMINI_MODEL_THINKING_BUDGET", 256))
-GEMINI_MAX_HISTORY_LENGTH = int(os.environ.get("GEMINI_MAX_HISTORY_LENGTH", 50))
+GEMINI_MAX_HISTORY_LENGTH = int(os.environ.get("GEMINI_MAX_HISTORY_LENGTH", 4))
 
 genai_system_instruction_child = """
     당신은 대한민국의 초등학생입니다.

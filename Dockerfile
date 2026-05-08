@@ -1,4 +1,4 @@
-FROM python:3.10.6
+FROM python:3.12.13
 
 ENV TZ Asia/Seoul
 

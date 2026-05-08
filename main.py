@@ -41,7 +41,7 @@ async def get_message(request: Request):
         return JSONResponse(content = reply_data)
 
     # Get Message
-    reply_message = get_wa_reply(input_message, input_room, input_sender)
+    reply_message = await run_in_threadpool(get_wa_reply, input_message, input_room, input_sender)
 
     # Reply Message
     if reply_message is not None:

@@ -1,7 +1,7 @@
 import datetime
 import re
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Comment
 
 import base64
 import json
@@ -60,29 +60,54 @@ def message_chopchop(message):
     }
 
     request_session = requests.Session()
-    request_session.mount(chopchop_url, DESAdapter())
+    request_session.mount("http://", DESAdapter())
+    request_session.mount("https://", DESAdapter())
     response = request_session.post(chopchop_url, data=data)
 
     if "등록된 데이터가 없습니다" in response.text:
         return "등록된 데이터가 없습니다. 다시 확인해주세요."
 
     soup = BeautifulSoup(response.text, "html.parser")
-    str_status = soup.find('td', text='업무진행상황').find_next_sibling('td').get_text(strip=True)
+
+    def get_td_value(s, label):
+        target = s.find('td', string=lambda t: t and label in t)
+        if target:
+            sibling = target.find_next_sibling('td')
+            if sibling:
+                return sibling.get_text(strip=True)
+        return None
+
+    str_status = get_td_value(soup, '업무진행상황')
+    if str_status is None:
+        str_status = '알수없음'
 
     str_message = f"업무진행상황: {str_status}\n" \
-                    f"통신사/유형: {soup.find('td', text='통신사/유형').find_next_sibling('td').get_text(strip=True)}\n" \
-                    f"모델명: {soup.find('td', text='모델명').find_next_sibling('td').get_text(strip=True)}\n" \
-                    f"색상: {soup.find('td', text='색상').find_next_sibling('td').get_text(strip=True)}\n" \
-                    f"요금제: {soup.find('td', text='요금제').find_next_sibling('td').get_text(strip=True)}\n" \
-                    f"약정: {soup.find('td', text='약정').find_next_sibling('td').get_text(strip=True)}\n"
+                  f"통신사/유형: {get_td_value(soup, '통신사/유형') or '알수없음'}\n" \
+                  f"모델명: {get_td_value(soup, '모델명') or '알수없음'}\n" \
+                  f"색상: {get_td_value(soup, '색상') or '알수없음'}\n" \
+                  f"요금제: {get_td_value(soup, '요금제') or '알수없음'}\n" \
+                  f"약정: {get_td_value(soup, '약정') or '알수없음'}\n"
+
+    maint_period = get_td_value(soup, '회선유지기간')
+    plan_period = get_td_value(soup, '요금제유지기간')
+
+    if not maint_period or not plan_period:
+        comments = soup.find_all(string=lambda text: isinstance(text, Comment))
+        for comment in comments:
+            if "회선유지기간" in comment or "요금제유지기간" in comment:
+                c_soup = BeautifulSoup(comment, "html.parser")
+                if not maint_period:
+                    maint_period = get_td_value(c_soup, '회선유지기간')
+                if not plan_period:
+                    plan_period = get_td_value(c_soup, '요금제유지기간')
 
     if str_status == "개통완료":
-        str_message += f"회선유지기간: {soup.find('td', text='회선유지기간').find_next_sibling('td').get_text(strip=True)}\n" \
-                        f"요금제유지기간: {soup.find('td', text='요금제유지기간').find_next_sibling('td').get_text(strip=True)}"
+        str_message += f"회선유지기간: {maint_period or '정보없음'}\n" \
+                        f"요금제유지기간: {plan_period or '정보없음'}"
     else:
-        str_message += f"배송정보: {soup.find('td', text='배송등록').find_next_sibling('td').get_text(strip=True)}"
+        str_message += f"배송정보: {get_td_value(soup, '배송정보') or get_td_value(soup, '배송등록') or '정보없음'}"
 
-    return str_message
+    return str_message.strip()
 
 def message_currency():
     today_date = datetime.date.today()

@@ -1,4 +1,5 @@
 import base64
+import json
 import os
 
 from google import genai
@@ -38,6 +39,39 @@ genai_client = genai.Client(api_key = GEMINI_API_KEY)
 
 chat_histories = {}
 
+def load_histories():
+    global chat_histories
+    if os.path.isfile("gemini_history.json"):
+        try:
+            with open("gemini_history.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+                for room, personas in data.items():
+                    room_dict = chat_histories.setdefault(room, {})
+                    for persona, history_list in personas.items():
+                        room_dict[persona] = [
+                            types.Content.model_validate(h) for h in history_list
+                        ]
+        except Exception as e:
+            print(f"[Gemini Load Error] Failed to load history: {e}")
+            chat_histories = {}
+
+def save_histories():
+    try:
+        serialized = {}
+        for room, personas in chat_histories.items():
+            serialized[room] = {}
+            for persona, history_list in personas.items():
+                serialized[room][persona] = [
+                    h.model_dump(exclude_none=True) for h in history_list
+                ]
+        with open("gemini_history.json", "w", encoding="utf-8") as f:
+            json.dump(serialized, f, ensure_ascii=False, indent=4)
+    except Exception as e:
+        print(f"[Gemini Save Error] Failed to save history: {e}")
+
+# Load histories when module is imported
+load_histories()
+
 def message_gemini(wa_message: WaMessage):
     message = wa_message.msg
     sender = wa_message.sender
@@ -68,8 +102,17 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
 
     parts.append(types.Part(text = f"{sender}: {message}"))
 
-    history.append(
-        types.Content(parts = parts))
+    user_content = types.Content(
+        role="user",
+        parts=parts
+    )
+
+    # Check if history is currently empty or has odd elements
+    # and prune it to keep only valid pairs starting with user role.
+    rotate_gemini_history(history)
+
+    # Temporarily append new user message to query the model without mutating persistent history yet
+    temp_contents = history + [user_content]
 
     config = types.GenerateContentConfig(
         system_instruction = instruction,
@@ -77,27 +120,58 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
         thinking_config = types.ThinkingConfig(thinking_budget = GEMINI_MODEL_THINKING_BUDGET),
         tools = tools
     )
+
+    # If the model call fails, the persistent history list is not altered
     gemini_response = genai_client.models.generate_content(
         model = GEMINI_MODEL_NAME,
         config = config,
-        contents = history
+        contents = temp_contents
     )
 
-    history.append(
-        gemini_response.candidates[0].content)
+    # API call succeeded, commit user message and model response to history
+    model_content = gemini_response.candidates[0].content
+    # Explicitly set role as model if not present
+    if not model_content.role:
+        model_content.role = "model"
 
+    history.append(user_content)
+    history.append(model_content)
+
+    # Rotate history in pairs
     rotate_gemini_history(history)
+
+    # Save the updated history state to disk
+    save_histories()
 
     return gemini_response.text.strip()
 
 def message_gemini_child(message, sender, room, image=None):
+    if not message:
+        return "왜 불러?"
     history = chat_histories.setdefault(room, {}).setdefault("child", [])
     return get_gemini_result(genai_system_instruction_child, [genai_grounding_tool], message, history, sender, image)
 
 def message_gemini_smart(message, sender, room, image=None):
+    if not message:
+        return "네, 말씀하십시오."
     history = chat_histories.setdefault(room, {}).setdefault("smart", [])
     return get_gemini_result(genai_system_instruction_smart, [genai_grounding_tool], message, history, sender, image)
 
 def rotate_gemini_history(history: list):
-    while len(history) > GEMINI_MAX_HISTORY_LENGTH:
+    # Ensure history only contains alternating pairs (User, Model)
+    # and limit to maximum size of GEMINI_MAX_HISTORY_LENGTH.
+    max_pairs = GEMINI_MAX_HISTORY_LENGTH // 2
+    if max_pairs < 1:
+        max_pairs = 1
+    max_len = max_pairs * 2
+
+    # If history gets into an invalid format, clean it
+    while history and history[0].role != "user":
         history.pop(0)
+
+    while len(history) > max_len:
+        if len(history) >= 2:
+            history.pop(0)  # Pop user message
+            history.pop(0)  # Pop model response
+        else:
+            history.pop(0)

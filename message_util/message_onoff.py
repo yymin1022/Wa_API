@@ -18,7 +18,12 @@ def check_onoff(input_message, input_room):
         return True
     return False
 
-def message_onoff(message, room, sender):
+from models import WaMessage
+
+def message_onoff(wa_message: WaMessage):
+    message = wa_message.msg
+    room = wa_message.room
+    sender = wa_message.sender
     if "와봇" in message:
         if "꺼" in message or "끄" in message:
             return message_wabot_power(0, room)

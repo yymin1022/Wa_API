@@ -6,7 +6,13 @@ import requests
 from util.cipher_util import DESAdapter
 
 
-def message_meme(message, room, sender):
+from models import WaMessage
+
+
+def message_meme(wa_message: WaMessage):
+    message = wa_message.msg
+    room = wa_message.room
+    sender = wa_message.sender
     if "아.." in message:
         return message_ah()
     elif "안사요" in message or "안 사요" in message or "사지말까" in message or "사지 말까" in message or "안살래" in message or "안 살래" in message:

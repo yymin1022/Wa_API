@@ -11,11 +11,12 @@ import certifi
 import dotenv
 import requests
 
-from util.cipher_util import DESAdapter
+from models import WaMessage
 
-dotenv.load_dotenv()
-
-def message_command(message, room, sender):
+def message_command(wa_message: WaMessage):
+    message = wa_message.msg
+    room = wa_message.room
+    sender = wa_message.sender
     if message.startswith("!base64d"):
         return message_base64_decode(message)
     if message.startswith("!base64e"):

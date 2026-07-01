@@ -6,6 +6,8 @@ from starlette.concurrency import run_in_threadpool
 import uvicorn
 
 from message import get_wa_reply
+from models import WaMessage
+
 
 fastApiApp = FastAPI()
 fastApiApp.add_middleware(
@@ -33,16 +35,19 @@ async def get_message(request: Request):
     # Message Input Parse
     try:
         input_data = await request.json()
-        input_message = input_data["msg"]
-        input_room = input_data["room"]
-        input_sender = input_data["sender"]
+        wa_message = WaMessage(
+            msg = input_data.get("msg", ""),
+            room = input_data.get("room", ""),
+            sender = input_data.get("sender", ""),
+            image = input_data.get("image", None)
+        )
     except Exception as err_data:
         reply_data["RESULT"]["RESULT_CODE"] = 200
         reply_data["RESULT"]["RESULT_MSG"] = repr(err_data)
         return JSONResponse(content = reply_data)
 
     # Get Message
-    reply_message = await run_in_threadpool(get_wa_reply, input_message, input_room, input_sender)
+    reply_message = await run_in_threadpool(get_wa_reply, wa_message)
 
     # Reply Message
     if reply_message is not None:

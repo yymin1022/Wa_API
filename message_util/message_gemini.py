@@ -1,9 +1,11 @@
+import base64
 import os
 
 from google import genai
 from google.genai import types
 
 import dotenv
+from models import WaMessage
 
 
 dotenv.load_dotenv()
@@ -36,16 +38,34 @@ genai_client = genai.Client(api_key = GEMINI_API_KEY)
 
 chat_histories = {}
 
-def message_gemini(message, sender, room):
+def message_gemini(wa_message: WaMessage):
+    message = wa_message.msg
+    sender = wa_message.sender
+    room = wa_message.room
+    image = wa_message.image
     if message.startswith("잼민아"):
-        return message_gemini_child(message.replace("잼민아", "").strip(), sender, room)
+        return message_gemini_child(message.replace("잼민아", "").strip(), sender, room, image)
     elif message.startswith("헤이구글"):
-        return message_gemini_smart(message.replace("헤이구글", "").strip(), sender, room)
+        return message_gemini_smart(message.replace("헤이구글", "").strip(), sender, room, image)
     return None
 
-def get_gemini_result(instruction: str, tools: list, message: str, history: list, sender: str):
+def get_gemini_result(instruction: str, tools: list, message: str, history: list, sender: str, image: str = None):
+    parts = []
+    if image:
+        try:
+            if "," in image:
+                image_data = image.split(",")[1]
+            else:
+                image_data = image
+            img_bytes = base64.b64decode(image_data)
+            parts.append(types.Part.from_bytes(data=img_bytes, mime_type="image/png"))
+        except Exception as e:
+            print(f"[Gemini Image Error] Failed to parse base64 image: {e}")
+
+    parts.append(types.Part(text = f"{sender}: {message}"))
+
     history.append(
-        types.Content(parts = [types.Part(text = f"{sender}: {message}")]))
+        types.Content(parts = parts))
 
     config = types.GenerateContentConfig(
         system_instruction = instruction,
@@ -66,13 +86,13 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
 
     return gemini_response.text.strip()
 
-def message_gemini_child(message, sender, room):
+def message_gemini_child(message, sender, room, image=None):
     history = chat_histories.setdefault(room, {}).setdefault("child", [])
-    return get_gemini_result(genai_system_instruction_child, [genai_grounding_tool], message, history, sender)
+    return get_gemini_result(genai_system_instruction_child, [genai_grounding_tool], message, history, sender, image)
 
-def message_gemini_smart(message, sender, room):
+def message_gemini_smart(message, sender, room, image=None):
     history = chat_histories.setdefault(room, {}).setdefault("smart", [])
-    return get_gemini_result(genai_system_instruction_smart, [genai_grounding_tool], message, history, sender)
+    return get_gemini_result(genai_system_instruction_smart, [genai_grounding_tool], message, history, sender, image)
 
 def rotate_gemini_history(history: list):
     while len(history) > GEMINI_MAX_HISTORY_LENGTH:

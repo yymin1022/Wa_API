@@ -1,7 +1,13 @@
 import datetime
 
 
-def message_datetime(message, room, sender):
+from models import WaMessage
+
+
+def message_datetime(wa_message: WaMessage):
+    message = wa_message.msg
+    room = wa_message.room
+    sender = wa_message.sender
     if message.startswith("!날짜"):
         if "더하기" in message:
             return message_cal_day(1, message)

@@ -2,7 +2,13 @@ import json
 import os
 
 
-def message_memory(message, room, sender):
+from models import WaMessage
+
+
+def message_memory(wa_message: WaMessage):
+    message = wa_message.msg
+    room = wa_message.room
+    sender = wa_message.sender
     if "!기억" in message:
         return message_remem(message, room)
     if "뭐였" in message:

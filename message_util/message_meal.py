@@ -9,7 +9,12 @@ import requests
 from util.cipher_util import DESAdapter
 
 
-def message_meal(message, room, sender):
+from models import WaMessage
+
+def message_meal(wa_message: WaMessage):
+    message = wa_message.msg
+    room = wa_message.room
+    sender = wa_message.sender
     if "학식" in message:
         if "아침" in message or "조식" in message:
             return message_meal_cau("10", "내일" in message)

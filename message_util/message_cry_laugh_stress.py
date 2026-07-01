@@ -1,7 +1,12 @@
 import random
 
+from models import WaMessage
 
-def message_cry_laugh_stress(message, room, sender):
+
+def message_cry_laugh_stress(wa_message: WaMessage):
+    message = wa_message.msg
+    room = wa_message.room
+    sender = wa_message.sender
     if "ㅠ" in message or "ㅜ" in message:
         return message_cry(message)
     elif "ㅋ" in message or "ㅎ" in message:

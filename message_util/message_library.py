@@ -6,7 +6,13 @@ import requests
 from util.cipher_util import DESAdapter
 
 
-def message_library(message, room, sender):
+from models import WaMessage
+
+
+def message_library(wa_message: WaMessage):
+    message = wa_message.msg
+    room = wa_message.room
+    sender = wa_message.sender
     if "학사일정" in message:
         return message_calendar_cau()
     elif "열람실" in message:

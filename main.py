@@ -54,8 +54,8 @@ async def get_message(request: Request):
         reply_data["RESULT"]["RESULT_CODE"] = 0
         reply_data["RESULT"]["RESULT_MSG"] = "RESULT OK"
         reply_data["DATA"]["msg"] = reply_message
-        reply_data["DATA"]["room"] = input_room
-        reply_data["DATA"]["sender"] = input_sender
+        reply_data["DATA"]["room"] = wa_message.room
+        reply_data["DATA"]["sender"] = wa_message.sender
     else:
         reply_data["RESULT"]["RESULT_CODE"] = 100
         reply_data["RESULT"]["RESULT_MSG"] = "None WA Bot Message Found or Disabled Chatroom"

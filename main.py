@@ -35,11 +35,16 @@ async def get_message(request: Request):
     # Message Input Parse
     try:
         input_data = await request.json()
+        input_message = input_data["msg"]
+        input_room = input_data["room"]
+        input_sender = input_data["sender"]
+        input_image = input_data.get("image", None)
+
         wa_message = WaMessage(
-            msg = input_data.get("msg", ""),
-            room = input_data.get("room", ""),
-            sender = input_data.get("sender", ""),
-            image = input_data.get("image", None)
+            msg = input_message,
+            room = input_room,
+            sender = input_sender,
+            image = input_image
         )
     except Exception as err_data:
         reply_data["RESULT"]["RESULT_CODE"] = 200

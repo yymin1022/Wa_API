@@ -1,7 +1,13 @@
 import random
 
 
-def message_friends(message, room, sends):
+from models import WaMessage
+
+
+def message_friends(wa_message: WaMessage):
+    message = wa_message.msg
+    room = wa_message.room
+    sends = wa_message.sender
     if "동훈" in message:
         return message_donghoon()
     elif "민석" in message:

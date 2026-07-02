@@ -28,7 +28,12 @@ logistics_urls = {
     "Lotte":        "https://www.lotteglogis.com/mobile/reservation/tracking/linkView?InvNo=%s"                                             # 롯데택배
 }
 
-def message_logistics(message, room, sender):
+from models import WaMessage
+
+def message_logistics(wa_message: WaMessage):
+    message = wa_message.msg
+    room = wa_message.room
+    sender = wa_message.sender
     if message.startswith("!택배") or message.startswith("!ㅌㅂ"):
         return message_logistics_main(message)
     if message.startswith("!통관") or message.startswith("!ㅌㄱ"):

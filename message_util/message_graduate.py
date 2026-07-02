@@ -2,7 +2,13 @@ import datetime
 import random
 
 
-def message_graduate(message, room, sender):
+from models import WaMessage
+
+
+def message_graduate(wa_message: WaMessage):
+    message = wa_message.msg
+    room = wa_message.room
+    sender = wa_message.sender
     if "소해" in message or "졸업" in message or "전역" in message:
         if "병희" in message:
             return message_bh_graduate()

@@ -1,3 +1,4 @@
+from models import WaMessage
 from message_util.message_command import message_command
 from message_util.message_cry_laugh_stress import message_cry_laugh_stress
 from message_util.message_datetime import message_datetime
@@ -12,58 +13,58 @@ from message_util.message_memory import message_memory
 from message_util.message_onoff import check_onoff, message_onoff
 
 
-def get_wa_reply(message, room, sender):
+def get_wa_reply(wa_message: WaMessage):
     # Check for disabled room
-    if check_onoff(message, room) is False:
+    if check_onoff(wa_message.msg, wa_message.room) is False:
         return None
 
     # Special Command Messages
-    result_message = message_command(message, room, sender)
+    result_message = message_command(wa_message)
     if result_message is not None:
         return result_message
     
-    result_message = message_datetime(message, room, sender)
+    result_message = message_datetime(wa_message)
     if result_message is not None:
         return result_message
 
-    result_message = message_gemini(message, room, sender)
+    result_message = message_gemini(wa_message)
     if result_message is not None:
         return result_message
 
-    result_message = message_logistics(message, room, sender)
+    result_message = message_logistics(wa_message)
     if result_message is not None:
         return result_message
 
     # Normal Text Messages
-    result_message = message_cry_laugh_stress(message, room, sender)
+    result_message = message_cry_laugh_stress(wa_message)
     if result_message is not None:
         return result_message
 
-    result_message = message_friends(message, room, sender)
+    result_message = message_friends(wa_message)
     if result_message is not None:
         return result_message
 
-    result_message = message_graduate(message, room, sender)
+    result_message = message_graduate(wa_message)
     if result_message is not None:
         return result_message
 
-    result_message = message_library(message, room, sender)
+    result_message = message_library(wa_message)
     if result_message is not None:
         return result_message
 
-    result_message = message_meal(message, room, sender)
+    result_message = message_meal(wa_message)
     if result_message is not None:
         return result_message
 
-    result_message = message_meme(message, room, sender)
+    result_message = message_meme(wa_message)
     if result_message is not None:
         return result_message
 
-    result_message = message_memory(message, room, sender)
+    result_message = message_memory(wa_message)
     if result_message is not None:
         return result_message
 
-    result_message = message_onoff(message, room, sender)
+    result_message = message_onoff(wa_message)
     if result_message is not None:
         return result_message
     return None

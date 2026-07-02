@@ -53,12 +53,16 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
     parts = []
     if image:
         try:
+            mime_type = "image/png"
+            image_data = image
             if "," in image:
-                image_data = image.split(",")[1]
-            else:
-                image_data = image
+                header, base64_data = image.split(",", 1)
+                image_data = base64_data
+                if header.startswith("data:") and ";base64" in header:
+                    mime_part = header.split(";")[0]
+                    mime_type = mime_part.replace("data:", "")
             img_bytes = base64.b64decode(image_data)
-            parts.append(types.Part.from_bytes(data=img_bytes, mime_type="image/png"))
+            parts.append(types.Part.from_bytes(data=img_bytes, mime_type=mime_type))
         except Exception as e:
             print(f"[Gemini Image Error] Failed to parse base64 image: {e}")
 

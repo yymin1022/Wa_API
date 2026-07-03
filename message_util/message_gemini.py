@@ -109,9 +109,16 @@ def save_history_from_cache(room: str, persona: str):
         return
     file_path = get_history_file_path(room, persona)
     try:
-        serialized = [
-            h.model_dump(exclude_none=True) for h in chat_histories[cache_key]["history"]
-        ]
+        serialized = []
+        for h in chat_histories[cache_key]["history"]:
+            h_dict = h.model_dump(exclude_none=True)
+            if "parts" in h_dict:
+                for part in h_dict["parts"]:
+                    if "inline_data" in part:
+                        part.clear()
+                        part["text"] = "[📎 이미지 첨부됨]"
+            serialized.append(h_dict)
+            
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(serialized, f, ensure_ascii=False, indent=4)
     except Exception as e:

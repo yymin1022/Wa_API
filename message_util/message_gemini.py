@@ -56,40 +56,58 @@ genai_grounding_tool = types.Tool(
 
 genai_client = genai.Client(api_key = GEMINI_API_KEY)
 
+HISTORY_DIR = "gemini_chat_history"
+if not os.path.exists(HISTORY_DIR):
+    os.makedirs(HISTORY_DIR)
+
+# Runtime cache: key is f"{room}_{persona}"
 chat_histories = {}
 
-def load_histories():
-    global chat_histories
-    if os.path.isfile("gemini_history.json"):
-        try:
-            with open("gemini_history.json", "r", encoding="utf-8") as f:
-                data = json.load(f)
-                for room, personas in data.items():
-                    room_dict = chat_histories.setdefault(room, {})
-                    for persona, history_list in personas.items():
-                        room_dict[persona] = [
-                            types.Content.model_validate(h) for h in history_list
-                        ]
-        except Exception as e:
-            print(f"[Gemini Load Error] Failed to load history: {e}")
-            chat_histories = {}
+def get_history_file_path(room: str, persona: str) -> str:
+    # Sanitization: Allow alphanumeric, dash, and underscore
+    safe_room = "".join(c for c in room if c.isalnum() or c in ("-", "_")).strip()
+    if not safe_room:
+        safe_room = "default"
+    return os.path.join(HISTORY_DIR, f"history_{safe_room}_{persona}.json")
 
-def save_histories():
-    try:
-        serialized = {}
-        for room, personas in chat_histories.items():
-            serialized[room] = {}
-            for persona, history_list in personas.items():
-                serialized[room][persona] = [
-                    h.model_dump(exclude_none=True) for h in history_list
+def load_history_to_cache(room: str, persona: str) -> list:
+    global chat_histories
+    cache_key = f"{room}_{persona}"
+    # Cache hit
+    if cache_key in chat_histories:
+        return chat_histories[cache_key]
+
+    # Cache miss: load single array of Content from file once
+    file_path = get_history_file_path(room, persona)
+    history_list = []
+    if os.path.isfile(file_path):
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                raw_data = json.load(f)
+                # Deserialize raw dict list into types.Content objects
+                history_list = [
+                    types.Content.model_validate(h) for h in raw_data
                 ]
-        with open("gemini_history.json", "w", encoding="utf-8") as f:
+        except Exception as e:
+            print(f"[Gemini Load Error] Failed to load history for {cache_key}: {e}")
+            history_list = []
+
+    chat_histories[cache_key] = history_list
+    return history_list
+
+def save_history_from_cache(room: str, persona: str):
+    cache_key = f"{room}_{persona}"
+    if cache_key not in chat_histories:
+        return
+    file_path = get_history_file_path(room, persona)
+    try:
+        serialized = [
+            h.model_dump(exclude_none=True) for h in chat_histories[cache_key]
+        ]
+        with open(file_path, "w", encoding="utf-8") as f:
             json.dump(serialized, f, ensure_ascii=False, indent=4)
     except Exception as e:
-        print(f"[Gemini Save Error] Failed to save history: {e}")
-
-# Load histories when module is imported
-load_histories()
+        print(f"[Gemini Save Error] Failed to save history for {cache_key}: {e}")
 
 def message_gemini(wa_message: WaMessage):
     message = wa_message.msg
@@ -159,22 +177,27 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
     # Rotate history in pairs
     rotate_gemini_history(history)
 
-    # Save the updated history state to disk
-    save_histories()
-
     return gemini_response.text.strip()
 
 def message_gemini_child(message, sender, room, image=None):
     if not message:
         return "왜 불러?"
-    history = chat_histories.setdefault(room, {}).setdefault("child", [])
-    return get_gemini_result(genai_system_instruction_child, [genai_grounding_tool], message, history, sender, image)
+    history_list = load_history_to_cache(room, "child")
+
+    reply = get_gemini_result(genai_system_instruction_child, [genai_grounding_tool], message, history_list, sender, image)
+
+    save_history_from_cache(room, "child")
+    return reply
 
 def message_gemini_smart(message, sender, room, image=None):
     if not message:
         return "네, 말씀하십시오."
-    history = chat_histories.setdefault(room, {}).setdefault("smart", [])
-    return get_gemini_result(genai_system_instruction_smart, [genai_grounding_tool], message, history, sender, image)
+    history_list = load_history_to_cache(room, "smart")
+
+    reply = get_gemini_result(genai_system_instruction_smart, [genai_grounding_tool], message, history_list, sender, image)
+
+    save_history_from_cache(room, "smart")
+    return reply
 
 def rotate_gemini_history(history: list):
     # Ensure history only contains alternating pairs (User, Model)

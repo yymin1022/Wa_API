@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.concurrency import run_in_threadpool
@@ -22,8 +22,11 @@ fastApiApp.add_middleware(
 def main_page():
     return RedirectResponse(url = "https://github.com/yymin1022/Wa_API")
 
+from message_util.message_gemini import evict_expired_histories
+
+
 @fastApiApp.post("/getMessage")
-async def get_message(request: Request):
+async def get_message(request: Request, background_tasks: BackgroundTasks):
     reply_data = dict([("RESULT",
                         dict([("RESULT_CODE", 0),
                                 ("RESULT_MSG", "RESULT OK")])),
@@ -65,6 +68,7 @@ async def get_message(request: Request):
         reply_data["RESULT"]["RESULT_CODE"] = 100
         reply_data["RESULT"]["RESULT_MSG"] = "None WA Bot Message Found or Disabled Chatroom"
 
+    background_tasks.add_task(evict_expired_histories)
     return JSONResponse(content = reply_data)
  
 if __name__ == "__main__":

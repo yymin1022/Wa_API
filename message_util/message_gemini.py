@@ -1,6 +1,7 @@
 import base64
 import json
 import os
+import time
 
 from google import genai
 from google.genai import types
@@ -15,6 +16,7 @@ GEMINI_MODEL_NAME = os.environ.get("GEMINI_MODEL_NAME", "gemini-2.5-flash")
 GEMINI_MODEL_TEMPERATURE = float(os.environ.get("GEMINI_MODEL_TEMPERATURE", 0.5))
 GEMINI_MODEL_THINKING_BUDGET = int(os.environ.get("GEMINI_MODEL_THINKING_BUDGET", 256))
 GEMINI_MAX_HISTORY_LENGTH = int(os.environ.get("GEMINI_MAX_HISTORY_LENGTH", 4))
+CACHE_EXPIRATION_SECONDS = int(os.environ.get("GEMINI_CACHE_EXPIRATION_SECONDS", 10800)) # Default 3 hours
 
 genai_system_instruction_child = """
     당신은 대한민국의 초등학생입니다.
@@ -60,7 +62,7 @@ HISTORY_DIR = "gemini_chat_history"
 if not os.path.exists(HISTORY_DIR):
     os.makedirs(HISTORY_DIR)
 
-# Runtime cache: key is f"{room}_{persona}"
+# Runtime cache: key is f"{room}_{persona}", value is dict: {"history": list, "last_accessed": float}
 chat_histories = {}
 
 def get_history_file_path(room: str, persona: str) -> str:
@@ -73,9 +75,12 @@ def get_history_file_path(room: str, persona: str) -> str:
 def load_history_to_cache(room: str, persona: str) -> list:
     global chat_histories
     cache_key = f"{room}_{persona}"
-    # Cache hit
+    current_time = time.time()
+
+    # Cache hit: Update access time and return
     if cache_key in chat_histories:
-        return chat_histories[cache_key]
+        chat_histories[cache_key]["last_accessed"] = current_time
+        return chat_histories[cache_key]["history"]
 
     # Cache miss: load single array of Content from file once
     file_path = get_history_file_path(room, persona)
@@ -92,7 +97,10 @@ def load_history_to_cache(room: str, persona: str) -> list:
             print(f"[Gemini Load Error] Failed to load history for {cache_key}: {e}")
             history_list = []
 
-    chat_histories[cache_key] = history_list
+    chat_histories[cache_key] = {
+        "history": history_list,
+        "last_accessed": current_time
+    }
     return history_list
 
 def save_history_from_cache(room: str, persona: str):
@@ -102,12 +110,24 @@ def save_history_from_cache(room: str, persona: str):
     file_path = get_history_file_path(room, persona)
     try:
         serialized = [
-            h.model_dump(exclude_none=True) for h in chat_histories[cache_key]
+            h.model_dump(exclude_none=True) for h in chat_histories[cache_key]["history"]
         ]
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(serialized, f, ensure_ascii=False, indent=4)
     except Exception as e:
         print(f"[Gemini Save Error] Failed to save history for {cache_key}: {e}")
+
+def evict_expired_histories():
+    global chat_histories
+    current_time = time.time()
+    expired_keys = []
+    for key, val in chat_histories.items():
+        if isinstance(val, dict) and "last_accessed" in val:
+            if current_time - val["last_accessed"] > CACHE_EXPIRATION_SECONDS:
+                expired_keys.append(key)
+
+    for key in expired_keys:
+        chat_histories.pop(key, None)
 
 def message_gemini(wa_message: WaMessage):
     message = wa_message.msg

@@ -1,3 +1,4 @@
+import util.cipher_util
 from models import WaMessage
 from message_util.message_command import message_command
 from message_util.message_cry_laugh_stress import message_cry_laugh_stress

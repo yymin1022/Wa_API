@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 
 import datetime
+import xml.etree.ElementTree as ET
 import os
 import time
 
@@ -48,16 +49,20 @@ def message_custom_tracker(message) -> str:
         year = datetime.date.today().year
         result = requests.get(logistics_urls["Customs"] % (key, year, message)) # 통관 조회에선 message가 isdigit인지 검사하지 않음
 
-        soup = BeautifulSoup(result.text, "xml")
-        name = soup.find("prnm")                # 품명
-        customs_name = soup.find("etprCstm")    # 입항세관
-        status = soup.find("prgsStts")          # 통관진행상태
-        process_time = datetime.datetime.strptime(str(soup.find("prcsDttm").text), # 처리일시
-                                                  "%Y%m%d%H%M%S").strftime("%Y.%m.%d %H:%M:%S")
+        root = ET.fromstring(result.content)
+        name = root.find(".//prnm")                # 품명
+        customs_name = root.find(".//etprCstm")    # 입항세관
+        status = root.find(".//prgsStts")          # 통관진행상태
+        prcs_dttm = root.find(".//prcsDttm")       # 처리일시
+
+        if name is None or customs_name is None or status is None or prcs_dttm is None:
+            raise AttributeError
+
+        process_time = datetime.datetime.strptime(prcs_dttm.text, "%Y%m%d%H%M%S").strftime("%Y.%m.%d %H:%M:%S")
 
         return f"/// 관세청 UNIPASS 통관 조회 ///\n\n품명: {name.text}\n입항세관: {customs_name.text}\n통관진행상태: {status.text}\n처리일시: {process_time}"
     
-    except (TypeError, AttributeError):
+    except (TypeError, AttributeError, ValueError, ET.ParseError):
         return "존재하지 않는 운송장번호이거나 잘못된 형식 혹은 아직 입항하지 않은 화물입니다.\\m사용법: !통관 123456789"
 
 def message_logistics_main(message) -> str:

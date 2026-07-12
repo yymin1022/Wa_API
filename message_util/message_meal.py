@@ -6,9 +6,6 @@ import json
 import certifi
 import requests
 
-from util.cipher_util import DESAdapter
-
-
 from models import WaMessage
 
 def message_meal(wa_message: WaMessage):
@@ -38,9 +35,7 @@ def message_meal_anyang():
 
     meal_url = "https://www.anyang.ac.kr/main/activities/school-cafeteria.do"
 
-    request_session = requests.Session()
-    request_session.mount(meal_url, DESAdapter())
-    meal_response = request_session.get(meal_url, verify = certifi.where()).text
+    meal_response = requests.get(meal_url, verify = certifi.where()).text
 
     bs = BeautifulSoup(meal_response, "html.parser")
     meal_data = json.loads(bs.find("input", id = "mealList").get("value"))
@@ -71,9 +66,7 @@ def message_meal_cau(meal_type_id, is_tomorrow):
         "tabs2": meal_type_id
     }
 
-    request_session = requests.Session()
-    request_session.mount(meal_url, DESAdapter())
-    meal_response = request_session.post(meal_url, json=meal_data, verify=certifi.where()).json()
+    meal_response = requests.post(meal_url, json=meal_data, verify=certifi.where()).json()
     meal_list = meal_response["list"]
 
     str_message = f"{meal_list[0]['date']}. 중앙대학교 학식메뉴({meal_type})\n"
@@ -92,9 +85,7 @@ def message_meal_daelim():
     meal_input = f"MENU_ID=1470&BISTRO_SEQ=1&START_DAY={today_date.strftime('%Y.%m.%d')}&END_DAY={today_date.strftime('%Y.%m.%d')}"
     meal_url = "https://www.daelim.ac.kr/ajaxf/FrBistroSvc/BistroCarteInfo.do"
 
-    request_session = requests.Session()
-    request_session.mount(meal_url, DESAdapter())
-    meal_response = request_session.post(meal_url, data=meal_input, headers=meal_header, verify=certifi.where()).json()
+    meal_response = requests.post(meal_url, data=meal_input, headers=meal_header, verify=certifi.where()).json()
 
     str_date = today_date.weekday() + 1
     str_message = f"{today_date.strftime('%Y.%m.%d.')} 대림대학교 학식메뉴\n"

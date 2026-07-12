@@ -13,6 +13,8 @@ import requests
 
 from models import WaMessage
 
+dotenv.load_dotenv()
+
 def message_command(wa_message: WaMessage):
     message = wa_message.msg
     room = wa_message.room
@@ -21,13 +23,7 @@ def message_command(wa_message: WaMessage):
         return message_base64_decode(message)
     if message.startswith("!base64e"):
         return message_base64_encode(message)
-    if message.startswith("!날씨"):
-        loc = message.split("!날씨")
-        if len(loc) == 1:
-            return message_weather()
-        else:
-            lat, lon = get_weather_lat_lon(loc)
-            return message_weather_latlon(lat, lon, loc)
+
     if message.startswith("!뉴스"):
         return message_fake_news(message)
     if message.startswith("!메모"):
@@ -60,10 +56,7 @@ def message_chopchop(message):
         "r_hp": r_hp
     }
 
-    request_session = requests.Session()
-    request_session.mount("http://", DESAdapter())
-    request_session.mount("https://", DESAdapter())
-    response = request_session.post(chopchop_url, data=data)
+    response = requests.post(chopchop_url, data=data)
 
     if "등록된 데이터가 없습니다" in response.text:
         return "등록된 데이터가 없습니다. 다시 확인해주세요."
@@ -114,9 +107,7 @@ def message_currency():
     today_date = datetime.date.today()
     currency_url = f"http://www.smbs.biz/Flash/TodayExRate_flash.jsp?tr_date={today_date.strftime('%Y-%m-%d')}"
 
-    request_session = requests.Session()
-    request_session.mount(currency_url, DESAdapter())
-    response = request_session.get(currency_url, verify=certifi.where())
+    response = requests.get(currency_url, verify=certifi.where())
 
     parse_data = re.findall(r"([A-Z]+)=([\d.,]+)", response.text)
     str_message = f"{today_date.strftime('%m월 %d일')} 환율 정보"
@@ -128,9 +119,7 @@ def message_currency():
 def message_fake_news(message):
     fake_news_url = os.environ["FAKE_NEWS_URL"]
     keyword = message.split("!뉴스:")[1]
-    request_session = requests.Session()
-    request_session.mount(fake_news_url, DESAdapter())
-    response = request_session.post(fake_news_url, json={"message_util":keyword, "len":64}, verify=certifi.where())
+    response = requests.post(fake_news_url, json={"message_util":keyword, "len":64}, verify=certifi.where())
     return "\\m".join(response.text.split("\n")[2:-4])
 
 def message_memo(message, sender):
@@ -149,59 +138,3 @@ def message_memo(message, sender):
         with open("mem.json", "w", encoding="utf-8") as f:
             f.write(json_data)
     return None
-
-def message_weather():
-    app_id = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
-    api_id = 1835847
-    weather_api_url = f"https://api.openweathermap.org/data/2.5/weather?id={api_id}&appid={app_id}"
-
-    request_session = requests.Session()
-    request_session.mount(weather_api_url, DESAdapter())
-    text = request_session.get(weather_api_url, verify=certifi.where())
-    text = text.text
-    json_data = json.loads(text)
-
-    try:
-        return f"현재온도: {str(json_data['main']['temp'])}K\\n구름: {str(json_data['clouds']['all'])}%\\n"\
-                  f"압력: {str(json_data['main']['pressure'])}Pa\\n습도: {str(json_data['main']['humidity'])}%\\m"\
-                  f"서울의 날씨 {str(json_data['weather']['description'])}"
-    except KeyError:
-        return None
-
-def message_weather_latlon(lat, lon, loc):
-    apikey = os.environ.get("WEATHER_API_KEY")
-    weather_api_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apikey}"
-
-    request_session = requests.Session()
-    request_session.mount(weather_api_url, DESAdapter())
-    text = request_session.get(weather_api_url, verify=certifi.where())
-    text = text.text
-    json_data = json.loads(text)
-
-    try:
-        return f"현재온도: {str(json_data['main']['temp'])}K\\n구름: {str(json_data['clouds']['all'])}%\\n"\
-                  f"압력: {str(json_data['main']['pressure'])}Pa\\n습도: {str(json_data['main']['humidity'])}%\\m"\
-                  f"{loc}의 날씨 {str(json_data['weather']['description'])}"
-    except KeyError:
-        return None
-
-def get_weather_lat_lon(location):
-    apikey = "ea9e5f8d8e4aa2c798f8eb78f361d1b4"
-    weather_api_url = "http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={key}".format(city_name=location, key=apikey)
-
-    request_session = requests.Session()
-    request_session.mount(weather_api_url, DESAdapter())
-    text = request_session.get(weather_api_url, verify=certifi.where())
-    text = text.text
-    json_data = json.loads(text)
-
-    try:
-        lat = json_data["lat"]
-        lon = json_data["lon"]
-
-        if "cod" in json_data:
-            return "지역이 잘못되었습니다", "지역이 잘못되었습니다"
-        else:
-            return lat, lon
-    except TypeError:
-        return None, None

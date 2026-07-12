@@ -3,9 +3,6 @@ import random
 import certifi
 import requests
 
-from util.cipher_util import DESAdapter
-
-
 from models import WaMessage
 
 
@@ -112,11 +109,8 @@ def message_baby():
 
 def message_bitcoin():
     request_url = "https://api.upbit.com/v1/ticker?markets=KRW-BTC"
-    request_session = requests.Session()
-    request_session.mount(request_url, DESAdapter())
-
     try:
-        response = request_session.get(request_url, verify = certifi.where())
+        response = requests.get(request_url, verify = certifi.where())
         response.raise_for_status()
         data = response.json()
         current_price = data[0]["trade_price"]

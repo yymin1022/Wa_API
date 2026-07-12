@@ -1,10 +1,8 @@
+import ast
 import datetime
 
 import certifi
 import requests
-
-from util.cipher_util import DESAdapter
-
 
 from models import WaMessage
 
@@ -40,9 +38,7 @@ def message_calendar_cau():
     }
     cal_url = "https://mportal.cau.ac.kr/portlet/p014/p014List.ajax"
 
-    request_session = requests.Session()
-    request_session.mount(cal_url, DESAdapter())
-    cal_response = eval(request_session.post(cal_url, json = cal_data, verify = certifi.where()).json())
+    cal_response = ast.literal_eval(requests.post(cal_url, json = cal_data, verify = certifi.where()).json())
     cal_list = cal_response['data']
 
     str_message = f"중앙대학교 {cal_month}월 학사일정\n"
@@ -65,9 +61,7 @@ def message_library_cau(lib_type_id):
     lib_data = {"tabNo": lib_type_id}
     lib_url = "https://mportal.cau.ac.kr/portlet/p017/p017.ajax"
 
-    request_session = requests.Session()
-    request_session.mount(lib_url, DESAdapter())
-    lib_response = request_session.post(lib_url, json = lib_data, verify = certifi.where()).json()
+    lib_response = requests.post(lib_url, json = lib_data, verify = certifi.where()).json()
 
     lib_list = lib_response["gridData"]
 

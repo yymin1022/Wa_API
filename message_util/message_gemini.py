@@ -140,7 +140,7 @@ def message_gemini(wa_message: WaMessage):
     message = wa_message.msg
     sender = wa_message.sender
     room = wa_message.room
-    image = wa_message.image
+    image = wa_message.images[0] if wa_message.images else None
     if message.startswith("잼민아"):
         return message_gemini_child(message.replace("잼민아", "").strip(), sender, room, image)
     elif message.startswith("헤이구글"):

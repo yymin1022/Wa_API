@@ -7,7 +7,7 @@ from starlette.concurrency import run_in_threadpool
 import uvicorn
 
 from message import get_wa_reply
-from models import WaMessage
+from models import ReplyMessage, WaMessage
 
 
 fastApiApp = FastAPI()
@@ -42,13 +42,34 @@ async def get_message(request: Request, background_tasks: BackgroundTasks):
         input_message = input_data["msg"]
         input_room = input_data["room"]
         input_sender = input_data["sender"]
-        input_image = input_data.get("image", None)
+
+        input_images = input_data.get("images", [])
+        if not input_images and "image" in input_data and input_data["image"]:
+            input_images = [input_data["image"]]
+        elif isinstance(input_images, str):
+            input_images = [input_images]
+
+        reply_message_data = input_data.get("replyMessage", None)
+        reply_message = None
+        if reply_message_data:
+            reply_images = reply_message_data.get("images", [])
+            if not reply_images and "image" in reply_message_data and reply_message_data["image"]:
+                reply_images = [reply_message_data["image"]]
+            elif isinstance(reply_images, str):
+                reply_images = [reply_images]
+
+            reply_message = ReplyMessage(
+                msg = reply_message_data.get("msg", ""),
+                sender = reply_message_data.get("sender", ""),
+                images = reply_images
+            )
 
         wa_message = WaMessage(
             msg = input_message,
             room = input_room,
             sender = input_sender,
-            image = input_image
+            images = input_images,
+            replyMessage = reply_message
         )
     except Exception as err_data:
         reply_data["RESULT"]["RESULT_CODE"] = 200

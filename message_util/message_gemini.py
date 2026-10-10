@@ -155,6 +155,9 @@ def parse_image_part(image_str: str) -> Optional[types.Part]:
             except Exception:
                 pass
 
+            if img.mode not in ("RGB", "RGBA"):
+                img = img.convert("RGB")
+
             if max(img.width, img.height) > 1280:
                 img.thumbnail((1280, 1280), Image.Resampling.LANCZOS)
 

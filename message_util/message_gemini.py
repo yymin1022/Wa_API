@@ -185,26 +185,25 @@ def message_gemini(wa_message: WaMessage):
 def get_gemini_result(instruction: str, tools: list, message: str, history: list, sender: str, images: List[str] = None, reply_message: Optional[ReplyMessage] = None):
     parts = []
 
-    # 1. 답장 대상 메시지의 이미지들 먼저 추가
-    if reply_message and reply_message.images:
-        for reply_img in reply_message.images:
-            img_part = parse_image_part(reply_img)
-            if img_part:
-                parts.append(img_part)
+    # 1. 답장 맥락이 있는 경우: 답장 텍스트 라벨 파트 + 답장 이미지 파트들
+    if reply_message and (reply_message.msg or reply_message.sender or reply_message.images):
+        reply_sender = reply_message.sender or "상대방"
+        reply_text = reply_message.msg if reply_message.msg else "(텍스트 없음)"
+        parts.append(types.Part(text = f"[답장 대상: {reply_sender}님의 메시지]\n{reply_text}"))
 
-    # 2. 현재 메시지의 이미지들 추가
+        if reply_message.images:
+            for reply_img in reply_message.images:
+                img_part = parse_image_part(reply_img)
+                if img_part:
+                    parts.append(img_part)
+
+    # 2. 현재 질문/메시지: 발화자 메시지 텍스트 파트 + 현재 첨부 이미지 파트들
+    parts.append(types.Part(text = f"{sender}: {message}"))
     if images:
         for img in images:
             img_part = parse_image_part(img)
             if img_part:
                 parts.append(img_part)
-
-    # 3. 텍스트 파트 구성 (답장 맥락이 있으면 주입)
-    reply_prefix = ""
-    if reply_message and (reply_message.msg or reply_message.sender):
-        reply_prefix = f"(답장 대상: {reply_message.sender}님의 메시지 \"{reply_message.msg}\")\n"
-
-    parts.append(types.Part(text = f"{reply_prefix}{sender}: {message}"))
 
     user_content = types.Content(
         role="user",

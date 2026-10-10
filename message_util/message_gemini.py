@@ -1,4 +1,5 @@
 import base64
+import io
 import json
 import os
 import time
@@ -7,6 +8,7 @@ from typing import List, Optional
 import dotenv
 from google import genai
 from google.genai import types
+from PIL import Image, ImageOps
 
 from models import ReplyMessage, WaMessage
 
@@ -141,18 +143,28 @@ def parse_image_part(image_str: str) -> Optional[types.Part]:
     if not image_str:
         return None
     try:
-        mime_type = "image/png"
         image_data = image_str
         if "," in image_str:
             header, base64_data = image_str.split(",", 1)
             image_data = base64_data
-            if header.startswith("data:") and ";base64" in header:
-                mime_part = header.split(";")[0]
-                mime_type = mime_part.replace("data:", "")
         img_bytes = base64.b64decode(image_data)
-        return types.Part.from_bytes(data=img_bytes, mime_type=mime_type)
+
+        with Image.open(io.BytesIO(img_bytes)) as img:
+            try:
+                img = ImageOps.exif_transpose(img)
+            except Exception:
+                pass
+
+            if max(img.width, img.height) > 1280:
+                img.thumbnail((1280, 1280), Image.Resampling.LANCZOS)
+
+            output_buffer = io.BytesIO()
+            img.save(output_buffer, format="PNG", optimize=True)
+            compressed_bytes = output_buffer.getvalue()
+
+        return types.Part.from_bytes(data=compressed_bytes, mime_type="image/png")
     except Exception as e:
-        print(f"[Gemini Image Error] Failed to parse base64 image: {e}")
+        print(f"[Gemini Image Error] Failed to parse and resize image: {e}")
         return None
 
 

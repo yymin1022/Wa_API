@@ -1,13 +1,16 @@
 import base64
+import io
 import json
 import os
 import time
-
-from google import genai
-from google.genai import types
+from typing import List, Optional
 
 import dotenv
-from models import WaMessage
+from google import genai
+from google.genai import types
+from PIL import Image, ImageOps
+
+from models import ReplyMessage, WaMessage
 
 
 dotenv.load_dotenv()
@@ -136,35 +139,74 @@ def evict_expired_histories():
     for key in expired_keys:
         chat_histories.pop(key, None)
 
+def parse_image_part(image_str: str) -> Optional[types.Part]:
+    if not image_str:
+        return None
+    try:
+        image_data = image_str
+        if "," in image_str:
+            header, base64_data = image_str.split(",", 1)
+            image_data = base64_data
+        img_bytes = base64.b64decode(image_data)
+
+        with Image.open(io.BytesIO(img_bytes)) as img:
+            try:
+                img = ImageOps.exif_transpose(img)
+            except Exception:
+                pass
+
+            if img.mode not in ("RGB", "RGBA"):
+                img = img.convert("RGB")
+
+            if max(img.width, img.height) > 1280:
+                img.thumbnail((1280, 1280), Image.Resampling.LANCZOS)
+
+            output_buffer = io.BytesIO()
+            img.save(output_buffer, format="PNG", optimize=True)
+            compressed_bytes = output_buffer.getvalue()
+
+        return types.Part.from_bytes(data=compressed_bytes, mime_type="image/png")
+    except Exception as e:
+        print(f"[Gemini Image Error] Failed to parse and resize image: {e}")
+        return None
+
+
 def message_gemini(wa_message: WaMessage):
     message = wa_message.msg
     sender = wa_message.sender
     room = wa_message.room
-    image = wa_message.image
+    images = wa_message.images
+    reply_message = wa_message.replyMessage
+
     if message.startswith("잼민아"):
-        return message_gemini_child(message.replace("잼민아", "").strip(), sender, room, image)
+        return message_gemini_child(message.replace("잼민아", "").strip(), sender, room, images, reply_message)
     elif message.startswith("헤이구글"):
-        return message_gemini_smart(message.replace("헤이구글", "").strip(), sender, room, image)
+        return message_gemini_smart(message.replace("헤이구글", "").strip(), sender, room, images, reply_message)
     return None
 
-def get_gemini_result(instruction: str, tools: list, message: str, history: list, sender: str, image: str = None):
-    parts = []
-    if image:
-        try:
-            mime_type = "image/png"
-            image_data = image
-            if "," in image:
-                header, base64_data = image.split(",", 1)
-                image_data = base64_data
-                if header.startswith("data:") and ";base64" in header:
-                    mime_part = header.split(";")[0]
-                    mime_type = mime_part.replace("data:", "")
-            img_bytes = base64.b64decode(image_data)
-            parts.append(types.Part.from_bytes(data=img_bytes, mime_type=mime_type))
-        except Exception as e:
-            print(f"[Gemini Image Error] Failed to parse base64 image: {e}")
 
+def get_gemini_result(instruction: str, tools: list, message: str, history: list, sender: str, images: List[str] = None, reply_message: Optional[ReplyMessage] = None):
+    parts = []
+
+    # 1. 답장 맥락이 있는 경우: 답장 텍스트 라벨 파트 + 답장 이미지 파트들
+    if reply_message and (reply_message.msg or reply_message.sender or reply_message.images):
+        reply_sender = reply_message.sender or "상대방"
+        reply_text = reply_message.msg if reply_message.msg else "(텍스트 없음)"
+        parts.append(types.Part(text = f"[답장 대상: {reply_sender}님의 메시지]\n{reply_text}"))
+
+        if reply_message.images:
+            for reply_img in reply_message.images:
+                img_part = parse_image_part(reply_img)
+                if img_part:
+                    parts.append(img_part)
+
+    # 2. 현재 질문/메시지: 발화자 메시지 텍스트 파트 + 현재 첨부 이미지 파트들
     parts.append(types.Part(text = f"{sender}: {message}"))
+    if images:
+        for img in images:
+            img_part = parse_image_part(img)
+            if img_part:
+                parts.append(img_part)
 
     user_content = types.Content(
         role="user",
@@ -206,22 +248,24 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
 
     return gemini_response.text.strip()
 
-def message_gemini_child(message, sender, room, image=None):
+
+def message_gemini_child(message, sender, room, images: List[str] = None, reply_message: Optional[ReplyMessage] = None):
     if not message:
         return "왜 불러?"
     history_list = load_history_to_cache(room, "child")
 
-    reply = get_gemini_result(genai_system_instruction_child, [genai_grounding_tool], message, history_list, sender, image)
+    reply = get_gemini_result(genai_system_instruction_child, [genai_grounding_tool], message, history_list, sender, images, reply_message)
 
     save_history_from_cache(room, "child")
     return reply
 
-def message_gemini_smart(message, sender, room, image=None):
+
+def message_gemini_smart(message, sender, room, images: List[str] = None, reply_message: Optional[ReplyMessage] = None):
     if not message:
         return "네, 말씀하십시오."
     history_list = load_history_to_cache(room, "smart")
 
-    reply = get_gemini_result(genai_system_instruction_smart, [genai_grounding_tool], message, history_list, sender, image)
+    reply = get_gemini_result(genai_system_instruction_smart, [genai_grounding_tool], message, history_list, sender, images, reply_message)
 
     save_history_from_cache(room, "smart")
     return reply

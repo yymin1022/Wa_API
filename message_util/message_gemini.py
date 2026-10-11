@@ -201,7 +201,7 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
                     parts.append(img_part)
 
     # 2. 현재 질문/메시지: 발화자 메시지 텍스트 파트 + 현재 첨부 이미지 파트들
-    parts.append(types.Part(text = f"{sender}: {message}"))
+    parts.append(types.Part(text = f"[발화자: {sender}]\n{message}"))
     if images:
         for img in images:
             img_part = parse_image_part(img)
@@ -236,12 +236,25 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
 
     # API call succeeded, commit user message and model response to history
     model_content = gemini_response.candidates[0].content
-    # Explicitly set role as model if not present
-    if not model_content.role:
-        model_content.role = "model"
+    # Tag recipient in model response history to clarify multi-party conversation context
+    tagged_parts = []
+    prefix_applied = False
+    for part in model_content.parts:
+        if part.text and not prefix_applied:
+            tagged_parts.append(types.Part(text = f"[{sender}에게 한 답변]\n{part.text}"))
+            prefix_applied = True
+        else:
+            tagged_parts.append(part)
+    if not prefix_applied:
+        tagged_parts = [types.Part(text = f"[{sender}에게 한 답변]\n{gemini_response.text.strip()}")]
+
+    history_model_content = types.Content(
+        role = "model",
+        parts = tagged_parts
+    )
 
     history.append(user_content)
-    history.append(model_content)
+    history.append(history_model_content)
 
     # Rotate history in pairs
     rotate_gemini_history(history)

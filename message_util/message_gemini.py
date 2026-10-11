@@ -19,7 +19,7 @@ GEMINI_MODEL_NAME = os.environ.get("GEMINI_MODEL_NAME", "gemini-2.5-flash")
 GEMINI_MODEL_TEMPERATURE = float(os.environ.get("GEMINI_MODEL_TEMPERATURE", 0.5))
 GEMINI_MODEL_THINKING_BUDGET = int(os.environ.get("GEMINI_MODEL_THINKING_BUDGET", 256))
 GEMINI_MAX_HISTORY_LENGTH = int(os.environ.get("GEMINI_MAX_HISTORY_LENGTH", 4))
-CACHE_EXPIRATION_SECONDS = int(os.environ.get("GEMINI_CACHE_EXPIRATION_SECONDS", 10800)) # Default 3 hours
+CACHE_EXPIRATION_SECONDS = int(os.environ.get("GEMINI_CACHE_EXPIRATION_SECONDS", 600)) # Default 10 minutes
 
 genai_system_instruction_child = """
     당신은 대한민국의 초등학생입니다.
@@ -86,22 +86,34 @@ def load_history_to_cache(room: str, persona: str) -> list:
     cache_key = f"{room}_{persona}"
     current_time = time.time()
 
-    # Cache hit: Update access time and return
+    # Cache hit: Check expiration before returning
     if cache_key in chat_histories:
-        chat_histories[cache_key]["last_accessed"] = current_time
-        return chat_histories[cache_key]["history"]
+        last_accessed = chat_histories[cache_key].get("last_accessed", 0)
+        if current_time - last_accessed <= CACHE_EXPIRATION_SECONDS:
+            chat_histories[cache_key]["last_accessed"] = current_time
+            return chat_histories[cache_key]["history"]
+        else:
+            chat_histories.pop(cache_key, None)
 
-    # Cache miss: load single array of Content from file once
+    # Cache miss: load single array of Content from file if not expired
     file_path = get_history_file_path(room, persona)
     history_list = []
     if os.path.isfile(file_path):
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                raw_data = json.load(f)
-                # Deserialize raw dict list into types.Content objects
-                history_list = [
-                    types.Content.model_validate(h) for h in raw_data
-                ]
+            file_mtime = os.path.getmtime(file_path)
+            if current_time - file_mtime <= CACHE_EXPIRATION_SECONDS:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    raw_data = json.load(f)
+                    # Deserialize raw dict list into types.Content objects
+                    history_list = [
+                        types.Content.model_validate(h) for h in raw_data
+                    ]
+            else:
+                # File expired: clean up file
+                try:
+                    os.remove(file_path)
+                except OSError:
+                    pass
         except Exception as e:
             print(f"[Gemini Load Error] Failed to load history for {cache_key}: {e}")
             history_list = []
@@ -144,6 +156,20 @@ def evict_expired_histories():
 
     for key in expired_keys:
         chat_histories.pop(key, None)
+
+    # Clean up expired history files on disk
+    if os.path.exists(HISTORY_DIR):
+        try:
+            for filename in os.listdir(HISTORY_DIR):
+                if filename.startswith("history_") and filename.endswith(".json"):
+                    file_path = os.path.join(HISTORY_DIR, filename)
+                    try:
+                        if current_time - os.path.getmtime(file_path) > CACHE_EXPIRATION_SECONDS:
+                            os.remove(file_path)
+                    except OSError:
+                        pass
+        except Exception as e:
+            print(f"[Gemini Evict Error] Failed to clean up history files: {e}")
 
 def parse_image_part(image_str: str) -> Optional[types.Part]:
     if not image_str:

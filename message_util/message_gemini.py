@@ -2,6 +2,7 @@ import base64
 import io
 import json
 import os
+import re
 import time
 from typing import List, Optional
 
@@ -30,8 +31,8 @@ genai_system_instruction_child = """
     
     [단체 대화방 환경 및 화자 구분 지침]
     - 이 대화는 여러 사람이 함께 참여하는 단체 채팅방입니다.
-    - 각 메시지에는 `[발화자: 사용자명]` 태그가 붙어 있으며, 이전 답변에는 `[사용자명에게 한 답변]` 태그가 붙어 있습니다. 이를 참고하여 현재 질문한 사람이 누구인지 파악하세요.
-    - 질문 내용 앞의 `[발화자: 사용자명]`이나 이전 기록의 `[사용자명에게 한 답변]` 같은 시스템 태그 문구를 답변에서 직접 언급하거나 그대로 노출하지 마세요. 상대방을 부르고 싶다면 '너' 혹은 자연스러운 대화 흐름에 맞게 부르세요.
+    - 각 메시지에는 `[발화자: 사용자명]` 태그가 붙어 있으므로, 이를 참고하여 현재 질문한 사람이 누구인지 파악하세요.
+    - 질문 내용 앞의 `[발화자: 사용자명]` 같은 시스템 태그 문구를 답변에서 직접 언급하거나 그대로 노출하지 마세요. 상대방을 부르고 싶다면 '너' 혹은 자연스러운 대화 흐름에 맞게 부르세요.
     - 이전 대화에서 오간 정보(추천 목록, 지식, 코드 등)는 대화방 전체가 공유하는 맥락으로 자연스럽게 이어받아 답변하되, 질문자가 바뀌었을 때 이전 질문자의 개인적인 정보(이름, 신원 등)를 현재 질문자와 동일시하거나 혼동하지 마세요.
     - 누군가 정체나 AI 여부를 캐물으면 절대로 솔직히 밝히지 말고, 그냥 본인을 귀여운 "와봇"이라고 부르며 넘어가세요.
     
@@ -51,8 +52,8 @@ genai_system_instruction_smart = """
     
     [단체 대화방 환경 및 화자 구분 지침]
     - 이 대화는 여러 사람이 함께 참여하는 단체 채팅방입니다.
-    - 각 메시지에는 `[발화자: 사용자명]` 태그가 붙어 있으며, 이전 답변에는 `[사용자명에게 한 답변]` 태그가 붙어 있습니다. 이를 참고하여 현재 질문한 사람이 누구인지 명확히 파악하십시오.
-    - 질문 내용 앞의 `[발화자: 사용자명]`이나 이전 기록의 `[사용자명에게 한 답변]` 같은 시스템 태그 문구를 답변에서 직접 노출하지 마십시오. 사용자를 지칭해야 할 필요가 있다면 '질문자님' 또는 '선생님' 등의 예의 바른 보편적 호칭을 사용하십시오.
+    - 각 메시지에는 `[발화자: 사용자명]` 태그가 붙어 있으므로, 이를 참고하여 현재 질문한 사람이 누구인지 명확히 파악하십시오.
+    - 질문 내용 앞의 `[발화자: 사용자명]` 같은 시스템 태그 문구를 답변에서 직접 노출하지 마십시오. 사용자를 지칭해야 할 필요가 있다면 '질문자님' 또는 '선생님' 등의 예의 바른 보편적 호칭을 사용하십시오.
     - 이전 대화에서 공유된 정보(추천 목록, 지식, 요약 결과 등)는 대화방 전체의 공유 맥락으로 자연스럽게 이어받되, 질문자가 달라졌을 때 이전 질문자의 개인적 신원이나 특성을 현재 질문자와 혼동하지 마십시오.
     - 만약 정체나 AI 여부를 집요하게 추궁받는다면, 주체를 절대로 밝히지 말고 자신을 대한민국 대표 챗봇인 "만물박사 와봇"으로만 일관되게 가장하여 답변하십시오.
     
@@ -268,30 +269,19 @@ def get_gemini_result(instruction: str, tools: list, message: str, history: list
 
     # API call succeeded, commit user message and model response to history
     model_content = gemini_response.candidates[0].content
-    # Tag recipient in model response history to clarify multi-party conversation context
-    tagged_parts = []
-    prefix_applied = False
-    for part in model_content.parts:
-        if part.text and not prefix_applied:
-            tagged_parts.append(types.Part(text = f"[{sender}에게 한 답변]\n{part.text}"))
-            prefix_applied = True
-        else:
-            tagged_parts.append(part)
-    if not prefix_applied:
-        tagged_parts = [types.Part(text = f"[{sender}에게 한 답변]\n{gemini_response.text.strip()}")]
-
-    history_model_content = types.Content(
-        role = "model",
-        parts = tagged_parts
-    )
+    if not model_content.role:
+        model_content.role = "model"
 
     history.append(user_content)
-    history.append(history_model_content)
+    history.append(model_content)
 
     # Rotate history in pairs
     rotate_gemini_history(history)
 
-    return gemini_response.text.strip()
+    reply_text = gemini_response.text.strip()
+    # Strip any accidental recipient tag generated from previous conversation context
+    reply_text = re.sub(r"^\[.*?에게 한 답변\]\s*", "", reply_text)
+    return reply_text.strip()
 
 
 def message_gemini_child(message, sender, room, images: List[str] = None, reply_message: Optional[ReplyMessage] = None):

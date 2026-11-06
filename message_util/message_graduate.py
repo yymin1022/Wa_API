@@ -24,8 +24,6 @@ def message_graduate(wa_message: WaMessage):
             return message_seongmin_graduate()
         elif "승범" in message:
             return message_seungbeom_graduate()
-        elif "수필" in message:
-            return message_supil_graduate()
         elif "태식" in message:
             return message_tjo_graduate()
     return None
@@ -50,7 +48,7 @@ def message_hokyu_graduate():
                 "호규의 학사 152기 지원을 응원합니다!",
                 f"호규의 예비군 소집해제일까지 {(datetime.date(2030, 12, 31) - datetime.date.today()).days - 1:d}일 남았습니다.",
                 f"호규의 민방위 소집해제일까지 {(datetime.date(2041, 4, 28) - datetime.date.today()).days - 1:d}일 남았습니다.",
-                "예비군 1년차는 좀...",
+                "어떻게 사람이 아직도 동원 예비군",
                 f"하사 김호규의 임기제부사관 만기복무일까지 {(datetime.date(2027, 8, 26) - datetime.date.today()).days - 1:d}일 남았습니다."]
     return random.choice(messages)
 
@@ -65,20 +63,12 @@ def message_seungbeom_graduate():
                 f"승범이가 박사과정을 마치기까지 {int((datetime.datetime(2031, 2, 28) - datetime.datetime.now()).total_seconds()):,}초 남았습니다."]
     return random.choice(messages)
 
-def message_supil_graduate():
-    messages = ["24년은 오지 않습니다...",
-                "그런거 물어볼 시간에 일이나 하세요.",
-                f"박수필씨의 소집해제일까지 {(datetime.date(2024, 11, 27) - datetime.date.today()).days}일이 남았습니다.",
-                f"박수필씨의 소집해제일까지 {(datetime.date(2024, 11, 27) - datetime.date.today()).days - 1}일 {(datetime.datetime(2024, 11, 27) - datetime.datetime.now()).seconds // 3600}시간 {((datetime.datetime(2024, 11, 27) - datetime.datetime.now()).seconds // 60) % 60}분 {(datetime.datetime(2024, 11, 27) - datetime.datetime.now()).seconds % 60}초 남았습니다.",
-                f"당신이 민간인이 될 때까지 {int((datetime.datetime(2024, 11, 27) - datetime.datetime.now()).total_seconds()):,}초 남았습니다."]
-    return random.choice(messages)
-
 def message_seongmin_graduate():
     messages = [f"지성민씨가 소집된지 {(datetime.date.today() - datetime.date(2022, 5, 22)).days:d}일, 소해된지는 {(datetime.date.today() - datetime.date(2024, 2, 22)).days:d}일이 됐습니다.",
                 f"지성민씨의 예비군 소집해제일까지 {(datetime.date(2031, 12, 31) - datetime.date.today()).days:d}일 남았습니다."]
     return random.choice(messages)
 
 def message_tjo_graduate():
-    messages = [f"조태식의 즐거운 공익 생활이 {(datetime.date(2026, 11, 5) - datetime.date.today()).days}일 남았습니다.",
+    messages = [f"조태식이 소집된지 {(datetime.date.today() - datetime.date(2025, 2, 7)).days:d}일, 소해된지는 {(datetime.date.today() - datetime.date(2026, 11, 6)).days:d}일이 됐습니다.",
                 f"조태식의 행복한 예비군 생활이 {(datetime.date(2033, 12, 31) - datetime.date.today()).days:d}일 남았습니다."]
     return random.choice(messages)

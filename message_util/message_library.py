@@ -20,8 +20,6 @@ def message_library(wa_message: WaMessage):
             return message_library_cau(2)
         elif "안성" in message:
             return message_library_cau(3)
-        elif "남샤" in message:
-            return message_library_nsu()
         else:
             return message_library_cau(0)
 
@@ -68,17 +66,5 @@ def message_library_cau(lib_type_id):
     str_message = f"중앙대학교 열람실 좌석현황({lib_type})\n"
     for lib_item in lib_list:
        str_message += f"\n{lib_item['roomName']} : 여석 {lib_item['remainCnt']}석 ({lib_item['useCnt']}석 사용중)"
-
-    return str_message
-
-def message_library_nsu():
-    str_url = "http://220.68.191.20/setting"
-    request_session = requests.Session()
-    request_response = dict(request_session.get(str_url, headers={"Content-Type": "application/x-www-form-urlencoded"}, verify=certifi.where()).json())
-    lib_first = f"제1 자유열람실 : 여석 {str(357 - int(request_response['data']['data'][0]['inUse']) - int(request_response['data']['data'][0]['fix']) - int(request_response['data']['data'][0]['disabled']))}석 ({request_response['data']['data'][0]['inUse']}석 사용중)\n"
-    lib_second = f"제2 자유열람실 : 여석 {str(265 - int(request_response['data']['data'][1]['inUse']) - int(request_response['data']['data'][1]['fix']) - int(request_response['data']['data'][1]['disabled']))}석 ({request_response['data']['data'][1]['inUse']}석 사용중)\n"
-    lib_third = f"제3 자유열람실 : 여석 {str(324 - int(request_response['data']['data'][2]['inUse']) - int(request_response['data']['data'][2]['fix']) - int(request_response['data']['data'][2]['disabled']))}석 ({request_response['data']['data'][2]['inUse']}석 사용중)"
-
-    str_message = f"남서울대학교 열람실 좌석현황(성암기념중앙도서관)\n\n{lib_first}{lib_second}{lib_third}"
 
     return str_message

@@ -24,8 +24,6 @@ def message_graduate(wa_message: WaMessage):
             return message_seongmin_graduate()
         elif "승범" in message:
             return message_seungbeom_graduate()
-        elif "수필" in message:
-            return message_supil_graduate()
         elif "태식" in message:
             return message_tjo_graduate()
     return None
@@ -63,14 +61,6 @@ def message_seungbeom_graduate():
     messages = ["승범아 대학원 가야지?",
                 f"승범이가 박사과정을 마치기까지 {(datetime.date(2031, 2, 28) - datetime.date.today()).days - 1}일 {(datetime.datetime(2031, 2, 28) - datetime.datetime.now()).seconds // 3600}시간 {((datetime.datetime(2031, 2, 28) - datetime.datetime.now()).seconds // 60) % 60}분 {(datetime.datetime(2031, 2, 28) - datetime.datetime.now()).seconds % 60}초 남았습니다.",
                 f"승범이가 박사과정을 마치기까지 {int((datetime.datetime(2031, 2, 28) - datetime.datetime.now()).total_seconds()):,}초 남았습니다."]
-    return random.choice(messages)
-
-def message_supil_graduate():
-    messages = ["24년은 오지 않습니다...",
-                "그런거 물어볼 시간에 일이나 하세요.",
-                f"박수필씨의 소집해제일까지 {(datetime.date(2024, 11, 27) - datetime.date.today()).days}일이 남았습니다.",
-                f"박수필씨의 소집해제일까지 {(datetime.date(2024, 11, 27) - datetime.date.today()).days - 1}일 {(datetime.datetime(2024, 11, 27) - datetime.datetime.now()).seconds // 3600}시간 {((datetime.datetime(2024, 11, 27) - datetime.datetime.now()).seconds // 60) % 60}분 {(datetime.datetime(2024, 11, 27) - datetime.datetime.now()).seconds % 60}초 남았습니다.",
-                f"당신이 민간인이 될 때까지 {int((datetime.datetime(2024, 11, 27) - datetime.datetime.now()).total_seconds()):,}초 남았습니다."]
     return random.choice(messages)
 
 def message_seongmin_graduate():

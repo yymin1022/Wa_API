@@ -48,7 +48,7 @@ def message_hokyu_graduate():
                 "호규의 학사 152기 지원을 응원합니다!",
                 f"호규의 예비군 소집해제일까지 {(datetime.date(2030, 12, 31) - datetime.date.today()).days - 1:d}일 남았습니다.",
                 f"호규의 민방위 소집해제일까지 {(datetime.date(2041, 4, 28) - datetime.date.today()).days - 1:d}일 남았습니다.",
-                "예비군 1년차는 좀...",
+                "어떻게 사람이 아직도 동원 예비군",
                 f"하사 김호규의 임기제부사관 만기복무일까지 {(datetime.date(2027, 8, 26) - datetime.date.today()).days - 1:d}일 남았습니다."]
     return random.choice(messages)
 
@@ -69,6 +69,6 @@ def message_seongmin_graduate():
     return random.choice(messages)
 
 def message_tjo_graduate():
-    messages = [f"조태식의 즐거운 공익 생활이 {(datetime.date(2026, 11, 5) - datetime.date.today()).days}일 남았습니다.",
+    messages = [f"조태식이 소집된지 {(datetime.date.today() - datetime.date(2025, 2, 7)).days:d}일, 소해된지는 {(datetime.date.today() - datetime.date(2026, 11, 6)).days:d}일이 됐습니다.",
                 f"조태식의 행복한 예비군 생활이 {(datetime.date(2033, 12, 31) - datetime.date.today()).days:d}일 남았습니다."]
     return random.choice(messages)
